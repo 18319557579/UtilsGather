@@ -1,0 +1,3 @@
+rootProject.name = "UtilsGather"
+include ':app'
+include ':utilsgather'
