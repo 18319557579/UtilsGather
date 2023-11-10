@@ -7,7 +7,6 @@ import org.json.JSONTokener;
 
 public class DetermineJsonType {
     public enum JSON_TYPE {
-
         OBJECT,  //是json对象类型
 
         ARRAY,  //是json数组类型
