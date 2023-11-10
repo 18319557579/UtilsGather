@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.utilsgather.assets.AssetsUtil;
 import com.example.utilsgather.databinding.ActivityMainBinding;
 import com.example.utilsgather.handler.HandlerUI;
 import com.example.utilsgather.lifecycle_callback.CallbackActivity;
@@ -46,6 +47,12 @@ public class MainActivity extends CallbackActivity {
                                 LogUtil.d("当前的线程是2：" + Thread.currentThread());
                             }
                         });
+                    }
+                }),
+                new GuideItemEntity("从Assets中读出内容", new Runnable() {
+                    @Override
+                    public void run() {
+                        LogUtil.d("读出来的文本:\n" + AssetsUtil.readAssetsFile(MainActivity.this, "uiautomatorviewer.txt"));
                     }
                 })
         };
