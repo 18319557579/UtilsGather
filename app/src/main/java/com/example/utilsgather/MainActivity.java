@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.utilsgather.application_store.AppStoreUtil;
 import com.example.utilsgather.assets.AssetsUtil;
+import com.example.utilsgather.browser.BrowserUtil;
 import com.example.utilsgather.databinding.ActivityMainBinding;
 import com.example.utilsgather.handler.HandlerUI;
 import com.example.utilsgather.lifecycle_callback.CallbackActivity;
@@ -55,10 +56,22 @@ public class MainActivity extends CallbackActivity {
                         LogUtil.d("读出来的文本:\n" + AssetsUtil.readAssetsFile(MainActivity.this, "uiautomatorviewer.txt"));
                     }
                 }),
-                new GuideItemEntity("在谷歌中打开小红书：", new Runnable() {
+                new GuideItemEntity("在谷歌中打开小红书", new Runnable() {
                     @Override
                     public void run() {
                         AppStoreUtil.jumpStore(MainActivity.this, "com.xingin.xhs", true);
+                    }
+                }),
+                new GuideItemEntity("在浏览器中打开京东", new Runnable() {
+                    @Override
+                    public void run() {
+                        BrowserUtil.jumpBrowser("https://m.jd.com/", MainActivity.this);
+                    }
+                }),
+                new GuideItemEntity("能不能让我选一下跳转去哪", new Runnable() {
+                    @Override
+                    public void run() {
+                        BrowserUtil.jumpOthers(MainActivity.this, "https://www.baidu.com");
                     }
                 })
         };
