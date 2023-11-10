@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.utilsgather.application_store.AppStoreUtil;
 import com.example.utilsgather.assets.AssetsUtil;
 import com.example.utilsgather.databinding.ActivityMainBinding;
 import com.example.utilsgather.handler.HandlerUI;
@@ -53,6 +53,12 @@ public class MainActivity extends CallbackActivity {
                     @Override
                     public void run() {
                         LogUtil.d("读出来的文本:\n" + AssetsUtil.readAssetsFile(MainActivity.this, "uiautomatorviewer.txt"));
+                    }
+                }),
+                new GuideItemEntity("在谷歌中打开小红书：", new Runnable() {
+                    @Override
+                    public void run() {
+                        AppStoreUtil.jumpStore(MainActivity.this, "com.xingin.xhs", true);
                     }
                 })
         };
