@@ -14,7 +14,11 @@ import com.example.utilsgather.databinding.ActivityMainBinding;
 import com.example.utilsgather.handler.HandlerUI;
 import com.example.utilsgather.lifecycle_callback.CallbackActivity;
 import com.example.utilsgather.logcat.LogUtil;
+import com.example.utilsgather.map.MapUtil;
 import com.example.utilsgather.package_info.PackageInfoUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends CallbackActivity {
 
@@ -72,6 +76,16 @@ public class MainActivity extends CallbackActivity {
                     @Override
                     public void run() {
                         BrowserUtil.jumpOthers(MainActivity.this, "https://www.baidu.com");
+                    }
+                }),
+                new GuideItemEntity("通过value找到key", new Runnable() {
+                    @Override
+                    public void run() {
+                        Map<Float, String> myMap = new HashMap<>();
+                        myMap.put(0.1f, "hsf");
+                        myMap.put(0.2f, "hwt");
+                        myMap.put(0.3f, "hqs");
+                        LogUtil.d("找到的KEY：" + MapUtil.getKey(myMap, "hsf"));
                     }
                 })
         };
