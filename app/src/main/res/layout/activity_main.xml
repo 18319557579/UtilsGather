@@ -7,17 +7,10 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_test_app_name"
+    <ListView
+        android:id="@+id/lv_launcher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="测试获取应用名"/>
-
-    <Button
-        android:id="@+id/btn_test_ui"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="测试切换为UI线程"/>
+        android:layout_height="match_parent"/>
 
 
 </LinearLayout>

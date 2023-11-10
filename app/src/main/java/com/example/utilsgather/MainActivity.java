@@ -1,7 +1,12 @@
 package com.example.utilsgather;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.utilsgather.databinding.ActivityMainBinding;
 import com.example.utilsgather.handler.HandlerUI;
@@ -13,22 +18,24 @@ public class MainActivity extends CallbackActivity {
 
     ActivityMainBinding mainBinding;
 
+    public GuideItemEntity[] datas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
 
-        mainBinding.btnTestAppName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PackageInfoUtil.getAppNameByUrl("xhsdiscover://search/result?keyword=%E5%B9%BF%E4%B8%9C%E6%94%BB%E7%95%A5&open_url=baidu&groupid=60f954717ae4040001eabf05&mode=openurl&source=landingpage");
-            }
-        });
-        mainBinding.btnTestUi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(new Runnable() {
+        datas = new GuideItemEntity[] {
+                new GuideItemEntity("测试获取应用名", new Runnable() {
+
+                    @Override
+                    public void run() {
+                        PackageInfoUtil.getAppNameByUrl("xhsdiscover://search/result?keyword=%E5%B9%BF%E4%B8%9C%E6%94%BB%E7%95%A5&open_url=baidu&groupid=60f954717ae4040001eabf05&mode=openurl&source=landingpage");
+                    }
+                }),
+                new GuideItemEntity("测试从子线程切换为UI线程", new Runnable() {
+
                     @Override
                     public void run() {
                         LogUtil.d("当前的线程是：" + Thread.currentThread());
@@ -39,10 +46,56 @@ public class MainActivity extends CallbackActivity {
                                 LogUtil.d("当前的线程是2：" + Thread.currentThread());
                             }
                         });
-
                     }
-                }).start();
+                })
+        };
+
+        mainBinding.lvLauncher.setAdapter(new MainAdapter());
+
+    }
+
+    private class MainAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return datas.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return datas[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder mViewHolder;
+            if (convertView == null) {
+                mViewHolder = new ViewHolder();
+                View mView = LayoutInflater.from(parent.getContext()).inflate(
+                        android.R.layout.simple_list_item_1, parent, false);
+                mViewHolder.mTextView = mView.findViewById(android.R.id.text1);
+                mView.setTag(mViewHolder);
+                convertView = mView;
+            } else {
+                mViewHolder = (ViewHolder) convertView.getTag();
             }
-        });
+            mViewHolder.mTextView.setText(datas[position].getGuideTitle());
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    datas[position].getRunnable().run();
+                }
+            });
+            return convertView;
+        }
+
+        private class ViewHolder {
+            TextView mTextView;
+        }
     }
 }
