@@ -16,6 +16,7 @@ import com.example.utilsgather.lifecycle_callback.CallbackActivity;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsgather.map.MapUtil;
 import com.example.utilsgather.package_info.PackageInfoUtil;
+import com.example.utilsgather.ui.ScreenParamsUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -86,6 +87,12 @@ public class MainActivity extends CallbackActivity {
                         myMap.put(0.2f, "hwt");
                         myMap.put(0.3f, "hqs");
                         LogUtil.d("找到的KEY：" + MapUtil.getKey(myMap, "hsf"));
+                    }
+                }),
+                new GuideItemEntity("设置屏幕常亮", new Runnable() {
+                    @Override
+                    public void run() {
+                        ScreenParamsUtils.setScreenOn(MainActivity.this);
                     }
                 })
         };
