@@ -16,7 +16,7 @@ import com.example.utilsgather.lifecycle_callback.CallbackActivity;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsgather.map.MapUtil;
 import com.example.utilsgather.package_info.PackageInfoUtil;
-import com.example.utilsgather.ui.ScreenParamsUtils;
+import com.example.utilsgather.ui.ScreenFunctionUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -92,7 +92,7 @@ public class MainActivity extends CallbackActivity {
                 new GuideItemEntity("设置屏幕常亮", new Runnable() {
                     @Override
                     public void run() {
-                        ScreenParamsUtils.setScreenOn(MainActivity.this);
+                        ScreenFunctionUtils.setScreenOn(MainActivity.this);
                     }
                 })
         };
