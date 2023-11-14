@@ -43,7 +43,7 @@ public class CallbackActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("Daisy", canonicalName + " 回调onCreate");
+        Log.d("Daisy", canonicalName + " 回调onDestroy");
     }
 
     @Override
