@@ -1,5 +1,6 @@
 package com.example.utilsgather;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,17 +9,20 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.uitraining.UiOperateEntranceActivity;
 import com.example.utilsgather.application_store.AppStoreUtil;
 import com.example.utilsgather.assets.AssetsUtil;
 import com.example.utilsgather.browser.BrowserUtil;
 import com.example.utilsgather.databinding.ActivityMainBinding;
 import com.example.utilsgather.handler.HandlerUI;
 import com.example.utilsgather.lifecycle_callback.CallbackActivity;
+import com.example.utilsgather.list_guide.GuideSettings;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsgather.map.MapUtil;
 import com.example.utilsgather.package_info.PackageInfoUtil;
 import com.example.utilsgather.source_file.SourceUtil;
 import com.example.utilsgather.ui.ScreenFunctionUtils;
+import com.example.utilsgather.list_guide.GuideItemEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +39,14 @@ public class MainActivity extends CallbackActivity {
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
 
-        datas = new GuideItemEntity[] {
+        GuideSettings.set(mainBinding.lvLauncher, new GuideItemEntity[] {
+                new GuideItemEntity("去UIOperate", new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(MainActivity.this, UiOperateEntranceActivity.class);
+                        startActivity(intent);
+                    }
+                }),
                 new GuideItemEntity("测试获取应用名", new Runnable() {
 
                     @Override
@@ -116,54 +127,53 @@ public class MainActivity extends CallbackActivity {
 
                     }
                 })
-        };
-
-        mainBinding.lvLauncher.setAdapter(new MainAdapter());
+        });
+//        mainBinding.lvLauncher.setAdapter(new MainAdapter());
 
     }
 
-    private class MainAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return datas.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return datas[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder mViewHolder;
-            if (convertView == null) {
-                mViewHolder = new ViewHolder();
-                View mView = LayoutInflater.from(parent.getContext()).inflate(
-                        android.R.layout.simple_list_item_1, parent, false);
-                mViewHolder.mTextView = mView.findViewById(android.R.id.text1);
-                mView.setTag(mViewHolder);
-                convertView = mView;
-            } else {
-                mViewHolder = (ViewHolder) convertView.getTag();
-            }
-            mViewHolder.mTextView.setText(datas[position].getGuideTitle());
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    datas[position].getRunnable().run();
-                }
-            });
-            return convertView;
-        }
-
-        private class ViewHolder {
-            TextView mTextView;
-        }
-    }
+//    private class MainAdapter extends BaseAdapter {
+//
+//        @Override
+//        public int getCount() {
+//            return datas.length;
+//        }
+//
+//        @Override
+//        public Object getItem(int position) {
+//            return datas[position];
+//        }
+//
+//        @Override
+//        public long getItemId(int position) {
+//            return position;
+//        }
+//
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//            ViewHolder mViewHolder;
+//            if (convertView == null) {
+//                mViewHolder = new ViewHolder();
+//                View mView = LayoutInflater.from(parent.getContext()).inflate(
+//                        android.R.layout.simple_list_item_1, parent, false);
+//                mViewHolder.mTextView = mView.findViewById(android.R.id.text1);
+//                mView.setTag(mViewHolder);
+//                convertView = mView;
+//            } else {
+//                mViewHolder = (ViewHolder) convertView.getTag();
+//            }
+//            mViewHolder.mTextView.setText(datas[position].getGuideTitle());
+//            convertView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    datas[position].getRunnable().run();
+//                }
+//            });
+//            return convertView;
+//        }
+//
+//        private class ViewHolder {
+//            TextView mTextView;
+//        }
+//    }
 }
