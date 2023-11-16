@@ -1,5 +1,6 @@
 package com.example.utilsgather;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.utilsgather.lifecycle_callback.CallbackActivity;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsgather.map.MapUtil;
 import com.example.utilsgather.package_info.PackageInfoUtil;
+import com.example.utilsgather.source_file.SourceUtil;
 import com.example.utilsgather.ui.ScreenFunctionUtils;
 
 import java.util.HashMap;
@@ -93,6 +95,25 @@ public class MainActivity extends CallbackActivity {
                     @Override
                     public void run() {
                         ScreenFunctionUtils.setScreenOn(MainActivity.this);
+                    }
+                }),
+                new GuideItemEntity("从raw中读出图片", new Runnable() {
+                    @Override
+                    public void run() {
+                        new Thread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Bitmap bitmap = SourceUtil.getBitmapFromRaw(MainActivity.this, R.raw.set_meal);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mainBinding.ivContent.setImageBitmap(bitmap);
+                                    }
+                                });
+                            }
+                        }).start();
+
                     }
                 })
         };
