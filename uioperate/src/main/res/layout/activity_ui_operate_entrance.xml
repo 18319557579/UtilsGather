@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".UiOperateEntranceActivity">
 
+    <ListView
+        android:id="@+id/uioperate_lv_launcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
 </LinearLayout>
