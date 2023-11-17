@@ -3,13 +3,8 @@ package com.example.utilsgather;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
-import com.example.uitraining.UiOperateEntranceActivity;
+import com.example.uioperate.UiOperateEntranceActivity;
 import com.example.utilsgather.application_store.AppStoreUtil;
 import com.example.utilsgather.assets.AssetsUtil;
 import com.example.utilsgather.browser.BrowserUtil;

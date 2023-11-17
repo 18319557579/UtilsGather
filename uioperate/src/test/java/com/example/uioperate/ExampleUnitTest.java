@@ -1,4 +1,4 @@
-package com.example.uitraining;
+package com.example.uioperate;
 
 import org.junit.Test;
 
