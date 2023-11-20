@@ -38,6 +38,7 @@ public class PackageInfoUtil {
 
         } catch (Exception e) {
             e.printStackTrace();
+            LogUtil.d("查找应用名失败: " + e);
         }
         return appName;
     }

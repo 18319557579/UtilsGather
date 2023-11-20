@@ -1,6 +1,8 @@
 package com.example.utilsgather
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import com.example.uioperate.UiOperateEntranceActivity
 import com.example.utilsgather.application_store.AppStoreUtil
@@ -14,6 +16,7 @@ import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.map.MapUtil
 import com.example.utilsgather.package_info.PackageInfoUtil
+import com.example.utilsgather.permission.permissionX.PermissionX
 import com.example.utilsgather.source_file.SourceUtil
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.ScreenFunctionUtils
@@ -86,6 +89,17 @@ class MainActivity : CallbackActivity() {
                             SourceUtil.getBitmapFromRaw(this@MainActivity, R.raw.set_meal)
                         }
                         mainBinding!!.ivContent.setImageBitmap(bitmap)
+                    }
+                },
+                GuideItemEntity("测试授权情况") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        PermissionX.request(this@MainActivity, arrayOf(Manifest.permission.CAMERA)) { allGranted, deniedList ->
+                            if (allGranted) {
+                                LogUtil.d("所有权限都已授权")
+                            } else {
+                                LogUtil.d("没有通过的权限：$deniedList")
+                            }
+                        }
                     }
                 })
         )
