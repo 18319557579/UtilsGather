@@ -14,6 +14,8 @@ public class AppStoreUtil {
     public static void jumpStore(Activity activity, String pkgName, boolean isGooglePlay) {
         Uri uri = Uri.parse("market://details?id=" + pkgName);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         if (isGooglePlay) {
             intent.setPackage(GOOGLE_PLAY);
         }

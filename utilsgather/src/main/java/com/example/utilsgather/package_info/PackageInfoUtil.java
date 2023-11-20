@@ -28,6 +28,7 @@ public class PackageInfoUtil {
         PackageManager mPackageManager = ApplicationGlobal.getInstance().getPackageManager();
 
         //如果不申请QUERY_ALL_PACKAGES权限，那么得到的componentName将会为null
+        //如果设备没有能响应url的应用，那么这里也将为null
         ComponentName componentName = intent.resolveActivity(mPackageManager);
         try {
 //            List<ResolveInfo> mResolveInfos = mPackageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);

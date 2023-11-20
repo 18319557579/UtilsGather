@@ -39,6 +39,9 @@ public class JumpActivityUtils {
      */
     public static void startApp(Context context, String urlScheme) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlScheme));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
         try {
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {

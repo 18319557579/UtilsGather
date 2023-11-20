@@ -65,6 +65,11 @@ class MainActivity : CallbackActivity() {
     """.trimIndent()
                     )
                 },
+                GuideItemEntity("在应用商店中打开小红书") {
+                    AppStoreUtil.jumpStore(
+                        this@MainActivity, "com.xingin.xhs", false
+                    )
+                },
                 GuideItemEntity("在谷歌中打开小红书") {
                     AppStoreUtil.jumpStore(
                         this@MainActivity, "com.xingin.xhs", true
