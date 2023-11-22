@@ -53,6 +53,10 @@ class MainActivity : CallbackActivity() {
                 GuideItemEntity("跳转第三方app: 小红书（测试应用不存在的情况）") {
                     JumpActivityUtils.startApp(this, "xhsdiscover://search/result?keyword=%E5%B9%BF%E4%B8%9C%E6%94%BB%E7%95%A5&open_url=baidu&groupid=60f954717ae4040001eabf05&mode=openurl&source=landingpage")
                 },
+                //在TargetGather上写了响应daisy协议的Activity，因此可以跳转到自己的应用
+                GuideItemEntity("跳转自己的应用") {
+                    JumpActivityUtils.startApp(this, "daisy://mobile/carDetail/hsf?car_id=123456")
+                },
                 GuideItemEntity("测试从子线程切换为UI线程") {
                     LogUtil.d("当前的线程是：" + Thread.currentThread())
                     HandlerUI.runOnUI { LogUtil.d("当前的线程是2：" + Thread.currentThread()) }
