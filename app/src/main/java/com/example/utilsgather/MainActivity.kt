@@ -6,7 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import com.example.uioperate.UiOperateEntranceActivity
 import com.example.utilsgather.application_store.AppStoreUtil
-import com.example.utilsgather.assets.AssetsUtil
+import com.example.utilsgather.source_file.assets.AssetsUtil
 import com.example.utilsgather.browser.BrowserUtil
 import com.example.utilsgather.databinding.ActivityMainBinding
 import com.example.utilsgather.handler.HandlerUI
@@ -18,9 +18,9 @@ import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.map.MapUtil
 import com.example.utilsgather.package_info.PackageInfoUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
-import com.example.utilsgather.source_file.SourceUtil
+import com.example.utilsgather.source_file.raw.SourceUtil
 import com.example.utilsgather.thread.ThreadUtil
-import com.example.utilsgather.ui.ScreenFunctionUtils
+import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

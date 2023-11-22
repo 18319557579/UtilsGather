@@ -1,4 +1,4 @@
-package com.example.utilsgather.ui;
+package com.example.utilsgather.ui.screen;
 
 import android.app.Activity;
 import android.view.WindowManager;
