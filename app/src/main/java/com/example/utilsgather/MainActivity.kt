@@ -18,7 +18,7 @@ import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.map.MapUtil
 import com.example.utilsgather.package_info.PackageInfoUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
-import com.example.utilsgather.random.StringRandom
+import com.example.utilsgather.random.StringRandomUtil
 import com.example.utilsgather.source_file.raw.SourceUtil
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
@@ -126,10 +126,10 @@ class MainActivity : CallbackActivity() {
                 },
 
                 GuideItemEntity("获得指定长度，指定字典的随机字符串") {
-                    LogUtil.d(StringRandom.getRandomStringWithSection(3, 7, 3));
+                    LogUtil.d(StringRandomUtil.getRandomStringWithSection(3, 7, 3));
                 },
                 GuideItemEntity("简易地获得随机字符串") {
-                    LogUtil.d(StringRandom.getRandomString())
+                    LogUtil.d(StringRandomUtil.getRandomString())
                 }
             )
 
