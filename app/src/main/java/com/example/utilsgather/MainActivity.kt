@@ -10,6 +10,8 @@ import com.example.utilsgather.source_file.assets.AssetsUtil
 import com.example.utilsgather.browser.BrowserUtil
 import com.example.utilsgather.databinding.ActivityMainBinding
 import com.example.utilsgather.handler.HandlerUI
+import com.example.utilsgather.java_regex.RegexPackaged
+import com.example.utilsgather.java_regex.RegexUtil
 import com.example.utilsgather.jump.JumpActivityUtils
 import com.example.utilsgather.lifecycle_callback.CallbackActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
@@ -130,6 +132,19 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("简易地获得随机字符串") {
                     LogUtil.d(StringRandomUtil.getRandomString())
+                },
+                GuideItemEntity("测试正则表达式globalFind()") {
+                    RegexUtil.globalFind("#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})", "#ffbbad #Fc01DF #FFF #ffE");
+                },
+                GuideItemEntity("测试正则表达式singleFind()") {
+                    RegexUtil.singleFind("#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})", "#ffbbad #Fc01DF #FFF #ffE");
+                },
+                GuideItemEntity("判断是否为windows路径") {
+                    System.out.println(RegexPackaged.isWindowsDir("F:\\study\\javascript\\regex\\regular expression.pdf"));
+                    System.out.println(RegexPackaged.isWindowsDir("F:\\study\\javascript\\regex\\"));
+                    System.out.println(RegexPackaged.isWindowsDir("F:\\study\\javascript"));
+                    System.out.println(RegexPackaged.isWindowsDir("F:\\"));
+                    System.out.println(RegexPackaged.isWindowsDir("F:\\sdf\\*3"));
                 }
             )
 
