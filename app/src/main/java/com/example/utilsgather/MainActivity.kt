@@ -133,11 +133,13 @@ class MainActivity : CallbackActivity() {
                 GuideItemEntity("简易地获得随机字符串") {
                     LogUtil.d(StringRandomUtil.getRandomString())
                 },
-                GuideItemEntity("测试正则表达式globalFind()") {
-                    RegexUtil.globalFind("#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})", "#ffbbad #Fc01DF #FFF #ffE");
-                },
-                GuideItemEntity("测试正则表达式singleFind()") {
-                    RegexUtil.singleFind("#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})", "#ffbbad #Fc01DF #FFF #ffE");
+                GuideItemEntity("测试正则表达式globalFind()和singleFind()") {
+                    LogUtil.d(
+                        RegexUtil.findSubstringAll("#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})", "#ffbbad #Fc01DF #FFF #ffE").toString()
+                    )
+                    LogUtil.d(
+                        RegexUtil.findSubstringFirst("#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})", "#ffbbad #Fc01DF #FFF #ffE")
+                    )
                 },
                 GuideItemEntity("判断是否为windows路径") {
                     System.out.println(RegexPackaged.isWindowsDir("F:\\study\\javascript\\regex\\regular expression.pdf"));

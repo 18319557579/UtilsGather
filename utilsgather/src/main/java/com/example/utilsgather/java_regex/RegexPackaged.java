@@ -11,4 +11,11 @@ public class RegexPackaged {
         String regex = "^[a-zA-Z]:\\\\([^\\:*<>|\"?\\r\\n/]+\\\\)*([^\\:*<>|\"?\\r\\n/]+)?$";
         return Pattern.matches(regex, origin);
     }
+
+    /**
+     * 去掉文件名的后缀，获得文件名
+     */
+    public static String getFileName(String wholeFileName) {
+        return Pattern.compile("[.][^.]*$").matcher(wholeFileName).replaceFirst("");
+    }
 }

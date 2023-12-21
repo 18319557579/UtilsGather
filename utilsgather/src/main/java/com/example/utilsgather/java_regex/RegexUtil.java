@@ -2,35 +2,58 @@ package com.example.utilsgather.java_regex;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegexUtil {
-    /**
-     * 全局匹配
-     */
-    public static void globalFind(String regex, String origin) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(origin);
+    public static boolean matches(String regex, String inputStr) {
+        return Pattern.compile(regex).matcher(inputStr).matches();
+    }
 
+    public static boolean find(String regex, String inputStr) {
+        return Pattern.compile(regex).matcher(inputStr).find();
+    }
+
+    public static String findSubstringFirst(String regex, String inputStr) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return null;
+    }
+    public static List<String> findSubstringAll(String regex, String inputStr) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(inputStr);
+        List<String> substringList = new ArrayList<>();
         while (matcher.find()) {
             int start = matcher.start();
             int end = matcher.end();
-            String match = origin.substring(start, end);
+            String match = inputStr.substring(start, end);
             System.out.println("Match: " + match);
+            substringList.add(match);
         }
+        return substringList;
     }
 
-    /**
-     * 单一匹配
-     */
-    public static void singleFind(String regex, String origin) {
+    public static List<Integer> findAllLocation(String regex, String inputStr) {
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(origin);
-
-        if (matcher.find()) {
-            System.out.println("Match: " + matcher.group());
+        Matcher matcher = pattern.matcher(inputStr);
+        List<Integer> matchPosition = new ArrayList<>();
+        while (matcher.find()) {
+            int start = matcher.start();
+            matchPosition.add(start);
         }
+        return matchPosition;
+    }
 
+    public static String replaceAll(String regex, String inputStr, String replacement) {
+        return Pattern.compile(regex).matcher(inputStr).replaceAll(replacement);
+    }
+
+    public static String replaceFirst(String regex, String inputStr, String replacement) {
+        return Pattern.compile(regex).matcher(inputStr).replaceFirst(replacement);
     }
 }
