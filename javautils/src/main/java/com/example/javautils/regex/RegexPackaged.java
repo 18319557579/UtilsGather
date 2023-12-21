@@ -1,4 +1,4 @@
-package com.example.utilsgather.java_regex;
+package com.example.javautils.regex;
 
 import java.util.regex.Pattern;
 

@@ -4,14 +4,15 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import com.example.javautils.number_format.NumberFormatUtil
+import com.example.javautils.regex.RegexPackaged
+import com.example.javautils.regex.RegexUtil
 import com.example.uioperate.UiOperateEntranceActivity
 import com.example.utilsgather.application_store.AppStoreUtil
 import com.example.utilsgather.source_file.assets.AssetsUtil
 import com.example.utilsgather.browser.BrowserUtil
 import com.example.utilsgather.databinding.ActivityMainBinding
 import com.example.utilsgather.handler.HandlerUI
-import com.example.utilsgather.java_regex.RegexPackaged
-import com.example.utilsgather.java_regex.RegexUtil
 import com.example.utilsgather.jump.JumpActivityUtils
 import com.example.utilsgather.lifecycle_callback.CallbackActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
@@ -133,6 +134,8 @@ class MainActivity : CallbackActivity() {
                 GuideItemEntity("简易地获得随机字符串") {
                     LogUtil.d(StringRandomUtil.getRandomString())
                 },
+
+                GuideItemEntity("以下为java的测试--------------------------------------------") {},
                 GuideItemEntity("测试正则表达式globalFind()和singleFind()") {
                     LogUtil.d(
                         RegexUtil.findSubstringAll("#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})", "#ffbbad #Fc01DF #FFF #ffE").toString()
@@ -147,6 +150,11 @@ class MainActivity : CallbackActivity() {
                     System.out.println(RegexPackaged.isWindowsDir("F:\\study\\javascript"));
                     System.out.println(RegexPackaged.isWindowsDir("F:\\"));
                     System.out.println(RegexPackaged.isWindowsDir("F:\\sdf\\*3"));
+                },
+                GuideItemEntity("将数字保留2位小数") {
+                    LogUtil.d(NumberFormatUtil.keepTwoDecimals(53.234F))
+                    LogUtil.d(NumberFormatUtil.keepTwoDecimals(53.364F))
+                    LogUtil.d(NumberFormatUtil.keepTwoDecimals(53F))
                 }
             )
 

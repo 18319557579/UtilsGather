@@ -1,4 +1,4 @@
-package com.example.utilsgather.java_regex;
+package com.example.javautils.regex;
 
 
 
@@ -32,7 +32,6 @@ public class RegexUtil {
             int start = matcher.start();
             int end = matcher.end();
             String match = inputStr.substring(start, end);
-            System.out.println("Match: " + match);
             substringList.add(match);
         }
         return substringList;
