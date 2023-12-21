@@ -11,7 +11,7 @@
   "createdBy": {
     "gradle": {
       "version": "6.8.3",
-      "buildId": "lldlhmddq5grposvjothacvxxa"
+      "buildId": "6vyx5oyi3fdxpbr4xvoacqupra"
     }
   },
   "variants": [
@@ -28,11 +28,11 @@
         {
           "name": "java-utils-0.0.1.jar",
           "url": "java-utils-0.0.1.jar",
-          "size": 3448,
-          "sha512": "14cb0315316a6d8c10c0353c07e3711959515f2e20a171cb16f28c60ba8eb41b1b84a98b454584881e57546d2b604d2db7073c8b92c2301e4427c2acf4421757",
-          "sha256": "4ede4808561cd3a7a30fb6ab1dfe82ce4510dcc06890ab5b745e1c1b7062d319",
-          "sha1": "a8200a829aad2461d03b33b8821084350b995870",
-          "md5": "d88776f09cf421201b173d8af52b3306"
+          "size": 4487,
+          "sha512": "6ba82e1476af9bcd67e136832972220ba648b63a8bbcf25eb6f91d4b3cb6561fb34cf06b0e5fe836bcef07f67dfdc5e7b77425bce819b260bfb1d9d01677d226",
+          "sha256": "60a1ed1fc5149e9e06c0a7a60ca4328995b7769bf7917c51bbe97d9e654342bd",
+          "sha1": "bbff80f3051b8ef3013a4fdcf14ea5ec9e38ae4c",
+          "md5": "35a853862d32f08ecff1e5fccd87f58a"
         }
       ]
     },
@@ -49,11 +49,11 @@
         {
           "name": "java-utils-0.0.1.jar",
           "url": "java-utils-0.0.1.jar",
-          "size": 3448,
-          "sha512": "14cb0315316a6d8c10c0353c07e3711959515f2e20a171cb16f28c60ba8eb41b1b84a98b454584881e57546d2b604d2db7073c8b92c2301e4427c2acf4421757",
-          "sha256": "4ede4808561cd3a7a30fb6ab1dfe82ce4510dcc06890ab5b745e1c1b7062d319",
-          "sha1": "a8200a829aad2461d03b33b8821084350b995870",
-          "md5": "d88776f09cf421201b173d8af52b3306"
+          "size": 4487,
+          "sha512": "6ba82e1476af9bcd67e136832972220ba648b63a8bbcf25eb6f91d4b3cb6561fb34cf06b0e5fe836bcef07f67dfdc5e7b77425bce819b260bfb1d9d01677d226",
+          "sha256": "60a1ed1fc5149e9e06c0a7a60ca4328995b7769bf7917c51bbe97d9e654342bd",
+          "sha1": "bbff80f3051b8ef3013a4fdcf14ea5ec9e38ae4c",
+          "md5": "35a853862d32f08ecff1e5fccd87f58a"
         }
       ]
     }
