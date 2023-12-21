@@ -1,0 +1,17 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    repositories {
+        maven {
+            url = "${getRootDir().toString()}/mavenopening"
+        }
+    }
+    publications {
+        release(MavenPublication) {
+            from components.java
+            groupId = "com.example.javautils"
+            artifactId = "java-utils"
+            version = "0.0.1"
+        }
+    }
+}
