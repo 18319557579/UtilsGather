@@ -58,4 +58,40 @@ public class RegexPackaged {
         matcher.appendTail(sb);
         return sb.toString();
     }
+
+    /**
+     * 将一个输出串整体驼峰化
+     *
+     * 例，"-moz-transform  "
+     */
+    public static String humping(String inputStr) {
+        Pattern pattern = Pattern.compile("[-_\\s]+(.)?");
+        Matcher matcher = pattern.matcher(inputStr);
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            String initialLetter = matcher.group(1);
+            if (initialLetter == null) {
+                initialLetter = "";
+            } else {
+                initialLetter = initialLetter.toUpperCase();
+            }
+            matcher.appendReplacement(sb, initialLetter);
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
+
+    /**
+     * 中划线化。
+     *
+     * 例，"_M_oz  Trans-form-FDSa - "
+     */
+    public static String toStrike(String inputStr) {
+        Pattern pattern = Pattern.compile("([A-Z])");
+        Matcher matcher = pattern.matcher(inputStr);
+        return matcher.replaceAll("-$1")  //在大写字母之前都加上中划线
+                .replaceAll("[-_\\s]+$", "")  //将末尾的指定字符干掉
+                .replaceAll("[-_\\s]+", "-")  //将重复的指定字符替换为中划线
+                .toLowerCase();  //中划线化都是小写字母
+    }
 }
