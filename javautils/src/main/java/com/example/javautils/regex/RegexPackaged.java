@@ -42,4 +42,20 @@ public class RegexPackaged {
         Matcher matcher = pattern.matcher(inputStr);
         return matcher.find();
     }
+
+    /**
+     * 将一个输入串中的单词的首字母都大写
+     *
+     * 例，dgHDf name is epeli sf_33f 87SDF_df _SDF423
+     */
+    public static String capitalization(String inputStr) {
+        Pattern pattern = Pattern.compile("\\b[a-z]");
+        Matcher matcher = pattern.matcher(inputStr);
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, matcher.group().toUpperCase());
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
 }

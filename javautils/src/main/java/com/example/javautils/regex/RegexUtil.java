@@ -20,6 +20,7 @@ public class RegexUtil {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(inputStr);
         if (matcher.find()) {
+            //todo 这种方式是不是会存在bug，尝试找出反例
             return matcher.group();
         }
         return null;
