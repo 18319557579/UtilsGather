@@ -4,13 +4,8 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import com.example.javautils.map.MapUtil
-import com.example.javautils.number_format.NumberFormatUtil
-import com.example.javautils.regex.RegexPackaged
-import com.example.javautils.regex.RegexUtil
 import com.example.uioperate.UiOperateEntranceActivity
 import com.example.utilsgather.application_store.AppStoreUtil
-import com.example.utilsgather.source_file.assets.AssetsUtil
 import com.example.utilsgather.browser.BrowserUtil
 import com.example.utilsgather.databinding.ActivityMainBinding
 import com.example.utilsgather.handler.HandlerUI
@@ -19,10 +14,10 @@ import com.example.utilsgather.lifecycle_callback.CallbackActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
-
 import com.example.utilsgather.package_info.PackageInfoUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
 import com.example.utilsgather.random.StringRandomUtil
+import com.example.utilsgather.source_file.assets.AssetsUtil
 import com.example.utilsgather.source_file.raw.SourceUtil
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
@@ -94,13 +89,7 @@ class MainActivity : CallbackActivity() {
                         this@MainActivity, "https://www.baidu.com"
                     )
                 },
-                GuideItemEntity("通过value找到key") {
-                    val myMap: MutableMap<Float, String> = HashMap()
-                    myMap[0.1f] = "hsf"
-                    myMap[0.2f] = "hwt"
-                    myMap[0.3f] = "hqs"
-                    LogUtil.d("找到的KEY：" + MapUtil.getKey(myMap, "hsf"))
-                },
+
                 GuideItemEntity("设置屏幕常亮") { ScreenFunctionUtils.setScreenOn(this@MainActivity) },
                 GuideItemEntity("从raw中读出图片") {
                     /*Thread {
@@ -137,26 +126,7 @@ class MainActivity : CallbackActivity() {
                 },
 
                 GuideItemEntity("以下为java的测试--------------------------------------------") {},
-                GuideItemEntity("测试正则表达式globalFind()和singleFind()") {
-                    LogUtil.d(
-                        RegexUtil.findSubstringAll("#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})", "#ffbbad #Fc01DF #FFF #ffE").toString()
-                    )
-                    LogUtil.d(
-                        RegexUtil.findSubstringFirst("#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})", "#ffbbad #Fc01DF #FFF #ffE")
-                    )
-                },
-                GuideItemEntity("判断是否为windows路径") {
-                    System.out.println(RegexPackaged.isWindowsDir("F:\\study\\javascript\\regex\\regular expression.pdf"));
-                    System.out.println(RegexPackaged.isWindowsDir("F:\\study\\javascript\\regex\\"));
-                    System.out.println(RegexPackaged.isWindowsDir("F:\\study\\javascript"));
-                    System.out.println(RegexPackaged.isWindowsDir("F:\\"));
-                    System.out.println(RegexPackaged.isWindowsDir("F:\\sdf\\*3"));
-                },
-                GuideItemEntity("将数字保留2位小数") {
-                    LogUtil.d(NumberFormatUtil.keepTwoDecimals(53.234F))
-                    LogUtil.d(NumberFormatUtil.keepTwoDecimals(53.364F))
-                    LogUtil.d(NumberFormatUtil.keepTwoDecimals(53F))
-                }
+
             )
 
         )
