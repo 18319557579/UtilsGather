@@ -11,7 +11,7 @@
   "createdBy": {
     "gradle": {
       "version": "6.8.3",
-      "buildId": "zhu2egzhy5hibegp3nzdetbahy"
+      "buildId": "2yobdlafrzdchbjpcejueif5ku"
     }
   },
   "variants": [
@@ -28,11 +28,11 @@
         {
           "name": "java-utils-0.0.1.jar",
           "url": "java-utils-0.0.1.jar",
-          "size": 5034,
-          "sha512": "b99edaa74ba63f278e684072bc747dd58ee193b1ce72e5191c8bbf18f263550bd001e6a6cd99087f72acb70a95cd456f06326cceaf3cefcfe1959e6495cd4b18",
-          "sha256": "c7c624eafb9c57dddd5168c49e07e3036290814914197291bfdbfec0899be7ac",
-          "sha1": "e707b4145a9dfa7721b2a1fb5ac6cac74fbceef2",
-          "md5": "60fc7617caabefaa72486a01eb47e9d3"
+          "size": 8135,
+          "sha512": "00d653bad129e36ff306c874268b207979cb6a9e1dce9103ddf253db786581eb2153dad7c2771d10bf8565767a4f9d950ed88b0de8fe039a7a5f967f38e0d8d9",
+          "sha256": "fbad94ef13ffd36f60e1fa1f00b37a49f57ae0d37f6c5fde8811288b47acafc2",
+          "sha1": "a6ad1410e9507f42c470b31b4f30581ca8450f93",
+          "md5": "c9eb6eead1d08a6b9777dc49c7dc38f3"
         }
       ]
     },
@@ -49,11 +49,11 @@
         {
           "name": "java-utils-0.0.1.jar",
           "url": "java-utils-0.0.1.jar",
-          "size": 5034,
-          "sha512": "b99edaa74ba63f278e684072bc747dd58ee193b1ce72e5191c8bbf18f263550bd001e6a6cd99087f72acb70a95cd456f06326cceaf3cefcfe1959e6495cd4b18",
-          "sha256": "c7c624eafb9c57dddd5168c49e07e3036290814914197291bfdbfec0899be7ac",
-          "sha1": "e707b4145a9dfa7721b2a1fb5ac6cac74fbceef2",
-          "md5": "60fc7617caabefaa72486a01eb47e9d3"
+          "size": 8135,
+          "sha512": "00d653bad129e36ff306c874268b207979cb6a9e1dce9103ddf253db786581eb2153dad7c2771d10bf8565767a4f9d950ed88b0de8fe039a7a5f967f38e0d8d9",
+          "sha256": "fbad94ef13ffd36f60e1fa1f00b37a49f57ae0d37f6c5fde8811288b47acafc2",
+          "sha1": "a6ad1410e9507f42c470b31b4f30581ca8450f93",
+          "md5": "c9eb6eead1d08a6b9777dc49c7dc38f3"
         }
       ]
     }

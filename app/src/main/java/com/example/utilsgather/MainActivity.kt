@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import com.example.javautils.map.MapUtil
 import com.example.javautils.number_format.NumberFormatUtil
 import com.example.javautils.regex.RegexPackaged
 import com.example.javautils.regex.RegexUtil
@@ -18,7 +19,7 @@ import com.example.utilsgather.lifecycle_callback.CallbackActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
-import com.example.utilsgather.map.MapUtil
+
 import com.example.utilsgather.package_info.PackageInfoUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
 import com.example.utilsgather.random.StringRandomUtil

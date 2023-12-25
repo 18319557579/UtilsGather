@@ -1,4 +1,4 @@
-package com.example.utilsgather.map;
+package com.example.javautils.map;
 
 import java.util.Iterator;
 import java.util.Map;
