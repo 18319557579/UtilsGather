@@ -4,10 +4,12 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
 import com.example.uioperate.UiOperateEntranceActivity
 import com.example.utilsgather.application_store.AppStoreUtil
 import com.example.utilsgather.browser.BrowserUtil
 import com.example.utilsgather.databinding.ActivityMainBinding
+import com.example.utilsgather.exit.ExitUtil
 import com.example.utilsgather.handler.HandlerUI
 import com.example.utilsgather.jump.JumpActivityUtils
 import com.example.utilsgather.lifecycle_callback.CallbackActivity
@@ -125,10 +127,22 @@ class MainActivity : CallbackActivity() {
                     LogUtil.d(StringRandomUtil.getRandomString())
                 },
 
-                GuideItemEntity("以下为java的测试--------------------------------------------") {},
+                GuideItemEntity("跳转到测试两下返回的Activity") {
+                    val intent = Intent(this@MainActivity, TextExitHandleActivity::class.java)
+                    startActivity(intent)
+
+                    finish()
+                },
 
             )
 
         )
+    }
+
+    override fun onBackPressed() {
+        if (ExitUtil.handle(this, ExitUtil.Action.SIMULATE_HOME)) {
+            return
+        }
+        super.onBackPressed()
     }
 }
