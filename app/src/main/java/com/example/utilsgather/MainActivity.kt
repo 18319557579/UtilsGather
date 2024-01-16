@@ -5,10 +5,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
+import android.webkit.WebView
 import com.example.uioperate.UiOperateEntranceActivity
 import com.example.utilsgather.application_store.AppStoreUtil
 import com.example.utilsgather.browser.BrowserUtil
 import com.example.utilsgather.databinding.ActivityMainBinding
+import com.example.utilsgather.encoding.Base64Util
 import com.example.utilsgather.exit.ExitUtil
 import com.example.utilsgather.handler.HandlerUI
 import com.example.utilsgather.jump.JumpActivityUtils
@@ -132,6 +134,15 @@ class MainActivity : CallbackActivity() {
                     startActivity(intent)
 
                     finish()
+                },
+
+                GuideItemEntity("Base64编码") {
+                    val content = "Hello I am From China."
+                    LogUtil.d("编码后: " + Base64Util.base64Encode(content))
+                },
+                GuideItemEntity("Base64解码") {
+                    val content = "SGVsbG8gSSBhbSBGcm9tIENoaW5hLg==";
+                    LogUtil.d("解码后: " + Base64Util.base64Decode(content))
                 },
 
             )
