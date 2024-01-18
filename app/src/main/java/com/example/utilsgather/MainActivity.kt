@@ -20,7 +20,7 @@ import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.info.PackageInfoUtil
 import com.example.utilsgather.info.DeviceInfoUtil
 import com.example.utilsgather.info.NetworkInfoUtil
-import com.example.utilsgather.info.SniffingAppUtil
+import com.example.utilsgather.interaction.SniffingAppUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
 import com.example.utilsgather.random.StringRandomUtil
 import com.example.utilsgather.source_file.assets.AssetsUtil

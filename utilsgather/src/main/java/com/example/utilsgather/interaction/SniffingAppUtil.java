@@ -1,4 +1,4 @@
-package com.example.utilsgather.info;
+package com.example.utilsgather.interaction;
 
 import android.content.ComponentName;
 import android.content.Intent;
