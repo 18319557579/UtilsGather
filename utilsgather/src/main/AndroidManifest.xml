@@ -2,4 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!--添加该权限后，安装app时，会提示该权限：“查询所有软件包”-->
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+
+    <!--获取网路状态的util中会用到-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

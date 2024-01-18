@@ -19,6 +19,7 @@ import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.info.PackageInfoUtil
 import com.example.utilsgather.info.DeviceInfoUtil
+import com.example.utilsgather.info.NetworkInfoUtil
 import com.example.utilsgather.info.SniffingAppUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
 import com.example.utilsgather.random.StringRandomUtil
@@ -160,6 +161,9 @@ class MainActivity : CallbackActivity() {
                     LogUtil.d("获取当前手机系统语言: " + DeviceInfoUtil.getDeviceLanguage())
                     LogUtil.d("获得sim卡国家: " + DeviceInfoUtil.getSimCountry(ApplicationGlobal.getInstance()))
                     LogUtil.d("获得国家代码: " + DeviceInfoUtil.getCountryCode())
+                },
+                GuideItemEntity("获得网络信息") {
+                    LogUtil.d("网络连接情况: " + NetworkInfoUtil.getNetType(ApplicationGlobal.getInstance()))
                 },
 
             )
