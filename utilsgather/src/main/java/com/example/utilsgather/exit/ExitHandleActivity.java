@@ -5,7 +5,7 @@ import com.example.utilsgather.lifecycle_callback.CallbackActivity;
 public class ExitHandleActivity extends CallbackActivity {
     @Override
     public void onBackPressed() {
-        if (ExitUtil.handle(this, ExitUtil.Action.SYSTEM_HANDLE)) {
+        if (ExitUtil.handle(this, ExitUtil.Action.SYSTEM_HANDLE, true)) {
             return;
         }
         super.onBackPressed();

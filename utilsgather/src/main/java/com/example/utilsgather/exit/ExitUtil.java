@@ -12,11 +12,14 @@ public enum ExitUtil {
 
     private long lastBackClickTime = 0;
 
-    public static boolean handle(AppCompatActivity activity, Action action) {
+    public static boolean handle(AppCompatActivity activity, Action action, boolean isToast) {
         LogUtil.d("点击了返回键");
 
         if ((System.currentTimeMillis() - INSTANCE.lastBackClickTime) > 2000) {
-            Toast.makeText(activity, "再按一次回到桌面", Toast.LENGTH_SHORT).show();
+            if (isToast) {
+                Toast.makeText(activity, "再按一次退出应用", Toast.LENGTH_SHORT).show();
+            }
+            LogUtil.d("再按一次回到桌面");
             INSTANCE.lastBackClickTime = System.currentTimeMillis();
             return true;
         }

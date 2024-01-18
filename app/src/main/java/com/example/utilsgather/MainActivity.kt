@@ -151,7 +151,7 @@ class MainActivity : CallbackActivity() {
     }
 
     override fun onBackPressed() {
-        if (ExitUtil.handle(this, ExitUtil.Action.SIMULATE_HOME)) {
+        if (ExitUtil.handle(this, ExitUtil.Action.SIMULATE_HOME, true)) {
             return
         }
         super.onBackPressed()
