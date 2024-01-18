@@ -4,11 +4,10 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.KeyEvent
-import android.webkit.WebView
 import com.example.uioperate.UiOperateEntranceActivity
 import com.example.utilsgather.application_store.AppStoreUtil
 import com.example.utilsgather.browser.BrowserUtil
+import com.example.utilsgather.context.ApplicationGlobal
 import com.example.utilsgather.databinding.ActivityMainBinding
 import com.example.utilsgather.encoding.Base64Util
 import com.example.utilsgather.exit.ExitUtil
@@ -18,6 +17,7 @@ import com.example.utilsgather.lifecycle_callback.CallbackActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
+import com.example.utilsgather.package_info.DeviceInfoUtil
 import com.example.utilsgather.package_info.PackageInfoUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
 import com.example.utilsgather.random.StringRandomUtil
@@ -143,6 +143,16 @@ class MainActivity : CallbackActivity() {
                 GuideItemEntity("Base64解码") {
                     val content = "SGVsbG8gSSBhbSBGcm9tIENoaW5hLg==";
                     LogUtil.d("解码后: " + Base64Util.base64Decode(content))
+                },
+
+                GuideItemEntity("获得系统信息") {
+                    LogUtil.d("系统品牌: " + DeviceInfoUtil.getOsType())
+                    LogUtil.d("Android系统版本: " + DeviceInfoUtil.getAndroidOsVersion())
+                    LogUtil.d("是否为鸿蒙系统: " + DeviceInfoUtil.isHarmonyOs())
+                    LogUtil.d("获得鸿蒙系统版本: " + DeviceInfoUtil.getHarmonyOsVersion())
+                    LogUtil.d("获取当前手机系统语言: " + DeviceInfoUtil.getDeviceLanguage())
+                    LogUtil.d("获得sim卡国家: " + DeviceInfoUtil.getSimCountry(ApplicationGlobal.getInstance()))
+                    LogUtil.d("获得国家代码: " + DeviceInfoUtil.getCountryCode())
                 },
 
             )
