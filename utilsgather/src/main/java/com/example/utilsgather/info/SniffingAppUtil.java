@@ -1,6 +1,5 @@
-package com.example.utilsgather.package_info;
+package com.example.utilsgather.info;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -10,7 +9,7 @@ import android.net.Uri;
 import com.example.utilsgather.context.ApplicationGlobal;
 import com.example.utilsgather.logcat.LogUtil;
 
-public class PackageInfoUtil {
+public class SniffingAppUtil {
 
     /**
      * 获取该url是要跳转到哪一个App的（通常这类url都是该app自己定义的，例如：

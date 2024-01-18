@@ -13,17 +13,5 @@ public class VersionCodeUtil {
         return Build.VERSION.SDK_INT >= targetVersion;
     }
 
-    /**
-     * 获得版本号
-     */
-    public static int getPackageVersionCode(Context context) {
-        try {
-            PackageManager manager = context.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-            return info.versionCode;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
+
 }
