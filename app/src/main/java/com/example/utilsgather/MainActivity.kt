@@ -26,6 +26,7 @@ import com.example.utilsgather.random.StringRandomUtil
 import com.example.utilsgather.source_file.assets.AssetsUtil
 import com.example.utilsgather.source_file.raw.SourceUtil
 import com.example.utilsgather.thread.ThreadUtil
+import com.example.utilsgather.ui.immersion.ImmersionUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -166,6 +167,9 @@ class MainActivity : CallbackActivity() {
                     LogUtil.d("网络连接情况: " + NetworkInfoUtil.getNetType(ApplicationGlobal.getInstance()))
                 },
 
+                GuideItemEntity("跳转测试沉浸式的Activity") {
+                    startActivity(Intent(this, TestImmersionActivity::class.java))
+                },
             )
 
         )
