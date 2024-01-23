@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.utilsgather.logcat.LogUtil;
 
 public class CallbackActivity extends AppCompatActivity {
-    private final String canonicalName = getClass().getCanonicalName();
+    protected final String canonicalName = getClass().getCanonicalName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
