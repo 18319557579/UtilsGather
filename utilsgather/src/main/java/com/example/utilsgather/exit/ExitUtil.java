@@ -12,6 +12,16 @@ public enum ExitUtil {
 
     private long lastBackClickTime = 0;
 
+    /**
+     * 连续两次返回才退出应用
+     * @param activity 主Activity，即退出应用前的最后一个Activity
+     * @param action 连续两次返回时的处理行为
+     * @param isToast 是否展示弹窗
+     *
+     * @return 是否进行了处理：
+     * 1.点击距离上次的时间>2000ms，那么进行处理，吞噬掉这次点击
+     * 2.点击距离上次的时间<2000ms，判断行为，如果为SYSTEM_HANDLE，那么不进行处理，交由系统处理；其他的情况，根据用户的选择进行处理
+     */
     public static boolean handle(AppCompatActivity activity, Action action, boolean isToast) {
         LogUtil.d("点击了返回键");
 

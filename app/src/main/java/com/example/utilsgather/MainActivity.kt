@@ -170,6 +170,10 @@ class MainActivity : CallbackActivity() {
                 GuideItemEntity("跳转测试沉浸式的Activity") {
                     startActivity(Intent(this, TestImmersionActivity::class.java))
                 },
+
+                GuideItemEntity("获得当前的线程信息") {
+                    LogUtil.d("当前的线程信息: " + Thread.currentThread().toString())
+                },
             )
 
         )
