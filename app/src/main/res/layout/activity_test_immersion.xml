@@ -4,7 +4,19 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Button
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我就是一些头部的内容Head!!!"/>
+
+    <ListView
+        android:id="@+id/lv_launcher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#DADADA"/>
+
+
+    <!--<Button
         android:id="@+id/btn_hide_virtual_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,8 +31,27 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_set_status_bar_color"
         app:layout_constraintTop_toBottomOf="@+id/btn_hide_virtual_button"
         android:text="设置全屏？"/>
+
+    <Button
+        android:id="@+id/btn_set_status_bar_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_set_screen_full"
+        android:text="设置状态栏颜色"/>
+
+    <Button
+        android:id="@+id/btn_set_status_bar_translucent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_set_status_bar_color"
+        android:text="设置状态栏透明"/>-->
 
 
 

@@ -28,7 +28,6 @@
         <!--android:theme="@style/Theme.Mine.Fullscreen"-->
         <!--android:theme="@android:style/Theme.NoTitleBar.Fullscreen"-->
         <activity android:name=".TestImmersionActivity"
-            android:theme="@style/Theme.Mine.Fullscreen"
             android:exported="false"/>
     </application>
 
