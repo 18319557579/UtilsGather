@@ -103,7 +103,7 @@ class TestImmersionActivity : CallbackActivity() {
                  * 2.状态栏为透明
                  * 3.浅色文字和图标（适用于深色背景），默认
                  */
-                GuideItemEntity("设置状态栏透明（6.0）") {
+                GuideItemEntity("设置状态栏透明（6.0），浅色文字") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         window.decorView.systemUiVisibility =
                             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -118,6 +118,41 @@ class TestImmersionActivity : CallbackActivity() {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         window.decorView.systemUiVisibility = 0; // 移除所有标志
                     }
+
+                },
+
+                /**
+                 * 状态栏不可见，但从顶端往下拉时又会出现，之后不再消失
+                 */
+                GuideItemEntity("让状态栏消失（16）") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        val decorView = window.decorView
+                        val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+                        decorView.systemUiVisibility = uiOptions
+                    }
+                },
+                /**
+                 * 状态栏不可见，但从顶端往下拉时又会出现，之后不再消失
+                 * 导航栏不可见，但从底部往上拉时又会出现，之后不再消失
+                 */
+                GuideItemEntity("让状态栏消失（19）") {
+                    val decorView = window.decorView
+                    val uiOptions = (View.SYSTEM_UI_FLAG_FULLSCREEN
+                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_IMMERSIVE)
+                    decorView.systemUiVisibility = uiOptions
+                },
+
+                /**
+                 * 状态栏不可见，但从顶端往下拉时又会出现，之后会自动消失，可以循环本操作
+                 * 导航栏不可见，但从底部往上拉时又会出现，之后会自动消失，可以循环本操作
+                 */
+                GuideItemEntity("让状态栏消失（19），可以重复出现") {
+                    val decorView = window.decorView
+                    val uiOptions = (View.SYSTEM_UI_FLAG_FULLSCREEN
+                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+                    decorView.systemUiVisibility = uiOptions
 
                 },
             )
