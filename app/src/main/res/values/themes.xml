@@ -22,4 +22,12 @@
 
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
+    <!-- 基于App主题的沉浸式主题 -->
+    <style name="Theme.MyApp.Immersive" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- 对于Android 6.0及以上，深色状态栏图标 -->
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 </resources>

@@ -29,6 +29,10 @@
         <!--android:theme="@android:style/Theme.NoTitleBar.Fullscreen"-->
         <activity android:name=".TestImmersionActivity"
             android:exported="false"/>
+
+        <activity android:name=".StyleImmersionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApp.Immersive"/>
     </application>
 
 </manifest>

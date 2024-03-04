@@ -1,5 +1,6 @@
 package com.example.utilsgather
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -22,6 +23,9 @@ class TestImmersionActivity : CallbackActivity() {
         val listView = findViewById<ListView>(R.id.lv_launcher)
         GuideSettings.set(
             listView, arrayOf<GuideItemEntity>(
+                GuideItemEntity("去StyleImmersionActivity") {
+                    startActivity(Intent(this, StyleImmersionActivity::class.java))
+                },
                 /**
                  * 效果：
                  * ActionBar消失了，附带动画的
