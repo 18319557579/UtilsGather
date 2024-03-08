@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.ListView
+import com.example.utilsgather.kt_room.KtRoomActivity
 import com.example.utilsgather.lifecycle_callback.CallbackActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -26,6 +27,12 @@ class TestImmersionActivity : CallbackActivity() {
                 GuideItemEntity("去StyleImmersionActivity") {
                     startActivity(Intent(this, StyleImmersionActivity::class.java))
                 },
+                GuideItemEntity("去StyleImmersion2Activity") {
+                    startActivity(Intent(this, StyleImmersion2Activity::class.java))
+                },
+                GuideItemEntity("去KtRoomActivity") {
+                    startActivity(Intent(this, KtRoomActivity::class.java))
+                },
                 /**
                  * 效果：
                  * ActionBar消失了，附带动画的
@@ -39,6 +46,11 @@ class TestImmersionActivity : CallbackActivity() {
                 GuideItemEntity("设置全屏？") {
                     ImmersionUtil.screenFull(this)
                 },
+                GuideItemEntity("单独使用FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS") {
+                    this.getWindow()
+                        .addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                },
+
                 GuideItemEntity("设置状态栏颜色") {
                     OtherStatusBarUtil.setColor(this, 0x21303c, 0)
                 },

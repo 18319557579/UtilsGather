@@ -30,4 +30,9 @@
         <!-- 对于Android 6.0及以上，深色状态栏图标 -->
         <item name="android:windowLightStatusBar">false</item>
     </style>
+
+    <style name="Theme.MyApp.Immersive2" parent="Theme.AppCompat.NoActionBar">
+<!--        <item name="android:windowFullscreen">true</item>-->
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+    </style>
 </resources>
