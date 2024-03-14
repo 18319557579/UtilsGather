@@ -8,6 +8,7 @@ import com.example.uioperate.UiOperateEntranceActivity
 import com.example.utilsgather.application_store.AppStoreUtil
 import com.example.utilsgather.browser.BrowserUtil
 import com.example.utilsgather.context.ApplicationGlobal
+import com.example.utilsgather.cutomerview.CustomViewActivity
 import com.example.utilsgather.databinding.ActivityMainBinding
 import com.example.utilsgather.encoding.Base64Util
 import com.example.utilsgather.exit.ExitUtil
@@ -43,6 +44,12 @@ class MainActivity : CallbackActivity() {
         setContentView(mainBinding!!.getRoot())
         GuideSettings.set(
             mainBinding!!.lvLauncher, arrayOf<GuideItemEntity>(
+                GuideItemEntity("跳转测试沉浸式的Activity") {
+                    startActivity(Intent(this, TestImmersionActivity::class.java))
+                },
+                GuideItemEntity("测试自定义View的Activity") {
+                    startActivity(Intent(this, CustomViewActivity::class.java))
+                },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)
                     startActivity(intent)
@@ -167,9 +174,7 @@ class MainActivity : CallbackActivity() {
                     LogUtil.d("网络连接情况: " + NetworkInfoUtil.getNetType(ApplicationGlobal.getInstance()))
                 },
 
-                GuideItemEntity("跳转测试沉浸式的Activity") {
-                    startActivity(Intent(this, TestImmersionActivity::class.java))
-                },
+
 
                 GuideItemEntity("获得当前的线程信息") {
                     LogUtil.d("当前的线程信息: " + Thread.currentThread().toString())

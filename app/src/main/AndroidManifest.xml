@@ -43,6 +43,9 @@
 
         <activity android:name=".kt_room.KtRoomActivity"
             android:exported="false"/>
+
+        <activity android:name=".cutomerview.CustomViewActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>
