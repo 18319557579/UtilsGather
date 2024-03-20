@@ -2,34 +2,45 @@ package com.example.utilsgather.cutomerview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.EmbossMaskFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.utilsgather.R;
+import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsgather.source_file.BitmapGainUtil;
 import com.example.utilsgather.source_file.DrawableGainUtil;
 
+import java.util.Locale;
+
 public class CustomView extends View {
-    Paint paint = new Paint();
+    TextPaint paint = new TextPaint();
     Paint paint2 = new Paint();
     Path path = new Path(); // 初始化 Path 对象
     {
-        paint.setColor(Color.RED); // 设置为红色
+//        paint.setColor(Color.RED); // 设置为红色
 
-        paint.setStyle(Paint.Style.FILL); // Style 修改为画线模式
-        paint.setStrokeWidth(5); // 线条宽度为 20 像素
+//        paint.setStyle(Paint.Style.FILL); // Style 修改为画线模式
+//        paint.setStrokeWidth(5); // 线条宽度为 20 像素
+//
+//        paint.setAntiAlias(true);
 
-        paint.setAntiAlias(true);
+
 
         // 使用 path 对图形进行描述（这段描述代码不必看懂）
 //        path.addArc(200, 200, 400, 400, -225, 225);
@@ -150,7 +161,7 @@ public class CustomView extends View {
 
         canvas.drawPath(path, paint); // 绘制出 path 描述的图形（心形），大功告成*/
 
-        Bitmap bitmap = BitmapGainUtil.getBitmapFromDrawable(this.getContext(), R.drawable.rwx_img);
+        /*Bitmap bitmap = BitmapGainUtil.getBitmapFromDrawable(this.getContext(), R.drawable.rwx_img);
 //        canvas.drawBitmap(bitmap, 200, 100, paint);
 
         // 创建一个 Matrix 对象
@@ -166,7 +177,7 @@ public class CustomView extends View {
 // 设置矩阵的位移，比如向右移动 100 像素，向下移动 200 像素
         matrix.postTranslate(200, 200);
 
-        canvas.drawBitmap(bitmap, matrix, paint);
+        canvas.drawBitmap(bitmap, matrix, paint);*/
 
 
         /*int sideLength = Math.min(bitmap.getWidth(), bitmap.getHeight()) * 2/ 3;
@@ -176,13 +187,16 @@ public class CustomView extends View {
 
         canvas.drawBitmap(bitmap, src, dst, paint);*/
 
-        int sideLength = Math.min(bitmap.getWidth(), bitmap.getHeight()) * 2/ 3;
+        /*int sideLength = Math.min(bitmap.getWidth(), bitmap.getHeight()) * 2/ 3;
         Rect src = new Rect(0, 0, bitmap.getWidth(), bitmap.getWidth());
 
 //        RectF dst = new RectF(300f, 300f, 800f, 500f);
         Rect dst = new Rect(300, 300, 800, 500);
 
-        canvas.drawBitmap(bitmap, src, dst, paint);
+        canvas.drawBitmap(bitmap, src, dst, paint);*/
+
+//        paint.setStyle(Paint.Style.FILL); // FILL 模式，填充
+//        canvas.drawCircle(300, 300, 200, paint);
 
         /*String text = "Hello World!";
         paint.setTextSize(18);
@@ -220,5 +234,217 @@ public class CustomView extends View {
         path.addPath();
 
         path.addArc();*/
+
+        /*paint.setStyle(Paint.Style.STROKE);
+
+        paint.setStrokeCap(Paint.Cap.BUTT);
+
+        paint.setStrokeJoin();
+
+        paint.setStrokeMiter();
+        paint.setDither();
+        paint.setFilterBitmap();
+
+        paint.setPathEffect();
+        paint.setShadowLayer();
+        paint.clearShadowLayer();
+
+        paint.setStrokeWidth(1);
+        canvas.drawCircle(150, 125, 100, paint);
+        paint.setStrokeWidth(5);
+        canvas.drawCircle(400, 125, 100, paint);
+        paint.setStrokeWidth(40);
+        canvas.drawCircle(650, 125, 100, paint);*/
+
+        /*Bitmap bitmap = BitmapGainUtil.getBitmapFromDrawable(this.getContext(), R.drawable.rwx_img);
+        paint.setMaskFilter(new EmbossMaskFilter(new float[]{1, 1, 1}, 0.5f, 8, 3));
+        canvas.drawBitmap(bitmap, 100, 100, paint);
+
+        canvas.drawText("动点智能", 100, 200, paint);
+
+        canvas.drawCircle(150, 250, 100, paint);
+
+        paint.getFillPath();
+        paint.getTextPath();
+        paint.reset();
+        paint.set();
+
+        paint.setFlags();
+        paint.getFlags();*/
+
+
+        /*String text = "a\nbc\ndefghi\njklm\nnopqrst\nuvwx\nyz";
+        paint.setTextSize(100f);
+        canvas.drawText(text, 100, 200, paint);*/
+
+        paint.setTextSize(80f);
+        /*String text1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+//        StaticLayout staticLayout1 = new StaticLayout(text1, paint, 600,
+//                Layout.Alignment.ALIGN_NORMAL, 1, 0, false);
+        StaticLayout staticLayout1 = StaticLayout.Builder.obtain(text1, 0, text1.length(), paint, 600)
+                .build();
+        String text2 = "a\nbc\ndefghi\njklm\nnopqrst\nuvwx\nyz";
+//        StaticLayout staticLayout2 = new StaticLayout(text2, paint, 600,
+//                Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+        StaticLayout staticLayout2 = StaticLayout.Builder.obtain(text2, 0, text2.length(), paint, 600)
+                        .build();
+
+                canvas.save();
+        canvas.translate(50, 100);
+        staticLayout1.draw(canvas);
+        canvas.translate(0, 200);
+        staticLayout2.draw(canvas);
+        canvas.restore();*/
+
+        /*String text = "Hello HenCoder";
+        paint.setFakeBoldText(true);
+//        paint.setStrikeThruText(false);
+//        paint.setUnderlineText(false);
+//        paint.setTextScaleX(-0.1f);
+        canvas.drawText(text, 100, 150, paint);
+
+        paint.setFakeBoldText(false);
+        paint.setStrikeThruText(true);
+        paint.setUnderlineText(true);
+        paint.setTextSkewX(-0.5f);
+        paint.setTextScaleX(1.2f);
+        paint.setLetterSpacing(0.2f);
+        canvas.drawText(text, 100, 230, paint);*/
+
+        /*paint.setFontFeatureSettings("smcp"); // 设置 "small caps"
+        paint.setTextAlign();
+        canvas.drawText("Hello HenCoder", 100, 150, paint);*/
+
+//        String text = "雨骨底条今直沿微雨";
+
+        /*paint.setTextLocale(Locale.CHINA); // 简体中文
+        canvas.drawText(text, 150, 150, paint);
+//        paint.setTextLocale(Locale.TAIWAN); // 繁体中文
+//        canvas.drawText(text, 150, 150 + paint.getFontSpacing(), paint);
+//        paint.setTextLocale(Locale.JAPAN); // 日语
+//        canvas.drawText(text, 150, 150 + paint.getFontSpacing() * 2, paint);
+
+        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        LogUtil.d(String.format("ascent %s, descent %s, top %s, bottom %s, leading %S",
+                fontMetrics.ascent, fontMetrics.descent, fontMetrics.top, fontMetrics.bottom, fontMetrics.leading));
+        LogUtil.d("计算的 font spacing: " + (fontMetrics.bottom - fontMetrics.top + fontMetrics.leading));
+        LogUtil.d("paint.getFontSpacing(): " + paint.getFontSpacing());
+
+        paint.setTextLocale(Locale.CHINA); // 简体中文
+        canvas.drawText(text, 150, 150, paint);
+        paint.setTextLocale(Locale.TAIWAN); // 繁体中文
+        canvas.drawText(text, 150, 150 + (fontMetrics.bottom - fontMetrics.top + fontMetrics.leading), paint);
+        paint.setTextLocale(Locale.JAPAN); // 日语
+        canvas.drawText(text, 150, 150 + paint.getFontSpacing() * 2, paint);
+
+
+
+        LogUtil.d(String.format("ascent %s, descent %s, top %s, bottom %s, leading %S",
+                fontMetrics.ascent, fontMetrics.descent, fontMetrics.top, fontMetrics.bottom, fontMetrics.leading));
+
+
+        Paint.FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
+        LogUtil.d(String.format("int类型： ascent %s, descent %s, top %s, bottom %s, leading %S",
+                fontMetricsInt.ascent, fontMetricsInt.descent, fontMetricsInt.top, fontMetricsInt.bottom, fontMetricsInt.leading));
+
+        Paint.FontMetrics storeFontMetrics = new Paint.FontMetrics();
+        float interlineSpacing = paint.getFontMetrics(storeFontMetrics);
+        LogUtil.d(String.format("存储的： ascent %s, descent %s, top %s, bottom %s, leading %S, interlineSpacing %s",
+                storeFontMetrics.ascent, storeFontMetrics.descent, storeFontMetrics.top, storeFontMetrics.bottom, storeFontMetrics.leading, interlineSpacing));*/
+
+        float offsetX = 100f;
+        float offsetY = 200f;
+        Rect bounds = new Rect();
+
+//        String text = "Hello123中国";
+        /*paint.setStyle(Paint.Style.FILL);
+
+
+        paint.getTextBounds(text, 0, text.length(), bounds);
+        bounds.left += offsetX;
+        bounds.top += offsetY;
+        bounds.right += offsetX;
+        bounds.bottom += offsetY;
+
+
+        canvas.drawText(text, offsetX, offsetY, paint);
+
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawRect(bounds, paint);*/
+
+        /*canvas.drawText(text, offsetX, offsetY, paint);
+        float textWidth = paint.measureText(text);
+        canvas.drawLine(offsetX, offsetY, offsetX + textWidth, offsetY, paint);
+
+        LogUtil.d("占用宽度: " + textWidth);
+
+        float[] widths = new float[text.length()];
+        int unit = paint.getTextWidths(text, widths);
+
+        float allWidth = 0;
+        for (float width : widths) {
+            allWidth += width;
+            LogUtil.d("各个字符宽度: " + allWidth);
+        }
+        LogUtil.d("加起来占用的宽度: " + allWidth + ", 单元数: " + unit);*/
+
+        /*int measuredCount;
+        float[] measuredWidth = {0};
+        float fontSpacing = paint.getFontSpacing();
+// 宽度上限 300 （不够用，截断）
+        measuredCount = paint.breakText(text, 0, text.length(), true, 300, measuredWidth);
+        canvas.drawText(text, 0, measuredCount, 150, 150, paint);
+
+// 宽度上限 400 （不够用，截断）
+        measuredCount = paint.breakText(text, 0, text.length(), true, 400, measuredWidth);
+        canvas.drawText(text, 0, measuredCount, 150, 150 + fontSpacing, paint);
+
+// 宽度上限 500 （够用）
+        measuredCount = paint.breakText(text, 0, text.length(), true, 500, measuredWidth);
+        canvas.drawText(text, 0, measuredCount, 150, 150 + fontSpacing * 2, paint);
+
+// 宽度上限 600 （够用）
+        measuredCount = paint.breakText(text, 0, text.length(), true, 600, measuredWidth);
+        canvas.drawText(text, 0, measuredCount, 150, 150 + fontSpacing * 3, paint);*/
+
+        /*int length = text.length();
+        float advance = paint.getRunAdvance(text, 0, length, 0, length, false, length);
+        canvas.drawText(text, offsetX, offsetY, paint);
+        canvas.drawLine(offsetX + advance, offsetY - 50, offsetX + advance, offsetY + 10, paint);*/
+
+        String text = "Hello HenCoder \uD83C\uDDE8\uD83C\uDDF3"; // "Hello HenCoder 🇨🇳"
+        canvas.drawText(text, offsetX, offsetY, paint);
+
+        float advance = paint.getRunAdvance(text, 0, text.length(), 0, text.length(), false, text.length() - 4);
+        LogUtil.d("获得运行进展: " + advance);
+
+        paint.setStrokeWidth(3);
+        paint.setColor(Color.BLUE);
+//        canvas.drawLine(offsetX + advance, offsetY + paint.ascent(), offsetX + advance, offsetY + paint.descent(), paint);
+
+        float[] widths = new float[text.length()];
+        float allWidth = 0;
+        paint.getTextWidths(text, widths);
+        for (int i = 0; i < text.length() - 4; i++) {
+            allWidth += widths[i];
+        }
+        LogUtil.d("获得指定字符宽度: " + allWidth);
+        canvas.drawLine(offsetX + allWidth, offsetY + paint.ascent(), offsetX + allWidth, offsetY + paint.descent(), paint);
+
+//        paint.getOffsetForAdvance()
+//        paint.hasGlyph()
+
+        LogUtil.d("是否支持该字型: " + paint.hasGlyph("a"));
+        LogUtil.d("是否支持该字型: " + paint.hasGlyph("aa"));
+        LogUtil.d("是否支持该字型: " + paint.hasGlyph("ab"));
+        LogUtil.d("是否支持该字型: " + paint.hasGlyph("✓"));
+        LogUtil.d("是否支持该字型: " + paint.hasGlyph("✓a"));
+        LogUtil.d("是否支持该字型: " + paint.hasGlyph("\uD83C\uDDE8\uD83C\uDDF3"));
+        LogUtil.d("是否支持该字型: " + paint.hasGlyph("\uD83C\uDDE8\uD83C"));
+
+        LogUtil.d("是否支持该字型: " + paint.hasGlyph("1"));
+        LogUtil.d("是否支持该字型: " + paint.hasGlyph("中"));
+        LogUtil.d("是否支持该字型: " + paint.hasGlyph("中国"));
+
     }
 }
