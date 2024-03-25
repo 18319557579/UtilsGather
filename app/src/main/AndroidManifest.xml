@@ -51,6 +51,12 @@
         <activity android:name=".cutomerview.CustomView3Activity"
             android:exported="false"/>
 
+        <activity android:name=".cutomerview.CustomView1_4Activity"
+            android:exported="false"/>
+        <activity android:name=".cutomerview.one_five.CustomView1_5Activity"
+            android:exported="false"/>
+
+
     </application>
 
 </manifest>

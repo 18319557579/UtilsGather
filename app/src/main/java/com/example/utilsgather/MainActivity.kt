@@ -8,9 +8,11 @@ import com.example.uioperate.UiOperateEntranceActivity
 import com.example.utilsgather.application_store.AppStoreUtil
 import com.example.utilsgather.browser.BrowserUtil
 import com.example.utilsgather.context.ApplicationGlobal
+import com.example.utilsgather.cutomerview.CustomView1_4Activity
 import com.example.utilsgather.cutomerview.CustomView2Activity
 import com.example.utilsgather.cutomerview.CustomView3Activity
 import com.example.utilsgather.cutomerview.CustomViewActivity
+import com.example.utilsgather.cutomerview.one_five.CustomView1_5Activity
 import com.example.utilsgather.databinding.ActivityMainBinding
 import com.example.utilsgather.encoding.Base64Util
 import com.example.utilsgather.exit.ExitUtil
@@ -57,6 +59,12 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("测试自定义View的Activity3") {
                     startActivity(Intent(this, CustomView3Activity::class.java))
+                },
+                GuideItemEntity("测试自定义View的Activity1-4") {
+                    startActivity(Intent(this, CustomView1_4Activity::class.java))
+                },
+                GuideItemEntity("测试自定义View的Activity1-5") {
+                    startActivity(Intent(this, CustomView1_5Activity::class.java))
                 },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)
