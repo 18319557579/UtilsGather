@@ -13,6 +13,7 @@ import com.example.utilsgather.cutomerview.CustomView2Activity
 import com.example.utilsgather.cutomerview.CustomView3Activity
 import com.example.utilsgather.cutomerview.CustomViewActivity
 import com.example.utilsgather.cutomerview.one_five.CustomView1_5Activity
+import com.example.utilsgather.cutomerview.one_six.CustomView1_6Activity
 import com.example.utilsgather.databinding.ActivityMainBinding
 import com.example.utilsgather.encoding.Base64Util
 import com.example.utilsgather.exit.ExitUtil
@@ -65,6 +66,9 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("测试自定义View的Activity1-5") {
                     startActivity(Intent(this, CustomView1_5Activity::class.java))
+                },
+                GuideItemEntity("测试自定义View的Activity1-6") {
+                    startActivity(Intent(this, CustomView1_6Activity::class.java))
                 },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)

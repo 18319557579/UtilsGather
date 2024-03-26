@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请点击"/>
+
+    <Button
+        android:id="@+id/btn_click1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请点击1"
+        android:layout_toRightOf="@id/btn_click"/>
+
+    <Button
+        android:id="@+id/btn_click_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        android:layout_toRightOf="@id/btn_click1"/>
+
+    <Button
+        android:id="@+id/btn_click_cancel1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消1"
+        android:layout_toRightOf="@id/btn_click_cancel"/>
+    <Button
+        android:id="@+id/btn_click_resume1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="继续1"
+        android:layout_below="@id/btn_click"/>
+    <Button
+        android:id="@+id/btn_click_pause1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="暂停1"
+        android:layout_toRightOf="@id/btn_click_resume1"
+        android:layout_alignTop="@id/btn_click_resume1"/>
+
+
+
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#FF6347"/>
+
+    <ImageView
+        android:id="@+id/iv_rwx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/rwx_img"
+        android:layout_below="@id/btn_click"
+        android:layout_marginLeft="100dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我在上面"
+        android:layout_below="@id/btn_click"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_below="@id/view_bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我能展示"/>
+
+        <com.example.utilsgather.cutomerview.one_six.SportsView
+            android:id="@+id/sports_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
