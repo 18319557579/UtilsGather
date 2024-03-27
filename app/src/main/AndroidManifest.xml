@@ -57,6 +57,8 @@
             android:exported="false"/>
         <activity android:name=".cutomerview.one_six.CustomView1_6Activity"
             android:exported="false"/>
+        <activity android:name=".cutomerview.one_seven.CustomView1_7Activity"
+            android:exported="false"/>
 
 
 
