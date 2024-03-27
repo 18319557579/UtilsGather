@@ -1,7 +1,10 @@
 package com.example.utilsgather.cutomerview.one_six;
 
 import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.graphics.Path;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.view.ViewPropertyAnimator;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.PathInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +21,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
 
 import com.example.utilsgather.R;
 import com.example.utilsgather.logcat.LogUtil;
@@ -85,9 +90,39 @@ public class CustomView1_6Activity extends AppCompatActivity {
         btnClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPropertyAnimator.translationXBy(200)
-                        .setInterpolator(new PathInterpolator(interpolatorPath))
-                        .setDuration(5000);
+                /*viewPropertyAnimator.scaleX(0.5f)
+                        .scaleY(0.5f)
+                        .alpha(0.5f);*/
+
+                /*PropertyValuesHolder holder1 = PropertyValuesHolder.ofFloat("scaleX", 0.2f);
+                PropertyValuesHolder holder2 = PropertyValuesHolder.ofFloat("scaleY", 0.2f);
+                PropertyValuesHolder holder3 = PropertyValuesHolder.ofFloat("alpha", 0.2f);
+                ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(ivRwx, holder1, holder2, holder3);
+                animator.setInterpolator(new FastOutLinearInInterpolator());
+                animator.start();*/
+
+                /*ObjectAnimator animator1 = ObjectAnimator.ofFloat(ivRwx, "scaleX", 0.2f);
+                animator1.setInterpolator(new LinearInterpolator());
+                ObjectAnimator animator2 = ObjectAnimator.ofFloat(ivRwx, "alpha", 0.2f);
+                animator2.setInterpolator(new DecelerateInterpolator());
+                AnimatorSet animatorSet = new AnimatorSet();
+                // 两个动画依次执行
+//                animatorSet.playSequentially(animator1, animator2);
+//                animatorSet.playTogether(animator1, animator2);
+//                animatorSet.play(animator1).with(animator2);
+//                animatorSet.play(animator1).before(animator2);
+                animatorSet.play(animator1).after(animator2);
+                animatorSet.start();*/
+
+                // 在 0% 处开始
+                Keyframe keyframe1 = Keyframe.ofFloat(0, 0);
+                // 时间经过 50% 的时候，动画完成度 100%
+                Keyframe keyframe2 = Keyframe.ofFloat(0.5f, 300);
+                // 时间见过 100% 的时候，动画完成度倒退到 80%，即反弹 20%
+                Keyframe keyframe3 = Keyframe.ofFloat(1, 100);
+                PropertyValuesHolder holder = PropertyValuesHolder.ofKeyframe("translationX", keyframe1, keyframe2, keyframe3);
+                ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(ivRwx, holder);
+                animator.start();
             }
         });
         btnClickCancel.setOnClickListener(new View.OnClickListener() {
