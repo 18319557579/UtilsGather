@@ -1,10 +1,12 @@
 package com.example.utilsgather.cutomerview.flow;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.utilsgather.R;
 import com.example.utilsgather.logcat.LogUtil;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class FlowLayout extends ViewGroup {
 
     private List<List<View>> mAllView = new ArrayList<>();  //每一个元素
     private List<Integer> mLineHeight = new ArrayList<>();  //每一行的行高
+    private int mMaxLines;
 
     public FlowLayout(Context context) {
         super(context);
@@ -21,6 +24,16 @@ public class FlowLayout extends ViewGroup {
 
     public FlowLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.FlowLayout);
+        mMaxLines = a.getInt(R.styleable.FlowLayout_maxLines, Integer.MAX_VALUE);
+
+//        int[] ml = new int[]{android.R.attr.maxLines};
+//        TypedArray a = context.obtainStyledAttributes(attrs, ml);
+//        mMaxLines = a.getInt(0, Integer.MAX_VALUE);
+
+        a.recycle();
+        LogUtil.d("maxLines = " + mMaxLines);
     }
 
     /**
@@ -75,7 +88,7 @@ public class FlowLayout extends ViewGroup {
             int cWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
             int cHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
 
-            if (lineWidth + cWidth > sizeWidth) {  //换行处理
+            if (lineWidth + cWidth > sizeWidth - getPaddingLeft() - getPaddingRight()) {  //换行处理
                 height += lineHeight;  //发生了换行，那么总高度累加上上一行的高度
 
                 mLineHeight.add(lineHeight);  //将上一行的高度依次存入mLineHeight List中，这样就能得到每一行的高度了
@@ -102,12 +115,25 @@ public class FlowLayout extends ViewGroup {
             }
         }
 
+        //todo 前移优化
+        if (mMaxLines < mLineHeight.size()) {
+            height = getMaxLinesHeight();
+        }
+
         //如果为确切值，那么就白算了。todo 可以前移优化
         if (modeHeight == MeasureSpec.EXACTLY) {
             height = sizeHeight;
         } else if (modeHeight == MeasureSpec.AT_MOST){  //如果有上限，那么不能超过上限
             height = Math.min(sizeHeight, height);
-        }  //如果无限制，那么就用height
+            height += getPaddingTop() + getPaddingBottom();
+
+            //todo 上面这两行代码应该调换顺序，改为下面的，因为父ViewGroup给的上限，你不应该突破它，但是上面却加了padding
+//            height += getPaddingTop() + getPaddingBottom();
+//            height = Math.min(sizeHeight, height);
+
+        } else if (modeHeight == MeasureSpec.UNSPECIFIED) {//如果无限制，那么就用height
+            height += getPaddingTop() + getPaddingBottom();
+        }
 
         setMeasuredDimension(sizeWidth, height);
     }
@@ -116,8 +142,8 @@ public class FlowLayout extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         LogUtil.d("FlowLayout的onLayout()回调");
 
-        int left = 0;
-        int top = 0;
+        int left = getPaddingLeft();
+        int top = getPaddingTop();
 
         int lineNums = mAllView.size();  //总行数
         for (int i = 0; i < lineNums; i++) {
@@ -140,9 +166,17 @@ public class FlowLayout extends ViewGroup {
                 left += child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
             }
 
-            left = 0;
+            left = getPaddingLeft();
             top += lineHeight;
         }
+    }
+
+    private int getMaxLinesHeight() {
+        int height = 0;
+        for (int i = 0; i < mMaxLines; i++) {
+            height += mLineHeight.get(i);
+        }
+        return height;
     }
 
     //动态添加View到FlowLayout中时（addView），没有设置LayoutParams，就使用这个默认的LayoutParams
