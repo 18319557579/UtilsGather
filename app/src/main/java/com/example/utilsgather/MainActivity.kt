@@ -12,6 +12,7 @@ import com.example.utilsgather.cutomerview.CustomView1_4Activity
 import com.example.utilsgather.cutomerview.CustomView2Activity
 import com.example.utilsgather.cutomerview.CustomView3Activity
 import com.example.utilsgather.cutomerview.CustomViewActivity
+import com.example.utilsgather.cutomerview.flow.FlowLayoutActivity
 import com.example.utilsgather.cutomerview.one_five.CustomView1_5Activity
 import com.example.utilsgather.cutomerview.one_seven.CustomView1_7Activity
 import com.example.utilsgather.cutomerview.one_six.CustomView1_6Activity
@@ -73,6 +74,9 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("测试自定义View的Activity1-7") {
                     startActivity(Intent(this, CustomView1_7Activity::class.java))
+                },
+                GuideItemEntity("测试自定义View的FlowActivity") {
+                    startActivity(Intent(this, FlowLayoutActivity::class.java))
                 },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)

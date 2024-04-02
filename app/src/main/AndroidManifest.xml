@@ -60,7 +60,8 @@
         <activity android:name=".cutomerview.one_seven.CustomView1_7Activity"
             android:exported="false"/>
 
-
+        <activity android:name=".cutomerview.flow.FlowLayoutActivity"
+            android:exported="false"/>
 
     </application>
 
