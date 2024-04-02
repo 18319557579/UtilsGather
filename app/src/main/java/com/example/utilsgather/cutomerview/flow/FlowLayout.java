@@ -60,64 +60,67 @@ public class FlowLayout extends ViewGroup {
         int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
         int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
 
-        int lineWidth = 0;  //目前行宽（当前行所有元素的累加宽度）
-        int lineHeight = 0;  //当前行高，取决于当前行中最高的元素
         int height = 0;  //总高度
 
-        // widthMeasureSpec
-        int cCount = getChildCount();
+        if (mMaxLines > 0) {
+            int lineWidth = 0;  //目前行宽（当前行所有元素的累加宽度）
+            int lineHeight = 0;  //当前行高，取决于当前行中最高的元素
 
-        List<View> lineViews = new ArrayList<>();  //保存当前行的元素
+            // widthMeasureSpec
+            int cCount = getChildCount();
 
-        for (int i = 0; i < cCount; i++) {
-            View child = getChildAt(i);
+            List<View> lineViews = new ArrayList<>();  //保存当前行的元素
 
-            if (child.getVisibility() == View.GONE) {
-                continue;
+            for (int i = 0; i < cCount; i++) {
+                View child = getChildAt(i);
+
+                if (child.getVisibility() == View.GONE) {
+                    continue;
+                }
+
+                //child也要确定宽高（建议尺寸 + mode）
+                //取决于：
+                //1.子控件在xml里面写30dp，match_parent，wrap_content
+                //2.父控件当前的mode + 建议尺寸MeasureSpec
+                measureChild(child, widthMeasureSpec, heightMeasureSpec);
+
+                MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
+
+                //子控件所占的空间包括margin
+                int cWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
+                int cHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
+
+                if (lineWidth + cWidth > sizeWidth - getPaddingLeft() - getPaddingRight()) {  //换行处理
+                    //换行后，处理换行之前的数据
+                    height += lineHeight;  //发生了换行，那么总高度累加上上一行的高度
+                    mLineHeight.add(lineHeight);  //将上一行的高度依次存入mLineHeight List中，这样就能得到每一行的高度了
+                    mAllView.add(lineViews);  //换行的时候，将上一行的view添加到mAllView中去
+
+                    //如果行数已经达到了最大，那么结束遍历
+                    if (mLineHeight.size() >= mMaxLines) {
+                        break;
+                    }
+
+                    //重置
+                    lineViews = new ArrayList<>();
+                    lineViews.add(child);
+
+                    lineWidth = cWidth;  //如果发生了换行，那么当前行宽就等于最新这个元素的cWidth
+                    lineHeight = cHeight;  //如果发生了换行，那么当前行高等于最新这个元素的高度
+
+                } else {
+                    lineWidth += cWidth;  //如果没发生换行，那么累加本行宽
+                    lineHeight = Math.max(lineHeight, cHeight);
+
+                    lineViews.add(child);
+                }
+
+                if (i == cCount - 1) {
+                    height += lineHeight;  //如果遍历结束了，那么代表现在在最后一行了，height的高度是未包括最后一行的，所以要加上
+                    mLineHeight.add(lineHeight);
+                    mAllView.add(lineViews);
+                }
             }
-
-            //child也要确定宽高（建议尺寸 + mode）
-            //取决于：
-            //1.子控件在xml里面写30dp，match_parent，wrap_content
-            //2.父控件当前的mode + 建议尺寸MeasureSpec
-            measureChild(child, widthMeasureSpec, heightMeasureSpec);
-
-            MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
-
-            //子控件所占的空间包括margin
-            int cWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
-            int cHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
-
-            if (lineWidth + cWidth > sizeWidth - getPaddingLeft() - getPaddingRight()) {  //换行处理
-                height += lineHeight;  //发生了换行，那么总高度累加上上一行的高度
-
-                mLineHeight.add(lineHeight);  //将上一行的高度依次存入mLineHeight List中，这样就能得到每一行的高度了
-                mAllView.add(lineViews);  //换行的时候，将上一行的view添加到mAllView中去
-
-                //重置
-                lineViews = new ArrayList<>();
-                lineViews.add(child);
-
-                lineWidth = cWidth;  //如果发生了换行，那么当前行宽就等于最新这个元素的cWidth
-                lineHeight = cHeight;  //如果发生了换行，那么当前行高等于最新这个元素的高度
-
-            } else {
-                lineWidth += cWidth;  //如果没发生换行，那么累加本行宽
-                lineHeight = Math.max(lineHeight, cHeight);
-
-                lineViews.add(child);
-            }
-
-            if (i == cCount - 1) {
-                height += lineHeight;  //如果遍历结束了，那么代表现在在最后一行了，height的高度是未包括最后一行的，所以要加上
-                mLineHeight.add(lineHeight);
-                mAllView.add(lineViews);
-            }
-        }
-
-        //todo 前移优化
-        if (mMaxLines < mLineHeight.size()) {
-            height = getMaxLinesHeight();
         }
 
         //如果为确切值，那么就白算了。todo 可以前移优化
@@ -166,14 +169,6 @@ public class FlowLayout extends ViewGroup {
             left = getPaddingLeft();
             top += lineHeight;
         }
-    }
-
-    private int getMaxLinesHeight() {
-        int height = 0;
-        for (int i = 0; i < mMaxLines; i++) {
-            height += mLineHeight.get(i);
-        }
-        return height;
     }
 
     //动态添加View到FlowLayout中时（addView），没有设置LayoutParams，就使用这个默认的LayoutParams
