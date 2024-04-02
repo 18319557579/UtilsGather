@@ -123,13 +123,10 @@ public class FlowLayout extends ViewGroup {
         //如果为确切值，那么就白算了。todo 可以前移优化
         if (modeHeight == MeasureSpec.EXACTLY) {
             height = sizeHeight;
-        } else if (modeHeight == MeasureSpec.AT_MOST){  //如果有上限，那么不能超过上限
-            height = Math.min(sizeHeight, height);
-            height += getPaddingTop() + getPaddingBottom();
 
-            //todo 上面这两行代码应该调换顺序，改为下面的，因为父ViewGroup给的上限，你不应该突破它，但是上面却加了padding
-//            height += getPaddingTop() + getPaddingBottom();
-//            height = Math.min(sizeHeight, height);
+        } else if (modeHeight == MeasureSpec.AT_MOST){  //如果有上限，那么不能超过上限
+            height += getPaddingTop() + getPaddingBottom();
+            height = Math.min(sizeHeight, height);
 
         } else if (modeHeight == MeasureSpec.UNSPECIFIED) {//如果无限制，那么就用height
             height += getPaddingTop() + getPaddingBottom();
