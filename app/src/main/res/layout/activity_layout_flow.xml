@@ -14,87 +14,45 @@
         android:background="#44ff0000"
         android:id="@+id/flowlayout"
         app:maxLines="30"
-        android:padding="20dp">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="001"
-            android:layout_marginRight="8dp"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00100"
-            android:layout_marginRight="8dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0010"
-            android:layout_marginRight="8dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0010000"
-            android:layout_marginRight="8dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00100000000000000000000000000000000000000000"
-            android:layout_marginRight="8dp"/>
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00100"
             android:layout_marginRight="8dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="001"
-            android:layout_marginRight="8dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0010"
-            android:layout_marginRight="8dp"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="001"
-            android:layout_marginRight="8dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="001000000000000000000000"
-            android:layout_marginRight="8dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="001"
-            android:layout_marginRight="8dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="001000"
-            android:layout_marginRight="8dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00100"
-            android:layout_marginRight="8dp"/>
-
-
-
 
     </com.example.utilsgather.cutomerview.flow.FlowLayout>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="addTag: new Button，无LayoutParams"
+        android:onClick="addTag3"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="addTag: new Button，ViewGroup.MarginLayoutParams"
+        android:onClick="addTag4"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="addTag: new Button，ViewGroup.LayoutParams"
+        android:onClick="addTag2"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="addTag: 使用了inflate()"
+        android:onClick="addTag"/>
+
+
 
 </LinearLayout>

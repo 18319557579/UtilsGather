@@ -182,24 +182,28 @@ public class FlowLayout extends ViewGroup {
     //动态添加View到FlowLayout中时（addView），没有设置LayoutParams，就使用这个默认的LayoutParams
     @Override
     protected LayoutParams generateDefaultLayoutParams() {
+        LogUtil.d("回调 generateDefaultLayoutParams()");
         return new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     }
 
     //inflater 1.activity中setContentView() 2.Inflater加载
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
+        LogUtil.d("回调 generateLayoutParams() AttributeSet: " + attrs);
         return new MarginLayoutParams(getContext(), attrs);
     }
 
-    //在该方法中做一些转换（不能强转）
+    //当checkLayoutParams()返回false时，会调用该方法。在该方法中做一些转换（不能强转）
     @Override
     protected LayoutParams generateLayoutParams(LayoutParams p) {
+        LogUtil.d("回调 generateLayoutParams() LayoutParams: " + p);
         return new MarginLayoutParams(p);
     }
 
     //要确保这个LayoutParams p你能用才返回true；不能直接使用就返回false，这样就会将该LayoutParams传入上面这个方法
     @Override
     protected boolean checkLayoutParams(LayoutParams p) {
+        LogUtil.d("回调 checkLayoutParams(): " + p + ", 结果：" + (p instanceof MarginLayoutParams));
         return p instanceof MarginLayoutParams;
     }
 }
