@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="#44ff0000"
         android:id="@+id/flowlayout"
-        app:maxLines="30"
+        app:maxLines="10"
 
         android:paddingBottom="8dp"
         android:paddingLeft="8dp">
@@ -23,6 +23,13 @@
             android:layout_height="wrap_content"
             android:text="00100"
             android:layout_marginRight="8dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0010000100"
+            android:layout_marginRight="8dp"/>
+
 
     </com.example.utilsgather.cutomerview.flow.FlowLayout>
 
