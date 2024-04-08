@@ -178,7 +178,7 @@ public class FlowLayout extends ViewGroup {
         return new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     }
 
-    //inflater 1.activity的setContentView()时，xml中加载子空间到ViewGroup 2.Inflater加载
+    //inflater 1.activity的setContentView()时，xml中加载子控件到FlowLayout 2.Inflater加载
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         LogUtil.d("回调 generateLayoutParams() AttributeSet: " + attrs);

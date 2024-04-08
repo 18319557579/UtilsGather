@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--ViewGroup 设置了 padding 时，默认不允许子元素在 padding 区域绘制-->
     <com.example.utilsgather.cutomerview.flow_optimize.OptimizedFlowLayout
         android:background="#44ff0000"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
         <TextView
             android:text="Android"
@@ -21,7 +23,9 @@
 
         <TextView
             android:text="Java"
-            style="@style/ItemStyle" />
+            style="@style/ItemStyle"
+
+            android:layout_margin="16dp"/>
 
         <TextView
             android:text="Custom View"
