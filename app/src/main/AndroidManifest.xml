@@ -63,6 +63,10 @@
         <activity android:name=".cutomerview.flow.FlowLayoutActivity"
             android:exported="false"/>
 
+        <activity android:name=".cutomerview.flow_optimize.OptimizedFlowLayoutActivity"
+            android:exported="false"/>
+
+
     </application>
 
 </manifest>
