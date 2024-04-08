@@ -27,10 +27,20 @@ class OptimizedFlowLayout @JvmOverloads constructor(
             LogUtil.d("lineVerticalGravity set()被调用")
         }
 
+    //限制显示行数
     var maxLines: Int = Int.MAX_VALUE
         set(value) {
             field = value
             requestLayout()
+            LogUtil.d("maxLines set()被调用: $maxLines")
+        }
+
+    //限制显示个数
+    var maxCount: Int = Int.MAX_VALUE
+        set(value) {
+            field = value
+            requestLayout()
+            LogUtil.d("maxCount set()被调用 $maxCount")
         }
 
 
@@ -47,10 +57,12 @@ class OptimizedFlowLayout @JvmOverloads constructor(
         val ta = context.obtainStyledAttributes(attrs, R.styleable.OptimizedFlowLayout)
         lineVerticalGravity = ta.getInt(R.styleable.OptimizedFlowLayout_flowlayout_line_vertical_gravity, LINE_VERTICAL_GRAVITY_CENTER_VERTICAL)
         maxLines = ta.getInt(R.styleable.OptimizedFlowLayout_android_maxLines, Int.MAX_VALUE)
+        maxCount = ta.getInt(R.styleable.OptimizedFlowLayout_maxCount, Int.MAX_VALUE)
         ta.recycle()
 
         LogUtil.d("垂直位置: $lineVerticalGravity")
         LogUtil.d("最大行数: $maxLines")
+        LogUtil.d("最大个数: $maxCount")
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -73,12 +85,14 @@ class OptimizedFlowLayout @JvmOverloads constructor(
         val childCount = childCount
         var lineViews = ArrayList<View>()
         var lineCount = 0
+        var measuredChildCount = 0
 
         for (i in 0 until childCount) {
             val child = getChildAt(i)
             if (child.visibility == View.GONE)
                 continue
 
+            measuredChildCount++
             measureChild(child, widthMeasureSpec, heightMeasureSpec)
             val childMeasuredWidth = child.measuredWidth
             val childMeasuredHeight = child.measuredHeight
@@ -115,8 +129,10 @@ class OptimizedFlowLayout @JvmOverloads constructor(
                 lineViews = ArrayList<View>()
                 lineViews.add(child)
             }
-            if (i == childCount - 1) {
-                // 如果当前行数等于最大行数，就结束遍历子元素
+
+            //如果是最后一个元素，那么本行必定是最后一行，那么要将本行的行高和元素都累加到成员变量中
+            if (i == childCount - 1 || measuredChildCount == maxCount) {
+                // 这里只是为了解决 maxLines 为0的情况
                 // （因为在onLayout()中能用到的就lineHeights和allLineViews，所以控制这两位位置break即可）
                 if (lineCount == maxLines) {
                     break
@@ -127,6 +143,9 @@ class OptimizedFlowLayout @JvmOverloads constructor(
                 totalHeight += lineHeight + if (lineCount == 1) 0 else itemVerticalSpacing
                 lineHeights.add(lineHeight)
                 allLineViews.add(lineViews)
+
+                if (measuredChildCount == maxCount)
+                    break
             }
         }
 
@@ -140,6 +159,9 @@ class OptimizedFlowLayout @JvmOverloads constructor(
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         LogUtil.d("OptimizedFlowLayout onLayout()回调");
+        val itemCount = allLineViews.sumOf { it.size }  //统计出一个要layout多少个元素
+        LogUtil.d("onLayout: itemCount=$itemCount, childCount=$childCount")
+
         val lineCount = allLineViews.size
         var childLeft = paddingLeft
         var childTop = paddingTop
@@ -162,6 +184,17 @@ class OptimizedFlowLayout @JvmOverloads constructor(
             childTop += lineHeight + itemVerticalSpacing
             //遍历完一行后，下一行的第一个元素还是在0的位置开始布局
             childLeft = paddingLeft
+        }
+
+
+        val childCount = childCount
+        //重新布局itemCount之后的元素，防止还显示在屏幕上
+        for (i in itemCount until childCount) {
+            val child = getChildAt(i)
+            if (child.visibility == View.GONE) {
+                continue
+            }
+            child.layout(0, 0, 0, 0)
         }
     }
 

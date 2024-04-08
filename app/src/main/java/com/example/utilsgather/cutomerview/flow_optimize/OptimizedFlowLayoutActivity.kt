@@ -57,6 +57,7 @@ class OptimizedFlowLayoutActivity : AppCompatActivity() {
                 ofl.lineVerticalGravity = OptimizedFlowLayout.LINE_VERTICAL_GRAVITY_BOTTOM
             }
 
+            //限制显示行数
             R.id.action_maxlines_0 -> {
                 ofl.maxLines = 0
             }
@@ -68,6 +69,20 @@ class OptimizedFlowLayoutActivity : AppCompatActivity() {
             }
             R.id.action_maxlines_maxCount_no_limit -> {
                 ofl.maxLines = Int.MAX_VALUE
+            }
+
+            //限制显示个数
+            R.id.action_maxCount_0 -> {
+                ofl.maxCount = 0
+            }
+            R.id.action_maxCount_3 -> {
+                ofl.maxCount = 3
+            }
+            R.id.action_maxCount_6 -> {
+                ofl.maxCount = 6
+            }
+            R.id.action_maxlines_maxCount_no_limit -> {
+                ofl.maxCount = Int.MAX_VALUE
             }
         }
         return true

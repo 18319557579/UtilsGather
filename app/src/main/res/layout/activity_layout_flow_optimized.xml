@@ -14,8 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        app:flowlayout_line_vertical_gravity="top"
-        android:maxLines="3">
+        app:flowlayout_line_vertical_gravity="top">
 
         <TextView
             android:text="Android"

@@ -40,5 +40,23 @@
         android:title="最多显示不限制"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/action_maxCount_0"
+        android:title="限制最多0个"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_maxCount_3"
+        android:title="限制最多3个"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_maxCount_6"
+        android:title="限制最多6个"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_maxlines_maxCount_no_limit"
+        android:title="不限制个数"
+        app:showAsAction="never" />
+
 
 </menu>
