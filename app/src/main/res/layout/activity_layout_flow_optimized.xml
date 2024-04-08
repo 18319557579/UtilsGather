@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     tools:context=".cutomerview.flow_optimize.OptimizedFlowLayoutActivity">
 
     <!--ViewGroup 设置了 padding 时，默认不允许子元素在 padding 区域绘制-->
@@ -73,4 +72,4 @@
             android:padding="10dp"/>
     </com.example.utilsgather.cutomerview.flow_optimize.OptimizedFlowLayout>
 
-</LinearLayout>
+</HorizontalScrollView>
