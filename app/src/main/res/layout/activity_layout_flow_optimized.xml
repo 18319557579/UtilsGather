@@ -14,7 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        app:flowlayout_line_vertical_gravity="top">
+        app:flowlayout_line_vertical_gravity="top"
+        android:maxLines="3">
 
         <TextView
             android:text="Android"
@@ -33,6 +34,44 @@
         <TextView
             android:text="Custom View"
             style="@style/ItemStyle" />
+
+        <TextView
+            android:text="Android Studio"
+            style="@style/ItemStyle"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:text="中华人名共和国"
+            style="@style/ItemStyle"
+            android:padding="10dp"/>
+
+        <TextView
+            android:text="Android"
+            style="@style/ItemStyle" />
+
+        <TextView
+            android:text="Kotlin"
+            style="@style/ItemStyle" />
+
+        <TextView
+            android:text="Java"
+            style="@style/ItemStyle"
+
+            android:layout_margin="16dp"/>
+
+        <TextView
+            android:text="Custom View"
+            style="@style/ItemStyle" />
+
+        <TextView
+            android:text="Android Studio"
+            style="@style/ItemStyle"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:text="中华人名共和国"
+            style="@style/ItemStyle"
+            android:padding="10dp"/>
     </com.example.utilsgather.cutomerview.flow_optimize.OptimizedFlowLayout>
 
 </LinearLayout>

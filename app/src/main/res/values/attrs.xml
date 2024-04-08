@@ -10,5 +10,11 @@
             <enum name="center" value="1"/>
             <enum name="bottom" value="2"/>
         </attr>
+
+        <!--最大行数-->
+        <attr name="android:maxLines"/>
+
+        <!--最大个数-->
+        <attr name="maxCount" format="integer"/>
     </declare-styleable>
 </resources>

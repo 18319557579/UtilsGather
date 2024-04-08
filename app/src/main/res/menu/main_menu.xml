@@ -9,6 +9,7 @@
         android:id="@+id/action_add_item_a"
         android:title="增加一个Item(有LayoutParams)"
         app:showAsAction="never"/>
+
     <item
         android:id="@+id/action_line_vertical_gravity_top"
         android:title="上对齐"
@@ -21,5 +22,23 @@
         android:id="@+id/action_line_vertical_gravity_bottom"
         android:title="下对齐"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_maxlines_0"
+        android:title="最多显示0行"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_maxlines_1"
+        android:title="最多显示1行"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_maxlines_3"
+        android:title="最多显示3行"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_maxlines_maxCount_no_limit"
+        android:title="最多显示不限制"
+        app:showAsAction="never"/>
+
 
 </menu>

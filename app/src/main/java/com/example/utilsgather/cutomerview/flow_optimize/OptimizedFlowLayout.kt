@@ -19,6 +19,7 @@ class OptimizedFlowLayout @JvmOverloads constructor(
         const val LINE_VERTICAL_GRAVITY_CENTER_VERTICAL = 1
         const val LINE_VERTICAL_GRAVITY_BOTTOM = 2
     }
+    //纵向摆放的位置
     var lineVerticalGravity: Int = LINE_VERTICAL_GRAVITY_CENTER_VERTICAL
         set(value) {
             field = value
@@ -26,6 +27,11 @@ class OptimizedFlowLayout @JvmOverloads constructor(
             LogUtil.d("lineVerticalGravity set()被调用")
         }
 
+    var maxLines: Int = Int.MAX_VALUE
+        set(value) {
+            field = value
+            requestLayout()
+        }
 
 
     //子元素水平间隔
@@ -40,8 +46,11 @@ class OptimizedFlowLayout @JvmOverloads constructor(
     init {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.OptimizedFlowLayout)
         lineVerticalGravity = ta.getInt(R.styleable.OptimizedFlowLayout_flowlayout_line_vertical_gravity, LINE_VERTICAL_GRAVITY_CENTER_VERTICAL)
+        maxLines = ta.getInt(R.styleable.OptimizedFlowLayout_android_maxLines, Int.MAX_VALUE)
         ta.recycle()
+
         LogUtil.d("垂直位置: $lineVerticalGravity")
+        LogUtil.d("最大行数: $maxLines")
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -89,6 +98,10 @@ class OptimizedFlowLayout @JvmOverloads constructor(
 
                 //在本行不可以再放置一个子View，因此需要换行
             } else {
+                // 如果当前行数等于最大行数，就结束遍历子元素
+                if (lineCount == maxLines)
+                    break
+
                 maxLineWidth = max(lineWidth, maxLineWidth)
                 lineCount++
                 //如果换行后，行总数为1，代表现在是第二行，那么总行高不需要加上
@@ -103,6 +116,12 @@ class OptimizedFlowLayout @JvmOverloads constructor(
                 lineViews.add(child)
             }
             if (i == childCount - 1) {
+                // 如果当前行数等于最大行数，就结束遍历子元素
+                // （因为在onLayout()中能用到的就lineHeights和allLineViews，所以控制这两位位置break即可）
+                if (lineCount == maxLines) {
+                    break
+                }
+
                 maxLineWidth = max(lineWidth, maxLineWidth)
                 lineCount++
                 totalHeight += lineHeight + if (lineCount == 1) 0 else itemVerticalSpacing

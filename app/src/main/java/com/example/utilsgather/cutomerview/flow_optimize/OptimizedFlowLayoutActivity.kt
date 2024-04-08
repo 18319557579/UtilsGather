@@ -56,6 +56,19 @@ class OptimizedFlowLayoutActivity : AppCompatActivity() {
             R.id.action_line_vertical_gravity_bottom -> {
                 ofl.lineVerticalGravity = OptimizedFlowLayout.LINE_VERTICAL_GRAVITY_BOTTOM
             }
+
+            R.id.action_maxlines_0 -> {
+                ofl.maxLines = 0
+            }
+            R.id.action_maxlines_1 -> {
+                ofl.maxLines = 1
+            }
+            R.id.action_maxlines_3 -> {
+                ofl.maxLines = 3
+            }
+            R.id.action_maxlines_maxCount_no_limit -> {
+                ofl.maxLines = Int.MAX_VALUE
+            }
         }
         return true
     }
