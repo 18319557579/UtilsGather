@@ -81,7 +81,7 @@ class OptimizedFlowLayoutActivity : AppCompatActivity() {
             R.id.action_maxCount_6 -> {
                 ofl.maxCount = 6
             }
-            R.id.action_maxlines_maxCount_no_limit -> {
+            R.id.action_maxlines_no_limit -> {
                 ofl.maxCount = Int.MAX_VALUE
             }
         }

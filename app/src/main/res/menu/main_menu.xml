@@ -54,7 +54,7 @@
         android:title="限制最多6个"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_maxlines_maxCount_no_limit"
+        android:id="@+id/action_maxlines_no_limit"
         android:title="不限制个数"
         app:showAsAction="never" />
 
