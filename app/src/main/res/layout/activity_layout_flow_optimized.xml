@@ -34,10 +34,4 @@
             style="@style/ItemStyle" />
     </com.example.utilsgather.cutomerview.flow_optimize.OptimizedFlowLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="addView()，无LayoutParams"
-        android:onClick="addView"/>
-
 </LinearLayout>

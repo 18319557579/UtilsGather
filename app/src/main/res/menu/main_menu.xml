@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_add_item"
+        android:title="增加一个Item(无LayoutParams)"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_add_item_a"
+        android:title="增加一个Item(有LayoutParams)"
+        app:showAsAction="never"/>
+
+</menu>

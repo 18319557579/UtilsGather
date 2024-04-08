@@ -129,4 +129,13 @@ class OptimizedFlowLayout @JvmOverloads constructor(
     override fun generateDefaultLayoutParams(): LayoutParams {
         return MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
     }
+
+    // 检查传入的布局参数是否符合某个条件。当不满足条件时，调用下面的方法
+    override fun checkLayoutParams(p: LayoutParams?): Boolean {
+        return p is MarginLayoutParams
+    }
+
+    override fun generateLayoutParams(p: LayoutParams?): LayoutParams {
+        return MarginLayoutParams(p)
+    }
 }
