@@ -3,4 +3,12 @@
     <declare-styleable name="FlowLayout">
         <attr name="maxLines" format="integer" min="0" />
     </declare-styleable>
+
+    <declare-styleable name="OptimizedFlowLayout">
+        <attr name="flowlayout_line_vertical_gravity" format="enum">
+            <enum name="top" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="bottom" value="2"/>
+        </attr>
+    </declare-styleable>
 </resources>

@@ -47,6 +47,15 @@ class OptimizedFlowLayoutActivity : AppCompatActivity() {
                     }
                 )
             }
+            R.id.action_line_vertical_gravity_top -> {
+                ofl.lineVerticalGravity = OptimizedFlowLayout.LINE_VERTICAL_GRAVITY_TOP
+            }
+            R.id.action_line_vertical_gravity_center_vertical -> {
+                ofl.lineVerticalGravity = OptimizedFlowLayout.LINE_VERTICAL_GRAVITY_CENTER_VERTICAL
+            }
+            R.id.action_line_vertical_gravity_bottom -> {
+                ofl.lineVerticalGravity = OptimizedFlowLayout.LINE_VERTICAL_GRAVITY_BOTTOM
+            }
         }
         return true
     }
