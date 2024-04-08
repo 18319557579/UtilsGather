@@ -1,28 +1,29 @@
-package com.example.utilsgather.cutomerview.flow_optimize;
+package com.example.utilsgather.cutomerview.flow_optimize
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.os.Bundle
+import android.util.TypedValue
+import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.example.utilsgather.R
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+class OptimizedFlowLayoutActivity : AppCompatActivity() {
+    lateinit var ofl: OptimizedFlowLayout
 
-import com.example.utilsgather.R;
-import com.example.utilsgather.cutomerview.flow.FlowLayout;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_layout_flow_optimized)
+        ofl = findViewById<OptimizedFlowLayout>(R.id.ofl)
+    }
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
-public class OptimizedFlowLayoutActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_layout_flow_optimized);
+    fun addView(view: View?) {
+        ofl.addView(
+            TextView(this).apply {
+                text = "RxJava"
+                setBackgroundResource(R.drawable.shape_button_circular)
+                setPadding(12.dp2px(), 2.dp2px(), 12.dp2px(), 2.dp2px())
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f)
+            }
+        )
     }
 }

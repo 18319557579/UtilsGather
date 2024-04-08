@@ -124,4 +124,9 @@ class OptimizedFlowLayout @JvmOverloads constructor(
     override fun generateLayoutParams(attrs: AttributeSet?): LayoutParams {
         return MarginLayoutParams(context, attrs)
     }
+
+    //动态添加View到FlowLayout中时（addView），没有设置LayoutParams，就会调用该方法获得默认的LayoutParams
+    override fun generateDefaultLayoutParams(): LayoutParams {
+        return MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+    }
 }
