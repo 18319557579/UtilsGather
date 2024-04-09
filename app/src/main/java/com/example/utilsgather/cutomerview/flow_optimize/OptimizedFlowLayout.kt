@@ -242,6 +242,8 @@ class OptimizedFlowLayout @JvmOverloads constructor(
     override fun onSaveInstanceState(): Parcelable? {
         val superState = super.onSaveInstanceState()
         val ss = SaveState(superState)
+        ss.lineVerticalGravity = lineVerticalGravity
+        ss.maxLines = maxLines
         ss.maxCount = maxCount
         LogUtil.d("onSaveInstanceState() maxCount=${maxCount}")
         return ss
@@ -251,6 +253,8 @@ class OptimizedFlowLayout @JvmOverloads constructor(
     override fun onRestoreInstanceState(state: Parcelable?) {
         val ss = state as SaveState
         super.onRestoreInstanceState(ss.superState)
+        lineVerticalGravity = ss.lineVerticalGravity
+        maxLines = ss.maxLines
         maxCount = ss.maxCount
         LogUtil.d("onRestoreInstanceState() maxCount=${maxCount}")
     }
