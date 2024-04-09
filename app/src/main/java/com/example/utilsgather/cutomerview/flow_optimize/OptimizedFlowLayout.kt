@@ -1,6 +1,7 @@
 package com.example.utilsgather.cutomerview.flow_optimize
 
 import android.content.Context
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -235,5 +236,21 @@ class OptimizedFlowLayout @JvmOverloads constructor(
 
     override fun generateLayoutParams(p: LayoutParams?): LayoutParams {
         return MarginLayoutParams(p)
+    }
+
+    override fun onSaveInstanceState(): Parcelable? {
+        val superState = super.onSaveInstanceState()
+        val ss = SaveState(superState)
+        ss.maxCount = maxCount
+        LogUtil.d("onSaveInstanceState() maxCount=${maxCount}")
+        return ss
+    }
+
+    //恢复时，该函数会在初始化块后被调用，在onMeasure()之前
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        val ss = state as SaveState
+        super.onRestoreInstanceState(ss)
+        maxCount = ss.maxCount
+        LogUtil.d("onRestoreInstanceState() maxCount=${maxCount}")
     }
 }
