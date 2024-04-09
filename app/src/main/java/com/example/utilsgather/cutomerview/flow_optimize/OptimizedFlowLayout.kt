@@ -249,7 +249,7 @@ class OptimizedFlowLayout @JvmOverloads constructor(
     //恢复时，该函数会在初始化块后被调用，在onMeasure()之前
     override fun onRestoreInstanceState(state: Parcelable?) {
         val ss = state as SaveState
-        super.onRestoreInstanceState(ss)
+        super.onRestoreInstanceState(ss.superState)
         maxCount = ss.maxCount
         LogUtil.d("onRestoreInstanceState() maxCount=${maxCount}")
     }
