@@ -15,7 +15,8 @@ class OptimizedFlowLayout @JvmOverloads constructor(
 ) : ViewGroup(context, attrs, defStyleAttr){
 
     companion object {
-        //todo 优化。看看可不可以直接去读资源文件中的值
+        //done 优化。看看可不可以直接去读资源文件中的值
+        //solution 不可以，因为enum在编译成apk后，别名不会存在了，而是作为整型值存在
         const val LINE_VERTICAL_GRAVITY_TOP = 0
         const val LINE_VERTICAL_GRAVITY_CENTER_VERTICAL = 1
         const val LINE_VERTICAL_GRAVITY_BOTTOM = 2
@@ -78,76 +79,76 @@ class OptimizedFlowLayout @JvmOverloads constructor(
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         LogUtil.d("onMeasure: widthMeasureSpec=${MeasureSpec.toString(widthMeasureSpec)}, heightMeasureSpec=${MeasureSpec.toString(heightMeasureSpec)}")
 
-        // 流式布局允许的最大宽度
-        val maxWidth = if (widthMode != MeasureSpec.UNSPECIFIED) widthSize else Int.MAX_VALUE
-        var lineWidth = 0
-        var maxLineWidth = 0
-        var lineHeight = 0
-        var totalHeight = 0
-        val childCount = childCount
-        var lineViews = ArrayList<View>()
-        var lineCount = 0
-        var measuredChildCount = 0
+        var maxLineWidth = 0  //最大行宽
+        var totalHeight = 0  //总高度
 
-        for (i in 0 until childCount) {
-            val child = getChildAt(i)
-            if (child.visibility == View.GONE)
-                continue
+        if (maxLines > 0  //将最大行数为0的情况单独拎出来，这样子只有在后面maxLines只有在换行的时候才会用到了，且一换行就知道是否超出了限制，避免无意义的遍历
+            && maxCount > 0) {  //将最大个数未0的情况单独拎出来，避免无意义的遍历
+            // 流式布局允许的最大宽度
+            val maxWidth = if (widthMode != MeasureSpec.UNSPECIFIED) widthSize else Int.MAX_VALUE
+            var lineWidth = 0
+            var lineHeight = 0
+            val childCount = childCount
+            var lineViews = ArrayList<View>()
+            var lineCount = 0
+            var measuredChildCount = 0
 
-            measuredChildCount++
-            measureChild(child, widthMeasureSpec, heightMeasureSpec)
-            val childMeasuredWidth = child.measuredWidth
-            val childMeasuredHeight = child.measuredHeight
-            val lp = child.layoutParams as MarginLayoutParams
-            //当前子View与上一个子View的间隔，如果为一行的第一个元素则没有间隔
-            val actualItemHorizontalSpacing = if (lineWidth == 0) 0 else itemHorizontalSpacing
-            val actualChildWidth = childMeasuredWidth + lp.leftMargin + lp.rightMargin  //这里实际占用的宽度加上了左右margin
-            val actualChildHeight = childMeasuredHeight + lp.topMargin + lp.bottomMargin  //这里实际占用的高度加上了上下margin
+            for (i in 0 until childCount) {
+                val child = getChildAt(i)
+                if (child.visibility == View.GONE)
+                    continue
 
-            //判断是否需要换行
-                //在本行还可以放置一个子View
-            if (lineWidth + actualItemHorizontalSpacing + actualChildWidth
+                measuredChildCount++
+                measureChild(child, widthMeasureSpec, heightMeasureSpec)
+                val childMeasuredWidth = child.measuredWidth
+                val childMeasuredHeight = child.measuredHeight
+                val lp = child.layoutParams as MarginLayoutParams
+                //当前子View与上一个子View的间隔，如果为一行的第一个元素则没有间隔
+                val actualItemHorizontalSpacing = if (lineWidth == 0) 0 else itemHorizontalSpacing
+                val actualChildWidth = childMeasuredWidth + lp.leftMargin + lp.rightMargin  //这里实际占用的宽度加上了左右margin
+                val actualChildHeight = childMeasuredHeight + lp.topMargin + lp.bottomMargin  //这里实际占用的高度加上了上下margin
+
+                //判断是否需要换行
+                    //在本行还可以放置一个子View
+                if (lineWidth + actualItemHorizontalSpacing + actualChildWidth
                     <= maxWidth - paddingLeft - paddingRight) {
-                lineWidth += actualItemHorizontalSpacing + actualChildWidth
-                lineHeight = max(lineHeight, actualChildHeight )
-                lineViews.add(child)
+                    lineWidth += actualItemHorizontalSpacing + actualChildWidth
+                    lineHeight = max(lineHeight, actualChildHeight )
+                    lineViews.add(child)
 
-                //在本行不可以再放置一个子View，因此需要换行
-            } else {
-                // 如果当前行数等于最大行数，就结束遍历子元素
-                if (lineCount == maxLines)
-                    break
+                    //在本行不可以再放置一个子View，因此需要换行
+                } else {
+                    // 如果当前行数等于最大行数，就结束遍历子元素（因为行数是不包括当前元素的，所以直接结束遍历，无需入List了）
+                    if (lineCount == maxLines)
+                        break
 
-                maxLineWidth = max(lineWidth, maxLineWidth)
-                lineCount++
-                //如果换行后，行总数为1，代表现在是第二行，那么总行高不需要加上
-                totalHeight += lineHeight + if (lineCount == 1) 0 else itemVerticalSpacing
-                lineHeights.add(lineHeight)
-                allLineViews.add(lineViews)
+                    maxLineWidth = max(lineWidth, maxLineWidth)
+                    lineCount++
+                    //如果换行后，行总数为1，代表现在是第二行，那么总行高不需要加上
+                    totalHeight += lineHeight + if (lineCount == 1) 0 else itemVerticalSpacing
+                    lineHeights.add(lineHeight)
+                    allLineViews.add(lineViews)
 
-                //重置
-                lineWidth = actualChildWidth
-                lineHeight = actualChildHeight
-                lineViews = ArrayList<View>()
-                lineViews.add(child)
-            }
-
-            //如果是最后一个元素，那么本行必定是最后一行，那么要将本行的行高和元素都累加到成员变量中
-            if (i == childCount - 1 || measuredChildCount == maxCount) {
-                // 这里只是为了解决 maxLines 为0的情况
-                // （因为在onLayout()中能用到的就lineHeights和allLineViews，所以控制这两位位置break即可）
-                if (lineCount == maxLines) {
-                    break
+                    //重置
+                    lineWidth = actualChildWidth
+                    lineHeight = actualChildHeight
+                    lineViews = ArrayList<View>()
+                    lineViews.add(child)
                 }
 
-                maxLineWidth = max(lineWidth, maxLineWidth)
-                lineCount++
-                totalHeight += lineHeight + if (lineCount == 1) 0 else itemVerticalSpacing
-                lineHeights.add(lineHeight)
-                allLineViews.add(lineViews)
+                //如果是最后一个元素，那么本行必定是最后一行，那么要将本行的行高和元素都累加到成员变量中
+                //如果达到了个数上限，要入List了，且结束遍历
+                if (i == childCount - 1 || measuredChildCount == maxCount) {
+                    maxLineWidth = max(lineWidth, maxLineWidth)
+                    lineCount++
+                    totalHeight += lineHeight + if (lineCount == 1) 0 else itemVerticalSpacing
+                    lineHeights.add(lineHeight)
+                    allLineViews.add(lineViews)
 
-                if (measuredChildCount == maxCount)
-                    break
+                    //如果达到了个数上限，则结束遍历
+                    if (measuredChildCount == maxCount)
+                        break
+                }
             }
         }
 
