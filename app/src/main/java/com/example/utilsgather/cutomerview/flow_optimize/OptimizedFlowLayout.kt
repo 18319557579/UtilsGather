@@ -154,8 +154,13 @@ class OptimizedFlowLayout @JvmOverloads constructor(
         totalHeight += paddingTop + paddingBottom
 
         val measureWidth = if (widthMode == MeasureSpec.EXACTLY) widthSize else maxLineWidth
-        val measureHeight = if (heightMode == MeasureSpec.EXACTLY) heightSize else totalHeight
+        val measureHeight = when(heightMode) {
+            MeasureSpec.EXACTLY -> heightSize
+            MeasureSpec.AT_MOST -> Math.min(heightSize, totalHeight)  //如果是有上限的话，则不能超过上限
+            else -> totalHeight
+        }
         setMeasuredDimension(measureWidth, measureHeight)
+        LogUtil.d("测量自己的宽高: measuredWidth=$measureWidth, measuredHeight=$measureHeight")
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
