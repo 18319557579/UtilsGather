@@ -31,6 +31,7 @@ import com.example.utilsgather.info.DeviceInfoUtil
 import com.example.utilsgather.info.NetworkInfoUtil
 import com.example.utilsgather.interaction.SniffingAppUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
+import com.example.utilsgather.qihang.one.RectPointView.UseRectPointViewActivity
 import com.example.utilsgather.random.StringRandomUtil
 import com.example.utilsgather.source_file.assets.AssetsUtil
 import com.example.utilsgather.source_file.raw.SourceUtil
@@ -81,6 +82,9 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("测试自定义View的OptimizedFlowLayoutActivity") {
                     startActivity(Intent(this, OptimizedFlowLayoutActivity::class.java))
+                },
+                GuideItemEntity("去UseRectPointViewActivity") {
+                    startActivity(Intent(this, UseRectPointViewActivity::class.java))
                 },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)

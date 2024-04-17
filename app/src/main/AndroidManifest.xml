@@ -66,6 +66,8 @@
         <activity android:name=".cutomerview.flow_optimize.OptimizedFlowLayoutActivity"
             android:exported="false"/>
 
+        <activity android:name=".qihang.one.RectPointView.UseRectPointViewActivity"
+            android:exported="false"/>
 
     </application>
 
