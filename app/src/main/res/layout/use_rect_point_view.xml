@@ -14,7 +14,13 @@
         android:layout_height="match_parent"/>
 -->
 
+<!--
     <com.example.utilsuser.qihang.one.RectPointView.NormalCustomView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+-->
+
+    <com.example.utilsuser.qihang.one.RectPointView.CustomCircleView
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
