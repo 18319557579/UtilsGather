@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".cutomerview.flow_optimize.OptimizedFlowLayoutActivity">
+    tools:context="com.example.utilsuser.cutomerview.flow_optimize.OptimizedFlowLayoutActivity">
 
     <!--ViewGroup 设置了 padding 时，默认不允许子元素在 padding 区域绘制-->
-    <com.example.utilsgather.cutomerview.flow_optimize.OptimizedFlowLayout
+    <com.example.utilsuser.cutomerview.flow_optimize.OptimizedFlowLayout
         android:id="@+id/ofl"
         android:background="#44ff0000"
         android:layout_width="wrap_content"
@@ -71,6 +71,6 @@
             android:text="中华人名共和国"
             style="@style/ItemStyle"
             android:padding="10dp"/>
-    </com.example.utilsgather.cutomerview.flow_optimize.OptimizedFlowLayout>
+    </com.example.utilsuser.cutomerview.flow_optimize.OptimizedFlowLayout>
 
 </LinearLayout>

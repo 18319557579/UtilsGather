@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context="com.example.utilsuser.MainActivity"
     android:orientation="vertical">
 
-    <com.example.utilsgather.cutomerview.one_five.SpottedLinearLayout
+    <com.example.utilsuser.cutomerview.one_five.SpottedLinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -24,28 +24,28 @@
             android:text="Batman"
             android:layout_gravity="center"/>
 
-    </com.example.utilsgather.cutomerview.one_five.SpottedLinearLayout>
+    </com.example.utilsuser.cutomerview.one_five.SpottedLinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HenCoder是"
         android:textSize="20sp"/>
-    <com.example.utilsgather.cutomerview.one_five.CustomTextView
+    <com.example.utilsuser.cutomerview.one_five.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="针对高级Android工程师"
         android:textSize="20sp"/>
 
 
-    <com.example.utilsgather.cutomerview.one_five.AppImageView
+    <com.example.utilsuser.cutomerview.one_five.AppImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/batman"
         android:layout_marginTop="20dp"
         android:foreground="#88000000"/>
 
-    <com.example.utilsgather.cutomerview.one_five.CustomEditText
+    <com.example.utilsuser.cutomerview.one_five.CustomEditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello HenCoder"

@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.example.utilsuser.MainActivity">
 <!---->
-    <com.example.utilsgather.cutomerview.CustomView1_4
+    <com.example.utilsuser.cutomerview.CustomView1_4
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"

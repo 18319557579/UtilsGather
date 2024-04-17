@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.utilsgather">
+    package="com.example.utilsuser">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -8,14 +8,14 @@
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
-        android:name=".application.MyApplication"
+        android:name="com.example.utilsuser.application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather">
-        <activity android:name=".MainActivity"
+        <activity android:name="com.example.utilsuser.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,50 +23,50 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TextExitHandleActivity"
+        <activity android:name="com.example.utilsuser.TextExitHandleActivity"
             android:exported="false"/>
 
         <!--android:theme="@style/Theme.Mine.Fullscreen"-->
         <!--android:theme="@android:style/Theme.NoTitleBar.Fullscreen"-->
-        <activity android:name=".TestImmersionActivity"
+        <activity android:name="com.example.utilsuser.TestImmersionActivity"
             android:exported="false"/>
 
-        <activity android:name=".StyleImmersionActivity"
+        <activity android:name="com.example.utilsuser.StyleImmersionActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApp.Immersive"/>
 
 <!--
             android:theme="@style/Theme.MyApp.Immersive2"-->
-        <activity android:name=".StyleImmersion2Activity"
+        <activity android:name="com.example.utilsuser.StyleImmersion2Activity"
             android:exported="false"/>
 
 
-        <activity android:name=".kt_room.KtRoomActivity"
+        <activity android:name="com.example.utilsuser.kt_room.KtRoomActivity"
             android:exported="false"/>
 
-        <activity android:name=".cutomerview.CustomViewActivity"
+        <activity android:name="com.example.utilsuser.cutomerview.CustomViewActivity"
             android:exported="false"/>
-        <activity android:name=".cutomerview.CustomView2Activity"
+        <activity android:name="com.example.utilsuser.cutomerview.CustomView2Activity"
             android:exported="false"/>
-        <activity android:name=".cutomerview.CustomView3Activity"
-            android:exported="false"/>
-
-        <activity android:name=".cutomerview.CustomView1_4Activity"
-            android:exported="false"/>
-        <activity android:name=".cutomerview.one_five.CustomView1_5Activity"
-            android:exported="false"/>
-        <activity android:name=".cutomerview.one_six.CustomView1_6Activity"
-            android:exported="false"/>
-        <activity android:name=".cutomerview.one_seven.CustomView1_7Activity"
+        <activity android:name="com.example.utilsuser.cutomerview.CustomView3Activity"
             android:exported="false"/>
 
-        <activity android:name=".cutomerview.flow.FlowLayoutActivity"
+        <activity android:name="com.example.utilsuser.cutomerview.CustomView1_4Activity"
+            android:exported="false"/>
+        <activity android:name="com.example.utilsuser.cutomerview.one_five.CustomView1_5Activity"
+            android:exported="false"/>
+        <activity android:name="com.example.utilsuser.cutomerview.one_six.CustomView1_6Activity"
+            android:exported="false"/>
+        <activity android:name="com.example.utilsuser.cutomerview.one_seven.CustomView1_7Activity"
             android:exported="false"/>
 
-        <activity android:name=".cutomerview.flow_optimize.OptimizedFlowLayoutActivity"
+        <activity android:name="com.example.utilsuser.cutomerview.flow.FlowLayoutActivity"
             android:exported="false"/>
 
-        <activity android:name=".qihang.one.RectPointView.UseRectPointViewActivity"
+        <activity android:name="com.example.utilsuser.cutomerview.flow_optimize.OptimizedFlowLayoutActivity"
+            android:exported="false"/>
+
+        <activity android:name="com.example.utilsuser.qihang.one.RectPointView.UseRectPointViewActivity"
             android:exported="false"/>
 
     </application>

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context="com.example.utilsuser.MainActivity"
     android:orientation="vertical">
 
-    <com.example.utilsgather.cutomerview.one_seven.ColorAnimation
+    <com.example.utilsuser.cutomerview.one_seven.ColorAnimation
         android:id="@+id/color_animation"
         android:layout_width="200dp"
         android:layout_height="200dp"/>
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:text="启动！"/>
 
-    <com.example.utilsgather.cutomerview.one_seven.PointAnimation
+    <com.example.utilsuser.cutomerview.one_seven.PointAnimation
         android:id="@+id/point_animation"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -30,7 +30,7 @@
         android:text="启动点动画"
         android:layout_alignTop="@id/point_animation"/>
 
-    <com.example.utilsgather.cutomerview.one_seven.MyCustomView
+    <com.example.utilsuser.cutomerview.one_seven.MyCustomView
         android:id="@+id/my_custom_view"
         android:layout_width="match_parent"
         android:layout_height="100dp"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.example.utilsuser.MainActivity">
 <!---->
     <!--<com.example.utilsgather.cutomerview.CustomView2
         android:layout_width="wrap_content"
@@ -15,7 +15,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />-->
 
-    <com.example.utilsgather.cutomerview.PictureView2
+    <com.example.utilsuser.cutomerview.PictureView2
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

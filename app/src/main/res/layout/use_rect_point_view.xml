@@ -14,7 +14,7 @@
         android:layout_height="match_parent"/>
 -->
 
-    <com.example.utilsgather.qihang.one.RectPointView.NormalCustomView
+    <com.example.utilsuser.qihang.one.RectPointView.NormalCustomView
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
