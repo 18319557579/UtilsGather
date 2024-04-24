@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <!--<com.example.utilsgather.qihang.one.RectPointView.RectPointView
         android:layout_width="match_parent"
@@ -26,8 +27,39 @@
         android:layout_height="match_parent"/>
 -->
 
+<!--
     <com.example.utilsuser.qihang.one.RectPointView.ClipRgnView
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+-->
+
+<!--
+    <com.example.utilsuser.qihang.one.six.CustomView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
+-->
+
+<!--
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="自定义控件四部曲"/>
+-->
+
+    <!--<com.example.utilsuser.qihang.one.six.DogView
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>-->
+
+    <ImageView
+        android:id="@+id/img_avator"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/avator"/>
+
+    <SeekBar
+        android:id="@+id/seek_bar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
