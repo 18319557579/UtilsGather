@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".qihang.two.ViewAnimationActivity">
+
+    <!--<Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="startAnim"
+        android:onClick="btnToClick" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/darker_gray"
+        android:text="Hello World"/>-->
+
+    <!--<ImageView
+        android:id="@+id/img_scenery"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/scenery"
+        android:scaleType="fitXY"/>-->
+
+    <ImageView
+        android:id="@+id/loading"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/loading"/>
+
+</LinearLayout>
