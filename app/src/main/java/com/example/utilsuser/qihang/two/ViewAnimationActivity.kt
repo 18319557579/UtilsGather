@@ -3,6 +3,7 @@ package com.example.utilsuser.qihang.two
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.animation.AnticipateOvershootInterpolator
 import android.view.animation.BounceInterpolator
 import android.view.animation.LinearInterpolator
@@ -20,10 +21,39 @@ class ViewAnimationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_view_animation)
 
 //        bounce()
-        rotate()
+//        rotate()
+        scan()
     }
 
-    private fun rotate() {
+    private fun scan() {
+        val animation1 = AnimationUtils.loadAnimation(this, R.anim.scale_alpha_anim)
+        val animation2 = AnimationUtils.loadAnimation(this, R.anim.scale_alpha_anim)
+        val animation3 = AnimationUtils.loadAnimation(this, R.anim.scale_alpha_anim)
+        val animation4 = AnimationUtils.loadAnimation(this, R.anim.scale_alpha_anim)
+
+        val circle1 = findViewById<ImageView>(R.id.circle1)
+        val circle2 = findViewById<ImageView>(R.id.circle2)
+        val circle3 = findViewById<ImageView>(R.id.circle3)
+        val circle4 = findViewById<ImageView>(R.id.circle4)
+
+        findViewById<TextView>(R.id.start_scan).setOnClickListener {
+            circle1.startAnimation(animation1)
+
+            animation2.startOffset = 750
+            circle2.startAnimation(animation2)
+//            animation2.startOffset = 0
+
+            animation3.startOffset = 1500
+            circle3.startAnimation(animation3)
+//            animation3.startOffset = 0
+
+            animation4.startOffset = 2250
+            circle4.startAnimation(animation4)
+//            animation4.startOffset = 0
+        }
+    }
+
+    /*private fun rotate() {
         val imageView = findViewById<ImageView>(R.id.loading)
 
         RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
@@ -34,7 +64,7 @@ class ViewAnimationActivity : AppCompatActivity() {
                 imageView.startAnimation(it)
         }
 
-    }
+    }*/
 
     /*private fun bounce() {
         val imageView = findViewById<ImageView>(R.id.img_scenery)
