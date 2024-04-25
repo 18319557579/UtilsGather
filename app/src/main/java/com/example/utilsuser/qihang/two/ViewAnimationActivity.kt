@@ -1,5 +1,6 @@
 package com.example.utilsuser.qihang.two
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
@@ -10,22 +11,63 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.utilsuser.R
 
 class ViewAnimationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_animation)
+        setContentView(R.layout.activity_music_player)
 
 //        bounce()
 //        rotate()
-        scan()
+//        scan()
+//        startMusicPlayer()
+        translationTest()
     }
 
-    private fun scan() {
+    private fun translationTest() {
+        val tv = findViewById<TextView>(R.id.tv)
+        val btn = findViewById<Button>(R.id.btn)
+        btn.setOnClickListener {
+            TranslateAnimation(Animation.ABSOLUTE, 0f, Animation.ABSOLUTE, 400f,
+                Animation.ABSOLUTE, 0f, Animation.ABSOLUTE, 100F).also {
+                    it.fillAfter = true
+                    it.duration = 1000
+                    tv.startAnimation(it)
+            }
+        }
+
+        tv.setOnClickListener {
+            Toast.makeText(this@ViewAnimationActivity, "clicked me", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /*private fun startMusicPlayer() {
+        val image = findViewById<ImageView>(R.id.frame_image)
+        val anim = AnimationDrawable()
+        for (i in 1 .. 14) {
+            val id = resources.getIdentifier("list_icon_gif_playing$i", "drawable", packageName)
+            val drawable = resources.getDrawable(id)
+            anim.addFrame(drawable, 60)
+        }
+        anim.isOneShot = false
+        image.background = anim
+        anim.start()
+
+        findViewById<Button>(R.id.start_btn).setOnClickListener {
+            anim.start()
+        }
+        findViewById<Button>(R.id.stop_btn).setOnClickListener {
+            anim.stop()
+        }
+    }*/
+
+    /*private fun scan() {
         val animation1 = AnimationUtils.loadAnimation(this, R.anim.scale_alpha_anim)
         val animation2 = AnimationUtils.loadAnimation(this, R.anim.scale_alpha_anim)
         val animation3 = AnimationUtils.loadAnimation(this, R.anim.scale_alpha_anim)
@@ -51,7 +93,7 @@ class ViewAnimationActivity : AppCompatActivity() {
             circle4.startAnimation(animation4)
 //            animation4.startOffset = 0
         }
-    }
+    }*/
 
     /*private fun rotate() {
         val imageView = findViewById<ImageView>(R.id.loading)
