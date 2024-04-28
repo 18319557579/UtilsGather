@@ -53,9 +53,7 @@ class AnimatorSetActivity : AppCompatActivity() {
             play(tv1TranslateY).with(tv2TranslateY)
             duration = 2000
             /*addListener {
-                doOnStart {
-                    LogUtil.d("animator start")
-                }
+
                 doOnEnd {
                     LogUtil.d("animator end")
                 }
@@ -65,8 +63,29 @@ class AnimatorSetActivity : AppCompatActivity() {
                 doOnRepeat {
                     LogUtil.d("animator repeat")
                 }
+                doOnStart {
+                    LogUtil.d("animator start")
+                }
             }*/
-            addListener(object : Animator.AnimatorListener {
+            /*doOnStart {
+                LogUtil.d("animator start")
+            }
+            doOnEnd {
+                LogUtil.d("animator end")
+            }
+            doOnCancel {
+                LogUtil.d("animator cancel")
+            }*/
+            /*addListener(onStart = (a) -> {
+
+        })
+            addListener {
+                doOnStart {
+
+                }
+            }
+            addListener((a) -> {}, (a) -> {}, (a) -> {}, (a) -> {})*/
+            /*addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {
                     LogUtil.d("animator start")
                 }
@@ -83,7 +102,19 @@ class AnimatorSetActivity : AppCompatActivity() {
                     LogUtil.d("animator repeat")
                 }
 
-            })
+            })*/
+            addListener(
+                onEnd = { animator ->
+                    LogUtil.d("Animation ended")
+                },
+                onStart = { animator ->
+                    LogUtil.d("Animation started")
+                },
+                onCancel = { animator ->
+                    LogUtil.d("Animation canceled")
+                },
+            )
+
             start()
         }
     }
