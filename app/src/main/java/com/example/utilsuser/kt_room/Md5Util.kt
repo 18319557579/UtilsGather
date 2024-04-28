@@ -1,43 +1,33 @@
-package com.example.utilsuser.kt_room;
+package com.example.utilsuser.kt_room
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.io.UnsupportedEncodingException
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 /**
  * MD5工具类
  */
-public class Md5Util {
-
-    public static String md5(String string) {
-
-        byte[] hash;
+object Md5Util {
+    @JvmStatic
+    fun md5(string: String): String {
+        val hash: ByteArray
 
         try {
-
-            hash = MessageDigest.getInstance("MD5").digest(string.getBytes("UTF-8"));
-
-        } catch (NoSuchAlgorithmException e) {
-
-            throw new RuntimeException("Huh, MD5 should be supported?", e);
-
-        } catch (UnsupportedEncodingException e) {
-
-            throw new RuntimeException("Huh, UTF-8 should be supported?", e);
-
+            hash = MessageDigest.getInstance("MD5").digest(string.toByteArray(charset("UTF-8")))
+        } catch (e: NoSuchAlgorithmException) {
+            throw RuntimeException("Huh, MD5 should be supported?", e)
+        } catch (e: UnsupportedEncodingException) {
+            throw RuntimeException("Huh, UTF-8 should be supported?", e)
         }
 
-        StringBuilder hex = new StringBuilder(hash.length * 2);
+        val hex = StringBuilder(hash.size * 2)
 
-        for (byte b : hash) {
+        for (b in hash) {
+            if ((b.toInt() and 0xFF) < 0x10) hex.append("0")
 
-            if ((b & 0xFF) < 0x10) hex.append("0");
-
-            hex.append(Integer.toHexString(b & 0xFF));
-
+            hex.append(Integer.toHexString(b.toInt() and 0xFF))
         }
-
-        return hex.toString();
-
+        'A'
+        return hex.toString()
     }
 }

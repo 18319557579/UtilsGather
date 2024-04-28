@@ -1,8 +1,11 @@
 package com.example.utilsuser.qihang.two
 
+import android.animation.TypeEvaluator
+import android.animation.ValueAnimator
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.AnticipateOvershootInterpolator
@@ -27,10 +30,43 @@ class ViewAnimationActivity : AppCompatActivity() {
 //        rotate()
 //        scan()
 //        startMusicPlayer()
-        translationTest()
+//        translationTest()
+        characterChange()
     }
 
-    private fun translationTest() {
+    class CharEvaluator : TypeEvaluator<Char> {
+        override fun evaluate(
+            fraction: Float,
+            startValue: Char,
+            endValue: Char
+        ): Char {
+            val startint = startValue.code  //Char转Int
+            val endint = endValue.code  //Char转Int
+            val curint = (startint + fraction * (endint - startint)).toInt()  //Float转Int
+            val result = curint.toChar()  //Int转Char
+            return result
+        }
+    }
+
+    private fun characterChange() {
+        val tv = findViewById<TextView>(R.id.tv)
+        val btn = findViewById<Button>(R.id.btn)
+        btn.setOnClickListener {
+            ValueAnimator.ofObject(CharEvaluator(), 'A', 'Z').apply {
+                addUpdateListener {
+                    val text = it.getAnimatedValue()
+                    tv.text = text.toString()
+                }
+                duration = 10000
+                interpolator = AccelerateInterpolator()
+                start()
+            }
+        }
+
+
+    }
+
+    /*private fun translationTest() {
         val tv = findViewById<TextView>(R.id.tv)
         val btn = findViewById<Button>(R.id.btn)
         btn.setOnClickListener {
@@ -45,7 +81,7 @@ class ViewAnimationActivity : AppCompatActivity() {
         tv.setOnClickListener {
             Toast.makeText(this@ViewAnimationActivity, "clicked me", Toast.LENGTH_SHORT).show()
         }
-    }
+    }*/
 
     /*private fun startMusicPlayer() {
         val image = findViewById<ImageView>(R.id.frame_image)

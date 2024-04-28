@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather">
         <activity
+            android:name=".qihang.three.ValueAnimatorActivity"
+            android:exported="false" />
+        <activity
             android:name=".qihang.two.ViewAnimationActivity"
             android:exported="false" />
         <activity
@@ -38,8 +41,7 @@
         <activity
             android:name=".StyleImmersionActivity"
             android:exported="false"
-            android:theme="@style/Theme.MyApp.Immersive" />
-        <!--             android:theme="@style/Theme.MyApp.Immersive2" -->
+            android:theme="@style/Theme.MyApp.Immersive" /> <!-- android:theme="@style/Theme.MyApp.Immersive2" -->
         <activity
             android:name=".StyleImmersion2Activity"
             android:exported="false" />

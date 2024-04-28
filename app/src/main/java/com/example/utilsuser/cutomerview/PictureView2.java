@@ -36,7 +36,6 @@ public class PictureView2 extends View {
         //初始化画笔
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-
     }
 
     @Override
