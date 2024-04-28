@@ -2,6 +2,7 @@ package com.example.utilsuser.qihang.two
 
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
+import android.graphics.Point
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.View
@@ -31,7 +32,36 @@ class ViewAnimationActivity : AppCompatActivity() {
 //        scan()
 //        startMusicPlayer()
 //        translationTest()
-        characterChange()
+//        characterChange()
+        ballInit()
+    }
+
+    class FallingBallEvaluator : TypeEvaluator<Point> {
+        val point = Point()
+        override fun evaluate(fraction: Float, startValue: Point, endValue: Point): Point {
+            point.x = (startValue.x + fraction * (endValue.x - startValue.x)).toInt()
+            if (fraction * 2 <= 1) {
+                point.y = (startValue.y + fraction * 2 * (endValue.y - startValue.y)).toInt()
+            } else {
+                point.y = endValue.y
+            }
+            return point
+        }
+    }
+
+    private fun ballInit() {
+        val ballImg = findViewById<ImageView>(R.id.ball_img)
+        val btn = findViewById<Button>(R.id.btn)
+        btn.setOnClickListener {
+            ValueAnimator.ofObject(FallingBallEvaluator(), Point(0, 0), Point(500, 500)).apply {
+                addUpdateListener {
+                    val mCurPoint = it.getAnimatedValue() as Point
+                    ballImg.layout(mCurPoint.x, mCurPoint.y, mCurPoint.x + ballImg.width, mCurPoint.y + ballImg.height)
+                }
+                duration = 2000
+                start()
+            }
+        }
     }
 
     class CharEvaluator : TypeEvaluator<Char> {
@@ -48,7 +78,7 @@ class ViewAnimationActivity : AppCompatActivity() {
         }
     }
 
-    private fun characterChange() {
+    /*private fun characterChange() {
         val tv = findViewById<TextView>(R.id.tv)
         val btn = findViewById<Button>(R.id.btn)
         btn.setOnClickListener {
@@ -64,7 +94,7 @@ class ViewAnimationActivity : AppCompatActivity() {
         }
 
 
-    }
+    }*/
 
     /*private fun translationTest() {
         val tv = findViewById<TextView>(R.id.tv)

@@ -29,12 +29,18 @@
         android:padding="10dp"
         android:text="start anim"/>
 
-    <TextView
+    <!--<TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:background="#ffff00"
-        android:text="Hello qijian"/>
+        android:text="Hello qijian"/>-->
+
+    <ImageView
+        android:id="@+id/ball_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/circle"/>
 
 </LinearLayout>
