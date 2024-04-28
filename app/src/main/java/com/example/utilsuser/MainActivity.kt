@@ -39,6 +39,7 @@ import com.example.utilsgather.source_file.raw.SourceUtil
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsuser.databinding.ActivityMainBinding
+import com.example.utilsuser.qihang.three.AnimatorSetActivity
 import com.example.utilsuser.qihang.three.ValueAnimatorActivity
 import com.example.utilsuser.qihang.two.ViewAnimationActivity
 import kotlinx.coroutines.Dispatchers
@@ -94,6 +95,9 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去ValueAnimatorActivity") {
                     startActivity(Intent(this, ValueAnimatorActivity::class.java))
+                },
+                GuideItemEntity("去AnimatorSetActivity") {
+                    startActivity(Intent(this, AnimatorSetActivity::class.java))
                 },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)
