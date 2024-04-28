@@ -1,5 +1,7 @@
 package com.example.utilsuser.qihang.two
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
 import android.graphics.Point
@@ -23,6 +25,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.utilsuser.R
 
 class ViewAnimationActivity : AppCompatActivity() {
+    val view: View by lazy {
+        findViewById(R.id.tv)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_music_player)
@@ -33,7 +39,8 @@ class ViewAnimationActivity : AppCompatActivity() {
 //        startMusicPlayer()
 //        translationTest()
 //        characterChange()
-        ballInit()
+//        ballInit()
+        objectAnimatorInit()
     }
 
     class FallingBallEvaluator : TypeEvaluator<Point> {
@@ -49,20 +56,37 @@ class ViewAnimationActivity : AppCompatActivity() {
         }
     }
 
-    private fun ballInit() {
+    private fun objectAnimatorInit() {
+        val ballImg = findViewById<ImageView>(R.id.ball_img2)
+        val btn = findViewById<Button>(R.id.btn)
+        btn.setOnClickListener {
+            ObjectAnimator.ofObject(ballImg, "fallingPos", FallingBallEvaluator(),
+                Point(0, 0), Point(500, 500)).apply {
+                    duration = 2000
+                    start()
+            }
+        }
+    }
+
+    /*private fun ballInit() {
         val ballImg = findViewById<ImageView>(R.id.ball_img)
         val btn = findViewById<Button>(R.id.btn)
         btn.setOnClickListener {
-            ValueAnimator.ofObject(FallingBallEvaluator(), Point(0, 0), Point(500, 500)).apply {
+            ObjectAnimator.ofFloat(ballImg, "translationX", 0f, 200f, -200f, 0f).apply {
+                duration = 2000
+                start()
+            }
+
+            *//*ValueAnimator.ofObject(FallingBallEvaluator(), Point(0, 0), Point(500, 500)).apply {
                 addUpdateListener {
                     val mCurPoint = it.getAnimatedValue() as Point
                     ballImg.layout(mCurPoint.x, mCurPoint.y, mCurPoint.x + ballImg.width, mCurPoint.y + ballImg.height)
                 }
                 duration = 2000
                 start()
-            }
+            }*//*
         }
-    }
+    }*/
 
     class CharEvaluator : TypeEvaluator<Char> {
         override fun evaluate(

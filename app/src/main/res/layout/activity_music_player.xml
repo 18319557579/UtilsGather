@@ -37,10 +37,16 @@
         android:background="#ffff00"
         android:text="Hello qijian"/>-->
 
-    <ImageView
-        android:id="@+id/ball_img"
+    <com.example.utilsuser.qihang.two.FallingBallImageView
+        android:id="@+id/ball_img2"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/circle"/>
+
+    <!--<ImageView
+        android:id="@+id/ball_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/circle"/>-->
 
 </LinearLayout>
