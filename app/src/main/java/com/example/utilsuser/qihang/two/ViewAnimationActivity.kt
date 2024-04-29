@@ -66,11 +66,15 @@ class ViewAnimationActivity : AppCompatActivity() {
                     duration = 2000
                     start()
             }*/
-            AnimatorInflater.loadAnimator(this@ViewAnimationActivity, R.animator.value_animator).apply {
+            /*AnimatorInflater.loadAnimator(this@ViewAnimationActivity, R.animator.value_animator).apply {
                 (this as ValueAnimator).addUpdateListener {
                     val offset = it.getAnimatedValue() as Int
                     ballImg.layout(offset, offset, offset + ballImg.width, offset + ballImg.height)
                 }
+                start()
+            }*/
+            AnimatorInflater.loadAnimator(this@ViewAnimationActivity, R.animator.object_animator).apply {
+                (this as ObjectAnimator).target = ballImg
                 start()
             }
         }
