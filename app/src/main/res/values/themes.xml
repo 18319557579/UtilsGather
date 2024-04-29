@@ -47,4 +47,16 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <!--路径动画-->
+    <style name="MenuStyle">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_gravity">right|bottom</item>
+    </style>
+    <style name="MenuItemStyle">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_gravity">right|bottom</item>
+    </style>
 </resources>

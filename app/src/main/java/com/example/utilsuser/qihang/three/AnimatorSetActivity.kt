@@ -49,9 +49,9 @@ class AnimatorSetActivity : AppCompatActivity() {
 
         //implicit receiver
         animatorSet = AnimatorSet().apply {
-//            playTogether(tv1BgAnimator, tv1TranslateY, tv2TranslateY)
-            play(tv1TranslateY).with(tv2TranslateY)
+            playTogether(tv1BgAnimator, tv2TranslateY)
             duration = 2000
+            setTarget(tv2)
             /*addListener {
 
                 doOnEnd {
