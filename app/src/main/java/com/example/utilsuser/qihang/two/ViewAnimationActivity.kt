@@ -1,5 +1,6 @@
 package com.example.utilsuser.qihang.two
 
+import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.TypeEvaluator
@@ -60,10 +61,17 @@ class ViewAnimationActivity : AppCompatActivity() {
         val ballImg = findViewById<ImageView>(R.id.ball_img2)
         val btn = findViewById<Button>(R.id.btn)
         btn.setOnClickListener {
-            ObjectAnimator.ofObject(ballImg, "fallingPos", FallingBallEvaluator(),
+            /*ObjectAnimator.ofObject(ballImg, "fallingPos", FallingBallEvaluator(),
                 Point(0, 0), Point(500, 500)).apply {
                     duration = 2000
                     start()
+            }*/
+            AnimatorInflater.loadAnimator(this@ViewAnimationActivity, R.animator.value_animator).apply {
+                (this as ValueAnimator).addUpdateListener {
+                    val offset = it.getAnimatedValue() as Int
+                    ballImg.layout(offset, offset, offset + ballImg.width, offset + ballImg.height)
+                }
+                start()
             }
         }
     }
