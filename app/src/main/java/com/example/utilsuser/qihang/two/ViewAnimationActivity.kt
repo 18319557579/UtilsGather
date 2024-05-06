@@ -81,7 +81,7 @@ class ViewAnimationActivity : AppCompatActivity() {
     }
 
     /*private fun ballInit() {
-        val ballImg = findViewById<ImageView>(R.id.ball_img)
+//        val ballImg = findViewById<ImageView>(R.id.ball_img)
         val btn = findViewById<Button>(R.id.btn)
         btn.setOnClickListener {
             ObjectAnimator.ofFloat(ballImg, "translationX", 0f, 200f, -200f, 0f).apply {
