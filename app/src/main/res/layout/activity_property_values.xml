@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".qihang.four.PropertyValuesActivity"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开始"/>
+
+<!--
+    <TextView
+        android:id="@+id/tv_rectangle"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:text="HSF"
+        android:background="#80ff"/>
+-->
+
+    <com.example.utilsuser.qihang.four.TextViewChar
+        android:id="@+id/tv_char"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="8"/>
+
+</LinearLayout>

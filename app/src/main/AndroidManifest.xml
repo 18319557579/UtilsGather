@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather">
         <activity
+            android:name=".qihang.four.PropertyValuesActivity"
+            android:exported="false" />
+        <activity
             android:name=".qihang.three.PathAnimatorActivity"
             android:exported="false" />
         <activity
