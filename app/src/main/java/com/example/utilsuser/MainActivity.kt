@@ -39,6 +39,7 @@ import com.example.utilsgather.source_file.raw.SourceUtil
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsuser.databinding.ActivityMainBinding
+import com.example.utilsuser.qihang.four.KeyFrameActivity
 import com.example.utilsuser.qihang.four.PropertyValuesActivity
 import com.example.utilsuser.qihang.three.AnimatorSetActivity
 import com.example.utilsuser.qihang.three.PathAnimatorActivity
@@ -106,6 +107,9 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去PropertyValuesActivity") {
                     startActivity(Intent(this, PropertyValuesActivity::class.java))
+                },
+                GuideItemEntity("去KeyFrameActivity") {
+                    startActivity(Intent(this, KeyFrameActivity::class.java))
                 },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)
