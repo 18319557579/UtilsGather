@@ -14,11 +14,26 @@
         android:text="开始"
         android:onClick="startClick"/>
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/iv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/phone"/>
+        android:src="@drawable/phone"/>-->
+
+    <TextView
+        android:id="@+id/tv_bg_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tv1"
+        android:background="#8763"/>
+
+    <TextView
+        android:id="@+id/tv_bg_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tv2"
+        android:background="#8763"/>
+
 
 
 </LinearLayout>

@@ -23,7 +23,16 @@ class KeyFrameActivity : AppCompatActivity() {
     }
 
     fun startClick(view: View) {
-        val ivPhone = findViewById<ImageView>(R.id.iv_phone)
+        val tvBg1 = findViewById<TextView>(R.id.tv_bg_1).apply {
+            animate().scaleX(2f);
+        }
+        val tvBg2 = findViewById<TextView>(R.id.tv_bg_2).apply {
+            animate().scaleXBy(2f)
+        }
+
+
+
+        /*val ivPhone = findViewById<ImageView>(R.id.iv_phone)
 
         val frame0 = Keyframe.ofFloat(0f, 0f)
         val frame1 = Keyframe.ofFloat(0.1f, -20f).apply {
@@ -66,7 +75,7 @@ class KeyFrameActivity : AppCompatActivity() {
         ObjectAnimator.ofPropertyValuesHolder(ivPhone, frameHolder, frameHolder2, frameHolder3).apply {
             duration = 3000
             start()
-        }
+        }*/
 
 
     }
