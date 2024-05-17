@@ -8,7 +8,13 @@
     tools:context=".qihang.five.PathMeasureActivity"
     android:orientation="vertical">
 
+<!--
     <com.example.utilsuser.qihang.five.PathMeasureView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+-->
+
+    <com.example.utilsuser.qihang.five.AlipayView
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
