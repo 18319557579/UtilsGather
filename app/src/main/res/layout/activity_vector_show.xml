@@ -23,5 +23,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp">
+        <EditText
+            android:id="@+id/edit"
+            android:hint="点击输入"
+            android:layout_width="150dp"
+            android:layout_height="24dp"
+            android:background="@null"/>
+        <ImageView
+            android:id="@+id/anim_img"
+            android:layout_width="150dp"
+            android:layout_height="24dp"/>
+    </FrameLayout>
+
 
 </LinearLayout>
