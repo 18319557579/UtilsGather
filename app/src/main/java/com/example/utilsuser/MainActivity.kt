@@ -46,6 +46,7 @@ import com.example.utilsuser.qihang.four.KeyFrameActivity
 import com.example.utilsuser.qihang.four.PropertyValuesActivity
 import com.example.utilsuser.qihang.seven.BezierActivity
 import com.example.utilsuser.qihang.seven.BillowWaveActivity
+import com.example.utilsuser.qihang.seven.ShaowActivity
 import com.example.utilsuser.qihang.three.AnimatorSetActivity
 import com.example.utilsuser.qihang.three.PathAnimatorActivity
 import com.example.utilsuser.qihang.three.ValueAnimatorActivity
@@ -130,6 +131,9 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去BillowWaveActivity") {
                     startActivity(Intent(this, BillowWaveActivity::class.java))
+                },
+                GuideItemEntity("去ShaowActivity") {
+                    startActivity(Intent(this, ShaowActivity::class.java))
                 },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)
