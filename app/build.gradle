@@ -45,4 +45,8 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    //因为::mBitmapBG.isLateinit中使用到了反射功能
+    //implementation "org.jetbrains.kotlin:kotlin-reflect:你的Kotlin版本"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.9.20"
 }

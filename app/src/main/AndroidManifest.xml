@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather">
         <activity
+            android:name=".qihang.seven.TelescopeViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".qihang.seven.BlurActivity"
+            android:exported="false" />
+        <activity
             android:name=".qihang.seven.ShaowActivity"
             android:exported="false" />
         <activity
