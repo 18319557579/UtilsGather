@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather">
         <activity
+            android:name=".qihang.seven.BezierActivity"
+            android:exported="false" />
+        <activity
             android:name=".qihang.five.VectorShowActivity"
             android:exported="false" />
         <activity
