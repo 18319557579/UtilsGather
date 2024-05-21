@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather">
         <activity
+            android:name=".qihang.seven.HeadPortraitActivity"
+            android:exported="false" />
+        <activity
             android:name=".qihang.seven.TelescopeViewActivity"
             android:exported="false" />
         <activity

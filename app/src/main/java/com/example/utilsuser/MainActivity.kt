@@ -47,6 +47,7 @@ import com.example.utilsuser.qihang.four.PropertyValuesActivity
 import com.example.utilsuser.qihang.seven.BezierActivity
 import com.example.utilsuser.qihang.seven.BillowWaveActivity
 import com.example.utilsuser.qihang.seven.BlurActivity
+import com.example.utilsuser.qihang.seven.HeadPortraitActivity
 import com.example.utilsuser.qihang.seven.ShaowActivity
 import com.example.utilsuser.qihang.seven.TelescopeViewActivity
 import com.example.utilsuser.qihang.three.AnimatorSetActivity
@@ -142,6 +143,9 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去TelescopeViewActivity") {
                     startActivity(Intent(this, TelescopeViewActivity::class.java))
+                },
+                GuideItemEntity("去HeadPortraitActivity") {
+                    startActivity(Intent(this, HeadPortraitActivity::class.java))
                 },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)
