@@ -17,6 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather">
         <activity
+            android:name=".qihang.eight.EraserViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".qihang.eight.InvertedImageViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".qihang.eight.TwitterViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".qihang.eight.LightBookViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".qihang.eight.PorterDuffXfermodeViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".qihang.seven.HeadPortraitActivity"
             android:exported="false" />
         <activity

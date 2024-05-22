@@ -39,6 +39,11 @@ import com.example.utilsgather.source_file.raw.SourceUtil
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsuser.databinding.ActivityMainBinding
+import com.example.utilsuser.qihang.eight.EraserViewActivity
+import com.example.utilsuser.qihang.eight.InvertedImageViewActivity
+import com.example.utilsuser.qihang.eight.LightBookViewActivity
+import com.example.utilsuser.qihang.eight.PorterDuffXfermodeViewActivity
+import com.example.utilsuser.qihang.eight.TwitterViewActivity
 import com.example.utilsuser.qihang.five.PathMeasureActivity
 import com.example.utilsuser.qihang.five.VectorShowActivity
 import com.example.utilsuser.qihang.four.AnimateLayoutChangesActivity
@@ -146,6 +151,21 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去HeadPortraitActivity") {
                     startActivity(Intent(this, HeadPortraitActivity::class.java))
+                },
+                GuideItemEntity("去PorterDuffXfermodeViewActivity") {
+                    startActivity(Intent(this, PorterDuffXfermodeViewActivity::class.java))
+                },
+                GuideItemEntity("去LightBookViewActivity") {
+                    startActivity(Intent(this, LightBookViewActivity::class.java))
+                },
+                GuideItemEntity("去TwitterViewActivity") {
+                    startActivity(Intent(this, TwitterViewActivity::class.java))
+                },
+                GuideItemEntity("去InvertedImageViewActivity") {
+                    startActivity(Intent(this, InvertedImageViewActivity::class.java))
+                },
+                GuideItemEntity("去EraserViewActivity") {
+                    startActivity(Intent(this, EraserViewActivity::class.java))
                 },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)
