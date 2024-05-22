@@ -43,6 +43,7 @@ import com.example.utilsuser.qihang.eight.EraserViewActivity
 import com.example.utilsuser.qihang.eight.InvertedImageViewActivity
 import com.example.utilsuser.qihang.eight.LightBookViewActivity
 import com.example.utilsuser.qihang.eight.PorterDuffXfermodeViewActivity
+import com.example.utilsuser.qihang.eight.TextWave_DSTINActivity
 import com.example.utilsuser.qihang.eight.TwitterViewActivity
 import com.example.utilsuser.qihang.five.PathMeasureActivity
 import com.example.utilsuser.qihang.five.VectorShowActivity
@@ -166,6 +167,9 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去EraserViewActivity") {
                     startActivity(Intent(this, EraserViewActivity::class.java))
+                },
+                GuideItemEntity("去TextWave_DSTINActivity") {
+                    startActivity(Intent(this, TextWave_DSTINActivity::class.java))
                 },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)

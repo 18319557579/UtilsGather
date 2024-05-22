@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather">
         <activity
+            android:name=".qihang.eight.TextWave_DSTINActivity"
+            android:exported="false" />
+        <activity
             android:name=".qihang.eight.EraserViewActivity"
             android:exported="false" />
         <activity
