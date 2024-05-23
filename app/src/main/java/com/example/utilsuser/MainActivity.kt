@@ -41,6 +41,7 @@ import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsuser.databinding.ActivityMainBinding
 import com.example.utilsuser.qihang.eight.EraserViewActivity
 import com.example.utilsuser.qihang.eight.InvertedImageViewActivity
+import com.example.utilsuser.qihang.eight.IrregularWaveViewActivity
 import com.example.utilsuser.qihang.eight.LightBookViewActivity
 import com.example.utilsuser.qihang.eight.PorterDuffXfermodeViewActivity
 import com.example.utilsuser.qihang.eight.TextWave_DSTINActivity
@@ -50,6 +51,7 @@ import com.example.utilsuser.qihang.five.VectorShowActivity
 import com.example.utilsuser.qihang.four.AnimateLayoutChangesActivity
 import com.example.utilsuser.qihang.four.KeyFrameActivity
 import com.example.utilsuser.qihang.four.PropertyValuesActivity
+import com.example.utilsuser.qihang.nine.SaveLayerUseExampleActivity
 import com.example.utilsuser.qihang.seven.BezierActivity
 import com.example.utilsuser.qihang.seven.BillowWaveActivity
 import com.example.utilsuser.qihang.seven.BlurActivity
@@ -170,6 +172,12 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去TextWave_DSTINActivity") {
                     startActivity(Intent(this, TextWave_DSTINActivity::class.java))
+                },
+                GuideItemEntity("去IrregularWaveViewActivity") {
+                    startActivity(Intent(this, IrregularWaveViewActivity::class.java))
+                },
+                GuideItemEntity("去SaveLayerUseExampleActivity") {
+                    startActivity(Intent(this, SaveLayerUseExampleActivity::class.java))
                 },
                 GuideItemEntity("去UIOperate") {
                     val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)
