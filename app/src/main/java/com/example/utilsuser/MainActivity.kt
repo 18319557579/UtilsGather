@@ -52,12 +52,17 @@ import com.example.utilsuser.qihang.four.AnimateLayoutChangesActivity
 import com.example.utilsuser.qihang.four.KeyFrameActivity
 import com.example.utilsuser.qihang.four.PropertyValuesActivity
 import com.example.utilsuser.qihang.nine.SaveLayerUseExampleActivity
+import com.example.utilsuser.qihang.nine.TelescopeViewZoomInActivity
 import com.example.utilsuser.qihang.seven.BezierActivity
 import com.example.utilsuser.qihang.seven.BillowWaveActivity
 import com.example.utilsuser.qihang.seven.BlurActivity
 import com.example.utilsuser.qihang.seven.HeadPortraitActivity
 import com.example.utilsuser.qihang.seven.ShaowActivity
 import com.example.utilsuser.qihang.seven.TelescopeViewActivity
+import com.example.utilsuser.qihang.ten.CustomDrawableActivity
+import com.example.utilsuser.qihang.ten.GradientDrawableActivity
+import com.example.utilsuser.qihang.ten.RectShapeActivity
+import com.example.utilsuser.qihang.ten.ShapeShaderActivity
 import com.example.utilsuser.qihang.three.AnimatorSetActivity
 import com.example.utilsuser.qihang.three.PathAnimatorActivity
 import com.example.utilsuser.qihang.three.ValueAnimatorActivity
@@ -179,8 +184,25 @@ class MainActivity : CallbackActivity() {
                 GuideItemEntity("去SaveLayerUseExampleActivity") {
                     startActivity(Intent(this, SaveLayerUseExampleActivity::class.java))
                 },
-                GuideItemEntity("去UIOperate") {
-                    val intent = Intent(this@MainActivity, UiOperateEntranceActivity::class.java)
+                GuideItemEntity("去GradientDrawableActivity") {
+                    startActivity(Intent(this, GradientDrawableActivity::class.java))
+                },
+                GuideItemEntity("去RectShapeActivity") {
+                    startActivity(Intent(this, RectShapeActivity::class.java))
+                },
+                GuideItemEntity("去RectShapeActivity") {
+                    startActivity(Intent(this, RectShapeActivity::class.java))
+                },
+                GuideItemEntity("去ShapeShaderActivity") {
+                    val intent = Intent(this@MainActivity, ShapeShaderActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("去TelescopeViewZoomInActivity") {
+                    val intent = Intent(this@MainActivity, TelescopeViewZoomInActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("去CustomDrawableActivity") {
+                    val intent = Intent(this@MainActivity, CustomDrawableActivity::class.java)
                     startActivity(intent)
                 },
                 GuideItemEntity("测试获取应用名") {

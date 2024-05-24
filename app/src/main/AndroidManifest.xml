@@ -17,6 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather">
         <activity
+            android:name=".qihang.ten.CustomDrawableActivity"
+            android:exported="false" />
+        <activity
+            android:name=".qihang.nine.TelescopeViewZoomInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".qihang.ten.ShapeShaderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".qihang.ten.RectShapeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".qihang.ten.GradientDrawableActivity"
+            android:exported="false" />
+        <activity
             android:name=".qihang.nine.SaveLayerUseExampleActivity"
             android:exported="false" />
         <activity

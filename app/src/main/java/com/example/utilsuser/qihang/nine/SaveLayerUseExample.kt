@@ -47,6 +47,5 @@ class SaveLayerUseExample : View {
         canvas.drawRect(100f, 100f, 200f, 200f, mPaint)
 
         canvas.restore()
-
     }
 }

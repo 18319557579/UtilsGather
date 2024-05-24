@@ -50,7 +50,7 @@ class TelescopeView(context: Context, attributeSet: AttributeSet) : View(context
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (::mBitmapBG.isLateinit) {
+        if (::mBitmapBG.isInitialized) {
             mBitmapBG = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             val canvasbg = Canvas(mBitmapBG)
             canvasbg.drawBitmap(mBitmap, null, Rect(0, 0, width, height), mPaint)
