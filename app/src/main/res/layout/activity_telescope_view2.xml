@@ -5,9 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".qihang.nine.TelescopeViewZoomInActivity">
+    tools:context=".qihang.ten.TelescopeViewZoomInActivity">
 
-    <com.example.utilsuser.qihang.nine.TelescopeViewZoomIn
+    <com.example.utilsuser.qihang.ten.TelescopeViewZoomIn
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

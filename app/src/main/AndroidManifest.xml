@@ -20,7 +20,7 @@
             android:name=".qihang.ten.CustomDrawableActivity"
             android:exported="false" />
         <activity
-            android:name=".qihang.nine.TelescopeViewZoomInActivity"
+            android:name=".qihang.ten.TelescopeViewZoomInActivity"
             android:exported="false" />
         <activity
             android:name=".qihang.ten.ShapeShaderActivity"

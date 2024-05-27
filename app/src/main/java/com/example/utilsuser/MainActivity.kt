@@ -4,8 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import com.example.uioperate.UiOperateEntranceActivity
-import com.example.utilsuser.R
 import com.example.utilsgather.application_store.AppStoreUtil
 import com.example.utilsgather.browser.BrowserUtil
 import com.example.utilsgather.context.ApplicationGlobal
@@ -52,7 +50,7 @@ import com.example.utilsuser.qihang.four.AnimateLayoutChangesActivity
 import com.example.utilsuser.qihang.four.KeyFrameActivity
 import com.example.utilsuser.qihang.four.PropertyValuesActivity
 import com.example.utilsuser.qihang.nine.SaveLayerUseExampleActivity
-import com.example.utilsuser.qihang.nine.TelescopeViewZoomInActivity
+import com.example.utilsuser.qihang.ten.TelescopeViewZoomInActivity
 import com.example.utilsuser.qihang.seven.BezierActivity
 import com.example.utilsuser.qihang.seven.BillowWaveActivity
 import com.example.utilsuser.qihang.seven.BlurActivity
