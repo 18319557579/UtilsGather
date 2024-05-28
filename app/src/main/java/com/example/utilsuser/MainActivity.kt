@@ -57,6 +57,7 @@ import com.example.utilsuser.qihang.seven.BlurActivity
 import com.example.utilsuser.qihang.seven.HeadPortraitActivity
 import com.example.utilsuser.qihang.seven.ShaowActivity
 import com.example.utilsuser.qihang.seven.TelescopeViewActivity
+import com.example.utilsuser.qihang.ten.CreateBitmapViewActivity
 import com.example.utilsuser.qihang.ten.CustomDrawableActivity
 import com.example.utilsuser.qihang.ten.GradientDrawableActivity
 import com.example.utilsuser.qihang.ten.RectShapeActivity
@@ -201,6 +202,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去CustomDrawableActivity") {
                     val intent = Intent(this@MainActivity, CustomDrawableActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("去CreateBitmapViewActivity") {
+                    val intent = Intent(this@MainActivity, CreateBitmapViewActivity::class.java)
                     startActivity(intent)
                 },
                 GuideItemEntity("测试获取应用名") {
