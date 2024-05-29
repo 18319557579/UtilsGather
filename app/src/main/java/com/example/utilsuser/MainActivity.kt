@@ -38,6 +38,7 @@ import com.example.utilsgather.string.InfoFromURI
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsuser.databinding.ActivityMainBinding
+import com.example.utilsuser.httpurlconnect.HttpActivity
 import com.example.utilsuser.qihang.eight.EraserViewActivity
 import com.example.utilsuser.qihang.eight.InvertedImageViewActivity
 import com.example.utilsuser.qihang.eight.IrregularWaveViewActivity
@@ -338,6 +339,11 @@ class MainActivity : CallbackActivity() {
                 GuideItemEntity("解析URL") {
                     LogUtil.d(InfoFromURI.justGetResource("https://ucdl.25pp.com/fs08/2024/05/14/9/1_76669abdde68e00075f019cbfaa5d0bf.apk?yingid=web_space&packageid=500959094&did=5ab0d2490bd121b49d2e88b7cd3bca41"))
                     LogUtil.d(InfoFromURI.justGetResource("https://ucdl.25pp.com/fs08/2024/05/14/9/1_76669abdde68e00075f019cbfaa5d0bf.apk"))
+                },
+
+                GuideItemEntity("跳转到网络请求的Activity") {
+                    val intent = Intent(this@MainActivity, HttpActivity::class.java)
+                    startActivity(intent)
                 },
             )
 

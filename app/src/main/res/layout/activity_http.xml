@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".httpurlconnect.HttpActivity"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_start_base"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发起基本请求"/>
+
+
+    <Button
+        android:id="@+id/btn_start_hongyang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="对鸿洋的api发起请求"/>
+
+    <Button
+        android:id="@+id/btn_start_hongyang_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="对鸿洋的api发起请求 post"/>
+
+
+</LinearLayout>
