@@ -30,6 +30,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 原文：https://juejin.cn/post/6844903828538523655#heading-8
+ *
+ * 上面我们通过demo演示了如何上传XML文件和JSON文件，并对二者进行解析。在上传的过程中，Android要写入Content-Length这个请求头，Content-Length就是请求体的字节长度，注意是字节长度，而不是字符长度（汉字等会占用两个字节）。默认情况下，Android为了得到Content-Length的长度，Android会把请求体放到内存中的，直到输出流调用了close方法后，才会读取内存中请求体的字节长度，将其作为请求头Content-Length。当要上传的请求体很大时，这会非常占用内存，为此Android提供了两个方法来解决这个问题。
+ *
+ * setFixedLengthStreamingMode (int contentLength) 如果请求体的大小是知道的，那么可以调用HttpURLConnection的setFixedLengthStreamingMode (int contentLength) 方法，该方法会告诉Android要传输的请求头Content-Length的大小，这样Android就无需读取整个请求体的大小，从而不必一下将请求体全部放到内存中，这样就避免了请求体占用巨大内存的问题。
+ *
+ * setChunkedStreamingMode (int chunkLength) 如果请求体的大小不知道，那么可以调用setChunkedStreamingMode (int chunkLength)方法。该方法将传输的请求体分块传输，即将原始的数据分成多个数据块，chunkLength表示每块传输的字节大小。比如我们要传输的请求体大小是10M，我们将chunkLength设置为1024 * 1024 byte，即1M，那么Android会将请求体分10次传输，每次传输1M，具体的传输规则是：每次传输一个数据块时，首先在一行中写明该数据块的长度，比如1024
+ *  * 1024，然后在后面的一行中写入要传输的数据块的字节数组，再然后是一个空白行，这样第一数据块就这样传输，在空白行之后就是第二个数据块的传输，与第一个数据块的格式一样，直到最后没有数据块要传输了，就在用一行写明要传输的字节为0，这样在服务器端就知道读取完了整个请求体了。
+ * 如果设置的chunkLength的值为0，那么表示Android会使用默认的一个值作为实际的chunkLength。
+ * 使用setChunkedStreamingMode方法的前提是服务器支持分块数据传输，分块数据传输是从HTTP 1.1开始支持的，所以如果你的服务器只支持HTTP 1.0的话，那么不能使用setChunkedStreamingMode方法。
+ */
 public class NetworkActivity extends AppCompatActivity {
     private NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask();
 
