@@ -11,6 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 
 import java.io.BufferedInputStream;
@@ -61,6 +62,8 @@ public class NetworkActivity extends AppCompatActivity {
         public static final String NETWORK_GET = "NETWORK_GET";
         //NETWORK_POST_KEY_VALUE表示用POST发送键值对数据
         public static final String NETWORK_POST_KEY_VALUE = "NETWORK_POST_KEY_VALUE";
+        //发送GET请求，并解析获得的JSON数据
+        public static final String NETWORK_GET_PARSE_JSON = "NETWORK_GET_PARSE_JSON";
         //NETWORK_POST_XML表示用POST发送XML数据
         public static final String NETWORK_POST_XML = "NETWORK_POST_XML";
         //NETWORK_POST_JSON表示用POST发送JSON数据
@@ -78,7 +81,7 @@ public class NetworkActivity extends AppCompatActivity {
             String action = params[0];  //区分类型
 
             try {
-                if (NETWORK_GET.equals(action)) {
+                if (NETWORK_GET.equals(action) || NETWORK_GET_PARSE_JSON.equals(action)) {
                     url = new URL("https://wanandroid.com/article/list/0/json?author=鸿洋");
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
@@ -162,6 +165,10 @@ public class NetworkActivity extends AppCompatActivity {
 
             } else if (NETWORK_POST_KEY_VALUE.equals(action)) {
                 String response = getStringByBytes(responseBody);
+                tvResponseBody.setText(response);
+
+            } else if (NETWORK_GET_PARSE_JSON.equals(action)) {
+                String response = parseJsonResultByBytes(responseBody);
                 tvResponseBody.setText(response);
             }
         }
@@ -248,4 +255,9 @@ public class NetworkActivity extends AppCompatActivity {
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
+    private String parseJsonResultByBytes(byte[] bytes) {
+        String jsonString = getStringByBytes(bytes);
+        ArticleBean articleBean = JsonParser.parse(jsonString);
+        return articleBean.toString();
+    }
 }

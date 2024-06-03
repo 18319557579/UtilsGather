@@ -170,6 +170,9 @@ public class HttpActivity extends AppCompatActivity {
             case "get":
                 myIntent.putExtra("action", NetworkActivity.NetworkAsyncTask.NETWORK_GET);
                 break;
+            case "get_parse_json":
+                myIntent.putExtra("action", NetworkActivity.NetworkAsyncTask.NETWORK_GET_PARSE_JSON);
+                break;
             case "post":
                 myIntent.putExtra("action", NetworkActivity.NetworkAsyncTask.NETWORK_POST_KEY_VALUE);
                 break;
