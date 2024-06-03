@@ -36,7 +36,8 @@
         android:id="@+id/btn_start_base"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="发起基本请求"/>
+        android:text="发起基本请求"
+        android:layout_marginTop="15dp"/>
 
 
     <Button
@@ -50,6 +51,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="对鸿洋的api发起请求 post"/>
+
+    <Button
+        android:id="@+id/btn_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="简单下载"
+        android:layout_marginTop="15dp"
+        android:onClick="simpleDownload"/>
 
 
 </LinearLayout>
