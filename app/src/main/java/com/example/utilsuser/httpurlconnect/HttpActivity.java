@@ -1,5 +1,6 @@
 package com.example.utilsuser.httpurlconnect;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -159,5 +160,21 @@ public class HttpActivity extends AppCompatActivity {
                 }).start();
             }
         });
+    }
+
+    public void jumpNetworkActivity(View view) {
+        Intent myIntent = new Intent(this, NetworkActivity.class);
+
+        String tag = (String) view.getTag();
+        switch (tag) {
+            case "get":
+                myIntent.putExtra("action", NetworkActivity.NetworkAsyncTask.NETWORK_GET);
+                break;
+            case "post":
+                myIntent.putExtra("action", NetworkActivity.NetworkAsyncTask.NETWORK_POST_KEY_VALUE);
+                break;
+        }
+
+        startActivity(myIntent);
     }
 }

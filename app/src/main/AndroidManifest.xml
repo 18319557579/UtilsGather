@@ -7,8 +7,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".application.MyApplication"
@@ -19,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".httpurlconnect.NetworkActivity"
+            android:exported="false" />
         <activity
             android:name=".httpurlconnect.HttpActivity"
             android:exported="false" />

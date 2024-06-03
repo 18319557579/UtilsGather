@@ -9,6 +9,22 @@
     android:orientation="vertical">
 
     <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转 NetworkActivity（get）"
+        android:onClick="jumpNetworkActivity"
+        android:tag="get"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转 NetworkActivity（post）"
+        android:onClick="jumpNetworkActivity"
+        android:tag="post"/>
+
+
+
+    <Button
         android:id="@+id/btn_start_base"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
