@@ -19,6 +19,9 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".sqlite.SQLiteActivity"
+            android:exported="false" />
+        <activity
             android:name=".httpurlconnect.juejin_zhangfeng.JueJInZhangFengActivity"
             android:exported="false" />
         <activity

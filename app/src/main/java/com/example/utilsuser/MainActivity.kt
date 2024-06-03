@@ -68,6 +68,7 @@ import com.example.utilsuser.qihang.three.AnimatorSetActivity
 import com.example.utilsuser.qihang.three.PathAnimatorActivity
 import com.example.utilsuser.qihang.three.ValueAnimatorActivity
 import com.example.utilsuser.qihang.two.ViewAnimationActivity
+import com.example.utilsuser.sqlite.SQLiteActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -343,6 +344,10 @@ class MainActivity : CallbackActivity() {
 
                 GuideItemEntity("跳转到网络请求的Activity") {
                     val intent = Intent(this@MainActivity, HttpActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("跳转到SQLite的Activity") {
+                    val intent = Intent(this@MainActivity, SQLiteActivity::class.java)
                     startActivity(intent)
                 },
             )

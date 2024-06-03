@@ -65,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="去JueJInZhangFengActivity"
-        android:onClick="jumpJueJInZhangFengActivity"/>
+        android:onClick="jumpJueJInZhangFengActivity"
+        android:layout_marginTop="15dp"/>
 
 </LinearLayout>
