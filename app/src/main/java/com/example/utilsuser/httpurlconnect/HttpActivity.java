@@ -14,6 +14,7 @@ import com.example.utilsgather.format_trans.FormatTransfer;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 import com.example.utilsuser.httpurlconnect.jianshu_Baymax_zgl.HttpUrlConnectionAsyncTask;
+import com.example.utilsuser.httpurlconnect.juejin_zhangfeng.JueJInZhangFengActivity;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -206,5 +207,10 @@ public class HttpActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    public void jumpJueJInZhangFengActivity(View view) {
+        Intent myIntent = new Intent(this, JueJInZhangFengActivity.class);
+        startActivity(myIntent);
     }
 }

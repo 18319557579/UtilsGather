@@ -61,4 +61,10 @@
         android:onClick="simpleDownload"/>
 
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="去JueJInZhangFengActivity"
+        android:onClick="jumpJueJInZhangFengActivity"/>
+
 </LinearLayout>
