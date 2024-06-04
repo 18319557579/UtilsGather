@@ -1,6 +1,7 @@
 package com.example.utilsuser.file;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsgather.permission.permissionX.ApplyResultCallback;
 import com.example.utilsgather.permission.permissionX.PermissionX;
 import com.example.utilsuser.R;
+import com.example.utilsuser.file.list.ListActivity;
 
 import java.io.File;
 import java.util.List;
@@ -56,5 +58,9 @@ public class FileActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void jumpListActivity(View view) {
+        startActivity(new Intent(this, ListActivity.class));
     }
 }

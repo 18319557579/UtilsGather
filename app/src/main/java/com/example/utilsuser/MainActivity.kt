@@ -19,6 +19,7 @@ import com.example.utilsuser.cutomerview.one_six.CustomView1_6Activity
 
 import com.example.utilsgather.encoding.Base64Util
 import com.example.utilsgather.exit.ExitUtil
+import com.example.utilsgather.format_trans.FormatTransfer
 import com.example.utilsgather.handler.HandlerUI
 import com.example.utilsgather.jump.JumpActivityUtils
 import com.example.utilsgather.lifecycle_callback.CallbackActivity
@@ -354,6 +355,10 @@ class MainActivity : CallbackActivity() {
                 GuideItemEntity("跳转到FileActivity") {
                     val intent = Intent(this@MainActivity, FileActivity::class.java)
                     startActivity(intent)
+                },
+                GuideItemEntity("格式化时间") {
+                    LogUtil.d("格式化的时间: ${FormatTransfer.timeStampFormat(System.currentTimeMillis())}")
+
                 },
             )
 
