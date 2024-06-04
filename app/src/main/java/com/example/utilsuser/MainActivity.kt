@@ -38,6 +38,7 @@ import com.example.utilsgather.string.InfoFromURI
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsuser.databinding.ActivityMainBinding
+import com.example.utilsuser.file.FileActivity
 import com.example.utilsuser.httpurlconnect.HttpActivity
 import com.example.utilsuser.qihang.eight.EraserViewActivity
 import com.example.utilsuser.qihang.eight.InvertedImageViewActivity
@@ -348,6 +349,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("跳转到SQLite的Activity") {
                     val intent = Intent(this@MainActivity, SQLiteActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("跳转到FileActivity") {
+                    val intent = Intent(this@MainActivity, FileActivity::class.java)
                     startActivity(intent)
                 },
             )
