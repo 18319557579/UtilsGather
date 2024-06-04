@@ -2,6 +2,7 @@ package com.example.utilsuser.httpurlconnect.jianshu_Baymax_zgl;
 
 import android.os.AsyncTask;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +24,12 @@ public class HttpUrlConnectionAsyncTask extends AsyncTask<Integer, Long, String>
 
     @Override
     protected String doInBackground(Integer... integers) {
+        File apkFile = new File(filePath);
+        File parentFile = apkFile.getParentFile();
+        if (! parentFile.exists()) {
+            parentFile.mkdirs();
+        }
+
         HttpURLConnection connection = null;
         InputStream inputStream = null;
         OutputStream outputStream = null;
@@ -50,6 +57,7 @@ public class HttpUrlConnectionAsyncTask extends AsyncTask<Integer, Long, String>
 
         } catch (Exception e) {
             e.printStackTrace();
+            result = e.toString();
 
         } finally {
             if (outputStream != null) {

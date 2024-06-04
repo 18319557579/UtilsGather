@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +39,8 @@ public class ListActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(linearLayoutManager);
 
+        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
         FileInfoAdapter fileInfoAdapter = new FileInfoAdapter(fileInfoBeans);
         rv.setAdapter(fileInfoAdapter);
     }
@@ -46,6 +49,17 @@ public class ListActivity extends AppCompatActivity {
         File internalFile = getFilesDir();
         File downloadFile = new File(internalFile, "dl");
         LogUtil.d("打印下载路径: " + downloadFile);
+
+        File[] listFiles = downloadFile.listFiles();
+        for (File file: listFiles) {
+            FileInfoBean bean = new FileInfoBean();
+            bean.setName(file.getName());
+            bean.setPath(file.getPath());
+            bean.setLength(file.length());
+            bean.setLastModified(file.lastModified());
+
+            fileInfoBeans.add(bean);
+        }
     }
 
 }

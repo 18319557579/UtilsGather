@@ -63,4 +63,13 @@ public class FileActivity extends AppCompatActivity {
     public void jumpListActivity(View view) {
         startActivity(new Intent(this, ListActivity.class));
     }
+
+    public void createParentDirectory(View view) {
+        String apkFilePath = "/data/user/0/com.example.utilsuser/files/dl/asdg.apk";
+        File apkFile = new File(apkFilePath);
+        File parentFile = apkFile.getParentFile();
+        if (! parentFile.exists()) {
+            parentFile.mkdirs();
+        }
+    }
 }

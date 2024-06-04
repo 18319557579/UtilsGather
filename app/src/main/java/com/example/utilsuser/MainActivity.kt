@@ -343,6 +343,10 @@ class MainActivity : CallbackActivity() {
                     LogUtil.d(InfoFromURI.justGetResource("https://ucdl.25pp.com/fs08/2024/05/14/9/1_76669abdde68e00075f019cbfaa5d0bf.apk?yingid=web_space&packageid=500959094&did=5ab0d2490bd121b49d2e88b7cd3bca41"))
                     LogUtil.d(InfoFromURI.justGetResource("https://ucdl.25pp.com/fs08/2024/05/14/9/1_76669abdde68e00075f019cbfaa5d0bf.apk"))
                 },
+                GuideItemEntity("格式化时间") {
+                    LogUtil.d("格式化的时间: ${FormatTransfer.timeStampFormat(System.currentTimeMillis())}")
+
+                },
 
                 GuideItemEntity("跳转到网络请求的Activity") {
                     val intent = Intent(this@MainActivity, HttpActivity::class.java)
@@ -356,10 +360,7 @@ class MainActivity : CallbackActivity() {
                     val intent = Intent(this@MainActivity, FileActivity::class.java)
                     startActivity(intent)
                 },
-                GuideItemEntity("格式化时间") {
-                    LogUtil.d("格式化的时间: ${FormatTransfer.timeStampFormat(System.currentTimeMillis())}")
 
-                },
             )
 
         )

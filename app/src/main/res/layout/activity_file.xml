@@ -23,6 +23,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="创建父目录"
+        android:onClick="createParentDirectory"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="跳转为ListActivity"
         android:onClick="jumpListActivity"/>
 
