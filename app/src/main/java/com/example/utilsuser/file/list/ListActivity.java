@@ -1,6 +1,7 @@
 package com.example.utilsuser.file.list;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.utilsgather.file_system.FileInfoGainUtil;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
+import com.example.utilsuser.httpurlconnect.juejin_zhangfeng.DownloadManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,6 +62,37 @@ public class ListActivity extends AppCompatActivity {
 
             fileInfoBeans.add(bean);
         }
+    }
+
+    public void downloadJiZhang(View view) {
+        DownloadManager downloadManager = new DownloadManager();
+        downloadManager.setOriginUrl("https://ucdl.25pp.com/fs08/2024/01/08/11/110_54c27c8bd85e0b3f44e7d5491b5aa6a0.apk?nrd=0&fname=%E8%AE%B0%E8%B4%A6%E6%9C%AC&productid=2011&packageid=401462537&pkg=com.bookkp.accountzy&vcode=8&yingid=wdj_web&pos=wdj_web%2Fdetail_normal_dl%2F0&appid=8324843&apprd=8324843&iconUrl=http%3A%2F%2Fandroid-artworks.25pp.com%2Ffs08%2F2024%2F01%2F08%2F9%2F110_d9d998c600f8c061a079c4f73fbc1016_con.png&did=5587ef1782b1f7f31a42ced9a659c49f&md5=78631c8544971195b950d14771843514");
+        downloadManager.setFilePath(new File("/data/user/0/com.example.utilsuser/files/dl/jizhang.apk"));
+        downloadManager.setDownloadListener(new DownloadManager.DownloadListener() {
+            @Override
+            public void downloading(long now, long total) {
+                LogUtil.d("下载中: now: " + now + ", total:" + total);
+            }
+
+            @Override
+            public void onSuccess(int whatCase) {
+                LogUtil.d("下载成功: " + whatCase);
+            }
+
+            @Override
+            public void onFail(String failDesc) {
+                LogUtil.d("下载失败: " + failDesc);
+            }
+        });
+        new Thread(downloadManager).start();
+    }
+    public void downloadDouYin(View view) {
+    }
+    public void downloadWeiXin(View view) {
+    }
+    public void downloadXiaoHongShu(View view) {
+    }
+    public void downloadPiPiXia(View view) {
     }
 
 }

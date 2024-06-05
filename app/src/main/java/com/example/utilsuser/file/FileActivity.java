@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -12,6 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.utilsgather.file_system.FileOperationUtil;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsgather.permission.permissionX.ApplyResultCallback;
 import com.example.utilsgather.permission.permissionX.PermissionX;
@@ -71,5 +73,11 @@ public class FileActivity extends AppCompatActivity {
         if (! parentFile.exists()) {
             parentFile.mkdirs();
         }
+    }
+
+    public void addFilePrefix(View view) {
+        String apkFilePath = "/data/user/0/com.example.utilsuser/files/dl/asdg.apk";
+        File modifyName = FileOperationUtil.getFileWithPrefix(new File(apkFilePath), "finished-");
+        LogUtil.d("修改后的路径: " + modifyName.getPath());
     }
 }
