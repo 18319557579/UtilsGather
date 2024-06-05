@@ -20,6 +20,9 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".file.list.independent.IndependentActivity"
+            android:exported="false" />
+        <activity
             android:name=".file.list.ListActivity"
             android:exported="false" />
         <activity

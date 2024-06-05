@@ -83,6 +83,11 @@ public class ListActivity extends AppCompatActivity {
             public void onFail(String failDesc) {
                 LogUtil.d("下载失败: " + failDesc);
             }
+
+            @Override
+            public void onPause() {
+
+            }
         });
         new Thread(downloadManager).start();
     }
@@ -104,6 +109,11 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onFail(String failDesc) {
                 LogUtil.d("下载失败: " + failDesc);
+            }
+
+            @Override
+            public void onPause() {
+
             }
         });
         new Thread(downloadManager).start();

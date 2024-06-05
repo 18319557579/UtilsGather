@@ -19,6 +19,7 @@ import com.example.utilsgather.permission.permissionX.ApplyResultCallback;
 import com.example.utilsgather.permission.permissionX.PermissionX;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.ListActivity;
+import com.example.utilsuser.file.list.independent.IndependentActivity;
 
 import java.io.File;
 import java.util.List;
@@ -79,5 +80,9 @@ public class FileActivity extends AppCompatActivity {
         String apkFilePath = "/data/user/0/com.example.utilsuser/files/dl/asdg.apk";
         File modifyName = FileOperationUtil.getFileWithPrefix(new File(apkFilePath), "finished-");
         LogUtil.d("修改后的路径: " + modifyName.getPath());
+    }
+
+    public void jumpIndependentActivity(View view) {
+        startActivity(new Intent(this, IndependentActivity.class));
     }
 }

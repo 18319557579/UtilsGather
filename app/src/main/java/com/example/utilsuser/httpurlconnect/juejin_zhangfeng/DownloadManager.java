@@ -18,6 +18,8 @@ public class DownloadManager implements Runnable {
     //成功的文件名
     private File finishedFile;
 
+    private boolean paused;
+
     public void setOriginUrl(String originUrl) {
         this.originUrl = originUrl;
     }
@@ -28,6 +30,10 @@ public class DownloadManager implements Runnable {
 
     public void setDownloadListener(DownloadListener downloadListener) {
         this.downloadListener = downloadListener;
+    }
+
+    public void pause() {
+        paused = true;
     }
 
     @Override
@@ -51,6 +57,7 @@ public class DownloadManager implements Runnable {
             //是从开头标记的位置算的文件长度，所以可能是文件的一部分
             long originFileLength = conn.getContentLength();
             LogUtil.d("打印源文件长度: " + originFileLength);
+            long wholeLength = originFileLength + startLocation;
 
             raf = new RandomAccessFile(filePath, "rwd");
             raf.seek(startLocation);
@@ -63,7 +70,12 @@ public class DownloadManager implements Runnable {
                     raf.write(buf, 0, len);
                     startLocation += len;
 
-                    downloadListener.downloading(startLocation, originFileLength);
+                    downloadListener.downloading(startLocation, wholeLength);
+
+                    if (paused) {
+                        downloadListener.onPause();
+                        return;
+                    }
                 }
             }
 
@@ -132,5 +144,6 @@ public class DownloadManager implements Runnable {
         void downloading(long now, long total);
         void onSuccess(int whatCase);
         void onFail(String failDesc);
+        void onPause();
     }
 }
