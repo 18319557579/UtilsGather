@@ -61,7 +61,8 @@
         android:text="清除"
         app:layout_constraintRight_toLeftOf="@id/btn_inde_pause"
         app:layout_constraintTop_toBottomOf="@id/tv_inde_file_last_modified"
-        android:layout_marginRight="5dp"/>
+        android:layout_marginRight="5dp"
+        android:enabled="false"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

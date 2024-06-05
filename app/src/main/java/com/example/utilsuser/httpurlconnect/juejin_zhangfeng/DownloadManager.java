@@ -67,15 +67,15 @@ public class DownloadManager implements Runnable {
                 byte[] buf = new byte[1024 * 4];
                 int len = 0;
                 while ((len = is.read(buf)) != -1) {
-                    raf.write(buf, 0, len);
-                    startLocation += len;
-
-                    downloadListener.downloading(startLocation, wholeLength);
-
                     if (paused) {
                         downloadListener.onPause();
                         return;
                     }
+
+                    raf.write(buf, 0, len);
+                    startLocation += len;
+
+                    downloadListener.downloading(startLocation, wholeLength);
                 }
             }
 

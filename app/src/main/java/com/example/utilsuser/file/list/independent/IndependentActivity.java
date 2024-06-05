@@ -48,36 +48,7 @@ public class IndependentActivity extends AppCompatActivity {
         btn_inde_clear = findViewById(R.id.btn_inde_clear);
         pb_downloading = findViewById(R.id.pb_downloading);
 
-
-        independentBean = new IndependentBean();
-        independentBean.setUrl("https://ucdl.25pp.com/fs08/2024/05/31/4/1_b5ad5326678f8ae0fc218febcd525bc4.apk?nrd=0&fname=%E5%B0%8F%E7%BA%A2%E4%B9%A6&productid=2011&packageid=401600585&pkg=com.xingin.xhs&vcode=8381512&yingid=wdj_web&pos=wdj_web%2Fdetail_normal_dl%2F0&appid=6233739&apprd=6233739&iconUrl=http%3A%2F%2Fandroid-artworks.25pp.com%2Ffs08%2F2024%2F06%2F03%2F11%2F110_0d9fd027b032ec1f9912aefdb52c3e15_con.png&did=1f9702bdc0908ef80ca5d58376f1a98c&md5=ac107f06d6f063a91755f1c3b6ff6f44");
-        independentBean.setPath("/data/user/0/com.example.utilsuser/files/dl/xiaohongshu.apk");
-
-        File xiaohongshuFile = new File(independentBean.getPath());
-        File finishedFile = FileOperationUtil.getFileWithPrefix(xiaohongshuFile, "finished-");
-        if (finishedFile.exists()) {
-            independentBean.setName(finishedFile.getName());
-            independentBean.setLength(finishedFile.length());
-            independentBean.setLastModified(finishedFile.lastModified());
-            btn_inde_pause.setEnabled(false);
-
-        } else if (xiaohongshuFile.exists()) {
-            independentBean.setName(xiaohongshuFile.getName());
-            independentBean.setLength(xiaohongshuFile.length());
-            independentBean.setLastModified(xiaohongshuFile.lastModified());
-
-
-        }
-
-        tv_inde_file_name.setText(independentBean.getName());
-        tv_inde_file_path.setText(independentBean.getPath());
-
-        if (independentBean.getLength() != 0L)
-            tv_inde_file_length.setText(FormatTransfer.byteFormat(independentBean.getLength()));
-
-        if (independentBean.getLastModified() != 0L)
-            tv_inde_file_last_modified.setText(FormatTransfer.timeStampFormat(independentBean.getLastModified()));
-
+        loadLocalInfo();
 
         btn_inde_pause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +64,88 @@ public class IndependentActivity extends AppCompatActivity {
                 }
             }
         });
+        btn_inde_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (status == 1) {
+                    downloadManager.pause();
+                    status = 0;
+                }
+
+                File xiaohongshuFile = new File(independentBean.getPath());
+                File finishedFile = FileOperationUtil.getFileWithPrefix(xiaohongshuFile, "finished-");
+                if (finishedFile.exists()) {
+                    finishedFile.delete();
+                }
+                if (xiaohongshuFile.exists()) {
+                    xiaohongshuFile.delete();
+                }
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(500);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    loadLocalInfo();
+                                }
+                            });
+
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }).start();
+
+            }
+        });
+    }
+
+    private void loadLocalInfo() {
+        LogUtil.d("重新load本地的信息");
+
+        independentBean = new IndependentBean();
+        independentBean.setUrl("https://ucdl.25pp.com/fs08/2024/05/31/4/1_b5ad5326678f8ae0fc218febcd525bc4.apk?nrd=0&fname=%E5%B0%8F%E7%BA%A2%E4%B9%A6&productid=2011&packageid=401600585&pkg=com.xingin.xhs&vcode=8381512&yingid=wdj_web&pos=wdj_web%2Fdetail_normal_dl%2F0&appid=6233739&apprd=6233739&iconUrl=http%3A%2F%2Fandroid-artworks.25pp.com%2Ffs08%2F2024%2F06%2F03%2F11%2F110_0d9fd027b032ec1f9912aefdb52c3e15_con.png&did=1f9702bdc0908ef80ca5d58376f1a98c&md5=ac107f06d6f063a91755f1c3b6ff6f44");
+        independentBean.setPath("/data/user/0/com.example.utilsuser/files/dl/xiaohongshu.apk");
+
+        File xiaohongshuFile = new File(independentBean.getPath());
+        File finishedFile = FileOperationUtil.getFileWithPrefix(xiaohongshuFile, "finished-");
+        if (finishedFile.exists()) {
+            independentBean.setName(finishedFile.getName());
+            independentBean.setLength(finishedFile.length());
+            independentBean.setLastModified(finishedFile.lastModified());
+            btn_inde_pause.setEnabled(false);
+            btn_inde_clear.setEnabled(true);
+
+        } else if (xiaohongshuFile.exists()) {
+            independentBean.setName(xiaohongshuFile.getName());
+            independentBean.setLength(xiaohongshuFile.length());
+            independentBean.setLastModified(xiaohongshuFile.lastModified());
+            btn_inde_pause.setEnabled(true);
+            btn_inde_clear.setEnabled(true);
+
+        } else {
+            btn_inde_pause.setEnabled(true);
+            btn_inde_clear.setEnabled(false);
+        }
+
+        tv_inde_file_name.setText(independentBean.getName());
+        tv_inde_file_path.setText(independentBean.getPath());
+
+        if (independentBean.getLength() == 0L) {
+            tv_inde_file_length.setText(null);
+        } else {
+            tv_inde_file_length.setText(FormatTransfer.byteFormat(independentBean.getLength()));
+        }
+
+        if (independentBean.getLastModified() == 0L) {
+            tv_inde_file_last_modified.setText(null);
+        } else {
+            tv_inde_file_last_modified.setText(FormatTransfer.timeStampFormat(independentBean.getLastModified()));
+        }
+
     }
 
     private void startDownload() {
@@ -116,6 +169,8 @@ public class IndependentActivity extends AppCompatActivity {
 
                         int progress = (int) (now * 100 / total);
                         pb_downloading.setProgress(progress);
+
+                        btn_inde_clear.setEnabled(true);
                     }
                 });
             }
@@ -136,6 +191,13 @@ public class IndependentActivity extends AppCompatActivity {
             @Override
             public void onFail(String failDesc) {
                 LogUtil.d("下载失败: " + failDesc);
+                status = 0;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        btn_inde_pause.setText("继续");
+                    }
+                });
             }
 
             @Override
