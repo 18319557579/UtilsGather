@@ -87,6 +87,26 @@ public class ListActivity extends AppCompatActivity {
         new Thread(downloadManager).start();
     }
     public void downloadDouYin(View view) {
+        DownloadManager downloadManager = new DownloadManager();
+        downloadManager.setOriginUrl("https://ucdl.25pp.com/fs08/2024/05/28/8/120_1520704cba97e878685c716c5dd89961.apk?nrd=0&fname=%E6%8A%96%E9%9F%B3&productid=2011&packageid=500960169&pkg=com.ss.android.ugc.aweme&vcode=300101&yingid=wdj_web&pos=wdj_web%2Fdetail_normal_dl%2F0&appid=7461948&apprd=7461948&iconUrl=http%3A%2F%2Fandroid-artworks.25pp.com%2Ffs08%2F2024%2F05%2F29%2F0%2F110_948e6c5440768f9a40ddaf6036045056_con.png&did=6499240c97db2fab01ff289f059dbb92&md5=17dded2bed52cb677eb31ab8f3df33b6");
+        downloadManager.setFilePath(new File("/data/user/0/com.example.utilsuser/files/dl/douyin.apk"));
+        downloadManager.setDownloadListener(new DownloadManager.DownloadListener() {
+            @Override
+            public void downloading(long now, long total) {
+                LogUtil.d("下载中: now: " + now + ", total:" + total);
+            }
+
+            @Override
+            public void onSuccess(int whatCase) {
+                LogUtil.d("下载成功: " + whatCase);
+            }
+
+            @Override
+            public void onFail(String failDesc) {
+                LogUtil.d("下载失败: " + failDesc);
+            }
+        });
+        new Thread(downloadManager).start();
     }
     public void downloadWeiXin(View view) {
     }
