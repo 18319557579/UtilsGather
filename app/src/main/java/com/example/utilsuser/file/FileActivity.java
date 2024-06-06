@@ -19,6 +19,7 @@ import com.example.utilsgather.permission.permissionX.ApplyResultCallback;
 import com.example.utilsgather.permission.permissionX.PermissionX;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.ListActivity;
+import com.example.utilsuser.file.list.database.DownloadTaskActivity;
 import com.example.utilsuser.file.list.independent.IndependentActivity;
 
 import java.io.File;
@@ -84,5 +85,9 @@ public class FileActivity extends AppCompatActivity {
 
     public void jumpIndependentActivity(View view) {
         startActivity(new Intent(this, IndependentActivity.class));
+    }
+
+    public void jumpDownloadTaskActivity(View view) {
+        startActivity(new Intent(this, DownloadTaskActivity.class));
     }
 }

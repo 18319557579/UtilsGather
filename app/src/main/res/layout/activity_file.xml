@@ -46,6 +46,11 @@
         android:text="跳转为IndependentActivity"
         android:onClick="jumpIndependentActivity"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转 DownloadTaskActivity"
+        android:onClick="jumpDownloadTaskActivity"/>
 
 
 </LinearLayout>
