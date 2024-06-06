@@ -20,4 +20,54 @@
         android:text="创建数据库 版本2"
         android:onClick="createDB2"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="插入数据"
+        android:onClick="insertData"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="更新数据"
+        android:onClick="updateData"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="删除数据"
+        android:onClick="deleteData"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查询数据"
+        android:onClick="queryData"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="插入数据 execSQL"
+        android:onClick="insertDataExecSQL"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="更新数据 execSQL"
+        android:onClick="updateDataExecSQL"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="删除数据 execSQL"
+        android:onClick="deleteDataExecSQL"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查询数据 execSQL"
+        android:onClick="queryDataExecSQL"/>
+
+
+
 </LinearLayout>
