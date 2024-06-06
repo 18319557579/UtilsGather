@@ -20,7 +20,12 @@ public class SQLiteActivity extends AppCompatActivity {
     }
 
     public void createDB(View view) {
-        MyDatabaseHelper dbHelper = new MyDatabaseHelper(this, "BookStore2.db", 1);
+        MyDatabaseHelper dbHelper = new MyDatabaseHelper(this, "BookStore.db", 1);
+        dbHelper.getWritableDatabase();
+    }
+
+    public void createDB2(View view) {
+        MyDatabaseHelper dbHelper = new MyDatabaseHelper(this, "BookStore.db", 2);
         dbHelper.getWritableDatabase();
     }
 }
