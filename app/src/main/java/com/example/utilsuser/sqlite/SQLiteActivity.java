@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -152,5 +153,29 @@ public class SQLiteActivity extends AppCompatActivity {
         cursor.close();
 
         dbHelper.close();
+    }
+
+    public void useTransaction(View view) {
+        MyDatabaseHelper dbHelper = new MyDatabaseHelper(this, "BookStore.db", 2);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            db.execSQL("delete from Book where pages < ?",
+                    new String[]{"500"});
+            if (false) {
+                throw new NullPointerException();
+            }
+            db.execSQL("insert into Book (name, author, pages, price) values(?, ?, ?, ?)",
+                    new String[]{"幸福的勇气", "岸见一郎", "990", "178.00"});
+            db.setTransactionSuccessful();
+
+        } catch (Exception e) {
+            LogUtil.d("错误: " + e);
+
+        } finally {
+            db.endTransaction();
+        }
+
     }
 }

@@ -68,6 +68,11 @@
         android:text="查询数据 execSQL"
         android:onClick="queryDataExecSQL"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用事务"
+        android:onClick="useTransaction"/>
 
 
 </LinearLayout>
