@@ -1,23 +1,13 @@
 package com.example.utilsuser.file.list.database;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
-import com.example.utilsuser.file.list.database.network.NetworkCreateFile;
-import com.example.utilsuser.httpurlconnect.juejin_zhangfeng.DownloadManager;
-
-import java.io.File;
-import java.util.concurrent.CountDownLatch;
 
 public class DownloadTaskActivity extends AppCompatActivity {
 
