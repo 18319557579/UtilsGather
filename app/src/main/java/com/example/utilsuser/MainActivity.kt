@@ -70,6 +70,7 @@ import com.example.utilsuser.qihang.three.AnimatorSetActivity
 import com.example.utilsuser.qihang.three.PathAnimatorActivity
 import com.example.utilsuser.qihang.three.ValueAnimatorActivity
 import com.example.utilsuser.qihang.two.ViewAnimationActivity
+import com.example.utilsuser.service.MyServiceActivity
 import com.example.utilsuser.sqlite.SQLiteActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -358,6 +359,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("跳转到FileActivity") {
                     val intent = Intent(this@MainActivity, FileActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("跳转到 MyServiceActivity") {
+                    val intent = Intent(this@MainActivity, MyServiceActivity::class.java)
                     startActivity(intent)
                 },
 
