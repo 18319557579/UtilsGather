@@ -54,17 +54,17 @@ public class CreateFileNetwork {
                     downloadTaskBean.setCurrentLength(0L);
                     downloadTaskBean.setTotalLength(len);
 
+                    downloadTaskBean.setUrl(downloadUrl);
+                    downloadTaskBean.setPath(file.getPath());
+
                     //数据库
                     long id = DownloadTaskDao.newInstance().insertTask(downloadTaskBean);
                     downloadTaskBean.setId((int) id);
-
-                    downloadTaskBean.setUrl(downloadUrl);
-                    downloadTaskBean.setPath(file.getPath());
                 }
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.d("创建数据库的时候出错 " + e.toString());
         } finally {
             if (conn != null)
                 conn.disconnect();

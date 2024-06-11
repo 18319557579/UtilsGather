@@ -21,6 +21,8 @@ public class DownloadTaskDBHelper extends SQLiteOpenHelper {
         return mDownloadTaskDBHelper;
     }
 
+    //Field
+    public static final String FIELD_ID = "id";
     public static final String FIELD_URL = "url";
     public static final String FIELD_PATH = "path";
     public static final String FIELD_CURRENT_LENGTH = "current_length";
@@ -28,14 +30,17 @@ public class DownloadTaskDBHelper extends SQLiteOpenHelper {
     public static final String FIELD_CREATE_TIME = "create_time";
     public static final String FIELD_SHOW_NAME = "show_name";
 
-    private static final String createTaskTable = "create table Task (" +
-            "id integer primary key autoincrement," +
-            "{0} text," +
-            "{1} text," +
-            "{2} long," +
-            "{3} long," +
+    //Table
+    public static final String TABLE_TASK = "Task";
+
+    private static final String createTaskTable = "create table {0} (" +
+            "{1} integer primary key autoincrement," +
+            "{2} text," +
+            "{3} text," +
             "{4} long," +
-            "{5} text)";
+            "{5} long," +
+            "{6} long," +
+            "{7} text)";
 
     public DownloadTaskDBHelper(@Nullable Context context, @Nullable String name, int version) {
         super(context, name, null, version);
@@ -43,8 +48,8 @@ public class DownloadTaskDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(MessageFormat.format(createTaskTable,
-                FIELD_URL, FIELD_PATH, FIELD_CURRENT_LENGTH, FIELD_TOTAL_LENGTH, FIELD_CREATE_TIME, FIELD_SHOW_NAME));
+        db.execSQL(MessageFormat.format(createTaskTable, TABLE_TASK,
+                FIELD_ID, FIELD_URL, FIELD_PATH, FIELD_CURRENT_LENGTH, FIELD_TOTAL_LENGTH, FIELD_CREATE_TIME, FIELD_SHOW_NAME));
     }
 
     @Override

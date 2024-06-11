@@ -20,13 +20,14 @@ import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
 import com.example.utilsuser.service.MyService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DownloadTaskActivity extends AppCompatActivity {
     RecyclerView rv;
     public DownloaTaskAdapter downloaTaskAdapter;
-    public List<DownloadTaskBean> downloadTaskBeans = new ArrayList<>();
+    public List<DownloadTaskBean> downloadTaskBeans;
     public ChangeReceiver changeReceiver;
     private BackgroundDownloadService.DownloadBinder downloadBinder;
 
@@ -34,9 +35,11 @@ public class DownloadTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_task);
+        loadData();
         initView();
         registerBroadCast();
         bindService();
+
     }
 
     private void initView() {
@@ -46,9 +49,35 @@ public class DownloadTaskActivity extends AppCompatActivity {
         rv.setLayoutManager(linearLayoutManager);
 
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+    }
 
+    private void initAdapter() {
         downloaTaskAdapter = new DownloaTaskAdapter(downloadTaskBeans);
         rv.setAdapter(downloaTaskAdapter);
+    }
+
+    private void loadData() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                downloadTaskBeans = DownloadTaskDao.newInstance().queryTaskList();
+                for (DownloadTaskBean downloadTaskBean : downloadTaskBeans) {
+                    File file = new File(downloadTaskBean.getPath());
+                    if (file.exists()) {
+                        downloadTaskBean.setCurrentLength(file.length());
+                    } else {
+                        downloadTaskBean.setCurrentLength(-1);
+                    }
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initAdapter();
+                    }
+                });
+            }
+        }).start();
     }
 
     private void registerBroadCast(){
