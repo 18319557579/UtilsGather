@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
+import com.example.utilsuser.file.list.database.state.BeanPackaged;
 import com.example.utilsuser.service.MyService;
 
 import java.io.File;
@@ -53,7 +54,20 @@ public class DownloadTaskActivity extends AppCompatActivity {
 
     private void initAdapter() {
         downloaTaskAdapter = new DownloaTaskAdapter(downloadTaskBeans);
+        downloaTaskAdapter.setRecyclerItemClickListener(new DownloaTaskAdapter.OnRecyclerItemClickListener() {
+            @Override
+            public void onRecyclerItemClick(int position) {
+
+            }
+
+            @Override
+            public void onTaskToPause(int id) {
+                pauseTask(id);
+            }
+        });
+
         rv.setAdapter(downloaTaskAdapter);
+
     }
 
     private void loadData() {
@@ -84,6 +98,7 @@ public class DownloadTaskActivity extends AppCompatActivity {
         changeReceiver = new ChangeReceiver(this);
         IntentFilter filter = new IntentFilter();
         filter.addAction(ChangeReceiver.ACTION_UPDATE);
+        filter.addAction(ChangeReceiver.ACTION_PAUSED);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             registerReceiver(changeReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
         } else {
@@ -156,6 +171,14 @@ public class DownloadTaskActivity extends AppCompatActivity {
         downloaTaskAdapter.notifyAdd(downloadTaskBean);
     }
 
+    public void notifyPause(int id) {
+        downloaTaskAdapter.notifyPause(id);
+    }
+
+
+    public void pauseTask(int id) {
+        downloadBinder.pauseTask(id);
+    }
 
     @Override
     protected void onDestroy() {

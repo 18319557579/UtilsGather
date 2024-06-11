@@ -12,14 +12,43 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.utilsgather.format_trans.FormatTransfer;
 import com.example.utilsuser.R;
+import com.example.utilsuser.file.list.database.state.BeanPackaged;
+import com.example.utilsuser.file.list.database.state.PausedState;
+import com.example.utilsuser.file.list.database.state.DownloadingState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.FileInfoHolder> {
-    private final List<DownloadTaskBean> downloadTaskBeans;
+
+    // 点击事件接口
+    private OnRecyclerItemClickListener mOnItemClickListener;
+
+    // 设置点击事件监听器
+    public void setRecyclerItemClickListener(OnRecyclerItemClickListener listener) {
+        mOnItemClickListener = listener;
+    }
+
+    // 点击事件接口定义
+    public interface OnRecyclerItemClickListener {
+        void onRecyclerItemClick(int position);
+        void onTaskToPause(int id);
+    }
+
+    private final List<BeanPackaged> downloadTaskBeans;
 
     public DownloaTaskAdapter(List<DownloadTaskBean> downloadTaskBeans) {
-        this.downloadTaskBeans = downloadTaskBeans;
+        this.downloadTaskBeans = new ArrayList<>();
+
+        for (DownloadTaskBean downloadTaskBean : downloadTaskBeans) {
+            BeanPackaged beanPackaged = new BeanPackaged();
+            beanPackaged.downloadTaskBean = downloadTaskBean;
+            beanPackaged.baseState = new PausedState();
+
+            this.downloadTaskBeans.add(beanPackaged);
+        }
+
+//        this.downloadTaskBeans = downloadTaskBeans;
     }
 
     @NonNull
@@ -31,18 +60,21 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull FileInfoHolder fileInfoHolder, int i) {
-        fileInfoHolder.tvFileName.setText(downloadTaskBeans.get(i).getShowName());
-        fileInfoHolder.tvFileUrl.setText(downloadTaskBeans.get(i).getUrl());
-        fileInfoHolder.tvFilePath.setText(downloadTaskBeans.get(i).getPath());
+        fileInfoHolder.tvFileName.setText(downloadTaskBeans.get(i).downloadTaskBean.getShowName());
+        fileInfoHolder.tvFileUrl.setText(downloadTaskBeans.get(i).downloadTaskBean.getUrl());
+        fileInfoHolder.tvFilePath.setText(downloadTaskBeans.get(i).downloadTaskBean.getPath());
 
         fileInfoHolder.tvFileLength.setText(
-                FormatTransfer.byteFormat(downloadTaskBeans.get(i).getCurrentLength()) +
+                FormatTransfer.byteFormat(downloadTaskBeans.get(i).downloadTaskBean.getCurrentLength()) +
                 " / " +
-                FormatTransfer.byteFormat(downloadTaskBeans.get(i).getTotalLength())
+                FormatTransfer.byteFormat(downloadTaskBeans.get(i).downloadTaskBean.getTotalLength())
         );
 
-        int progress = (int) (downloadTaskBeans.get(i).getCurrentLength() * 100 / downloadTaskBeans.get(i).getTotalLength());
+        int progress = (int) (downloadTaskBeans.get(i).downloadTaskBean.getCurrentLength() * 100 / downloadTaskBeans.get(i).downloadTaskBean.getTotalLength());
         fileInfoHolder.pbDownloading.setProgress(progress);
+
+        fileInfoHolder.tvStatus.setText(downloadTaskBeans.get(i).baseState.text);
+        fileInfoHolder.ivOperation.setImageResource(downloadTaskBeans.get(i).baseState.resId);
     }
 
     @Override
@@ -50,7 +82,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         return downloadTaskBeans == null ? 0 : downloadTaskBeans.size();
     }
 
-    public static class FileInfoHolder extends RecyclerView.ViewHolder {
+    public class FileInfoHolder extends RecyclerView.ViewHolder {
         private ProgressBar pbDownloading;
         private TextView tvFileName;
         private TextView tvFileUrl;
@@ -70,14 +102,31 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
             tvStatus = itemView.findViewById(R.id.tv_status_download_task);
             btnClear = itemView.findViewById(R.id.btn_clear_download_task);
             ivOperation = itemView.findViewById(R.id.btn_operation_download_task);
+
+            ivOperation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    mOnItemClickListener.onRecyclerItemClick(getAdapterPosition());
+                    BeanPackaged beanPackaged = downloadTaskBeans.get(getAdapterPosition());
+                    if (beanPackaged.baseState instanceof DownloadingState) {
+                        mOnItemClickListener.onTaskToPause(beanPackaged.downloadTaskBean.getId());
+                    }
+                }
+            });
         }
     }
 
     public void notifyUpdateProgress(int id, long currentLength) {
         for (int i = 0; i < downloadTaskBeans.size(); i++) {
-            DownloadTaskBean downloadTaskBean = downloadTaskBeans.get(i);
-            if (downloadTaskBean.getId() == id) {
-                downloadTaskBean.setCurrentLength(currentLength);
+            BeanPackaged beanPackaged = downloadTaskBeans.get(i);
+            if (beanPackaged.downloadTaskBean.getId() == id) {
+                beanPackaged.downloadTaskBean.setCurrentLength(currentLength);
+
+                //如果当前状态不是下载中的话，就更新。这样防止频繁更新
+                if (! (beanPackaged.baseState instanceof DownloadingState)) {
+                    beanPackaged.baseState = new DownloadingState();
+                }
+
                 notifyItemChanged(i);
                 break;
             }
@@ -85,7 +134,22 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
     }
 
     public void notifyAdd(DownloadTaskBean downloadTaskBean) {
-        downloadTaskBeans.add(downloadTaskBean);
+        BeanPackaged beanPackaged = new BeanPackaged();
+        beanPackaged.downloadTaskBean = downloadTaskBean;
+        beanPackaged.baseState = new PausedState();
+
+        downloadTaskBeans.add(beanPackaged);
         notifyItemInserted(downloadTaskBeans.size() -1);
+    }
+
+    public void notifyPause(int id) {
+        for (int i = 0; i < downloadTaskBeans.size(); i++) {
+            BeanPackaged beanPackaged = downloadTaskBeans.get(i);
+            if (beanPackaged.downloadTaskBean.getId() == id) {
+                beanPackaged.baseState = new PausedState();
+                notifyItemChanged(i);
+                break;
+            }
+        }
     }
 }

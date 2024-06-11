@@ -50,7 +50,11 @@ public class BackgroundDownloadService extends Service {
 
                 @Override
                 public void onPause() {
+                    LogUtil.d(downloadTaskBean.getShowName() + "已暂停");
 
+                    Intent intent = new Intent(ChangeReceiver.ACTION_PAUSED);
+                    intent.putExtra(ChangeReceiver.EXTRA_ID, downloadTaskBean.getId());
+                    sendBroadcast(intent);
                 }
             };
 
@@ -60,8 +64,9 @@ public class BackgroundDownloadService extends Service {
             executor.execute(downloadTaskManager);
         }
 
-        public void pauseTask(DownloadTaskBean downloadTaskBean) {
-
+        public void pauseTask(int id) {
+            DownloadTaskManager downloadTaskManager = taskManagerArray.get(id);
+            downloadTaskManager.pause();
         }
     }
 }

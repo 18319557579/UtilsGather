@@ -8,10 +8,13 @@ public class ChangeReceiver extends BroadcastReceiver {
 
     //action
     public static final String ACTION_UPDATE = "ACTION_UPDATE";
+    public static final String ACTION_PAUSED = "ACTION_PAUSED";
 
     //extra
     public static final String EXTRA_ID = "EXTRA_ID";
     public static final String EXTRA_CURRENT_LENGTH = "EXTRA_CURRENT_LENGTH";
+
+
 
     public DownloadTaskActivity downloadTaskActivity;
 
@@ -26,6 +29,10 @@ public class ChangeReceiver extends BroadcastReceiver {
             int id = intent.getIntExtra(EXTRA_ID, -1);
             long currentLength = intent.getLongExtra(EXTRA_CURRENT_LENGTH, -1);
             downloadTaskActivity.notifyUpdateProgress(id, currentLength);
+
+        } else if (ACTION_PAUSED.equals(action)) {
+            int id = intent.getIntExtra(EXTRA_ID, -1);
+            downloadTaskActivity.notifyPause(id);
         }
     }
 }
