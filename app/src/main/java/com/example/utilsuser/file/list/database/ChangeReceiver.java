@@ -22,10 +22,10 @@ public class ChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (EXTRA_ID.equals(action)) {
+        if (ACTION_UPDATE.equals(action)) {
             int id = intent.getIntExtra(EXTRA_ID, -1);
             long currentLength = intent.getLongExtra(EXTRA_CURRENT_LENGTH, -1);
-            downloadTaskActivity.updateProgress(id, currentLength);
+            downloadTaskActivity.notifyUpdateProgress(id, currentLength);
         }
     }
 }

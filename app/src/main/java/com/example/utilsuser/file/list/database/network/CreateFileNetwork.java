@@ -50,7 +50,7 @@ public class CreateFileNetwork {
                     /*raf = new RandomAccessFile(file, "rwd");
                     raf.setLength(len);*/
 
-                    downloadTaskBean.setCreateTime(file.lastModified());
+                    downloadTaskBean.setCreateTime(System.currentTimeMillis());
                     downloadTaskBean.setCurrentLength(0L);
                     downloadTaskBean.setTotalLength(len);
 

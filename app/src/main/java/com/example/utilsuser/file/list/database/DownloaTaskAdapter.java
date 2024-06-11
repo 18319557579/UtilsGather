@@ -66,7 +66,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
             tvFileName = itemView.findViewById(R.id.tv_file_name_download_task);
             tvFileUrl = itemView.findViewById(R.id.tv_file_url_download_task);
             tvFilePath = itemView.findViewById(R.id.tv_file_path_download_task);
-            tvFileLength = itemView.findViewById(R.id.tv_file_length);
+            tvFileLength = itemView.findViewById(R.id.tv_file_length_download_task);
             tvStatus = itemView.findViewById(R.id.tv_status_download_task);
             btnClear = itemView.findViewById(R.id.btn_clear_download_task);
             ivOperation = itemView.findViewById(R.id.btn_operation_download_task);

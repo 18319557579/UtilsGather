@@ -1,9 +1,13 @@
 package com.example.utilsuser.file.list.database;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
-import com.example.utilsuser.file.list.FileInfoAdapter;
 import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
+import com.example.utilsuser.service.MyService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +28,7 @@ public class DownloadTaskActivity extends AppCompatActivity {
     public DownloaTaskAdapter downloaTaskAdapter;
     public List<DownloadTaskBean> downloadTaskBeans = new ArrayList<>();
     public ChangeReceiver changeReceiver;
+    private BackgroundDownloadService.DownloadBinder downloadBinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,7 @@ public class DownloadTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_download_task);
         initView();
         registerBroadCast();
+        bindService();
     }
 
     private void initView() {
@@ -56,6 +62,24 @@ public class DownloadTaskActivity extends AppCompatActivity {
         }
     }
 
+    private void bindService() {
+        Intent intent = new Intent(this, BackgroundDownloadService.class);
+        bindService(intent, connection, BIND_AUTO_CREATE);
+    }
+
+    private final ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            LogUtil.d("MyServiceActivity中回调 onServiceConnected()");
+            downloadBinder = (BackgroundDownloadService.DownloadBinder) service;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            LogUtil.d("MyServiceActivity中回调 onServiceDisconnected() " + name);
+        }
+    };
+
     public void downloadJiZhang(View view) {
         new Thread(new Runnable() {
 
@@ -70,6 +94,16 @@ public class DownloadTaskActivity extends AppCompatActivity {
                         .start();
 
                 LogUtil.d("数据库中的信息: " + downloadTaskBean);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyAdd(downloadTaskBean);
+
+                        downloadBinder.addTask(downloadTaskBean);
+                    }
+                });
+
             }
         }).start();
 
@@ -85,7 +119,7 @@ public class DownloadTaskActivity extends AppCompatActivity {
 
     }
 
-    public void updateProgress(int id, long currentLength) {
+    public void notifyUpdateProgress(int id, long currentLength) {
         for (int i = 0; i < downloadTaskBeans.size(); i++) {
             DownloadTaskBean downloadTaskBean = downloadTaskBeans.get(i);
             if (downloadTaskBean.getId() == id) {
@@ -96,10 +130,19 @@ public class DownloadTaskActivity extends AppCompatActivity {
         }
     }
 
+    public void notifyAdd(DownloadTaskBean downloadTaskBean) {
+        downloadTaskBeans.add(downloadTaskBean);
+        downloaTaskAdapter.notifyItemInserted(downloadTaskBeans.size() -1);
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (changeReceiver != null)
             unregisterReceiver(changeReceiver);
+
+        unbindService(connection);
+        downloadBinder = null;
     }
 }
