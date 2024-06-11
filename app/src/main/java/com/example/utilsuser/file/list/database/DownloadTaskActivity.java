@@ -149,19 +149,11 @@ public class DownloadTaskActivity extends AppCompatActivity {
     }
 
     public void notifyUpdateProgress(int id, long currentLength) {
-        for (int i = 0; i < downloadTaskBeans.size(); i++) {
-            DownloadTaskBean downloadTaskBean = downloadTaskBeans.get(i);
-            if (downloadTaskBean.getId() == id) {
-                downloadTaskBean.setCurrentLength(currentLength);
-                downloaTaskAdapter.notifyItemChanged(i);
-                break;
-            }
-        }
+        downloaTaskAdapter.notifyUpdateProgress(id, currentLength);
     }
 
     public void notifyAdd(DownloadTaskBean downloadTaskBean) {
-        downloadTaskBeans.add(downloadTaskBean);
-        downloaTaskAdapter.notifyItemInserted(downloadTaskBeans.size() -1);
+        downloaTaskAdapter.notifyAdd(downloadTaskBean);
     }
 
 

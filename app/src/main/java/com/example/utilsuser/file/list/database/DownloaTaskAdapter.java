@@ -73,7 +73,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         }
     }
 
-    public void updateProgress(int id, long currentLength) {
+    public void notifyUpdateProgress(int id, long currentLength) {
         for (int i = 0; i < downloadTaskBeans.size(); i++) {
             DownloadTaskBean downloadTaskBean = downloadTaskBeans.get(i);
             if (downloadTaskBean.getId() == id) {
@@ -82,5 +82,10 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
                 break;
             }
         }
+    }
+
+    public void notifyAdd(DownloadTaskBean downloadTaskBean) {
+        downloadTaskBeans.add(downloadTaskBean);
+        notifyItemInserted(downloadTaskBeans.size() -1);
     }
 }

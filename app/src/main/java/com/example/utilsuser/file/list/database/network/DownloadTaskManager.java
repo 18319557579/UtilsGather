@@ -3,6 +3,7 @@ package com.example.utilsuser.file.list.database.network;
 import com.example.utilsgather.file_system.FileOperationUtil;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.file.list.database.DownloadTaskBean;
+import com.example.utilsuser.file.list.database.DownloadTaskDao;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class DownloadTaskManager implements Runnable {
             raf = new RandomAccessFile(downloadTaskBean.getPath(), "rwd");
             raf.seek(downloadTaskBean.getCurrentLength());
 
-            long startLocation = downloadTaskBean.getCurrentLength();
+            long downloadedLocation = downloadTaskBean.getCurrentLength();
             if (conn.getResponseCode() == 206) {
                 is = conn.getInputStream();
                 byte[] buf = new byte[1024 * 4];
@@ -63,9 +64,11 @@ public class DownloadTaskManager implements Runnable {
                     }
 
                     raf.write(buf, 0, len);
-                    startLocation += len;
+                    downloadedLocation += len;
 
-                    downloadListener.downloading(startLocation);
+                    DownloadTaskDao.newInstance().updateTask(downloadTaskBean.getId(), downloadedLocation);
+
+                    downloadListener.downloading(downloadedLocation);
                 }
             }
 

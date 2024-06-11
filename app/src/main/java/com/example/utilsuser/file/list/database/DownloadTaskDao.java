@@ -51,8 +51,16 @@ public class DownloadTaskDao {
 
         return insertResult;
     }
-    void deleteTask(String id) {
+    public synchronized void updateTask(int id, long downloadedLocation) {
+        SQLiteDatabase db = mDBHelper.getWritableDatabase();
 
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DownloadTaskDBHelper.FIELD_CURRENT_LENGTH, downloadedLocation);
+        //返回收影响的行数
+        int updateResult = db.update(DownloadTaskDBHelper.TABLE_TASK, contentValues,
+                "id = ?", new String[]{String.valueOf(id)});
+
+        db.close();
     }
 
     public List<DownloadTaskBean> queryTaskList() {
@@ -67,7 +75,7 @@ public class DownloadTaskDao {
                 @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(DownloadTaskDBHelper.FIELD_ID));
                 @SuppressLint("Range") String url = cursor.getString(cursor.getColumnIndex(DownloadTaskDBHelper.FIELD_URL));
                 @SuppressLint("Range") String path = cursor.getString(cursor.getColumnIndex(DownloadTaskDBHelper.FIELD_PATH));
-//                @SuppressLint("Range") long currentLength = cursor.getLong(cursor.getColumnIndex(DownloadTaskDBHelper.FIELD_CURRENT_LENGTH));
+                @SuppressLint("Range") long currentLength = cursor.getLong(cursor.getColumnIndex(DownloadTaskDBHelper.FIELD_CURRENT_LENGTH));
                 @SuppressLint("Range") long totalLength = cursor.getLong(cursor.getColumnIndex(DownloadTaskDBHelper.FIELD_TOTAL_LENGTH));
                 @SuppressLint("Range") long createTime = cursor.getLong(cursor.getColumnIndex(DownloadTaskDBHelper.FIELD_CREATE_TIME));
                 @SuppressLint("Range") String showName = cursor.getString(cursor.getColumnIndex(DownloadTaskDBHelper.FIELD_SHOW_NAME));
@@ -76,7 +84,7 @@ public class DownloadTaskDao {
                 downloadTaskBean.setId(id);
                 downloadTaskBean.setUrl(url);
                 downloadTaskBean.setPath(path);
-//                downloadTaskBean.setCurrentLength(currentLength);
+                downloadTaskBean.setCurrentLength(currentLength);
                 downloadTaskBean.setCreateTime(createTime);
                 downloadTaskBean.setShowName(showName);
                 downloadTaskBean.setTotalLength(totalLength);
