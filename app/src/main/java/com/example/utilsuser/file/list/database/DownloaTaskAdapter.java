@@ -33,6 +33,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
     public interface OnRecyclerItemClickListener {
         void onRecyclerItemClick(int position);
         void onTaskToPause(int id);
+        void onTaskToResume(DownloadTaskBean downloadTaskBean);
     }
 
     private final List<BeanPackaged> downloadTaskBeans;
@@ -110,6 +111,9 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
                     BeanPackaged beanPackaged = downloadTaskBeans.get(getAdapterPosition());
                     if (beanPackaged.baseState instanceof DownloadingState) {
                         mOnItemClickListener.onTaskToPause(beanPackaged.downloadTaskBean.getId());
+
+                    } else if (beanPackaged.baseState instanceof PausedState) {
+                        mOnItemClickListener.onTaskToResume(beanPackaged.downloadTaskBean);
                     }
                 }
             });

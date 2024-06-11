@@ -29,6 +29,9 @@ public class DownloadTaskManager implements Runnable {
     public void pause() {
         paused = true;
     }
+    public void resume() {
+        paused = false;
+    }
 
     @Override
     public void run() {

@@ -40,7 +40,7 @@ public class BackgroundDownloadService extends Service {
 
                 @Override
                 public void onSuccess(int whatCase) {
-
+                    LogUtil.d("下载完成了：" + whatCase);
                 }
 
                 @Override
@@ -67,6 +67,19 @@ public class BackgroundDownloadService extends Service {
         public void pauseTask(int id) {
             DownloadTaskManager downloadTaskManager = taskManagerArray.get(id);
             downloadTaskManager.pause();
+        }
+
+        public void resumeTask(DownloadTaskBean downloadTaskBean) {
+            DownloadTaskManager downloadTaskManager = taskManagerArray.get(downloadTaskBean.getId());
+
+            if (downloadTaskManager == null) {
+                addTask(downloadTaskBean);
+                LogUtil.d("taskManagerArray中不存在，新增");
+            } else {
+                downloadTaskManager.resume();
+                executor.execute(downloadTaskManager);
+                LogUtil.d("taskManagerArray中存在，复用");
+            }
         }
     }
 }

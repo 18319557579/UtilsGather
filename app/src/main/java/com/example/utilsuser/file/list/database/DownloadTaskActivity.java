@@ -64,6 +64,11 @@ public class DownloadTaskActivity extends AppCompatActivity {
             public void onTaskToPause(int id) {
                 pauseTask(id);
             }
+
+            @Override
+            public void onTaskToResume(DownloadTaskBean downloadTaskBean) {
+                resumeTask(downloadTaskBean);
+            }
         });
 
         rv.setAdapter(downloaTaskAdapter);
@@ -178,6 +183,10 @@ public class DownloadTaskActivity extends AppCompatActivity {
 
     public void pauseTask(int id) {
         downloadBinder.pauseTask(id);
+    }
+
+    public void resumeTask(DownloadTaskBean downloadTaskBean) {
+        downloadBinder.resumeTask(downloadTaskBean);
     }
 
     @Override
