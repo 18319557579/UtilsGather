@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.utilsgather.format_trans.FormatTransfer;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.database.state.BeanPackaged;
+import com.example.utilsuser.file.list.database.state.FinishedState;
 import com.example.utilsuser.file.list.database.state.PausedState;
 import com.example.utilsuser.file.list.database.state.DownloadingState;
 
@@ -44,12 +45,15 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         for (DownloadTaskBean downloadTaskBean : downloadTaskBeans) {
             BeanPackaged beanPackaged = new BeanPackaged();
             beanPackaged.downloadTaskBean = downloadTaskBean;
-            beanPackaged.baseState = new PausedState();
+
+            if (downloadTaskBean.getCurrentLength() == downloadTaskBean.getTotalLength()) {
+                beanPackaged.baseState = new FinishedState();
+            } else {
+                beanPackaged.baseState = new PausedState();
+            }
 
             this.downloadTaskBeans.add(beanPackaged);
         }
-
-//        this.downloadTaskBeans = downloadTaskBeans;
     }
 
     @NonNull
@@ -75,7 +79,12 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         fileInfoHolder.pbDownloading.setProgress(progress);
 
         fileInfoHolder.tvStatus.setText(downloadTaskBeans.get(i).baseState.text);
-        fileInfoHolder.ivOperation.setImageResource(downloadTaskBeans.get(i).baseState.resId);
+
+        if (downloadTaskBeans.get(i).baseState instanceof FinishedState) {
+            fileInfoHolder.ivOperation.setVisibility(View.GONE);
+        } else {
+            fileInfoHolder.ivOperation.setImageResource(downloadTaskBeans.get(i).baseState.resId);
+        }
     }
 
     @Override
@@ -151,6 +160,17 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
             BeanPackaged beanPackaged = downloadTaskBeans.get(i);
             if (beanPackaged.downloadTaskBean.getId() == id) {
                 beanPackaged.baseState = new PausedState();
+                notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+    public void notifyFinished(int id) {
+        for (int i = 0; i < downloadTaskBeans.size(); i++) {
+            BeanPackaged beanPackaged = downloadTaskBeans.get(i);
+            if (beanPackaged.downloadTaskBean.getId() == id) {
+                beanPackaged.baseState = new FinishedState();
                 notifyItemChanged(i);
                 break;
             }

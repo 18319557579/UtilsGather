@@ -101,13 +101,11 @@ public class DownloadTaskActivity extends AppCompatActivity {
 
     private void registerBroadCast(){
         changeReceiver = new ChangeReceiver(this);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ChangeReceiver.ACTION_UPDATE);
-        filter.addAction(ChangeReceiver.ACTION_PAUSED);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            registerReceiver(changeReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+            registerReceiver(changeReceiver, ChangeReceiver.getAllActionIntentFilter(), Context.RECEIVER_NOT_EXPORTED);
         } else {
-            registerReceiver(changeReceiver, filter);
+            registerReceiver(changeReceiver, ChangeReceiver.getAllActionIntentFilter());
         }
     }
 
@@ -175,16 +173,16 @@ public class DownloadTaskActivity extends AppCompatActivity {
     public void notifyAdd(DownloadTaskBean downloadTaskBean) {
         downloaTaskAdapter.notifyAdd(downloadTaskBean);
     }
-
     public void notifyPause(int id) {
         downloaTaskAdapter.notifyPause(id);
     }
-
+    public void notifyFinished(int id) {
+        downloaTaskAdapter.notifyFinished(id);
+    }
 
     public void pauseTask(int id) {
         downloadBinder.pauseTask(id);
     }
-
     public void resumeTask(DownloadTaskBean downloadTaskBean) {
         downloadBinder.resumeTask(downloadTaskBean);
     }

@@ -41,6 +41,9 @@ public class BackgroundDownloadService extends Service {
                 @Override
                 public void onSuccess(int whatCase) {
                     LogUtil.d("下载完成了：" + whatCase);
+                    Intent intent = new Intent(ChangeReceiver.ACTION_FINISHED);
+                    intent.putExtra(ChangeReceiver.EXTRA_ID, downloadTaskBean.getId());
+                    sendBroadcast(intent);
                 }
 
                 @Override
