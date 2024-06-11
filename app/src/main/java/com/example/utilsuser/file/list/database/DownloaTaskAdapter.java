@@ -76,7 +76,11 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         );
 
         int progress = (int) (downloadTaskBeans.get(i).downloadTaskBean.getCurrentLength() * 100 / downloadTaskBeans.get(i).downloadTaskBean.getTotalLength());
-        fileInfoHolder.pbDownloading.setProgress(progress);
+        if (downloadTaskBeans.get(i).baseState instanceof FinishedState) {
+            fileInfoHolder.pbDownloading.setVisibility(View.GONE);
+        } else {
+            fileInfoHolder.pbDownloading.setProgress(progress);
+        }
 
         fileInfoHolder.tvStatus.setText(downloadTaskBeans.get(i).baseState.text);
 
