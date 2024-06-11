@@ -19,6 +19,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
+        <receiver
+            android:name=".file.list.database.ChangeReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
+        <service
+            android:name=".file.list.database.BackgroundDownloadService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
             android:name=".service.MyServiceActivity"
             android:exported="false" />

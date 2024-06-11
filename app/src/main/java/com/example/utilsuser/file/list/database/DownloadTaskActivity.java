@@ -1,20 +1,59 @@
 package com.example.utilsuser.file.list.database;
 
+import android.content.Context;
+import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
+import com.example.utilsuser.file.list.FileInfoAdapter;
 import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DownloadTaskActivity extends AppCompatActivity {
+    RecyclerView rv;
+    public DownloaTaskAdapter downloaTaskAdapter;
+    public List<DownloadTaskBean> downloadTaskBeans = new ArrayList<>();
+    public ChangeReceiver changeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_task);
+        initView();
+        registerBroadCast();
+    }
+
+    private void initView() {
+        rv = findViewById(R.id.rv_download_task_list);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rv.setLayoutManager(linearLayoutManager);
+
+        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        downloaTaskAdapter = new DownloaTaskAdapter(downloadTaskBeans);
+        rv.setAdapter(downloaTaskAdapter);
+    }
+
+    private void registerBroadCast(){
+        changeReceiver = new ChangeReceiver(this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ChangeReceiver.ACTION_UPDATE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            registerReceiver(changeReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            registerReceiver(changeReceiver, filter);
+        }
     }
 
     public void downloadJiZhang(View view) {
@@ -43,5 +82,24 @@ public class DownloadTaskActivity extends AppCompatActivity {
     public void downloadXiaoHongShu(View view) {
     }
     public void downloadPiPiXia(View view) {
+
+    }
+
+    public void updateProgress(int id, long currentLength) {
+        for (int i = 0; i < downloadTaskBeans.size(); i++) {
+            DownloadTaskBean downloadTaskBean = downloadTaskBeans.get(i);
+            if (downloadTaskBean.getId() == id) {
+                downloadTaskBean.setCurrentLength(currentLength);
+                downloaTaskAdapter.notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (changeReceiver != null)
+            unregisterReceiver(changeReceiver);
     }
 }

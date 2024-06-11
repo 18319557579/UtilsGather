@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="5dp">
+
+    <ProgressBar
+        android:id="@+id/pb_downloading_download_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        android:max="100"/>
+
+    <TextView
+        android:id="@+id/tv_file_name_download_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pb_downloading_download_task"
+        tools:text="aaa.apk"/>
+
+    <TextView
+        android:id="@+id/tv_file_url_download_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_file_name_download_task"
+        tools:text="https://ucdl.25pp.com/fs08/2024/05/21/10/125_fe34b81e35dc68a97e368db835f66194.apk?nrd=0"/>
+
+
+    <TextView
+        android:id="@+id/tv_file_path_download_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_file_url_download_task"
+        tools:text="/data/user/0/com.example.utilsuser/files/dl/aaa.apk"
+        android:layout_marginTop="3dp"/>
+
+    <TextView
+        android:id="@+id/tv_file_length_download_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_file_path_download_task"
+        tools:text="89.35MB"/>
+
+    <TextView
+        android:id="@+id/tv_status_download_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_file_length_download_task"
+        tools:text="已暂停"/>
+
+    <Button
+        android:id="@+id/btn_clear_download_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="清除"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_status_download_task"
+        android:layout_marginRight="5dp"
+        android:enabled="false"/>
+
+    <ImageView
+        android:id="@+id/btn_operation_download_task"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@drawable/download_resume"
+        android:padding="10dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

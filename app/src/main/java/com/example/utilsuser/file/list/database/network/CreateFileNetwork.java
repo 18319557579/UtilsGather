@@ -47,8 +47,8 @@ public class CreateFileNetwork {
                     }
                     File file = new File(dir, fileName);
                     //本地文件
-                    raf = new RandomAccessFile(file, "rwd");
-                    raf.setLength(len);
+                    /*raf = new RandomAccessFile(file, "rwd");
+                    raf.setLength(len);*/
 
                     downloadTaskBean.setCreateTime(file.lastModified());
                     downloadTaskBean.setCurrentLength(0L);
