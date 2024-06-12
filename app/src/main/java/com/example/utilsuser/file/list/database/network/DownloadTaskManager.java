@@ -80,6 +80,12 @@ public class DownloadTaskManager implements Runnable {
                     return;
                 }
 
+                if (! pathFile.exists()) {
+                    DownloadTaskDao.newInstance().updateTask(downloadTaskBean.getId(), -1L);
+                    downloadListener.onFail("文件不存在", 2);
+                    return;
+                }
+
                 //更新本地文件
                 raf.write(buf, 0, len);
                 downloadedLocation += len;
