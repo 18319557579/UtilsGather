@@ -115,9 +115,9 @@ public class DownloadTaskActivity extends AppCompatActivity {
         changeReceiver = new ChangeReceiver(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(changeReceiver, ChangeReceiver.getAllActionIntentFilter(), Context.RECEIVER_NOT_EXPORTED);
+            registerReceiver(changeReceiver, changeReceiver.getAllActionIntentFilter(), Context.RECEIVER_NOT_EXPORTED);
         } else {
-            registerReceiver(changeReceiver, ChangeReceiver.getAllActionIntentFilter());
+            registerReceiver(changeReceiver, changeReceiver.getAllActionIntentFilter());
         }
     }
 
@@ -236,6 +236,9 @@ public class DownloadTaskActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        downloadBinder.clearAllTask();
+
         if (changeReceiver != null)
             unregisterReceiver(changeReceiver);
 

@@ -28,7 +28,7 @@ public class ChangeReceiver extends BroadcastReceiver {
         this.downloadTaskActivity = downloadTaskActivity;
     }
 
-    public static IntentFilter getAllActionIntentFilter() {
+    public IntentFilter getAllActionIntentFilter() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(ChangeReceiver.ACTION_UPDATE);
         filter.addAction(ChangeReceiver.ACTION_PAUSED);

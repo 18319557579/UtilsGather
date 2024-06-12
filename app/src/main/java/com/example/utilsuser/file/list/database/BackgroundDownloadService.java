@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class BackgroundDownloadService extends Service {
-    public static ExecutorService executor = Executors.newCachedThreadPool();
+    public ExecutorService executor = Executors.newCachedThreadPool();
     private DownloadBinder downloadBinder = new DownloadBinder();
     private SparseArray<DownloadTaskManager> taskManagerArray = new SparseArray<>();
 
@@ -106,6 +106,17 @@ public class BackgroundDownloadService extends Service {
                 downloadTaskManager.pause();
             }
             taskManagerArray.remove(id);
+        }
+
+        public void clearAllTask() {
+            for (int i = 0; i < taskManagerArray.size(); i++) {
+                DownloadTaskManager downloadTaskManager = taskManagerArray.valueAt(i);
+                if (! downloadTaskManager.isPaused()) {
+                    downloadTaskManager.pause();
+                }
+            }
+            taskManagerArray.clear();
+            executor.shutdown();
         }
     }
 }
