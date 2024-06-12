@@ -3,7 +3,6 @@ package com.example.utilsuser.file.list.database;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,13 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
-import com.example.utilsuser.file.list.database.state.BeanPackaged;
-import com.example.utilsuser.service.MyService;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
+//todo 自行封装RxJava
+//todo 这个Activity的线程切换是不是可以使用Handler来进行优化
+//todo 优化Database，是不是可以让SQLiteDatabase对象变成单例模式
+//todo Activity去notify Adapter的时候，总是要找id所在的index，有没有办法节约这个步骤呢
+//todo state可以优化，不用总是新建对象
+//todo 多线程下载
+//todo 下载时控制缓存区大小，以此控制下载速度
 public class DownloadTaskActivity extends AppCompatActivity {
     RecyclerView rv;
     public DownloaTaskAdapter downloaTaskAdapter;
@@ -68,6 +71,11 @@ public class DownloadTaskActivity extends AppCompatActivity {
             @Override
             public void onTaskToResume(DownloadTaskBean downloadTaskBean) {
                 resumeTask(downloadTaskBean);
+            }
+
+            @Override
+            public void onTaskToClear(DownloadTaskBean downloadTaskBean, boolean inExecutor) {
+                clearTask(downloadTaskBean, inExecutor);
             }
         });
 
@@ -187,12 +195,33 @@ public class DownloadTaskActivity extends AppCompatActivity {
     public void notifyFinished(int id) {
         downloaTaskAdapter.notifyFinished(id);
     }
+    public void notifyCleared(int id) {
+        downloaTaskAdapter.notifyCleared(id);
+    }
 
     public void pauseTask(int id) {
         downloadBinder.pauseTask(id);
     }
     public void resumeTask(DownloadTaskBean downloadTaskBean) {
         downloadBinder.resumeTask(downloadTaskBean);
+    }
+    public void clearTask(DownloadTaskBean downloadTaskBean, boolean inExecutor) {
+        if (inExecutor) {
+            downloadBinder.clearTask(downloadTaskBean.getId());
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DownloadTaskDao.newInstance().deleteTask(downloadTaskBean.getId());
+                FileOperation.INSTANCE.deleteFile(downloadTaskBean.getPath());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyCleared(downloadTaskBean.getId());
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override

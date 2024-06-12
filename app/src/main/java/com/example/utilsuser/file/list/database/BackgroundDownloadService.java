@@ -29,6 +29,7 @@ public class BackgroundDownloadService extends Service {
     }
 
     class DownloadBinder extends Binder {
+        //添加任务
         public void addTask(DownloadTaskBean downloadTaskBean) {
             DownloadTaskManager.DownloadListener downloadListener = new DownloadTaskManager.DownloadListener() {
                 @Override
@@ -71,11 +72,13 @@ public class BackgroundDownloadService extends Service {
             executor.execute(downloadTaskManager);
         }
 
+        //暂停任务
         public void pauseTask(int id) {
             DownloadTaskManager downloadTaskManager = taskManagerArray.get(id);
             downloadTaskManager.pause();
         }
 
+        //继续任务（如果任务列表中没有，则新增）
         public void resumeTask(DownloadTaskBean downloadTaskBean) {
             DownloadTaskManager downloadTaskManager = taskManagerArray.get(downloadTaskBean.getId());
 
@@ -87,6 +90,17 @@ public class BackgroundDownloadService extends Service {
                 executor.execute(downloadTaskManager);
                 LogUtil.d("taskManagerArray中存在，复用");
             }
+        }
+
+        public void clearTask(int id) {
+            DownloadTaskManager downloadTaskManager = taskManagerArray.get(id);
+            if (downloadTaskManager == null) {  //因为有可能paused状态下，还没有启动任务（刚进该Activity的时候）
+                return;
+            }
+            if (! downloadTaskManager.isPaused()) {
+                downloadTaskManager.pause();
+            }
+            taskManagerArray.remove(id);
         }
     }
 }

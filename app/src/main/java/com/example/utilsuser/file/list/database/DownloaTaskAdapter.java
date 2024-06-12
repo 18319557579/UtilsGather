@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.utilsgather.format_trans.FormatTransfer;
+import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.database.state.BeanPackaged;
 import com.example.utilsuser.file.list.database.state.FinishedState;
@@ -35,6 +36,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         void onRecyclerItemClick(int position);
         void onTaskToPause(int id);
         void onTaskToResume(DownloadTaskBean downloadTaskBean);
+        void onTaskToClear(DownloadTaskBean downloadTaskBean, boolean inExecutor);
     }
 
     private final List<BeanPackaged> downloadTaskBeans;
@@ -130,6 +132,19 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
                     }
                 }
             });
+
+            btnClear.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BeanPackaged beanPackaged = downloadTaskBeans.get(getAdapterPosition());
+                    if (beanPackaged.baseState instanceof FinishedState ) {
+                        mOnItemClickListener.onTaskToClear(beanPackaged.downloadTaskBean, false);
+
+                    } else {
+                        mOnItemClickListener.onTaskToClear(beanPackaged.downloadTaskBean, true);
+                    }
+                }
+            });
         }
     }
 
@@ -176,6 +191,18 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
             if (beanPackaged.downloadTaskBean.getId() == id) {
                 beanPackaged.baseState = new FinishedState();
                 notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+    public void notifyCleared(int id) {
+        for (int i = 0; i < downloadTaskBeans.size(); i++) {
+            BeanPackaged beanPackaged = downloadTaskBeans.get(i);
+            if (beanPackaged.downloadTaskBean.getId() == id) {
+                downloadTaskBeans.remove(i);
+                notifyItemRemoved(i);
+                LogUtil.d("删除什么位置的item: " + i);
                 break;
             }
         }

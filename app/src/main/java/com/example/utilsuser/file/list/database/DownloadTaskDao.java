@@ -63,6 +63,14 @@ public class DownloadTaskDao {
         db.close();
     }
 
+    public synchronized void deleteTask(int id) {
+        SQLiteDatabase db = mDBHelper.getWritableDatabase();
+
+        int deleteResult = db.delete(DownloadTaskDBHelper.TABLE_TASK, "id = ?", new String[]{String.valueOf(id)});
+
+        db.close();
+    }
+
     //todo 我进行比较奇怪的返回再进入Activity的操作时，会遇到查询时db被关闭的问题，因此这里加了synchronized。但是我感觉可以优化
     public synchronized List<DownloadTaskBean> queryTaskList() {
         SQLiteDatabase db = mDBHelper.getWritableDatabase();

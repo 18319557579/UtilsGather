@@ -16,7 +16,7 @@ public class DownloadTaskManager implements Runnable {
 
     private final DownloadTaskManager.DownloadListener downloadListener;
 
-    private boolean paused;
+    private volatile boolean paused;
 
     private final DownloadTaskBean downloadTaskBean;
 
@@ -31,6 +31,10 @@ public class DownloadTaskManager implements Runnable {
     }
     public void resume() {
         paused = false;
+    }
+
+    public boolean isPaused() {
+        return paused;
     }
 
     @Override
