@@ -17,10 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
+import com.example.utilsuser.file.list.database.thread.Scheduler;
 
 import java.io.File;
 import java.util.List;
 
+//todo 退出这个Activity时，要关闭哪些东西
 //todo 自行封装RxJava
 //todo 这个Activity的线程切换是不是可以使用Handler来进行优化
 //todo 优化Database，是不是可以让SQLiteDatabase对象变成单例模式
@@ -29,6 +31,7 @@ import java.util.List;
 //todo 多线程下载
 //todo 下载时控制缓存区大小，以此控制下载速度
 //todo 将涉及到的一些工具方法，例如File文件的操作，写到UtilGather中
+//todo 错误情况的处理，例如下载中把原文件删除（至少要能实现暂停后继续时，可以进行原文件是否存在的判断）
 public class DownloadTaskActivity extends AppCompatActivity {
     RecyclerView rv;
     public DownloaTaskAdapter downloaTaskAdapter;
@@ -157,30 +160,23 @@ public class DownloadTaskActivity extends AppCompatActivity {
     }
 
     private void addTaskToStart(String url, String fileDir, String name, String showName) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DownloadTaskBean downloadTaskBean = new DownloadTaskBean();
-                downloadTaskBean.setShowName(showName);
-                new CreateFileNetwork(url,
-                        fileDir,
-                        name,
-                        downloadTaskBean)
-                        .start();
+        Scheduler.runOnBGThread(() -> {
+            DownloadTaskBean downloadTaskBean = new DownloadTaskBean();
+            downloadTaskBean.setShowName(showName);
+            new CreateFileNetwork(url,
+                    fileDir,
+                    name,
+                    downloadTaskBean)
+                    .start();
 
-                LogUtil.d("数据库中的信息: " + downloadTaskBean);
+            LogUtil.d("数据库中的信息: " + downloadTaskBean);
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        notifyAdd(downloadTaskBean);
+            Scheduler.runOnUiThread(() -> {
+                notifyAdd(downloadTaskBean);
 
-                        downloadBinder.addTask(downloadTaskBean);
-                    }
-                });
-
-            }
-        }).start();
+                downloadBinder.addTask(downloadTaskBean);
+            });
+        });
     }
 
     public void notifyUpdateProgress(int id, long currentLength) {
