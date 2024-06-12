@@ -216,4 +216,17 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
             }
         }
     }
+
+    public void notifyBroken(int id) {
+        for (int i = 0; i < downloadTaskBeans.size(); i++) {
+            BeanPackaged beanPackaged = downloadTaskBeans.get(i);
+            if (beanPackaged.downloadTaskBean.getId() == id) {
+                beanPackaged.downloadTaskBean.setCurrentLength(-1L);
+                beanPackaged.baseState = new BrokenState();
+                notifyItemChanged(i);
+                LogUtil.d("notifyBroken什么位置的item: " + i);
+                break;
+            }
+        }
+    }
 }

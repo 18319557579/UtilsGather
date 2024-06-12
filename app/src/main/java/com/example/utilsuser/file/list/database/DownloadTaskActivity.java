@@ -28,6 +28,7 @@ import java.util.List;
 //todo state可以优化，不用总是新建对象
 //todo 多线程下载
 //todo 下载时控制缓存区大小，以此控制下载速度
+//todo 将涉及到的一些工具方法，例如File文件的操作，写到UtilGather中
 public class DownloadTaskActivity extends AppCompatActivity {
     RecyclerView rv;
     public DownloaTaskAdapter downloaTaskAdapter;
@@ -197,6 +198,18 @@ public class DownloadTaskActivity extends AppCompatActivity {
     }
     public void notifyCleared(int id) {
         downloaTaskAdapter.notifyCleared(id);
+    }
+    public void notifyError(int id, int errorCode) {
+        switch (errorCode) {
+            case 0:
+                break;
+            case 1:
+                downloaTaskAdapter.notifyPause(id);
+                break;
+            case 2:
+                downloaTaskAdapter.notifyBroken(id);
+                break;
+        }
     }
 
     public void pauseTask(int id) {

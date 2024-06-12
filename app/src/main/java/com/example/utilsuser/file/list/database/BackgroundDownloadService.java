@@ -52,8 +52,13 @@ public class BackgroundDownloadService extends Service {
                 }
 
                 @Override
-                public void onFail(String failDesc) {
-
+                public void onFail(String failDesc, int whatCase) {
+                    LogUtil.d(downloadTaskBean.getShowName() + " 已失败, " + failDesc + " : " + whatCase);
+                    Intent intent = new Intent(ChangeReceiver.ACTION_ERROR);
+                    intent.setPackage(getPackageName());
+                    intent.putExtra(ChangeReceiver.EXTRA_ID, downloadTaskBean.getId());
+                    intent.putExtra(ChangeReceiver.EXTRA_ERROR_CODE, whatCase);
+                    sendBroadcast(intent);
                 }
 
                 @Override

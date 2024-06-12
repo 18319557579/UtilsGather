@@ -56,38 +56,47 @@ public class DownloadTaskManager implements Runnable {
             LogUtil.d("看看对不对得上：bean的总长度：" + downloadTaskBean.getTotalLength()
                             + ", 加出来的： " + wholeLength);
 
-            raf = new RandomAccessFile(downloadTaskBean.getPath(), "rwd");
+            File pathFile = new File(downloadTaskBean.getPath());
+            raf = new RandomAccessFile(pathFile, "rwd");
             raf.seek(downloadTaskBean.getCurrentLength());
 
             long downloadedLocation = downloadTaskBean.getCurrentLength();
-            if (conn.getResponseCode() == 206) {
-                is = conn.getInputStream();
-                byte[] buf = new byte[1024 * 4];
-                int len = 0;
-                while ((len = is.read(buf)) != -1) {
-                    if (paused) {
-                        downloadListener.onPause();
-                        return;
-                    }
-
-                    raf.write(buf, 0, len);
-                    downloadedLocation += len;
-
-                    DownloadTaskDao.newInstance().updateTask(downloadTaskBean.getId(), downloadedLocation);
-
-                    downloadListener.downloading(downloadedLocation);
-                }
+            if (conn.getResponseCode() != 206) {
+                downloadListener.onFail("响应码错误: " + conn.getResponseCode(), 0);
+                return;
             }
 
-            /*if (! filePath.renameTo(finishedFile)) {
-                downloadListener.onFail("下载完成后改名失败");
-                return;
-            }*/
+            is = conn.getInputStream();
+            byte[] buf = new byte[1024 * 4];
+            int len = 0;
+            while ((len = is.read(buf)) != -1) {
+                if (paused) {
+                    downloadListener.onPause();
+                    return;
+                }
 
-            downloadListener.onSuccess(1);
+                //更新本地文件
+                raf.write(buf, 0, len);
+                downloadedLocation += len;
+
+                //更新数据库
+                DownloadTaskDao.newInstance().updateTask(downloadTaskBean.getId(), downloadedLocation);
+
+                //更新UI
+                downloadListener.downloading(downloadedLocation);
+            }
+
+
+            if (pathFile.exists()) {
+                downloadListener.onSuccess(1);
+            } else {
+                DownloadTaskDao.newInstance().updateTask(downloadTaskBean.getId(), -1L);
+                downloadListener.onFail("文件不存在", 2);
+            }
+
 
         } catch (Exception e) {
-            downloadListener.onFail(e.toString());
+            downloadListener.onFail(e.toString(), 1);
 
         } finally
         {
@@ -107,28 +116,10 @@ public class DownloadTaskManager implements Runnable {
         }
     }
 
-
-    /*private long localFileCheck2() {
-        finishedFile = FileOperationUtil.getFileWithPrefix(filePath, "finished-");
-        if (finishedFile.exists()) {
-            LogUtil.d("文件早已完成");
-            return -1;
-        }
-
-        if (! filePath.exists()) {
-            LogUtil.d("文件无");
-            return 0;
-        }
-
-        LogUtil.d("文件已存在，断点:" + filePath.length());
-        return filePath.length();
-    }*/
-
-
     public interface DownloadListener {
         void downloading(long now);
         void onSuccess(int whatCase);
-        void onFail(String failDesc);
+        void onFail(String failDesc, int whatCase);
         void onPause();
     }
 }

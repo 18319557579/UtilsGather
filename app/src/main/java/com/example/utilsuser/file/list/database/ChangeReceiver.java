@@ -13,10 +13,12 @@ public class ChangeReceiver extends BroadcastReceiver {
     public static final String ACTION_UPDATE = "ACTION_UPDATE";
     public static final String ACTION_PAUSED = "ACTION_PAUSED";
     public static final String ACTION_FINISHED = "ACTION_FINISHED";
+    public static final String ACTION_ERROR = "ACTION_ERROR";
 
     //extra
     public static final String EXTRA_ID = "EXTRA_ID";
     public static final String EXTRA_CURRENT_LENGTH = "EXTRA_CURRENT_LENGTH";
+    public static final String EXTRA_ERROR_CODE = "EXTRA_ERROR_CODE";
 
 
 
@@ -31,6 +33,7 @@ public class ChangeReceiver extends BroadcastReceiver {
         filter.addAction(ChangeReceiver.ACTION_UPDATE);
         filter.addAction(ChangeReceiver.ACTION_PAUSED);
         filter.addAction(ChangeReceiver.ACTION_FINISHED);
+        filter.addAction(ChangeReceiver.ACTION_ERROR);
         return filter;
     }
 
@@ -50,6 +53,11 @@ public class ChangeReceiver extends BroadcastReceiver {
         } else if (ACTION_FINISHED.equals(action)) {
             int id = intent.getIntExtra(EXTRA_ID, -1);
             downloadTaskActivity.notifyFinished(id);
+
+        } else if (ACTION_ERROR.equals(action)) {
+            int id = intent.getIntExtra(EXTRA_ID, -1);
+            int errorCode = intent.getIntExtra(EXTRA_ERROR_CODE, -1);
+            downloadTaskActivity.notifyError(id, errorCode);
         }
     }
 }
