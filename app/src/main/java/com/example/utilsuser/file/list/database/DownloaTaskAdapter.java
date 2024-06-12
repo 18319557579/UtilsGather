@@ -138,7 +138,6 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
                         mOnItemClickListener.onTaskToResume(beanPackaged.downloadTaskBean);
 
                     } else if (beanPackaged.baseState instanceof BrokenState) {
-                        beanPackaged.downloadTaskBean.setCurrentLength(0L);
                         mOnItemClickListener.onTaskToResume(beanPackaged.downloadTaskBean);
                     }
                 }

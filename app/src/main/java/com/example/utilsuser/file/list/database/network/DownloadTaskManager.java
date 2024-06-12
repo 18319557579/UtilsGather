@@ -39,6 +39,11 @@ public class DownloadTaskManager implements Runnable {
 
     @Override
     public void run() {
+        LogUtil.d("当前的getCurrentLength: " + downloadTaskBean.getCurrentLength());
+        if (downloadTaskBean.getCurrentLength() == -1L) {
+            downloadTaskBean.setCurrentLength(0L);
+        }
+
         HttpURLConnection conn = null;
         RandomAccessFile raf = null;
         InputStream is = null;
