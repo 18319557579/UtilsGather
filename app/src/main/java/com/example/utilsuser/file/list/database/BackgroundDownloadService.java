@@ -1,6 +1,7 @@
 package com.example.utilsuser.file.list.database;
 
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
@@ -32,7 +33,9 @@ public class BackgroundDownloadService extends Service {
             DownloadTaskManager.DownloadListener downloadListener = new DownloadTaskManager.DownloadListener() {
                 @Override
                 public void downloading(long now) {
+                    LogUtil.d("downloading", "下载中：" + now);
                     Intent intent = new Intent(ChangeReceiver.ACTION_UPDATE);
+                    intent.setPackage(getPackageName());
                     intent.putExtra(ChangeReceiver.EXTRA_ID, downloadTaskBean.getId());
                     intent.putExtra(ChangeReceiver.EXTRA_CURRENT_LENGTH, now);
                     sendBroadcast(intent);
@@ -42,6 +45,7 @@ public class BackgroundDownloadService extends Service {
                 public void onSuccess(int whatCase) {
                     LogUtil.d("下载完成了：" + whatCase);
                     Intent intent = new Intent(ChangeReceiver.ACTION_FINISHED);
+                    intent.setPackage(getPackageName());
                     intent.putExtra(ChangeReceiver.EXTRA_ID, downloadTaskBean.getId());
                     sendBroadcast(intent);
                 }
@@ -54,8 +58,8 @@ public class BackgroundDownloadService extends Service {
                 @Override
                 public void onPause() {
                     LogUtil.d(downloadTaskBean.getShowName() + "已暂停");
-
                     Intent intent = new Intent(ChangeReceiver.ACTION_PAUSED);
+                    intent.setPackage(getPackageName());
                     intent.putExtra(ChangeReceiver.EXTRA_ID, downloadTaskBean.getId());
                     sendBroadcast(intent);
                 }

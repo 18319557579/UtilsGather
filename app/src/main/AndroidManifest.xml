@@ -19,10 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
+<!--
         <receiver
             android:name=".file.list.database.ChangeReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="false"></receiver>
+-->
 
         <service
             android:name=".file.list.database.BackgroundDownloadService"

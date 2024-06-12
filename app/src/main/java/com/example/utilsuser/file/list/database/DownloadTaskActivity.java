@@ -102,7 +102,7 @@ public class DownloadTaskActivity extends AppCompatActivity {
     private void registerBroadCast(){
         changeReceiver = new ChangeReceiver(this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             registerReceiver(changeReceiver, ChangeReceiver.getAllActionIntentFilter(), Context.RECEIVER_NOT_EXPORTED);
         } else {
             registerReceiver(changeReceiver, ChangeReceiver.getAllActionIntentFilter());

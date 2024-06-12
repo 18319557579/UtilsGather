@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.example.utilsgather.logcat.LogUtil;
+
 public class ChangeReceiver extends BroadcastReceiver {
 
     //action
@@ -35,6 +37,7 @@ public class ChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
+        LogUtil.d("downloading", "广播接收到了 " + action);
         if (ACTION_UPDATE.equals(action)) {
             int id = intent.getIntExtra(EXTRA_ID, -1);
             long currentLength = intent.getLongExtra(EXTRA_CURRENT_LENGTH, -1);
