@@ -1,5 +1,7 @@
 package com.example.utilsgather.file_system;
 
+import com.example.utilsgather.logcat.LogUtil;
+
 import java.io.File;
 
 public class FileOperationUtil {
@@ -48,5 +50,17 @@ public class FileOperationUtil {
         // 创建新的文件路径
         File newFile = new File(parentFile, newFileName);
         return newFile;
+    }
+
+    /**
+     * 删除指定路径下的文件
+     */
+    public static boolean deleteFile(String path) {
+        File file = new File(path);
+        if (! file.exists()) {
+            LogUtil.d("源文件不存在");
+            return false;
+        }
+        return file.delete();
     }
 }

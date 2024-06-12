@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.utilsgather.file_system.FileOperationUtil;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
@@ -223,7 +224,7 @@ public class DownloadTaskActivity extends AppCompatActivity {
             @Override
             public void run() {
                 DownloadTaskDao.newInstance().deleteTask(downloadTaskBean.getId());
-                FileOperation.INSTANCE.deleteFile(downloadTaskBean.getPath());
+                FileOperationUtil.deleteFile(downloadTaskBean.getPath());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
