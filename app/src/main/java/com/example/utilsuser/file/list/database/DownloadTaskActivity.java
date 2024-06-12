@@ -22,16 +22,17 @@ import com.example.utilsuser.file.list.database.thread.Scheduler;
 import java.io.File;
 import java.util.List;
 
-//todo 退出这个Activity时，要关闭哪些东西
-//todo 自行封装RxJava
+//todo 退出这个Activity时，要关闭哪些东西 1
+//todo 自行封装RxJava 1
 //todo 这个Activity的线程切换是不是可以使用Handler来进行优化
 //todo 优化Database，是不是可以让SQLiteDatabase对象变成单例模式
 //todo Activity去notify Adapter的时候，总是要找id所在的index，有没有办法节约这个步骤呢
-//todo state可以优化，不用总是新建对象
+//todo state可以优化，不用总是新建对象 1
 //todo 多线程下载
 //todo 下载时控制缓存区大小，以此控制下载速度
 //todo 将涉及到的一些工具方法，例如File文件的操作，写到UtilGather中
 //todo 错误情况的处理，例如下载中把原文件删除（至少要能实现暂停后继续时，可以进行原文件是否存在的判断）
+//todo 增加下载速度的显示
 public class DownloadTaskActivity extends AppCompatActivity {
     RecyclerView rv;
     public DownloaTaskAdapter downloaTaskAdapter;

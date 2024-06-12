@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.utilsgather.format_trans.FormatTransfer;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
+import com.example.utilsuser.file.list.database.state.BaseState;
 import com.example.utilsuser.file.list.database.state.BeanPackaged;
 import com.example.utilsuser.file.list.database.state.BrokenState;
 import com.example.utilsuser.file.list.database.state.FinishedState;
@@ -51,11 +52,11 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
             beanPackaged.downloadTaskBean = downloadTaskBean;
 
             if (downloadTaskBean.getCurrentLength() == -1) {
-                beanPackaged.baseState = new BrokenState();
+                beanPackaged.baseState = BaseState.BROKEN_STATE();
             } else if (downloadTaskBean.getCurrentLength() == downloadTaskBean.getTotalLength()) {
-                beanPackaged.baseState = new FinishedState();
+                beanPackaged.baseState = BaseState.FINISHED_STATE();
             } else {
-                beanPackaged.baseState = new PausedState();
+                beanPackaged.baseState = BaseState.PAUSED_STATE();
             }
 
             this.downloadTaskBeans.add(beanPackaged);
@@ -168,7 +169,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
 
                 //如果当前状态不是下载中的话，就更新。这样防止频繁更新
                 if (! (beanPackaged.baseState instanceof DownloadingState)) {
-                    beanPackaged.baseState = new DownloadingState();
+                    beanPackaged.baseState = BaseState.DOWNLOADING_STATE();
                 }
 
                 long lastUpdateTime = sparseLongArray.get(id);
@@ -186,7 +187,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
     public void notifyAdd(DownloadTaskBean downloadTaskBean) {
         BeanPackaged beanPackaged = new BeanPackaged();
         beanPackaged.downloadTaskBean = downloadTaskBean;
-        beanPackaged.baseState = new PausedState();
+        beanPackaged.baseState = BaseState.PAUSED_STATE();
 
         downloadTaskBeans.add(beanPackaged);
         notifyItemInserted(downloadTaskBeans.size() -1);
@@ -196,7 +197,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         for (int i = 0; i < downloadTaskBeans.size(); i++) {
             BeanPackaged beanPackaged = downloadTaskBeans.get(i);
             if (beanPackaged.downloadTaskBean.getId() == id) {
-                beanPackaged.baseState = new PausedState();
+                beanPackaged.baseState = BaseState.PAUSED_STATE();
                 notifyItemChanged(i);
                 break;
             }
@@ -207,7 +208,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         for (int i = 0; i < downloadTaskBeans.size(); i++) {
             BeanPackaged beanPackaged = downloadTaskBeans.get(i);
             if (beanPackaged.downloadTaskBean.getId() == id) {
-                beanPackaged.baseState = new FinishedState();
+                beanPackaged.baseState = BaseState.FINISHED_STATE();
                 notifyItemChanged(i);
                 break;
             }
@@ -231,7 +232,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
             BeanPackaged beanPackaged = downloadTaskBeans.get(i);
             if (beanPackaged.downloadTaskBean.getId() == id) {
                 beanPackaged.downloadTaskBean.setCurrentLength(-1L);
-                beanPackaged.baseState = new BrokenState();
+                beanPackaged.baseState = BaseState.BROKEN_STATE();
                 notifyItemChanged(i);
                 LogUtil.d("notifyBroken什么位置的item: " + i);
                 break;
