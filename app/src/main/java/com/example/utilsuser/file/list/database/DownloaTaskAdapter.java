@@ -14,6 +14,7 @@ import com.example.utilsgather.format_trans.FormatTransfer;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.database.state.BeanPackaged;
+import com.example.utilsuser.file.list.database.state.BrokenState;
 import com.example.utilsuser.file.list.database.state.FinishedState;
 import com.example.utilsuser.file.list.database.state.PausedState;
 import com.example.utilsuser.file.list.database.state.DownloadingState;
@@ -48,7 +49,9 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
             BeanPackaged beanPackaged = new BeanPackaged();
             beanPackaged.downloadTaskBean = downloadTaskBean;
 
-            if (downloadTaskBean.getCurrentLength() == downloadTaskBean.getTotalLength()) {
+            if (downloadTaskBean.getCurrentLength() == -1) {
+                beanPackaged.baseState = new BrokenState();
+            } else if (downloadTaskBean.getCurrentLength() == downloadTaskBean.getTotalLength()) {
                 beanPackaged.baseState = new FinishedState();
             } else {
                 beanPackaged.baseState = new PausedState();
@@ -71,8 +74,10 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         fileInfoHolder.tvFileUrl.setText(downloadTaskBeans.get(i).downloadTaskBean.getUrl());
         fileInfoHolder.tvFilePath.setText(downloadTaskBeans.get(i).downloadTaskBean.getPath());
 
+        String currentLengthShow = downloadTaskBeans.get(i).downloadTaskBean.getCurrentLength() == -1L ?
+                "~" : FormatTransfer.byteFormat(downloadTaskBeans.get(i).downloadTaskBean.getCurrentLength());
         fileInfoHolder.tvFileLength.setText(
-                FormatTransfer.byteFormat(downloadTaskBeans.get(i).downloadTaskBean.getCurrentLength()) +
+                currentLengthShow +
                 " / " +
                 FormatTransfer.byteFormat(downloadTaskBeans.get(i).downloadTaskBean.getTotalLength())
         );
@@ -128,6 +133,10 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
                         mOnItemClickListener.onTaskToPause(beanPackaged.downloadTaskBean.getId());
 
                     } else if (beanPackaged.baseState instanceof PausedState) {
+                        mOnItemClickListener.onTaskToResume(beanPackaged.downloadTaskBean);
+
+                    } else if (beanPackaged.baseState instanceof BrokenState) {
+                        beanPackaged.downloadTaskBean.setCurrentLength(0L);
                         mOnItemClickListener.onTaskToResume(beanPackaged.downloadTaskBean);
                     }
                 }
