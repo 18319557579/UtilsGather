@@ -128,15 +128,34 @@ public class DownloadTaskActivity extends AppCompatActivity {
     };
 
     public void downloadJiZhang(View view) {
-        new Thread(new Runnable() {
+        addTaskToStart("https://ucdl.25pp.com/fs08/2024/01/08/11/110_54c27c8bd85e0b3f44e7d5491b5aa6a0.apk?nrd=0&fname=%E8%AE%B0%E8%B4%A6%E6%9C%AC&productid=2011&packageid=401462537&pkg=com.bookkp.accountzy&vcode=8&yingid=wdj_web&pos=wdj_web%2Fdetail_normal_dl%2F0&appid=8324843&apprd=8324843&iconUrl=http%3A%2F%2Fandroid-artworks.25pp.com%2Ffs08%2F2024%2F01%2F08%2F9%2F110_d9d998c600f8c061a079c4f73fbc1016_con.png&did=5587ef1782b1f7f31a42ced9a659c49f&md5=78631c8544971195b950d14771843514",
+                "/data/user/0/com.example.utilsuser/files/",
+                "110_54c27c8bd85e0b3f44e7d5491b5aa6a0.apk",
+                "记账本");
+    }
+    public void downloadDouYin(View view) {
+        addTaskToStart("https://ucdl.25pp.com/fs08/2024/05/28/8/120_1520704cba97e878685c716c5dd89961.apk?nrd=0&fname=%E6%8A%96%E9%9F%B3&productid=2011&packageid=500960169&pkg=com.ss.android.ugc.aweme&vcode=300101&yingid=wdj_web&pos=wdj_web%2Fdetail_normal_dl%2F0&appid=7461948&apprd=7461948&iconUrl=http%3A%2F%2Fandroid-artworks.25pp.com%2Ffs08%2F2024%2F05%2F29%2F0%2F110_948e6c5440768f9a40ddaf6036045056_con.png&did=6499240c97db2fab01ff289f059dbb92&md5=17dded2bed52cb677eb31ab8f3df33b6",
+                "/data/user/0/com.example.utilsuser/files/",
+                "120_1520704cba97e878685c716c5dd89961.apk",
+                "抖音");
+    }
+    public void downloadWeiXin(View view) {
+    }
+    public void downloadXiaoHongShu(View view) {
+    }
+    public void downloadPiPiXia(View view) {
 
+    }
+
+    private void addTaskToStart(String url, String fileDir, String name, String showName) {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 DownloadTaskBean downloadTaskBean = new DownloadTaskBean();
-                downloadTaskBean.setShowName("记账本");
-                new CreateFileNetwork("https://ucdl.25pp.com/fs08/2024/01/08/11/110_54c27c8bd85e0b3f44e7d5491b5aa6a0.apk?nrd=0&fname=%E8%AE%B0%E8%B4%A6%E6%9C%AC&productid=2011&packageid=401462537&pkg=com.bookkp.accountzy&vcode=8&yingid=wdj_web&pos=wdj_web%2Fdetail_normal_dl%2F0&appid=8324843&apprd=8324843&iconUrl=http%3A%2F%2Fandroid-artworks.25pp.com%2Ffs08%2F2024%2F01%2F08%2F9%2F110_d9d998c600f8c061a079c4f73fbc1016_con.png&did=5587ef1782b1f7f31a42ced9a659c49f&md5=78631c8544971195b950d14771843514",
-                        "/data/user/0/com.example.utilsuser/files/",
-                        "110_54c27c8bd85e0b3f44e7d5491b5aa6a0.apk",
+                downloadTaskBean.setShowName(showName);
+                new CreateFileNetwork(url,
+                        fileDir,
+                        name,
                         downloadTaskBean)
                         .start();
 
@@ -153,17 +172,6 @@ public class DownloadTaskActivity extends AppCompatActivity {
 
             }
         }).start();
-
-
-    }
-    public void downloadDouYin(View view) {
-    }
-    public void downloadWeiXin(View view) {
-    }
-    public void downloadXiaoHongShu(View view) {
-    }
-    public void downloadPiPiXia(View view) {
-
     }
 
     public void notifyUpdateProgress(int id, long currentLength) {
