@@ -188,7 +188,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         beanPackaged.downloadTaskBean = downloadTaskBean;
         beanPackaged.baseState = BaseState.PAUSED_STATE();
 
-        downloadTaskBeans.add(beanPackaged);
+        downloadTaskBeans.add(0, beanPackaged);
         notifyItemInserted(downloadTaskBeans.size() -1);
     }
 

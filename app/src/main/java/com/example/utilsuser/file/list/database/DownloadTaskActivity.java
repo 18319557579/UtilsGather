@@ -32,7 +32,7 @@ import java.util.List;
 //todo 多线程下载
 //todo 下载时控制缓存区大小，以此控制下载速度 1
 //todo 将涉及到的一些工具方法，例如File文件的操作，写到UtilGather中 1
-//todo 错误情况的处理，例如下载中把原文件删除（至少要能实现暂停后继续时，可以进行原文件是否存在的判断） 1
+//todo 错误情况的处理，例如下载中把原文件删除（至少要能实现暂停后继续时，可以进行原文件是否存在的判断） 1 2
 //todo 增加下载速度的显示
 public class DownloadTaskActivity extends AppCompatActivity {
     RecyclerView rv;

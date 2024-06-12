@@ -78,7 +78,7 @@ public class DownloadTaskDao {
         List<DownloadTaskBean> downloadTaskBeanList = new ArrayList<>();
 
         Cursor cursor = db.query(DownloadTaskDBHelper.TABLE_TASK, null, null,
-                null, null, null, DownloadTaskDBHelper.FIELD_CREATE_TIME);
+                null, null, null, DownloadTaskDBHelper.FIELD_CREATE_TIME + " DESC");
         if (cursor.moveToFirst()) {
             do {
                 @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(DownloadTaskDBHelper.FIELD_ID));
