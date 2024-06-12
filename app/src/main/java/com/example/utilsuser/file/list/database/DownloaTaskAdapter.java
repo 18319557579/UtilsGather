@@ -1,5 +1,6 @@
 package com.example.utilsuser.file.list.database;
 
+import android.util.SparseLongArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -157,6 +158,8 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         }
     }
 
+    private final SparseLongArray sparseLongArray = new SparseLongArray();
+
     public void notifyUpdateProgress(int id, long currentLength) {
         for (int i = 0; i < downloadTaskBeans.size(); i++) {
             BeanPackaged beanPackaged = downloadTaskBeans.get(i);
@@ -168,7 +171,13 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
                     beanPackaged.baseState = new DownloadingState();
                 }
 
-                notifyItemChanged(i);
+                long lastUpdateTime = sparseLongArray.get(id);
+                long nowTime = System.currentTimeMillis();
+                if (nowTime - lastUpdateTime > 1000) {
+                    notifyItemChanged(i);
+                    sparseLongArray.put(id, nowTime);
+                }
+
                 break;
             }
         }
