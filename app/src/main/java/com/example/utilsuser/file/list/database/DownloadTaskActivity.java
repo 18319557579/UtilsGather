@@ -7,6 +7,7 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -159,6 +160,22 @@ public class DownloadTaskActivity extends AppCompatActivity {
     }
     public void downloadPiPiXia(View view) {
 
+    }
+    public void showInfo(View view) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (DownloadTaskBean downloadTaskBean : downloadTaskBeans) {
+            stringBuilder.append(downloadTaskBean).append("\n");
+        }
+        LogUtil.d("内存中的Bean: \n" + stringBuilder.toString());
+
+        Scheduler.runOnBGThread(() -> {
+            StringBuilder stringBuilder2 = new StringBuilder();
+            List<DownloadTaskBean> list = DownloadTaskDao.newInstance().queryTaskList();
+            for (DownloadTaskBean downloadTaskBean : list) {
+                stringBuilder2.append(downloadTaskBean).append("\n");
+            }
+            LogUtil.d("数据库中的Bean: \n" + stringBuilder2.toString());
+        });
     }
 
     private void addTaskToStart(String url, String fileDir, String name, String showName) {
