@@ -67,7 +67,7 @@ public class DownloadTaskManager implements Runnable {
             }
 
             is = conn.getInputStream();
-            byte[] buf = new byte[1024 * 4];
+            byte[] buf = new byte[1024 * 8];
             int len = 0;
             while ((len = is.read(buf)) != -1) {
                 if (paused) {

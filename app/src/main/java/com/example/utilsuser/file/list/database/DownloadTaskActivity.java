@@ -29,7 +29,7 @@ import java.util.List;
 //todo Activity去notify Adapter的时候，总是要找id所在的index，有没有办法节约这个步骤呢
 //todo state可以优化，不用总是新建对象 1
 //todo 多线程下载
-//todo 下载时控制缓存区大小，以此控制下载速度
+//todo 下载时控制缓存区大小，以此控制下载速度 1
 //todo 将涉及到的一些工具方法，例如File文件的操作，写到UtilGather中
 //todo 错误情况的处理，例如下载中把原文件删除（至少要能实现暂停后继续时，可以进行原文件是否存在的判断）
 //todo 增加下载速度的显示
