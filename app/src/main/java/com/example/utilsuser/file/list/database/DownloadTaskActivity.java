@@ -1,5 +1,6 @@
 package com.example.utilsuser.file.list.database;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +26,9 @@ import java.io.File;
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -39,6 +43,8 @@ import io.reactivex.schedulers.Schedulers;
 //todo 将涉及到的一些工具方法，例如File文件的操作，写到UtilGather中 1
 //todo 错误情况的处理，例如下载中把原文件删除（至少要能实现暂停后继续时，可以进行原文件是否存在的判断） 1 2
 //todo 增加下载速度的显示
+
+@SuppressLint("CheckResult")
 public class DownloadTaskActivity extends AppCompatActivity {
     RecyclerView rv;
     public DownloaTaskAdapter downloaTaskAdapter;
@@ -92,6 +98,7 @@ public class DownloadTaskActivity extends AppCompatActivity {
 
         rv.setAdapter(downloaTaskAdapter);
     }
+
 
     private void loadData() {
         Completable.fromAction(() -> {
@@ -171,34 +178,40 @@ public class DownloadTaskActivity extends AppCompatActivity {
         }
         LogUtil.d("内存中的Bean: \n" + stringBuilder.toString());
 
-        Scheduler.runOnBGThread(() -> {
-            StringBuilder stringBuilder2 = new StringBuilder();
-            List<DownloadTaskBean> list = DownloadTaskDao.newInstance().queryTaskList();
-            for (DownloadTaskBean downloadTaskBean : list) {
-                stringBuilder2.append(downloadTaskBean).append("\n");
-            }
-            LogUtil.d("数据库中的Bean: \n" + stringBuilder2.toString());
-        });
+        Completable.fromRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        StringBuilder stringBuilder2 = new StringBuilder();
+                        List<DownloadTaskBean> list = DownloadTaskDao.newInstance().queryTaskList();
+                        for (DownloadTaskBean downloadTaskBean : list) {
+                            stringBuilder2.append(downloadTaskBean).append("\n");
+                        }
+                        LogUtil.d("数据库中的Bean: \n" + stringBuilder2.toString());
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     private void addTaskToStart(String url, String fileDir, String name, String showName) {
-        Scheduler.runOnBGThread(() -> {
-            DownloadTaskBean downloadTaskBean = new DownloadTaskBean();
-            downloadTaskBean.setShowName(showName);
-            new CreateFileNetwork(url,
-                    fileDir,
-                    name,
-                    downloadTaskBean)
-                    .start();
+        Observable.fromCallable(() -> {
+                    DownloadTaskBean downloadTaskBean = new DownloadTaskBean();
+                    downloadTaskBean.setShowName(showName);
+                    new CreateFileNetwork(url,
+                            fileDir,
+                            name,
+                            downloadTaskBean)
+                            .start();
 
-            LogUtil.d("数据库中的信息: " + downloadTaskBean);
-
-            Scheduler.runOnUiThread(() -> {
-                notifyAdd(downloadTaskBean);
-
-                downloadBinder.addTask(downloadTaskBean);
-            });
-        });
+                    LogUtil.d("数据库中的信息: " + downloadTaskBean);
+                    return downloadTaskBean;
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(downloadTaskBean -> {
+                    notifyAdd(downloadTaskBean);
+                    downloadBinder.addTask(downloadTaskBean);
+                });
     }
 
     public void notifyUpdateProgress(int id, long currentLength) {
@@ -239,34 +252,38 @@ public class DownloadTaskActivity extends AppCompatActivity {
     }
 
     public void resumeTask(DownloadTaskBean downloadTaskBean) {
-        Scheduler.runOnBGThread(() -> {
-            if (!new File(downloadTaskBean.getPath()).exists()) {
-                DownloadTaskDao.newInstance().updateTask(downloadTaskBean.getId(), -1L);
-                downloadTaskBean.setCurrentLength(-1L);
-            }
-            Scheduler.runOnUiThread(() -> {
-                downloadBinder.resumeTask(downloadTaskBean);
-            });
-        });
+        //这里其实可以无需传递值，只是为了使用onNext()
+        Observable.create(observableEmitter -> {
+                    if (!new File(downloadTaskBean.getPath()).exists()) {
+                        DownloadTaskDao.newInstance().updateTask(downloadTaskBean.getId(), -1L);
+                        downloadTaskBean.setCurrentLength(-1L);
+                    }
+                    observableEmitter.onNext(downloadTaskBean);
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(bean -> {
+                    downloadBinder.resumeTask(downloadTaskBean);
+                });
     }
 
     public void clearTask(DownloadTaskBean downloadTaskBean, boolean inExecutor) {
-        if (inExecutor) {
-            downloadBinder.clearTask(downloadTaskBean.getId());
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DownloadTaskDao.newInstance().deleteTask(downloadTaskBean.getId());
-                FileOperationUtil.deleteFile(downloadTaskBean.getPath());
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        notifyCleared(downloadTaskBean.getId());
+        //这里的第一步实际上不需要切线程，但是为了好看，还是使用了RxJava包裹
+        Completable.fromAction(() -> {
+                    if (inExecutor) {
+                        downloadBinder.clearTask(downloadTaskBean.getId());
                     }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
+                .doOnComplete(() -> {
+                    DownloadTaskDao.newInstance().deleteTask(downloadTaskBean.getId());
+                    FileOperationUtil.deleteFile(downloadTaskBean.getPath());
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    notifyCleared(downloadTaskBean.getId());
                 });
-            }
-        }).start();
     }
 
     @Override

@@ -40,6 +40,7 @@ public class RxJavaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rx_java);
 
         GuideSettings.set(findViewById(R.id.lv_launcher_rxjava), new GuideItemEntity[]{
+                new GuideItemEntity("单纯使用RxJava来开子线程", () -> zero()),
                 new GuideItemEntity("使用fromCallable()", () -> one()),
                 new GuideItemEntity("使用create()", () -> two()),
                 new GuideItemEntity("两次切换线程 map()，都传递数据", () -> three()),
@@ -52,6 +53,19 @@ public class RxJavaActivity extends AppCompatActivity {
         });
     }
 
+
+    private void zero() {
+        //主要区别在于异常处理能力。如果你的代码块中可能会抛出检查型异常，那么使用Completable.fromAction()更合适，因为它允许你直接在代码块中处理这些异常。如果不需要关心异常，则可以使用Completable.fromRunnable()。
+        Completable.fromRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        LogUtil.d("当前在子线程中进行操作");
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+
+    }
 
     private void one() {
         Observable.fromCallable(() -> {
@@ -145,7 +159,7 @@ public class RxJavaActivity extends AppCompatActivity {
                 .ignoreElements()
                 .observeOn(Schedulers.io())
                 .subscribe(() -> {
-                    LogUtil.d("又回到子线程了: " + Thread.currentThread() );
+                    LogUtil.d("又回到子线程了: " + Thread.currentThread());
                 });
     }
 
@@ -167,9 +181,9 @@ public class RxJavaActivity extends AppCompatActivity {
 
     private void seven() {
         Completable.fromAction(() -> {
-            Thread.sleep(1000); // 模拟耗时
-            LogUtil.d("在后台执行任务");
-        })
+                    Thread.sleep(1000); // 模拟耗时
+                    LogUtil.d("在后台执行任务");
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .andThen(Observable.fromCallable(() -> {
@@ -181,6 +195,7 @@ public class RxJavaActivity extends AppCompatActivity {
                     LogUtil.d("又回到子线程了: " + Thread.currentThread() + ", 传值: " + user);
                 });
     }
+
     private void eight() {
         Completable.fromAction(() -> {
                     Thread.sleep(1000); // 模拟耗时
