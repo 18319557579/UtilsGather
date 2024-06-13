@@ -70,6 +70,7 @@ import com.example.utilsuser.qihang.three.AnimatorSetActivity
 import com.example.utilsuser.qihang.three.PathAnimatorActivity
 import com.example.utilsuser.qihang.three.ValueAnimatorActivity
 import com.example.utilsuser.qihang.two.ViewAnimationActivity
+import com.example.utilsuser.rxjava.RxJavaActivity
 import com.example.utilsuser.service.MyServiceActivity
 import com.example.utilsuser.sqlite.SQLiteActivity
 import kotlinx.coroutines.Dispatchers
@@ -365,7 +366,10 @@ class MainActivity : CallbackActivity() {
                     val intent = Intent(this@MainActivity, MyServiceActivity::class.java)
                     startActivity(intent)
                 },
-
+                GuideItemEntity("跳转到 RxJavaActivity") {
+                    val intent = Intent(this@MainActivity, RxJavaActivity::class.java)
+                    startActivity(intent)
+                },
             )
 
         )
