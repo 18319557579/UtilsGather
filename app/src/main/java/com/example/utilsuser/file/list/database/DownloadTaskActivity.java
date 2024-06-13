@@ -8,7 +8,6 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,16 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.utilsgather.file_system.FileOperationUtil;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
+import com.example.utilsuser.file.list.database.mvp.Contract;
+import com.example.utilsuser.file.list.database.mvp.MiddlePresenter;
 import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
-import com.example.utilsuser.file.list.database.thread.Scheduler;
 
 import java.io.File;
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -45,17 +43,20 @@ import io.reactivex.schedulers.Schedulers;
 //todo 增加下载速度的显示
 
 @SuppressLint("CheckResult")
-public class DownloadTaskActivity extends AppCompatActivity {
+public class DownloadTaskActivity extends AppCompatActivity implements Contract.View{
     RecyclerView rv;
     public DownloaTaskAdapter downloaTaskAdapter;
     public List<DownloadTaskBean> downloadTaskBeans;
     public ChangeReceiver changeReceiver;
     private BackgroundDownloadService.DownloadBinder downloadBinder;
 
+    private Contract.Presenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_task);
+        presenter = new MiddlePresenter(this);
         loadData();
         initView();
         registerBroadCast();
@@ -194,24 +195,7 @@ public class DownloadTaskActivity extends AppCompatActivity {
     }
 
     private void addTaskToStart(String url, String fileDir, String name, String showName) {
-        Observable.fromCallable(() -> {
-                    DownloadTaskBean downloadTaskBean = new DownloadTaskBean();
-                    downloadTaskBean.setShowName(showName);
-                    new CreateFileNetwork(url,
-                            fileDir,
-                            name,
-                            downloadTaskBean)
-                            .start();
-
-                    LogUtil.d("数据库中的信息: " + downloadTaskBean);
-                    return downloadTaskBean;
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(downloadTaskBean -> {
-                    notifyAdd(downloadTaskBean);
-                    downloadBinder.addTask(downloadTaskBean);
-                });
+        presenter.addTask_Mid(url, fileDir, name, showName);
     }
 
     public void notifyUpdateProgress(int id, long currentLength) {
@@ -299,5 +283,11 @@ public class DownloadTaskActivity extends AppCompatActivity {
 
         unbindService(connection);
         downloadBinder = null;
+    }
+
+    @Override
+    public void notifyAddTask(DownloadTaskBean downloadTaskBean) {
+        notifyAdd(downloadTaskBean);
+        downloadBinder.addTask(downloadTaskBean);
     }
 }

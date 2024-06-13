@@ -28,7 +28,7 @@ public class BackgroundDownloadService extends Service {
         return downloadBinder;
     }
 
-    class DownloadBinder extends Binder {
+    public class DownloadBinder extends Binder {
         //添加任务
         public void addTask(DownloadTaskBean downloadTaskBean) {
             DownloadTaskManager.DownloadListener downloadListener = new DownloadTaskManager.DownloadListener() {
