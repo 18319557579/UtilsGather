@@ -292,8 +292,10 @@ public class DownloadTaskActivity extends AppCompatActivity {
 
         downloadBinder.clearAllTask();
 
-        if (changeReceiver != null)
+        if (changeReceiver != null) {
             unregisterReceiver(changeReceiver);
+            changeReceiver = null;
+        }
 
         unbindService(connection);
         downloadBinder = null;
