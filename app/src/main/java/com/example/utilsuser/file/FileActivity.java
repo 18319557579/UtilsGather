@@ -4,14 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.utilsgather.file_system.FileOperationUtil;
 import com.example.utilsgather.logcat.LogUtil;
@@ -19,7 +14,7 @@ import com.example.utilsgather.permission.permissionX.ApplyResultCallback;
 import com.example.utilsgather.permission.permissionX.PermissionX;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.ListActivity;
-import com.example.utilsuser.file.list.database.DownloadTaskActivity;
+import com.example.utilsuser.file.list.database.ui.DownloadTaskActivity;
 import com.example.utilsuser.file.list.independent.IndependentActivity;
 
 import java.io.File;

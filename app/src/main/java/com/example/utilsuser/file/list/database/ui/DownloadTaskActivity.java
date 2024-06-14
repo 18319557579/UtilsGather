@@ -1,10 +1,7 @@
-package com.example.utilsuser.file.list.database;
+package com.example.utilsuser.file.list.database.ui;
 
 import android.annotation.SuppressLint;
-import android.content.ComponentName;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,19 +9,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.utilsgather.file_system.FileOperationUtil;
-import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
+import com.example.utilsuser.file.list.database.bean.DownloadTaskBean;
 import com.example.utilsuser.file.list.database.mvp.Contract;
 import com.example.utilsuser.file.list.database.mvp.MiddlePresenter;
 
-import java.io.File;
 import java.util.List;
-
-import io.reactivex.Completable;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 //todo 退出这个Activity时，要关闭哪些东西 1
 //todo 自行封装RxJava 1 -> 变成引入Rxjava了 1

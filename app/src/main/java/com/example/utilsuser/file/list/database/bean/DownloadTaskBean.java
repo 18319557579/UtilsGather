@@ -1,4 +1,4 @@
-package com.example.utilsuser.file.list.database;
+package com.example.utilsuser.file.list.database.bean;
 
 public class DownloadTaskBean {
     private int id;

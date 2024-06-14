@@ -1,4 +1,4 @@
-package com.example.utilsuser.file.list.database;
+package com.example.utilsuser.file.list.database.db;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.utilsgather.context.ApplicationGlobal;
 import com.example.utilsgather.logcat.LogUtil;
+import com.example.utilsuser.file.list.database.bean.DownloadTaskBean;
 
 import java.util.ArrayList;
 import java.util.List;

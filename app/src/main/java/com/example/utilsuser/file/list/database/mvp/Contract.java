@@ -1,7 +1,6 @@
 package com.example.utilsuser.file.list.database.mvp;
 
-import com.example.utilsuser.file.list.database.BackgroundDownloadService;
-import com.example.utilsuser.file.list.database.DownloadTaskBean;
+import com.example.utilsuser.file.list.database.bean.DownloadTaskBean;
 
 import java.util.List;
 

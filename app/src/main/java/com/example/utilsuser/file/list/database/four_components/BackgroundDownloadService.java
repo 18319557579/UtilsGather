@@ -1,15 +1,14 @@
-package com.example.utilsuser.file.list.database;
+package com.example.utilsuser.file.list.database.four_components;
 
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.SparseArray;
 
 import com.example.utilsgather.logcat.LogUtil;
+import com.example.utilsuser.file.list.database.bean.DownloadTaskBean;
 import com.example.utilsuser.file.list.database.network.DownloadTaskManager;
-import com.example.utilsuser.service.MyService;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

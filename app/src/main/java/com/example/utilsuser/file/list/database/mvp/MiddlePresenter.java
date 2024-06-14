@@ -12,11 +12,11 @@ import android.os.IBinder;
 
 import com.example.utilsgather.file_system.FileOperationUtil;
 import com.example.utilsgather.logcat.LogUtil;
-import com.example.utilsuser.file.list.database.BackgroundDownloadService;
-import com.example.utilsuser.file.list.database.ChangeReceiver;
-import com.example.utilsuser.file.list.database.DownloadTaskActivity;
-import com.example.utilsuser.file.list.database.DownloadTaskBean;
-import com.example.utilsuser.file.list.database.DownloadTaskDao;
+import com.example.utilsuser.file.list.database.four_components.BackgroundDownloadService;
+import com.example.utilsuser.file.list.database.four_components.ChangeReceiver;
+import com.example.utilsuser.file.list.database.ui.DownloadTaskActivity;
+import com.example.utilsuser.file.list.database.bean.DownloadTaskBean;
+import com.example.utilsuser.file.list.database.db.DownloadTaskDao;
 import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
 
 import java.io.File;

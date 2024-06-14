@@ -2,8 +2,8 @@ package com.example.utilsuser.file.list.database.network;
 
 import com.example.utilsgather.format_trans.FormatTransfer;
 import com.example.utilsgather.logcat.LogUtil;
-import com.example.utilsuser.file.list.database.DownloadTaskBean;
-import com.example.utilsuser.file.list.database.DownloadTaskDao;
+import com.example.utilsuser.file.list.database.bean.DownloadTaskBean;
+import com.example.utilsuser.file.list.database.db.DownloadTaskDao;
 
 import java.io.File;
 import java.io.IOException;

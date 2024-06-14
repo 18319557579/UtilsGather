@@ -1,6 +1,4 @@
-package com.example.utilsuser.file.list.database.state;
-
-import android.widget.ImageView;
+package com.example.utilsuser.file.list.database.bean;
 
 import com.example.utilsuser.R;
 

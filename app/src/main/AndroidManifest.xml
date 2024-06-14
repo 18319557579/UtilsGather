@@ -29,7 +29,7 @@
             android:exported="false"></receiver>
         -->
         <service
-            android:name=".file.list.database.BackgroundDownloadService"
+            android:name=".file.list.database.four_components.BackgroundDownloadService"
             android:enabled="true"
             android:exported="true" />
 
@@ -43,7 +43,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".file.list.database.DownloadTaskActivity"
+            android:name=".file.list.database.ui.DownloadTaskActivity"
             android:exported="false" />
         <activity
             android:name=".file.list.independent.IndependentActivity"

@@ -1,4 +1,4 @@
-package com.example.utilsuser.file.list.database.state;
+package com.example.utilsuser.file.list.database.bean;
 
 public class DownloadingState extends BaseState{
     public DownloadingState() {
