@@ -2,10 +2,7 @@ package com.example.utilsuser.file.list.database;
 
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
@@ -20,7 +17,6 @@ import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.database.mvp.Contract;
 import com.example.utilsuser.file.list.database.mvp.MiddlePresenter;
-import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
 
 import java.io.File;
 import java.util.List;
@@ -44,11 +40,9 @@ import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("CheckResult")
 public class DownloadTaskActivity extends AppCompatActivity implements Contract.View{
-    RecyclerView rv;
+    private RecyclerView rv;
     public DownloaTaskAdapter downloaTaskAdapter;
     public List<DownloadTaskBean> downloadTaskBeans;
-    public ChangeReceiver changeReceiver;
-    private BackgroundDownloadService.DownloadBinder downloadBinder;
 
     private Contract.Presenter presenter;
 
@@ -59,9 +53,6 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
         presenter = new MiddlePresenter(this);
         loadData();
         initView();
-        registerBroadCast();
-        bindService();
-
     }
 
     private void initView() {
@@ -102,51 +93,8 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
 
 
     private void loadData() {
-        Completable.fromAction(() -> {
-                    downloadTaskBeans = DownloadTaskDao.newInstance().queryTaskList();
-                    for (DownloadTaskBean downloadTaskBean : downloadTaskBeans) {
-                        File file = new File(downloadTaskBean.getPath());
-                        if (file.exists()) {
-                            downloadTaskBean.setCurrentLength(file.length());
-                        } else {
-                            downloadTaskBean.setCurrentLength(-1);
-                        }
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-                    initAdapter();
-                });
+        presenter.loadData();
     }
-
-    private void registerBroadCast() {
-        changeReceiver = new ChangeReceiver(this);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(changeReceiver, changeReceiver.getAllActionIntentFilter(), Context.RECEIVER_NOT_EXPORTED);
-        } else {
-            registerReceiver(changeReceiver, changeReceiver.getAllActionIntentFilter());
-        }
-    }
-
-    private void bindService() {
-        Intent intent = new Intent(this, BackgroundDownloadService.class);
-        bindService(intent, connection, BIND_AUTO_CREATE);
-    }
-
-    private final ServiceConnection connection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            LogUtil.d("MyServiceActivity中回调 onServiceConnected()");
-            downloadBinder = (BackgroundDownloadService.DownloadBinder) service;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            LogUtil.d("MyServiceActivity中回调 onServiceDisconnected() " + name);
-        }
-    };
 
     public void downloadJiZhang(View view) {
         addTaskToStart("https://ucdl.25pp.com/fs08/2024/01/08/11/110_54c27c8bd85e0b3f44e7d5491b5aa6a0.apk?nrd=0&fname=%E8%AE%B0%E8%B4%A6%E6%9C%AC&productid=2011&packageid=401462537&pkg=com.bookkp.accountzy&vcode=8&yingid=wdj_web&pos=wdj_web%2Fdetail_normal_dl%2F0&appid=8324843&apprd=8324843&iconUrl=http%3A%2F%2Fandroid-artworks.25pp.com%2Ffs08%2F2024%2F01%2F08%2F9%2F110_d9d998c600f8c061a079c4f73fbc1016_con.png&did=5587ef1782b1f7f31a42ced9a659c49f&md5=78631c8544971195b950d14771843514",
@@ -173,52 +121,71 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
     }
 
     public void showInfo(View view) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (DownloadTaskBean downloadTaskBean : downloadTaskBeans) {
-            stringBuilder.append(downloadTaskBean).append("\n");
-        }
-        LogUtil.d("内存中的Bean: \n" + stringBuilder.toString());
-
-        Completable.fromRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        StringBuilder stringBuilder2 = new StringBuilder();
-                        List<DownloadTaskBean> list = DownloadTaskDao.newInstance().queryTaskList();
-                        for (DownloadTaskBean downloadTaskBean : list) {
-                            stringBuilder2.append(downloadTaskBean).append("\n");
-                        }
-                        LogUtil.d("数据库中的Bean: \n" + stringBuilder2.toString());
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+        presenter.showInfo(downloadTaskBeans);
     }
 
     private void addTaskToStart(String url, String fileDir, String name, String showName) {
-        presenter.addTask_Mid(url, fileDir, name, showName);
-    }
-
-    public void notifyUpdateProgress(int id, long currentLength) {
-        downloaTaskAdapter.notifyUpdateProgress(id, currentLength);
+        presenter.addTask(url, fileDir, name, showName);
     }
 
     public void notifyAdd(DownloadTaskBean downloadTaskBean) {
         downloaTaskAdapter.notifyAdd(downloadTaskBean);
     }
 
-    public void notifyPause(int id) {
-        downloaTaskAdapter.notifyPause(id);
-    }
-
-    public void notifyFinished(int id) {
-        downloaTaskAdapter.notifyFinished(id);
-    }
-
     public void notifyCleared(int id) {
         downloaTaskAdapter.notifyCleared(id);
     }
 
-    public void notifyError(int id, int errorCode) {
+    public void pauseTask(int id) {
+        presenter.pauseTask(id);
+    }
+
+    public void resumeTask(DownloadTaskBean downloadTaskBean) {
+        presenter.resumeTask(downloadTaskBean);
+    }
+
+    public void clearTask(DownloadTaskBean downloadTaskBean, boolean inExecutor) {
+        presenter.clearTask(downloadTaskBean, inExecutor);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        presenter.destroy();
+        presenter = null;
+    }
+
+    @Override
+    public void notifyDBTaskList(List<DownloadTaskBean> downloadTaskBeans) {
+        this.downloadTaskBeans = downloadTaskBeans;
+        initAdapter();
+    }
+
+    @Override
+    public void notifyAddTask(DownloadTaskBean downloadTaskBean) {
+        notifyAdd(downloadTaskBean);
+//        downloadBinder.addTask(downloadTaskBean);
+//        presenter.addTaskToExecutor_Mid(downloadTaskBean, downloadBinder);
+    }
+
+    @Override
+    public void onNotifyUpdateProgress(int id, long currentLength) {
+        downloaTaskAdapter.notifyUpdateProgress(id, currentLength);
+    }
+
+    @Override
+    public void onNotifyPause(int id) {
+        downloaTaskAdapter.notifyPause(id);
+    }
+
+    @Override
+    public void onNotifyFinished(int id) {
+        downloaTaskAdapter.notifyFinished(id);
+    }
+
+    @Override
+    public void onNotifyError(int id, int errorCode) {
         switch (errorCode) {
             case 0:
                 break;
@@ -231,63 +198,4 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
         }
     }
 
-    public void pauseTask(int id) {
-        downloadBinder.pauseTask(id);
-    }
-
-    public void resumeTask(DownloadTaskBean downloadTaskBean) {
-        //这里其实可以无需传递值，只是为了使用onNext()
-        Observable.create(observableEmitter -> {
-                    if (!new File(downloadTaskBean.getPath()).exists()) {
-                        DownloadTaskDao.newInstance().updateTask(downloadTaskBean.getId(), -1L);
-                        downloadTaskBean.setCurrentLength(-1L);
-                    }
-                    observableEmitter.onNext(downloadTaskBean);
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(bean -> {
-                    downloadBinder.resumeTask(downloadTaskBean);
-                });
-    }
-
-    public void clearTask(DownloadTaskBean downloadTaskBean, boolean inExecutor) {
-        //这里的第一步实际上不需要切线程，但是为了好看，还是使用了RxJava包裹
-        Completable.fromAction(() -> {
-                    if (inExecutor) {
-                        downloadBinder.clearTask(downloadTaskBean.getId());
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
-                .doOnComplete(() -> {
-                    DownloadTaskDao.newInstance().deleteTask(downloadTaskBean.getId());
-                    FileOperationUtil.deleteFile(downloadTaskBean.getPath());
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-                    notifyCleared(downloadTaskBean.getId());
-                });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        downloadBinder.clearAllTask();
-
-        if (changeReceiver != null) {
-            unregisterReceiver(changeReceiver);
-            changeReceiver = null;
-        }
-
-        unbindService(connection);
-        downloadBinder = null;
-    }
-
-    @Override
-    public void notifyAddTask(DownloadTaskBean downloadTaskBean) {
-        notifyAdd(downloadTaskBean);
-        downloadBinder.addTask(downloadTaskBean);
-    }
 }

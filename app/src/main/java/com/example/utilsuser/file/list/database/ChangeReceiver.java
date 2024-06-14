@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.example.utilsgather.logcat.LogUtil;
+import com.example.utilsuser.file.list.database.mvp.Contract;
 
 public class ChangeReceiver extends BroadcastReceiver {
 
@@ -20,12 +21,10 @@ public class ChangeReceiver extends BroadcastReceiver {
     public static final String EXTRA_CURRENT_LENGTH = "EXTRA_CURRENT_LENGTH";
     public static final String EXTRA_ERROR_CODE = "EXTRA_ERROR_CODE";
 
+    private Contract.ReceiverCallback receiverCallback;
 
-
-    public DownloadTaskActivity downloadTaskActivity;
-
-    public ChangeReceiver(DownloadTaskActivity downloadTaskActivity) {
-        this.downloadTaskActivity = downloadTaskActivity;
+    public ChangeReceiver(Contract.ReceiverCallback receiverCallback) {
+        this.receiverCallback = receiverCallback;
     }
 
     public IntentFilter getAllActionIntentFilter() {
@@ -44,20 +43,20 @@ public class ChangeReceiver extends BroadcastReceiver {
         if (ACTION_UPDATE.equals(action)) {
             int id = intent.getIntExtra(EXTRA_ID, -1);
             long currentLength = intent.getLongExtra(EXTRA_CURRENT_LENGTH, -1);
-            downloadTaskActivity.notifyUpdateProgress(id, currentLength);
+            receiverCallback.onNotifyUpdateProgress(id, currentLength);
 
         } else if (ACTION_PAUSED.equals(action)) {
             int id = intent.getIntExtra(EXTRA_ID, -1);
-            downloadTaskActivity.notifyPause(id);
+            receiverCallback.onNotifyPause(id);
 
         } else if (ACTION_FINISHED.equals(action)) {
             int id = intent.getIntExtra(EXTRA_ID, -1);
-            downloadTaskActivity.notifyFinished(id);
+            receiverCallback.onNotifyFinished(id);
 
         } else if (ACTION_ERROR.equals(action)) {
             int id = intent.getIntExtra(EXTRA_ID, -1);
             int errorCode = intent.getIntExtra(EXTRA_ERROR_CODE, -1);
-            downloadTaskActivity.notifyError(id, errorCode);
+            receiverCallback.onNotifyError(id, errorCode);
         }
     }
 }

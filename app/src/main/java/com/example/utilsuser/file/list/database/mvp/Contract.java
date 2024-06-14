@@ -3,18 +3,37 @@ package com.example.utilsuser.file.list.database.mvp;
 import com.example.utilsuser.file.list.database.BackgroundDownloadService;
 import com.example.utilsuser.file.list.database.DownloadTaskBean;
 
-public interface Contract {
-    interface Model {
-        DownloadTaskBean addTask(String url, String fileDir, String name, DownloadTaskBean downloadTaskBean);
-        void addTaskToExecutor(DownloadTaskBean downloadTaskBean, BackgroundDownloadService.DownloadBinder downloadBinder);
-    }
+import java.util.List;
 
+public interface Contract {
     interface View {
+        void notifyDBTaskList(List<DownloadTaskBean> downloadTaskBeans);
         void notifyAddTask(DownloadTaskBean downloadTaskBean);
+        void notifyCleared(int id);
+
+        //BroadcastReceiver回调
+        void onNotifyUpdateProgress(int id, long currentLength);
+        void onNotifyPause(int id);
+        void onNotifyFinished(int id);
+        void onNotifyError(int id, int errorCode);
     }
 
     interface Presenter {
-        void addTask_Mid(String url, String fileDir, String name, String showName);
-        void addTaskToExecutor_Mid(DownloadTaskBean downloadTaskBean, BackgroundDownloadService.DownloadBinder downloadBinder);
+        void addTask(String url, String fileDir, String name, String showName);
+        void loadData();
+        void resumeTask(DownloadTaskBean downloadTaskBean);
+        void pauseTask(int id);
+        void clearTask(DownloadTaskBean downloadTaskBean, boolean inExecutor);
+
+        void showInfo(List<DownloadTaskBean> downloadTaskBeans);
+
+        void destroy();
+    }
+
+    interface ReceiverCallback {
+        void onNotifyUpdateProgress(int id, long currentLength);
+        void onNotifyPause(int id);
+        void onNotifyFinished(int id);
+        void onNotifyError(int id, int errorCode);
     }
 }
