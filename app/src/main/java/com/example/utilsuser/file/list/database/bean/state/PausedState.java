@@ -1,4 +1,4 @@
-package com.example.utilsuser.file.list.database.bean;
+package com.example.utilsuser.file.list.database.bean.state;
 
 public class PausedState extends BaseState{
     public PausedState() {

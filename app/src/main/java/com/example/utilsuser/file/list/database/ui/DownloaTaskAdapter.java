@@ -15,12 +15,12 @@ import com.example.utilsgather.format_trans.FormatTransfer;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 import com.example.utilsuser.file.list.database.bean.DownloadTaskBean;
-import com.example.utilsuser.file.list.database.bean.BaseState;
+import com.example.utilsuser.file.list.database.bean.state.BaseState;
 import com.example.utilsuser.file.list.database.bean.BeanPackaged;
-import com.example.utilsuser.file.list.database.bean.BrokenState;
-import com.example.utilsuser.file.list.database.bean.FinishedState;
-import com.example.utilsuser.file.list.database.bean.PausedState;
-import com.example.utilsuser.file.list.database.bean.DownloadingState;
+import com.example.utilsuser.file.list.database.bean.state.BrokenState;
+import com.example.utilsuser.file.list.database.bean.state.FinishedState;
+import com.example.utilsuser.file.list.database.bean.state.PausedState;
+import com.example.utilsuser.file.list.database.bean.state.DownloadingState;
 
 import java.util.ArrayList;
 import java.util.List;
