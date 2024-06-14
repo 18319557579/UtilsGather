@@ -171,7 +171,7 @@ public class MiddlePresenter implements Contract.Presenter{
     public void showInfo(List<DownloadTaskBean> downloadTaskBeans) {
         StringBuilder stringBuilder = new StringBuilder();
         for (DownloadTaskBean downloadTaskBean : downloadTaskBeans) {
-            stringBuilder.append(downloadTaskBean).append("\n");
+            stringBuilder.append(downloadTaskBean.toString()).append("\n");
         }
         LogUtil.d("内存中的Bean: \n" + stringBuilder.toString());
 
@@ -181,7 +181,7 @@ public class MiddlePresenter implements Contract.Presenter{
                         StringBuilder stringBuilder2 = new StringBuilder();
                         List<DownloadTaskBean> list = DownloadTaskDao.newInstance().queryTaskList();
                         for (DownloadTaskBean downloadTaskBean : list) {
-                            stringBuilder2.append(downloadTaskBean).append("\n");
+                            stringBuilder2.append(downloadTaskBean.toString()).append("\n");
                         }
                         LogUtil.d("数据库中的Bean: \n" + stringBuilder2.toString());
                     }

@@ -98,7 +98,6 @@ public class DownloadTaskDao {
                 downloadTaskBean.setShowName(showName);
                 downloadTaskBean.setTotalLength(totalLength);
 
-                LogUtil.d("打印数据中读出的Bean:" + downloadTaskBean);
                 downloadTaskBeanList.add(downloadTaskBean);
             } while (cursor.moveToNext());
         }

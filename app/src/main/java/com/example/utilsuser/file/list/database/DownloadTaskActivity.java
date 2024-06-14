@@ -37,6 +37,7 @@ import io.reactivex.schedulers.Schedulers;
 //todo 将涉及到的一些工具方法，例如File文件的操作，写到UtilGather中 1
 //todo 错误情况的处理，例如下载中把原文件删除（至少要能实现暂停后继续时，可以进行原文件是否存在的判断） 1 2
 //todo 增加下载速度的显示
+//todo 注意clear的情况，因为clear的时候会先进行暂停，这会进行暂停的回调，会更新list状态；而clear本身也会清楚list中的该元素；注意这里会不会发生冲突
 
 @SuppressLint("CheckResult")
 public class DownloadTaskActivity extends AppCompatActivity implements Contract.View{
