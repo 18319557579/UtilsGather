@@ -1,13 +1,14 @@
 package com.example.utilsuser.file.list.database.mvp;
 
+import com.example.utilsuser.file.list.database.bean.BeanPackaged;
 import com.example.utilsuser.file.list.database.bean.DownloadTaskBean;
 
 import java.util.List;
 
 public interface Contract {
     interface View {
-        void notifyDBTaskList(List<DownloadTaskBean> downloadTaskBeans);
-        void notifyAddTask(DownloadTaskBean downloadTaskBean);
+        void notifyDBTaskList(List<BeanPackaged> downloadTaskBeans);
+        void notifyAddTask(BeanPackaged beanPackaged);
         void notifyCleared(int id);
 
         //BroadcastReceiver回调
@@ -24,7 +25,7 @@ public interface Contract {
         void pauseTask(int id);
         void clearTask(DownloadTaskBean downloadTaskBean, boolean inExecutor);
 
-        void showInfo(List<DownloadTaskBean> downloadTaskBeans);
+        void showInfo(List<BeanPackaged> downloadTaskBeans);
 
         void destroy();
     }

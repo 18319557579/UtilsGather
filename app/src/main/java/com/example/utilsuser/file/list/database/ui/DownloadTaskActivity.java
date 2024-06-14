@@ -9,8 +9,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
+import com.example.utilsuser.file.list.database.bean.BeanPackaged;
 import com.example.utilsuser.file.list.database.bean.DownloadTaskBean;
+import com.example.utilsuser.file.list.database.bean.state.BaseState;
 import com.example.utilsuser.file.list.database.mvp.Contract;
 import com.example.utilsuser.file.list.database.mvp.MiddlePresenter;
 
@@ -33,7 +36,7 @@ import java.util.List;
 public class DownloadTaskActivity extends AppCompatActivity implements Contract.View{
     private RecyclerView rv;
     public DownloaTaskAdapter downloaTaskAdapter;
-    public List<DownloadTaskBean> downloadTaskBeans;
+    public List<BeanPackaged> downloadTaskBeans;
 
     private Contract.Presenter presenter;
 
@@ -119,12 +122,17 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
         presenter.addTask(url, fileDir, name, showName);
     }
 
-    public void notifyAdd(DownloadTaskBean downloadTaskBean) {
-        downloaTaskAdapter.notifyAdd(downloadTaskBean);
-    }
 
     public void notifyCleared(int id) {
-        downloaTaskAdapter.notifyCleared(id);
+        for (int i = 0; i < this.downloadTaskBeans.size(); i++) {
+            BeanPackaged beanPackaged = this.downloadTaskBeans.get(i);
+            if (beanPackaged.downloadTaskBean.getId() == id) {
+                downloadTaskBeans.remove(i);
+                downloaTaskAdapter.notifyItemRemoved(i);
+                LogUtil.d("删除什么位置的item: " + i);
+                break;
+            }
+        }
     }
 
     public void pauseTask(int id) {
@@ -148,16 +156,15 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
     }
 
     @Override
-    public void notifyDBTaskList(List<DownloadTaskBean> downloadTaskBeans) {
+    public void notifyDBTaskList(List<BeanPackaged> downloadTaskBeans) {
         this.downloadTaskBeans = downloadTaskBeans;
         initAdapter();
     }
 
     @Override
-    public void notifyAddTask(DownloadTaskBean downloadTaskBean) {
-        notifyAdd(downloadTaskBean);
-//        downloadBinder.addTask(downloadTaskBean);
-//        presenter.addTaskToExecutor_Mid(downloadTaskBean, downloadBinder);
+    public void notifyAddTask(BeanPackaged beanPackaged) {
+        downloadTaskBeans.add(0, beanPackaged);
+        downloaTaskAdapter.notifyItemInserted(downloadTaskBeans.size() -1);
     }
 
     @Override
@@ -167,12 +174,26 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
 
     @Override
     public void onNotifyPause(int id) {
-        downloaTaskAdapter.notifyPause(id);
+        for (int i = 0; i < this.downloadTaskBeans.size(); i++) {
+            BeanPackaged beanPackaged = this.downloadTaskBeans.get(i);
+            if (beanPackaged.downloadTaskBean.getId() == id) {
+                beanPackaged.baseState = BaseState.PAUSED_STATE();
+                downloaTaskAdapter.notifyItemChanged(i);
+                break;
+            }
+        }
     }
 
     @Override
     public void onNotifyFinished(int id) {
-        downloaTaskAdapter.notifyFinished(id);
+        for (int i = 0; i < downloadTaskBeans.size(); i++) {
+            BeanPackaged beanPackaged = downloadTaskBeans.get(i);
+            if (beanPackaged.downloadTaskBean.getId() == id) {
+                beanPackaged.baseState = BaseState.FINISHED_STATE();
+                downloaTaskAdapter.notifyItemChanged(i);
+                break;
+            }
+        }
     }
 
     @Override
@@ -181,10 +202,19 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
             case 0:
                 break;
             case 1:
-                downloaTaskAdapter.notifyPause(id);
+                onNotifyPause(id);
                 break;
             case 2:
-                downloaTaskAdapter.notifyBroken(id);
+                for (int i = 0; i < downloadTaskBeans.size(); i++) {
+                    BeanPackaged beanPackaged = downloadTaskBeans.get(i);
+                    if (beanPackaged.downloadTaskBean.getId() == id) {
+                        beanPackaged.downloadTaskBean.setCurrentLength(-1L);
+                        beanPackaged.baseState = BaseState.BROKEN_STATE();
+                        downloaTaskAdapter.notifyItemChanged(i);
+                        LogUtil.d("notifyBroken什么位置的item: " + i);
+                        break;
+                    }
+                }
                 break;
         }
     }

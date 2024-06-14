@@ -12,6 +12,8 @@ import android.os.IBinder;
 
 import com.example.utilsgather.file_system.FileOperationUtil;
 import com.example.utilsgather.logcat.LogUtil;
+import com.example.utilsuser.file.list.database.bean.BeanPackaged;
+import com.example.utilsuser.file.list.database.bean.state.BaseState;
 import com.example.utilsuser.file.list.database.four_components.BackgroundDownloadService;
 import com.example.utilsuser.file.list.database.four_components.ChangeReceiver;
 import com.example.utilsuser.file.list.database.ui.DownloadTaskActivity;
@@ -20,6 +22,7 @@ import com.example.utilsuser.file.list.database.db.DownloadTaskDao;
 import com.example.utilsuser.file.list.database.network.CreateFileNetwork;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -85,6 +88,9 @@ public class MiddlePresenter implements Contract.Presenter{
     @Override
     public void addTask(String url, String fileDir, String name, String showName) {
         Observable.fromCallable(() -> {
+                    BeanPackaged beanPackaged = new BeanPackaged();
+                    beanPackaged.baseState = BaseState.PAUSED_STATE();
+
                     DownloadTaskBean downloadTaskBean = new DownloadTaskBean();
                     downloadTaskBean.setShowName(showName);
                     new CreateFileNetwork(url,
@@ -93,13 +99,15 @@ public class MiddlePresenter implements Contract.Presenter{
                             downloadTaskBean)
                             .start();
                     LogUtil.d("数据库中的信息: " + downloadTaskBean);
-                    return downloadTaskBean;
+                    beanPackaged.downloadTaskBean = downloadTaskBean;
+
+                    return beanPackaged;
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(downloadTaskBean -> {
-                    view.notifyAddTask(downloadTaskBean);
-                    downloadBinder.addTask(downloadTaskBean);
+                .subscribe(beanPackaged -> {
+                    view.notifyAddTask(beanPackaged);
+                    downloadBinder.addTask(beanPackaged.downloadTaskBean);
                 });
     }
 
@@ -107,15 +115,25 @@ public class MiddlePresenter implements Contract.Presenter{
     public void loadData() {
         Observable.fromCallable(() -> {
                     List<DownloadTaskBean> downloadTaskBeans = DownloadTaskDao.newInstance().queryTaskList();
+
+                    List<BeanPackaged> beanPackagedList = new ArrayList<>();
                     for (DownloadTaskBean downloadTaskBean : downloadTaskBeans) {
+                        BeanPackaged beanPackaged = new BeanPackaged();
+                        beanPackaged.downloadTaskBean = downloadTaskBean;
+
                         File file = new File(downloadTaskBean.getPath());
-                        if (file.exists()) {
-                            downloadTaskBean.setCurrentLength(file.length());
-                        } else {
+                        if (! file.exists()) {
                             downloadTaskBean.setCurrentLength(-1);
+                            beanPackaged.baseState = BaseState.BROKEN_STATE();
+
+                        } else {
+                            downloadTaskBean.setCurrentLength(file.length());  //这里进行了一个长度校正
+                            beanPackaged.baseState = downloadTaskBean.getCurrentLength() == downloadTaskBean.getTotalLength() ?
+                                    BaseState.FINISHED_STATE() : BaseState.PAUSED_STATE();
                         }
+                        beanPackagedList.add(beanPackaged);
                     }
-                    return downloadTaskBeans;
+                    return beanPackagedList;
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -168,10 +186,10 @@ public class MiddlePresenter implements Contract.Presenter{
     }
 
     @Override
-    public void showInfo(List<DownloadTaskBean> downloadTaskBeans) {
+    public void showInfo(List<BeanPackaged> downloadTaskBeans) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (DownloadTaskBean downloadTaskBean : downloadTaskBeans) {
-            stringBuilder.append(downloadTaskBean.toString()).append("\n");
+        for (BeanPackaged beanPackaged : downloadTaskBeans) {
+            stringBuilder.append(beanPackaged.toString()).append("\n");
         }
         LogUtil.d("内存中的Bean: \n" + stringBuilder.toString());
 

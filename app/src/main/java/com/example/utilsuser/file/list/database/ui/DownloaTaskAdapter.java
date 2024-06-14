@@ -45,8 +45,10 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
 
     private final List<BeanPackaged> downloadTaskBeans;
 
-    public DownloaTaskAdapter(List<DownloadTaskBean> downloadTaskBeans) {
-        this.downloadTaskBeans = new ArrayList<>();
+    public DownloaTaskAdapter(List<BeanPackaged> downloadTaskBeans) {
+        this.downloadTaskBeans = downloadTaskBeans;
+
+        /*this.downloadTaskBeans = new ArrayList<>();
 
         for (DownloadTaskBean downloadTaskBean : downloadTaskBeans) {
             BeanPackaged beanPackaged = new BeanPackaged();
@@ -61,7 +63,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
             }
 
             this.downloadTaskBeans.add(beanPackaged);
-        }
+        }*/
     }
 
     @NonNull
@@ -89,6 +91,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         if (downloadTaskBeans.get(i).baseState instanceof FinishedState) {
             fileInfoHolder.pbDownloading.setVisibility(View.GONE);
         } else {
+            fileInfoHolder.pbDownloading.setVisibility(View.VISIBLE);
             fileInfoHolder.pbDownloading.setProgress(progress);
         }
 
@@ -97,6 +100,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         if (downloadTaskBeans.get(i).baseState instanceof FinishedState) {
             fileInfoHolder.ivOperation.setVisibility(View.GONE);
         } else {
+            fileInfoHolder.ivOperation.setVisibility(View.VISIBLE);
             fileInfoHolder.ivOperation.setImageResource(downloadTaskBeans.get(i).baseState.resId);
         }
     }
@@ -179,62 +183,6 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
                     sparseLongArray.put(id, nowTime);
                 }
 
-                break;
-            }
-        }
-    }
-
-    public void notifyAdd(DownloadTaskBean downloadTaskBean) {
-        BeanPackaged beanPackaged = new BeanPackaged();
-        beanPackaged.downloadTaskBean = downloadTaskBean;
-        beanPackaged.baseState = BaseState.PAUSED_STATE();
-
-        downloadTaskBeans.add(0, beanPackaged);
-        notifyItemInserted(downloadTaskBeans.size() -1);
-    }
-
-    public void notifyPause(int id) {
-        for (int i = 0; i < downloadTaskBeans.size(); i++) {
-            BeanPackaged beanPackaged = downloadTaskBeans.get(i);
-            if (beanPackaged.downloadTaskBean.getId() == id) {
-                beanPackaged.baseState = BaseState.PAUSED_STATE();
-                notifyItemChanged(i);
-                break;
-            }
-        }
-    }
-
-    public void notifyFinished(int id) {
-        for (int i = 0; i < downloadTaskBeans.size(); i++) {
-            BeanPackaged beanPackaged = downloadTaskBeans.get(i);
-            if (beanPackaged.downloadTaskBean.getId() == id) {
-                beanPackaged.baseState = BaseState.FINISHED_STATE();
-                notifyItemChanged(i);
-                break;
-            }
-        }
-    }
-
-    public void notifyCleared(int id) {
-        for (int i = 0; i < downloadTaskBeans.size(); i++) {
-            BeanPackaged beanPackaged = downloadTaskBeans.get(i);
-            if (beanPackaged.downloadTaskBean.getId() == id) {
-                downloadTaskBeans.remove(i);
-                notifyItemRemoved(i);
-                LogUtil.d("删除什么位置的item: " + i);
-                break;
-            }
-        }
-    }
-
-    public void notifyBroken(int id) {
-        for (int i = 0; i < downloadTaskBeans.size(); i++) {
-            BeanPackaged beanPackaged = downloadTaskBeans.get(i);
-            if (beanPackaged.downloadTaskBean.getId() == id) {
-                beanPackaged.downloadTaskBean.setCurrentLength(-1L);
-                beanPackaged.baseState = BaseState.BROKEN_STATE();
-                notifyItemChanged(i);
-                LogUtil.d("notifyBroken什么位置的item: " + i);
                 break;
             }
         }
