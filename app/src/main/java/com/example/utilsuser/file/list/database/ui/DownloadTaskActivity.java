@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,14 +37,16 @@ import java.util.List;
 public class DownloadTaskActivity extends AppCompatActivity implements Contract.View{
     private RecyclerView rv;
     public DownloaTaskAdapter downloaTaskAdapter;
-    public List<BeanPackaged> downloadTaskBeans;
+//    public List<BeanPackaged> downloadTaskBeans;
 
     private Contract.Presenter presenter;
+    private DownloadTaskViewHolder viewHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_task);
+        viewHolder = new ViewModelProvider(this).get(DownloadTaskViewHolder.class);
         presenter = new MiddlePresenter(this);
         loadData();
         initView();
@@ -59,7 +62,7 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
     }
 
     private void initAdapter() {
-        downloaTaskAdapter = new DownloaTaskAdapter(downloadTaskBeans);
+        downloaTaskAdapter = new DownloaTaskAdapter(viewHolder.getDownloadTaskBeans());
         downloaTaskAdapter.setRecyclerItemClickListener(new DownloaTaskAdapter.OnRecyclerItemClickListener() {
             @Override
             public void onRecyclerItemClick(int position) {
@@ -115,7 +118,7 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
     }
 
     public void showInfo(View view) {
-        presenter.showInfo(downloadTaskBeans);
+        presenter.showInfo(viewHolder.getDownloadTaskBeans());
     }
 
     private void addTaskToStart(String url, String fileDir, String name, String showName) {
@@ -124,10 +127,10 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
 
 
     public void notifyCleared(int id) {
-        for (int i = 0; i < this.downloadTaskBeans.size(); i++) {
-            BeanPackaged beanPackaged = this.downloadTaskBeans.get(i);
+        for (int i = 0; i < this.viewHolder.getDownloadTaskBeans().size(); i++) {
+            BeanPackaged beanPackaged = this.viewHolder.getDownloadTaskBeans().get(i);
             if (beanPackaged.downloadTaskBean.getId() == id) {
-                downloadTaskBeans.remove(i);
+                viewHolder.getDownloadTaskBeans().remove(i);
                 downloaTaskAdapter.notifyItemRemoved(i);
                 LogUtil.d("删除什么位置的item: " + i);
                 break;
@@ -157,14 +160,14 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
 
     @Override
     public void notifyDBTaskList(List<BeanPackaged> downloadTaskBeans) {
-        this.downloadTaskBeans = downloadTaskBeans;
+        viewHolder.setDownloadTaskBeans(downloadTaskBeans);
         initAdapter();
     }
 
     @Override
     public void notifyAddTask(BeanPackaged beanPackaged) {
-        downloadTaskBeans.add(0, beanPackaged);
-        downloaTaskAdapter.notifyItemInserted(downloadTaskBeans.size() -1);
+        viewHolder.addTask(beanPackaged);
+        downloaTaskAdapter.notifyItemInserted(viewHolder.getDownloadTaskBeans().size() -1);
     }
 
     @Override
@@ -174,8 +177,8 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
 
     @Override
     public void onNotifyPause(int id) {
-        for (int i = 0; i < this.downloadTaskBeans.size(); i++) {
-            BeanPackaged beanPackaged = this.downloadTaskBeans.get(i);
+        for (int i = 0; i < viewHolder.getDownloadTaskBeans().size(); i++) {
+            BeanPackaged beanPackaged = viewHolder.getDownloadTaskBeans().get(i);
             if (beanPackaged.downloadTaskBean.getId() == id) {
                 beanPackaged.baseState = BaseState.PAUSED_STATE();
                 downloaTaskAdapter.notifyItemChanged(i);
@@ -186,8 +189,8 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
 
     @Override
     public void onNotifyFinished(int id) {
-        for (int i = 0; i < downloadTaskBeans.size(); i++) {
-            BeanPackaged beanPackaged = downloadTaskBeans.get(i);
+        for (int i = 0; i < viewHolder.getDownloadTaskBeans().size(); i++) {
+            BeanPackaged beanPackaged = viewHolder.getDownloadTaskBeans().get(i);
             if (beanPackaged.downloadTaskBean.getId() == id) {
                 beanPackaged.baseState = BaseState.FINISHED_STATE();
                 downloaTaskAdapter.notifyItemChanged(i);
@@ -205,8 +208,8 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
                 onNotifyPause(id);
                 break;
             case 2:
-                for (int i = 0; i < downloadTaskBeans.size(); i++) {
-                    BeanPackaged beanPackaged = downloadTaskBeans.get(i);
+                for (int i = 0; i < viewHolder.getDownloadTaskBeans().size(); i++) {
+                    BeanPackaged beanPackaged = viewHolder.getDownloadTaskBeans().get(i);
                     if (beanPackaged.downloadTaskBean.getId() == id) {
                         beanPackaged.downloadTaskBean.setCurrentLength(-1L);
                         beanPackaged.baseState = BaseState.BROKEN_STATE();
