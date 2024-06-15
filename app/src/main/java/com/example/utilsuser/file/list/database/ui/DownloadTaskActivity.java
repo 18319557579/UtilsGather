@@ -107,7 +107,11 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
                 "抖音");
     }
 
-    public void downloadWeiXin(View view) {
+    public void downloadFanQie(View view) {
+        addTaskToStart("https://ucdl.25pp.com/fs08/2024/06/14/10/120_e8c52a47e6c480830e0147811dab51f7.apk?nrd=0&fname=%E7%95%AA%E8%8C%84%E5%85%8D%E8%B4%B9%E5%B0%8F%E8%AF%B4&productid=2011&packageid=701056031&pkg=com.dragon.read&vcode=62532&yingid=wdj_web&pos=wdj_web%2Fdetail_normal_dl%2F0&appid=8048758&apprd=8048758&iconUrl=http%3A%2F%2Fandroid-artworks.25pp.com%2Ffs08%2F2024%2F04%2F28%2F7%2F125_ed8a38599daedc9b23ce74370416268e_con.png&did=aa28cee315a41efc7ff43319a4b494ca&md5=2dee3e15d6ce270f55aaa0cdb248d197",
+                "/data/user/0/com.example.utilsuser/files/",
+                "120_e8c52a47e6c480830e0147811dab51f7",
+                "番茄免费小说");
     }
 
     public void downloadXiaoHongShu(View view) {
@@ -167,7 +171,7 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
     @Override
     public void notifyAddTask(BeanPackaged beanPackaged) {
         viewHolder.addTask(beanPackaged);
-        downloaTaskAdapter.notifyItemInserted(viewHolder.getDownloadTaskBeans().size() -1);
+        downloaTaskAdapter.notifyItemInserted(0);
     }
 
     @Override

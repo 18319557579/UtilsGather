@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CreateFileNetwork {
     private String downloadUrl;
@@ -46,6 +48,19 @@ public class CreateFileNetwork {
                         dir.mkdir();
                     }
                     File file = new File(dir, fileName);
+
+                    Pattern pattern = Pattern.compile("^(.*?)(\\.[^.]+)?$");
+                    Matcher matcher = pattern.matcher(fileName);
+
+                    int i = 1;
+                    while (file.exists()) {
+                        String newFileName = matcher.replaceFirst("$1(" + i + ")$2");
+                        file = new File(dir, newFileName);
+                        i++;
+                    }
+
+                    file.createNewFile();
+
                     //本地文件
                     /*raf = new RandomAccessFile(file, "rwd");
                     raf.setLength(len);*/

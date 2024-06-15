@@ -29,8 +29,8 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="下载微信"
-                android:onClick="downloadWeiXin"/>
+                android:text="番茄免费小说"
+                android:onClick="downloadFanQie"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
