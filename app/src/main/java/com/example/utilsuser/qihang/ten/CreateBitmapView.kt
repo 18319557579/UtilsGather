@@ -28,7 +28,6 @@ class CreateBitmapView : View{
             0xffffffff.toInt(), 0x00ffffff.toInt(), Shader.TileMode.CLAMP)
         val paint = Paint().apply {
             shader = linearGradient
-
         }
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
     }
@@ -36,12 +35,15 @@ class CreateBitmapView : View{
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+        canvas.drawBitmap(mDestBmp, 0f, 0f, mPaint)
+
+
         mPaint.apply {
             color = Color.RED
             style = Paint.Style.STROKE
-            strokeWidth = 55f
+            strokeWidth = 5f
         }
-        canvas.drawBitmap(mDestBmp, 0f, 0f, mPaint)
+        canvas.drawRect(0f, 0f, mDestBmp.width.toFloat(), mDestBmp.height.toFloat(), mPaint)
 
         LogUtil.d("重新编过")
     }

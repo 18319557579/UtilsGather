@@ -25,4 +25,11 @@ public class BitmapGainUtil {
         drawable.draw(canvas);
         return bitmap;
     }
+
+    /**
+     * 从本地文件中获得Bitmap
+     */
+    public static Bitmap getBitmapFromLocalFile(String filePath) {
+        return BitmapFactory.decodeFile(filePath);
+    }
 }
