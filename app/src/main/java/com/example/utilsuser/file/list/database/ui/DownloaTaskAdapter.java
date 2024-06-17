@@ -43,7 +43,7 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
         void onTaskToClear(DownloadTaskBean downloadTaskBean, boolean inExecutor);
     }
 
-    private final List<BeanPackaged> downloadTaskBeans;
+    private List<BeanPackaged> downloadTaskBeans;
 
     public DownloaTaskAdapter(List<BeanPackaged> downloadTaskBeans) {
         this.downloadTaskBeans = downloadTaskBeans;
@@ -64,6 +64,10 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
 
             this.downloadTaskBeans.add(beanPackaged);
         }*/
+    }
+
+    public void setDownloadTaskBeans(List<BeanPackaged> downloadTaskBeans) {
+        this.downloadTaskBeans = downloadTaskBeans;
     }
 
     @NonNull
@@ -135,6 +139,10 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
                 @Override
                 public void onClick(View v) {
 //                    mOnItemClickListener.onRecyclerItemClick(getAdapterPosition());
+                    if (getAdapterPosition() == RecyclerView.NO_POSITION) {
+                        LogUtil.d("该位置无法相应: " +getAdapterPosition());
+                        return;
+                    }
                     BeanPackaged beanPackaged = downloadTaskBeans.get(getAdapterPosition());
                     if (beanPackaged.baseState instanceof DownloadingState) {
                         mOnItemClickListener.onTaskToPause(beanPackaged.downloadTaskBean.getId());
@@ -151,6 +159,10 @@ public class DownloaTaskAdapter extends RecyclerView.Adapter<DownloaTaskAdapter.
             btnClear.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (getAdapterPosition() == RecyclerView.NO_POSITION) {
+                        LogUtil.d("该位置无法相应: " +getAdapterPosition());
+                        return;
+                    }
                     BeanPackaged beanPackaged = downloadTaskBeans.get(getAdapterPosition());
                     if (beanPackaged.baseState instanceof FinishedState ) {
                         mOnItemClickListener.onTaskToClear(beanPackaged.downloadTaskBean, false);

@@ -10,15 +10,17 @@ import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.file.list.database.bean.DownloadTaskBean;
 import com.example.utilsuser.file.list.database.network.DownloadTaskManager;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class BackgroundDownloadService extends Service {
     public ExecutorService executor = Executors.newCachedThreadPool();
-    private DownloadBinder downloadBinder = new DownloadBinder();
+    public DownloadBinder downloadBinder = new DownloadBinder();
     private SparseArray<DownloadTaskManager> taskManagerArray = new SparseArray<>();
 
     public BackgroundDownloadService() {
+        LogUtil.d("会回调构造函数吗: " + this);
     }
 
     @Override
@@ -30,6 +32,11 @@ public class BackgroundDownloadService extends Service {
     public class DownloadBinder extends Binder {
         //添加任务
         public void addTask(DownloadTaskBean downloadTaskBean) {
+            if (executor.isShutdown()) {
+                LogUtil.d("线程池已经关闭");
+                return;
+            }
+
             DownloadTaskManager.DownloadListener downloadListener = new DownloadTaskManager.DownloadListener() {
                 @Override
                 public void downloading(long now) {
@@ -78,12 +85,22 @@ public class BackgroundDownloadService extends Service {
 
         //暂停任务
         public void pauseTask(int id) {
+            if (executor.isShutdown()) {
+                LogUtil.d("线程池已经关闭");
+                return;
+            }
+
             DownloadTaskManager downloadTaskManager = taskManagerArray.get(id);
             downloadTaskManager.pause();
         }
 
         //继续任务（如果任务列表中没有，则新增）
         public void resumeTask(DownloadTaskBean downloadTaskBean) {
+            if (executor.isShutdown()) {
+                LogUtil.d("线程池已经关闭");
+                return;
+            }
+
             DownloadTaskManager downloadTaskManager = taskManagerArray.get(downloadTaskBean.getId());
 
             if (downloadTaskManager == null) {
@@ -97,6 +114,11 @@ public class BackgroundDownloadService extends Service {
         }
 
         public void clearTask(int id) {
+            if (executor.isShutdown()) {
+                LogUtil.d("线程池已经关闭");
+                return;
+            }
+
             DownloadTaskManager downloadTaskManager = taskManagerArray.get(id);
             if (downloadTaskManager == null) {  //因为有可能paused状态下，还没有启动任务（刚进该Activity的时候）
                 return;
@@ -115,7 +137,10 @@ public class BackgroundDownloadService extends Service {
                 }
             }
             taskManagerArray.clear();
-            executor.shutdown();
+            List<Runnable> runnableList = executor.shutdownNow();
+            for (Runnable runnable : runnableList) {
+                LogUtil.d("被我给中断的任务: " + runnable);
+            }
         }
     }
 }

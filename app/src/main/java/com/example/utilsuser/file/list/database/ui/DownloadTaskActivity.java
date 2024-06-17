@@ -46,10 +46,12 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_task);
+
         viewHolder = new ViewModelProvider(this).get(DownloadTaskViewHolder.class);
+        initView();
         presenter = new MiddlePresenter(this);
         loadData();
-        initView();
+
     }
 
     private void initView() {
@@ -59,9 +61,7 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
         rv.setLayoutManager(linearLayoutManager);
 
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-    }
 
-    private void initAdapter() {
         downloaTaskAdapter = new DownloaTaskAdapter(viewHolder.getDownloadTaskBeans());
         downloaTaskAdapter.setRecyclerItemClickListener(new DownloaTaskAdapter.OnRecyclerItemClickListener() {
             @Override
@@ -87,7 +87,6 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
 
         rv.setAdapter(downloaTaskAdapter);
     }
-
 
     private void loadData() {
         presenter.loadData();
@@ -123,6 +122,8 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
 
     public void showInfo(View view) {
         presenter.showInfo(viewHolder.getDownloadTaskBeans());
+
+
     }
 
     private void addTaskToStart(String url, String fileDir, String name, String showName) {
@@ -165,7 +166,8 @@ public class DownloadTaskActivity extends AppCompatActivity implements Contract.
     @Override
     public void notifyDBTaskList(List<BeanPackaged> downloadTaskBeans) {
         viewHolder.setDownloadTaskBeans(downloadTaskBeans);
-        initAdapter();
+        downloaTaskAdapter.setDownloadTaskBeans(viewHolder.getDownloadTaskBeans());
+        downloaTaskAdapter.notifyDataSetChanged();
     }
 
     @Override

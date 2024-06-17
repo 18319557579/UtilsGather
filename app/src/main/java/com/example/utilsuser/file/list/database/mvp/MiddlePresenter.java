@@ -78,6 +78,7 @@ public class MiddlePresenter implements Contract.Presenter{
         public void onServiceConnected(ComponentName name, IBinder service) {
             LogUtil.d("MyServiceActivity中回调 onServiceConnected()");
             downloadBinder = (BackgroundDownloadService.DownloadBinder) service;
+            LogUtil.d("打印这个Binder: " + downloadBinder);
         }
         @Override
         public void onServiceDisconnected(ComponentName name) {
@@ -218,6 +219,8 @@ public class MiddlePresenter implements Contract.Presenter{
         }
 
         ((DownloadTaskActivity)view).unbindService(connection);
+        //补充增加一个stopService()，可能这样可以更好的关闭Service
+        ((DownloadTaskActivity)view).stopService(new Intent(((DownloadTaskActivity)view), BackgroundDownloadService.class));
         downloadBinder = null;
     }
 
