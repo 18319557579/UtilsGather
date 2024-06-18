@@ -9,6 +9,14 @@
     android:background="#80000000"
     android:orientation="vertical">
 
+    <com.example.utilsuser.qihang.ten.StrokeImage
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cat"
+        android:padding="3dp"
+        android:clickable="true"
+        android:scaleType="fitCenter"/>
+
     <ImageView
         android:id="@+id/iv_extract"
         android:layout_width="wrap_content"
