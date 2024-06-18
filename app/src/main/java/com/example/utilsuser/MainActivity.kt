@@ -67,6 +67,7 @@ import com.example.utilsuser.qihang.ten.GradientDrawableActivity
 import com.example.utilsuser.qihang.ten.RectShapeActivity
 import com.example.utilsuser.qihang.ten.ScaleTypeActivity
 import com.example.utilsuser.qihang.ten.ShapeShaderActivity
+import com.example.utilsuser.qihang.ten.WaterActivity
 import com.example.utilsuser.qihang.three.AnimatorSetActivity
 import com.example.utilsuser.qihang.three.PathAnimatorActivity
 import com.example.utilsuser.qihang.three.ValueAnimatorActivity
@@ -218,6 +219,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去ScaleTypeActivity") {
                     val intent = Intent(this@MainActivity, ScaleTypeActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("去WaterActivity") {
+                    val intent = Intent(this@MainActivity, WaterActivity::class.java)
                     startActivity(intent)
                 },
                 GuideItemEntity("测试获取应用名") {
