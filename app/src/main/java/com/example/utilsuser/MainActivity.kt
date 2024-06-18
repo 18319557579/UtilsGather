@@ -65,6 +65,7 @@ import com.example.utilsuser.qihang.ten.CreateBitmapViewActivity
 import com.example.utilsuser.qihang.ten.CustomDrawableActivity
 import com.example.utilsuser.qihang.ten.GradientDrawableActivity
 import com.example.utilsuser.qihang.ten.RectShapeActivity
+import com.example.utilsuser.qihang.ten.ScaleTypeActivity
 import com.example.utilsuser.qihang.ten.ShapeShaderActivity
 import com.example.utilsuser.qihang.three.AnimatorSetActivity
 import com.example.utilsuser.qihang.three.PathAnimatorActivity
@@ -213,6 +214,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去CreateBitmapViewActivity") {
                     val intent = Intent(this@MainActivity, CreateBitmapViewActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("去ScaleTypeActivity") {
+                    val intent = Intent(this@MainActivity, ScaleTypeActivity::class.java)
                     startActivity(intent)
                 },
                 GuideItemEntity("测试获取应用名") {
