@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.utilsgather.logcat.LogUtil
+import com.example.utilsgather.source_file.BitmapUtil
 import com.example.utilsuser.R
 
 class CreateBitmapViewActivity : AppCompatActivity() {
@@ -19,6 +20,9 @@ class CreateBitmapViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_bitmap_view)
 
         val src = BitmapFactory.decodeResource(resources, R.drawable.dog)
+        LogUtil.d("图片内存大小1：${src.getAllocationByteCount()}")
+        LogUtil.d("图片内存大小1：${src.getByteCount()}")
+        LogUtil.d("图片内存大小1：${src.getRowBytes() * src.getHeight()}")
 
         val matrix = Matrix().apply {
             setScale(2f, 1f)
