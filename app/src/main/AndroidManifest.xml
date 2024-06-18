@@ -20,6 +20,9 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".qihang.ten.SurfaceViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".qihang.ten.WaterActivity"
             android:exported="false" />
         <activity
