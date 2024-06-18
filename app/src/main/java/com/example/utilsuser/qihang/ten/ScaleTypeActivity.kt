@@ -4,10 +4,15 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Environment
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.utilsgather.file_system.FileInfoGainUtil
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsuser.R
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 
 class ScaleTypeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +22,8 @@ class ScaleTypeActivity : AppCompatActivity() {
         setScaleImageView()
 
         setGreenImageView()
+
+        setCompressImageView()
     }
 
     private fun setScaleImageView() {
@@ -53,5 +60,36 @@ class ScaleTypeActivity : AppCompatActivity() {
             }
         }
         findViewById<ImageView>(R.id.img_green_2).setImageBitmap(desBmp)
+    }
+
+    private fun setCompressImageView() {
+        val iv_1 = findViewById<ImageView>(R.id.img_compress_1)
+        val iv_2 = findViewById<ImageView>(R.id.img_compress_2)
+
+        val bmp = BitmapFactory.decodeResource(resources, R.drawable.cat)
+        iv_1.setImageBitmap(bmp)
+
+        val bos = ByteArrayOutputStream()
+        bmp.compress(Bitmap.CompressFormat.WEBP_LOSSY, 10, bos)
+        val bytes = bos.toByteArray()
+        val bmp1 = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        iv_2.setImageBitmap(bmp1)
+
+        saveBmp(bmp)
+    }
+
+    private fun saveBmp(bitmap: Bitmap) {
+        val fileDir = FileInfoGainUtil.internalStoragePath(this) +
+                File.separator +
+                "/lavor.webp"
+
+        val file = File(fileDir)
+        if (file.exists())
+            file.delete()
+
+        val outputStream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.WEBP_LOSSY, 10, outputStream)
+        outputStream.flush()
+        outputStream.close()
     }
 }
