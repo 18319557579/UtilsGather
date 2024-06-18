@@ -2,11 +2,15 @@ package com.example.utilsuser.qihang.ten
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.BlurMaskFilter
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Matrix
+import android.graphics.Paint
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsuser.R
 
 class CreateBitmapViewActivity : AppCompatActivity() {
@@ -27,6 +31,9 @@ class CreateBitmapViewActivity : AppCompatActivity() {
         createBmpByColors()
 
         setScenery()
+
+        extractAlpha()
+        extractAlpha2()
     }
 
     private fun createBmpByColors() {
@@ -61,5 +68,48 @@ class CreateBitmapViewActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.iv_set3).apply {
             setImageBitmap(bitmap)
         }
+    }
+
+    private fun extractAlpha() {
+        val srcBitmap = BitmapFactory.decodeResource(resources, R.drawable.cat_dog)
+
+        val bitmap = Bitmap.createBitmap(srcBitmap.width, srcBitmap.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val paint = Paint().apply {
+            color = Color.CYAN
+        }
+        canvas.drawBitmap(srcBitmap.extractAlpha(), 0f, 0f, paint)
+
+        val iv = findViewById<ImageView>(R.id.iv_extract)
+        iv.setImageBitmap(bitmap)
+
+        srcBitmap.recycle()
+    }
+
+    private fun extractAlpha2() {
+        val srcBitmap = BitmapFactory.decodeResource(resources, R.drawable.cat_dog)
+
+        val blurMaskFilter = BlurMaskFilter(20f, BlurMaskFilter.Blur.NORMAL)
+        val alphaPaint = Paint().apply {
+            maskFilter = blurMaskFilter
+        }
+        val offsetXY = IntArray(2)
+        val alphaBmp = srcBitmap.extractAlpha(alphaPaint, offsetXY)
+        LogUtil.d("offsetX: ${offsetXY[0]}, offsetY: ${offsetXY[1]}")
+
+        val bitmap = Bitmap.createBitmap(alphaBmp.width, alphaBmp.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val paint = Paint().apply {
+            color = Color.CYAN
+        }
+        canvas.drawBitmap(alphaBmp, 0f, 0f, paint)
+
+        //绘制原图像
+        canvas.drawBitmap(srcBitmap, -offsetXY[0].toFloat(), -offsetXY[1].toFloat(), null)
+
+        val iv = findViewById<ImageView>(R.id.iv_extract2)
+        iv.setImageBitmap(bitmap)
+
+        srcBitmap.recycle()
     }
 }

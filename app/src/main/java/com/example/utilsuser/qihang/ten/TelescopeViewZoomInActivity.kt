@@ -30,10 +30,12 @@ class TelescopeViewZoomInActivity : AppCompatActivity() {
         }*/
         var bitmap = BitmapFactory.decodeResource(resources, R.drawable.scenery, options)
         LogUtil.d("bmpWidth: ${bitmap.width}, bmpHeight: ${bitmap.height}, bmpMemorySize: ${bitmap.byteCount}")
+        LogUtil.d("是否可以改变: ${bitmap.isMutable}")
 
         val path = FileInfoGainUtil.internalStoragePath(this) + File.separator + "scenery.png"
         bitmap = BitmapFactory.decodeFile(path)
         LogUtil.d("bmpWidth: ${bitmap.width}, bmpHeight: ${bitmap.height}, bmpMemorySize: ${bitmap.byteCount}")
+        LogUtil.d("是否可以改变: ${bitmap.isMutable}")
     }
 
     private fun calSampleSize(options: BitmapFactory.Options, dstWidth: Int, dstHeight: Int) : Int{
