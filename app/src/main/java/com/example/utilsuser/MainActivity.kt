@@ -67,6 +67,7 @@ import com.example.utilsuser.qihang.ten.CustomDrawableActivity
 import com.example.utilsuser.qihang.ten.DoubleBufferingViewActivity
 import com.example.utilsuser.qihang.ten.GradientDrawableActivity
 import com.example.utilsuser.qihang.ten.RectShapeActivity
+import com.example.utilsuser.qihang.ten.RectViewActivity
 import com.example.utilsuser.qihang.ten.ScaleTypeActivity
 import com.example.utilsuser.qihang.ten.ShapeShaderActivity
 import com.example.utilsuser.qihang.ten.SurfaceViewActivity
@@ -238,6 +239,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去DoubleBufferingViewActivity") {
                     val intent = Intent(this@MainActivity, DoubleBufferingViewActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("去RectViewActivity") {
+                    val intent = Intent(this@MainActivity, RectViewActivity::class.java)
                     startActivity(intent)
                 },
                 GuideItemEntity("测试获取应用名") {

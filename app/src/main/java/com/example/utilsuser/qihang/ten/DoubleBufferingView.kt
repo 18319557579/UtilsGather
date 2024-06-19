@@ -49,7 +49,7 @@ class DoubleBufferingView : SurfaceView {
                 canvas?.drawText("$i", i * 30f, 50f, mPaint)
                 holder.unlockCanvasAndPost(canvas)
 
-                Thread.sleep(500)
+                Thread.sleep(16)
             }
         }
     }
