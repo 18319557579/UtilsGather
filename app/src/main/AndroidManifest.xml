@@ -20,6 +20,9 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".qihang.ten.DoubleBufferingViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".qihang.ten.AnimationSurfaceViewActivity"
             android:exported="false" />
         <activity

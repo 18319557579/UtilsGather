@@ -64,6 +64,7 @@ import com.example.utilsuser.qihang.seven.TelescopeViewActivity
 import com.example.utilsuser.qihang.ten.AnimationSurfaceViewActivity
 import com.example.utilsuser.qihang.ten.CreateBitmapViewActivity
 import com.example.utilsuser.qihang.ten.CustomDrawableActivity
+import com.example.utilsuser.qihang.ten.DoubleBufferingViewActivity
 import com.example.utilsuser.qihang.ten.GradientDrawableActivity
 import com.example.utilsuser.qihang.ten.RectShapeActivity
 import com.example.utilsuser.qihang.ten.ScaleTypeActivity
@@ -233,6 +234,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("去AnimationSurfaceViewActivity") {
                     val intent = Intent(this@MainActivity, AnimationSurfaceViewActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("去DoubleBufferingViewActivity") {
+                    val intent = Intent(this@MainActivity, DoubleBufferingViewActivity::class.java)
                     startActivity(intent)
                 },
                 GuideItemEntity("测试获取应用名") {
