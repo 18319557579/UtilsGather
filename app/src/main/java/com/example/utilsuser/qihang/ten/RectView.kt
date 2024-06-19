@@ -20,7 +20,7 @@ class RectView : SurfaceView {
 
     private fun init() {
         mPaint = Paint().apply {
-            color = Color.argb(0x1F, 0xFF, 0xFF, 0xFF)
+            color = Color.RED
             textSize = 30f
         }
         holder.addCallback(object : SurfaceHolder.Callback {
@@ -45,7 +45,7 @@ class RectView : SurfaceView {
     }
 
     private fun drawText(holder: SurfaceHolder) {
-        thread {
+        /*thread {
             while (true) {
                 val dirtyRect = Rect(0, 0, 1, 1)
                 val canvas = holder.lockCanvas(dirtyRect)
@@ -90,10 +90,48 @@ class RectView : SurfaceView {
                 }
                 Thread.sleep(800)
             }
+        }*/
+
+        thread{
+            /*while (true) {
+                val dirtyRect = Rect(0, 0, 1, 1)
+                val canvas = holder.lockCanvas(dirtyRect)
+                val canvasRect = canvas.clipBounds
+
+                if (width == canvasRect.width() && height == canvasRect.height()) {
+                    canvas.drawColor(Color.BLACK)
+                    holder.unlockCanvasAndPost(canvas)
+                } else {
+                    holder.unlockCanvasAndPost(canvas)
+                    break
+                }
+            }*/
+
+            /*val canvas = holder.lockCanvas()
+            for (i in 0 until 10) {
+                canvas?.drawText("$i", i * 30f, 50f, mPaint)
+            }
+            holder.unlockCanvasAndPost(canvas)*/
+
+            for (i in 0 until 10) {
+                val canvas = holder.lockCanvas()
+                mInts.add(i)
+                canvas?.apply {
+                    mInts.forEach {
+                        drawText("$it", it * 30f, 50f, mPaint)
+                    }
+                }
+
+                Thread.sleep(800)
+                holder.unlockCanvasAndPost(canvas)
+            }
         }
+
     }
 
-    override fun onDraw(canvas: Canvas) {
+    private val mInts = ArrayList<Int>()
+
+    /*override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         mPaint.color = Color.RED
@@ -110,5 +148,5 @@ class RectView : SurfaceView {
 
         mPaint.color = Color.GREEN
         canvas.drawText("6", 300f, 300f, mPaint)
-    }
+    }*/
 }
