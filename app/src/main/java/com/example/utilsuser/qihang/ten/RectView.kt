@@ -113,7 +113,7 @@ class RectView : SurfaceView {
             }
             holder.unlockCanvasAndPost(canvas)*/
 
-            for (i in 0 until 10) {
+            /*for (i in 0 until 10) {
                 val canvas = holder.lockCanvas()
                 mInts.add(i)
                 canvas?.apply {
@@ -124,6 +124,33 @@ class RectView : SurfaceView {
 
                 Thread.sleep(800)
                 holder.unlockCanvasAndPost(canvas)
+            }*/
+
+            while (true) {
+                val dirtyRect = Rect(0, 0, 1, 1)
+                val canvas = holder.lockCanvas(dirtyRect)
+                val canvasRect = canvas.getClipBounds()
+                if (width == canvasRect.width() && height == canvasRect.height()) {
+                    canvas.drawColor(Color.BLACK)
+                    holder.unlockCanvasAndPost(canvas)
+                } else {
+                    holder.unlockCanvasAndPost(canvas)
+                    break
+                }
+            }
+
+            for (i in 0 until 10) {
+                val itemWidth = 50
+                val itemHeight = 50
+                val rect = Rect(i * itemWidth, 0, (i + 1) * itemWidth - 10, itemHeight)
+                val canvas = holder.lockCanvas(rect)
+                canvas?.apply {
+                    drawColor(Color.GREEN)
+                    drawText("$i", i * itemWidth + 10f, itemHeight / 2f, mPaint)
+                }
+                holder.unlockCanvasAndPost(canvas)
+
+                Thread.sleep(800)
             }
         }
 
