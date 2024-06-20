@@ -20,6 +20,9 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".keyvalue.KeyValueActivity"
+            android:exported="false" />
+        <activity
             android:name=".qihang.ten.RectViewActivity"
             android:exported="false" />
         <activity

@@ -41,6 +41,7 @@ import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsuser.databinding.ActivityMainBinding
 import com.example.utilsuser.file.FileActivity
 import com.example.utilsuser.httpurlconnect.HttpActivity
+import com.example.utilsuser.keyvalue.KeyValueActivity
 import com.example.utilsuser.qihang.eight.EraserViewActivity
 import com.example.utilsuser.qihang.eight.InvertedImageViewActivity
 import com.example.utilsuser.qihang.eight.IrregularWaveViewActivity
@@ -398,6 +399,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("跳转到 RxJavaActivity") {
                     val intent = Intent(this@MainActivity, RxJavaActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("跳转到 KeyValueActivity") {
+                    val intent = Intent(this@MainActivity, KeyValueActivity::class.java)
                     startActivity(intent)
                 },
             )
