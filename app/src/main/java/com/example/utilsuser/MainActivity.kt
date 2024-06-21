@@ -39,6 +39,7 @@ import com.example.utilsgather.string.InfoFromURI
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsuser.databinding.ActivityMainBinding
+import com.example.utilsuser.delegate.DelegateActivity
 import com.example.utilsuser.file.FileActivity
 import com.example.utilsuser.httpurlconnect.HttpActivity
 import com.example.utilsuser.keyvalue.KeyValueActivity
@@ -403,6 +404,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("跳转到 KeyValueActivity") {
                     val intent = Intent(this@MainActivity, KeyValueActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("跳转到 DelegateActivity") {
+                    val intent = Intent(this@MainActivity, DelegateActivity::class.java)
                     startActivity(intent)
                 },
             )
