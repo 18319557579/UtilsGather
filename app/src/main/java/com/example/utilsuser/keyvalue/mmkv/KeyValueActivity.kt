@@ -1,4 +1,4 @@
-package com.example.utilsuser.keyvalue
+package com.example.utilsuser.keyvalue.mmkv
 
 import android.os.Bundle
 import android.widget.ListView
@@ -20,6 +20,7 @@ class KeyValueActivity : AppCompatActivity() {
         GuideSettings.set(rv, arrayOf<GuideItemEntity>(
             GuideItemEntity("写入数据") {
                 val kv = MMKV.defaultMMKV()
+
 
                 kv.encode("isMan", true)
 
@@ -60,6 +61,48 @@ class KeyValueActivity : AppCompatActivity() {
                 kv.encode("desc", "Hello from mmkv")
                 val str: String = kv.decodeString("desc").toString()
                 LogUtil.d("age: $str")*/
+            },
+
+            GuideItemEntity("用封装的MMKV，写入数据") {
+                var darkMode by KVDelegate(
+                    "darkMode",
+                    false,
+                    model = KVUtil.Model.SETTINGS,
+                )
+                darkMode = true
+
+                //使用默认的KVUtil.Model.USER
+                var account : String by KVDelegate(
+                    "account"
+                )
+                account = "1152594956"
+
+                var age by KVDelegate<Int>(
+                    "age"
+                )
+                age = 25
+            },
+
+            GuideItemEntity("用封装的MMKV，读出数据") {
+                val darkMode by KVDelegate(
+                    "darkMode",
+                    false,
+                    model = KVUtil.Model.SETTINGS,
+                )
+                LogUtil.d("是否为深色模式: $darkMode")
+
+                //使用默认的KVUtil.Model.USER
+                val account by KVDelegate(
+                    "account",
+                    "这个是默认值"
+                )
+                LogUtil.d("账号: $account")
+
+                val age by KVDelegate(
+                    "age",
+                    -100
+                )
+                LogUtil.d("年龄: $age")
             },
         ))
     }

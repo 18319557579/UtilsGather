@@ -23,7 +23,7 @@
             android:name=".delegate.DelegateActivity"
             android:exported="false" />
         <activity
-            android:name=".keyvalue.KeyValueActivity"
+            android:name=".keyvalue.mmkv.KeyValueActivity"
             android:exported="false" />
         <activity
             android:name=".qihang.ten.RectViewActivity"

@@ -42,7 +42,7 @@ import com.example.utilsuser.databinding.ActivityMainBinding
 import com.example.utilsuser.delegate.DelegateActivity
 import com.example.utilsuser.file.FileActivity
 import com.example.utilsuser.httpurlconnect.HttpActivity
-import com.example.utilsuser.keyvalue.KeyValueActivity
+import com.example.utilsuser.keyvalue.mmkv.KeyValueActivity
 import com.example.utilsuser.qihang.eight.EraserViewActivity
 import com.example.utilsuser.qihang.eight.InvertedImageViewActivity
 import com.example.utilsuser.qihang.eight.IrregularWaveViewActivity
