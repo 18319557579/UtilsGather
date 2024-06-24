@@ -77,6 +77,7 @@ import com.example.utilsuser.qihang.ten.WaterActivity
 import com.example.utilsuser.qihang.three.AnimatorSetActivity
 import com.example.utilsuser.qihang.three.PathAnimatorActivity
 import com.example.utilsuser.qihang.three.ValueAnimatorActivity
+import com.example.utilsuser.qihang.twelve.MyLinLayoutActivity
 import com.example.utilsuser.qihang.two.ViewAnimationActivity
 import com.example.utilsuser.rxjava.RxJavaActivity
 import com.example.utilsuser.service.MyServiceActivity
@@ -408,6 +409,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("跳转到 DelegateActivity") {
                     val intent = Intent(this@MainActivity, DelegateActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("跳转到 MyLinLayoutActivity") {
+                    val intent = Intent(this@MainActivity, MyLinLayoutActivity::class.java)
                     startActivity(intent)
                 },
             )

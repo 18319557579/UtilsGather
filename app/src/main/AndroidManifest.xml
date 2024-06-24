@@ -20,6 +20,9 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".qihang.twelve.MyLinLayoutActivity"
+            android:exported="false" />
+        <activity
             android:name=".delegate.DelegateActivity"
             android:exported="false" />
         <activity
