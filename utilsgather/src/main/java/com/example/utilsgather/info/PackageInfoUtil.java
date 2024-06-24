@@ -3,6 +3,9 @@ package com.example.utilsgather.info;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
+
+import com.example.utilsgather.logcat.LogUtil;
 
 public class PackageInfoUtil {
     /**
@@ -23,11 +26,17 @@ public class PackageInfoUtil {
     /**
      * 获得版本号
      */
-    public static int getPackageVersionCode(Context context) {
+    public static long getPackageVersionCode(Context context) {
         try {
             PackageManager manager = context.getPackageManager();
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-            return info.versionCode;
+            long versionCode;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                versionCode = info.getLongVersionCode();  // 使用新API
+            } else {
+                versionCode = info.versionCode;  // 使用旧API，并转换为Long
+            }
+            return versionCode;
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
