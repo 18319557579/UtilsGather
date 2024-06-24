@@ -20,8 +20,11 @@ class MyLinLayout : ViewGroup {
         for (i in 0 until count) {
             val child = getChildAt(i)
             measureChild(child, widthMeasureSpec, heightMeasureSpec)
-            val childHeight = child.measuredHeight
-            val childWidth = child.measuredWidth
+
+            val lp = child.layoutParams as MarginLayoutParams
+            val childHeight = child.measuredHeight + lp.topMargin + lp.bottomMargin
+            val childWidth = child.measuredWidth + lp.leftMargin + lp.rightMargin
+
             height += childHeight
             width = Math.max(childWidth, width)
         }
@@ -39,13 +42,24 @@ class MyLinLayout : ViewGroup {
         for (i in 0 until count) {
             val child = getChildAt(i)
 
-            val childHeight = child.measuredHeight
-            val childWidth = child.measuredWidth
+            val lp = child.layoutParams as MarginLayoutParams
+            val childHeight = child.measuredHeight + lp.topMargin + lp.bottomMargin
+            val childWidth = child.measuredWidth + lp.leftMargin + lp.rightMargin
 
             child.layout(0, top, childWidth, top + childHeight)
             top += childHeight
         }
     }
 
+    override fun generateLayoutParams(p: LayoutParams?): LayoutParams {
+        return MarginLayoutParams(p)
+    }
 
+    override fun generateLayoutParams(attrs: AttributeSet?): LayoutParams {
+        return MarginLayoutParams(context, attrs)
+    }
+
+    override fun generateDefaultLayoutParams(): LayoutParams {
+        return MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+    }
 }

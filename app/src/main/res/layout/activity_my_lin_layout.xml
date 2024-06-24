@@ -12,19 +12,22 @@
         android:text="第一个View"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#ff0000"/>
+        android:background="#ff0000"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:text="第二个View"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#00ff00"/>
+        android:background="#00ff00"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:text="第三个View"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#0000ff"/>
+        android:background="#0000ff"
+        android:layout_marginTop="10dp"/>
 
 
 </com.example.utilsuser.qihang.twelve.MyLinLayout>
