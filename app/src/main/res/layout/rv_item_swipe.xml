@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFF7F9"
+
+   >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons_left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="8dp">
+
+        <ImageView
+            android:id="@+id/iv_item_website"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/rv_item_website"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_item_web_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="腾讯应用宝官网，全网最新的游戏"
+
+            app:layout_constraintStart_toEndOf="@id/iv_item_website"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="5dp"/>
+
+        <ImageView
+            android:id="@+id/iv_item_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/rv_item_close"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="#f33213"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cons_left">
+
+        <ImageView
+            android:id="@+id/iv_detele"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/rv_item_delete"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/tv_detele"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="左滑删除"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
