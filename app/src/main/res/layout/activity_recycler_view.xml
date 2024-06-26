@@ -16,5 +16,13 @@
 
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="增加条目"
+        app:layout_constraintTop_toBottomOf="@id/rv_slide_delete"
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="addItem"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
