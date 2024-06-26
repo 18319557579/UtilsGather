@@ -27,7 +27,7 @@ class SlideDeleteAdapter(val webList: MutableList<WebInfoBean>, val context: Con
         return webList.size
     }
 
-    class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val ivItemWebsite: ImageView
         val tvItemWebTitle: TextView
         val ivItemClose: ImageView
@@ -35,6 +35,10 @@ class SlideDeleteAdapter(val webList: MutableList<WebInfoBean>, val context: Con
             ivItemWebsite = view.findViewById(R.id.iv_item_website)
             tvItemWebTitle = view.findViewById(R.id.tv_item_web_title)
             ivItemClose = view.findViewById(R.id.iv_item_close)
+
+            ivItemClose.setOnClickListener {
+                onItemRemove(adapterPosition)
+            }
         }
     }
 
