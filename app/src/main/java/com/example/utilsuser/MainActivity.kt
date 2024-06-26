@@ -79,7 +79,7 @@ import com.example.utilsuser.qihang.three.PathAnimatorActivity
 import com.example.utilsuser.qihang.three.ValueAnimatorActivity
 import com.example.utilsuser.qihang.twelve.MyLinLayoutActivity
 import com.example.utilsuser.qihang.two.ViewAnimationActivity
-import com.example.utilsuser.recyclerview.RecyclerViewActivity
+import com.example.utilsuser.recyclerview.initial.RecyclerViewActivity
 import com.example.utilsuser.rxjava.RxJavaActivity
 import com.example.utilsuser.service.MyServiceActivity
 import com.example.utilsuser.sqlite.SQLiteActivity

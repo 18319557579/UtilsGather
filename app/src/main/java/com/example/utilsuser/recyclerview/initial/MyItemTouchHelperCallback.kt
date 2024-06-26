@@ -1,7 +1,6 @@
-package com.example.utilsuser.recyclerview.rv
+package com.example.utilsuser.recyclerview.initial
 
 import android.graphics.Canvas
-import android.graphics.Color
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.utilsgather.logcat.LogUtil

@@ -1,4 +1,4 @@
-package com.example.utilsuser.recyclerview.rv
+package com.example.utilsuser.recyclerview.initial
 
 interface ItemTouchMoveListener {
     fun onItemMove(fromPosition: Int, toPosition: Int) : Boolean

@@ -1,4 +1,4 @@
-package com.example.utilsuser.recyclerview
+package com.example.utilsuser.recyclerview.initial
 
 import android.os.Bundle
 import android.view.View
@@ -7,9 +7,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.utilsuser.R
-import com.example.utilsuser.recyclerview.rv.MyItemTouchHelperCallback
-import com.example.utilsuser.recyclerview.rv.SlideDeleteAdapter
-import com.example.utilsuser.recyclerview.rv.WebInfoBean
 import kotlin.random.Random
 
 class RecyclerViewActivity : AppCompatActivity() {

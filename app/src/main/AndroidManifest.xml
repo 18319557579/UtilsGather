@@ -20,7 +20,7 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".recyclerview.RecyclerViewActivity"
+            android:name=".recyclerview.initial.RecyclerViewActivity"
             android:exported="false" />
         <activity
             android:name=".qihang.twelve.MyLinLayoutActivity"

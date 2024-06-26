@@ -1,4 +1,4 @@
-package com.example.utilsuser.recyclerview.rv
+package com.example.utilsuser.recyclerview.initial
 
 import android.content.Context
 import android.view.LayoutInflater
