@@ -20,6 +20,12 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".gesture.GestureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer_text.CustomerTextActivity"
+            android:exported="false" />
+        <activity
             android:name=".recyclerview.swipe.RvSwipeActivity"
             android:exported="false" />
         <activity
