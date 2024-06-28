@@ -42,6 +42,7 @@ import com.example.utilsuser.databinding.ActivityMainBinding
 import com.example.utilsuser.delegate.DelegateActivity
 import com.example.utilsuser.file.FileActivity
 import com.example.utilsuser.gesture.GestureActivity
+import com.example.utilsuser.gesture.MyWindowManagerActivity
 import com.example.utilsuser.httpurlconnect.HttpActivity
 import com.example.utilsuser.keyvalue.mmkv.KeyValueActivity
 import com.example.utilsuser.qihang.eight.EraserViewActivity
@@ -428,6 +429,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("跳转到 GestureActivity") {
                     val intent = Intent(this@MainActivity, GestureActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("跳转到 WindowManagerActivity") {
+                    val intent = Intent(this@MainActivity, MyWindowManagerActivity::class.java)
                     startActivity(intent)
                 },
             )

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.utilsuser">
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -247,6 +249,9 @@
             android:exported="false" />
         <activity
             android:name=".qihang.one.RectPointView.UseRectPointViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".gesture.MyWindowManagerActivity"
             android:exported="false" />
     </application>
 
