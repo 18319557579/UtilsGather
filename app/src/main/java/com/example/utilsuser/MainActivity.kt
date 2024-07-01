@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import com.example.uioperate.UiOperateEntranceActivity
 import com.example.utilsgather.application_store.AppStoreUtil
 import com.example.utilsgather.browser.BrowserUtil
 import com.example.utilsgather.context.ApplicationGlobal
@@ -102,6 +103,9 @@ class MainActivity : CallbackActivity() {
         setContentView(mainBinding!!.getRoot())
         GuideSettings.set(
             mainBinding!!.lvLauncher, arrayOf<GuideItemEntity>(
+                GuideItemEntity("跳转 UiOperateEntranceActivity") {
+                    startActivity(Intent(this, UiOperateEntranceActivity::class.java))
+                },
                 GuideItemEntity("跳转测试沉浸式的Activity") {
                     startActivity(Intent(this, TestImmersionActivity::class.java))
                 },

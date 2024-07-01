@@ -18,7 +18,6 @@ class UiOperateEntranceActivity : AppCompatActivity() {
 
         GuideSettings.set(mBinding.uioperateLvLauncher, arrayOf(
             GuideItemEntity("替换ViewStud") { },
-            GuideItemEntity("two") { },
         ))
     }
 }
