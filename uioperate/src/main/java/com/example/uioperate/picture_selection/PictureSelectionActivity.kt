@@ -3,7 +3,6 @@ package com.example.uioperate.picture_selection
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.databinding.ActivityPictureSelectionBinding
@@ -21,6 +20,9 @@ class PictureSelectionActivity : AppCompatActivity() {
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
             LogUtil.d("打印图片的uri: $it")
         }
+    private val takePictureLauncherMulti = registerForActivityResult(PictureMultiple()) {
+        LogUtil.d("打印图片的uri: $it")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,9 @@ class PictureSelectionActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("单选图片(用新的方式)") {
                     takePictureLauncher.launch("image/*")
+                },
+                GuideItemEntity("多选图片(用新的方式，并自定义)") {
+                    takePictureLauncherMulti.launch(null)
                 },
             )
         )
