@@ -2,9 +2,12 @@ package com.example.uioperate.picture_selection
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.example.uioperate.R
 import com.example.uioperate.databinding.ActivityPictureSelectionBinding
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -17,8 +20,14 @@ class PictureSelectionActivity : AppCompatActivity() {
     private val REQEUST_COE = 8001
 
     //必须要提前注册
-    private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
+    private val takePictureLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) {
             LogUtil.d("打印图片的uri: $it")
+            it?.also {
+                val imageInputStream = contentResolver.openInputStream(it)
+                val bitmap = BitmapFactory.decodeStream(imageInputStream)
+                mBinding.ivPicSelected.setImageBitmap(bitmap)
+            }
         }
     private val takePictureLauncherMulti = registerForActivityResult(PictureMultiple()) {
         LogUtil.d("打印图片的uri: $it")
