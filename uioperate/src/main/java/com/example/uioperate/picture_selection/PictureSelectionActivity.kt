@@ -47,6 +47,8 @@ class PictureSelectionActivity : AppCompatActivity() {
             REQEUST_COE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     LogUtil.d("图片选择成功")
+                    val uri = data?.data ?: ""
+                    LogUtil.d("打印图片的uri: $uri")
 
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     LogUtil.d("图片选择失败")
