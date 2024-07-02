@@ -14,11 +14,19 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class UploadFileTask2_ChatGPT {
+    /**
+     * 上传文件到服务器，并返回服务器相应结果
+     * @param requestURL 服务器的地址
+     * @param imageUri 文件的Uri
+     * @param context
+     * @return 服务器返回的结果
+     */
     public String uploadImage(String requestURL, Uri imageUri, Context context) {
         HttpURLConnection connection = null;
         DataOutputStream outputStream = null;
         InputStream inputStream = null;
 
+        // boundary就是request头和上传文件内容的分隔符(可自定义任意一组字符串)
         String boundary = "*****" + System.currentTimeMillis() + "*****";
         String lineEnd = "\r\n";
         String twoHyphens = "--";
@@ -90,6 +98,4 @@ public class UploadFileTask2_ChatGPT {
         Scanner s = new Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";
     }
-
-
 }
