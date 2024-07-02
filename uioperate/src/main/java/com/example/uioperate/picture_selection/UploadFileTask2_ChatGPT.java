@@ -7,39 +7,24 @@ import com.example.utilsgather.logcat.LogUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class UploadFileTask {
+public class UploadFileTask2_ChatGPT {
     public String uploadImage(String requestURL, Uri imageUri, Context context) {
         HttpURLConnection connection = null;
         DataOutputStream outputStream = null;
         InputStream inputStream = null;
 
+        String boundary = "*****" + System.currentTimeMillis() + "*****";
         String lineEnd = "\r\n";
         String twoHyphens = "--";
-        String boundary = "*****";
-
-        int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024; // 1MB
 
         try {
-            // 将Uri转换为File路径（示例中需要调整为实际情况）
-            InputStream imageStream = context.getContentResolver().openInputStream(imageUri);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] data = new byte[maxBufferSize];
-            int count;
-            while ((count = imageStream.read(data, 0, data.length)) != -1) {
-                baos.write(data, 0, count);
-            }
-            baos.flush();
-            byte[] imageBytes = baos.toByteArray();
-            imageStream.close();
-            baos.close();
-
+            InputStream fileInputStream = context.getContentResolver().openInputStream(imageUri);
             URL url = new URL(requestURL);
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
@@ -47,9 +32,7 @@ public class UploadFileTask {
             connection.setUseCaches(false);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("ENCTYPE", "multipart/form-data");
-            connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-            connection.setRequestProperty("uploaded_file", imageUri.getLastPathSegment());
+            connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
 
             outputStream = new DataOutputStream(connection.getOutputStream());
             outputStream.writeBytes(twoHyphens + boundary + lineEnd);
@@ -57,11 +40,19 @@ public class UploadFileTask {
                     + imageUri.getLastPathSegment() + "\"" + lineEnd);
             outputStream.writeBytes(lineEnd);
 
-            outputStream.write(imageBytes);
+            int bytesAvailable = fileInputStream.available();
+            int bufferSize = Math.min(bytesAvailable, 1024 * 1024);
+            byte[] buffer = new byte[bufferSize];
 
+            int bytesRead;
+            while ((bytesRead = fileInputStream.read(buffer, 0, bufferSize)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
             outputStream.writeBytes(lineEnd);
             outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
             outputStream.flush();
+            fileInputStream.close();
             outputStream.close();
 
             // 检查服务器响应
@@ -81,6 +72,13 @@ public class UploadFileTask {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             if (connection != null) {
                 connection.disconnect();
             }
@@ -92,5 +90,6 @@ public class UploadFileTask {
         Scanner s = new Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";
     }
+
 
 }

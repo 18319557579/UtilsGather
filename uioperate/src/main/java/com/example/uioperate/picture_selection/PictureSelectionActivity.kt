@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.util.Base64
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.databinding.ActivityPictureSelectionBinding
@@ -97,7 +96,9 @@ class PictureSelectionActivity : AppCompatActivity() {
 
     suspend fun uploadPicture(uri: Uri) : String{
         return withContext(Dispatchers.IO) {
-            UploadFileTask().uploadImage("https://postman-echo.com/post", uri,
+            //UploadFileTask_ChatGPT和UploadFileTask2_ChatGPT都是可以的
+            UploadFileTask2_ChatGPT()
+                .uploadImage("https://postman-echo.com/post", uri,
                 this@PictureSelectionActivity)
         }
     }
