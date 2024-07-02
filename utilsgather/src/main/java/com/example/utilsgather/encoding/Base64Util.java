@@ -1,6 +1,8 @@
 package com.example.utilsgather.encoding;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import java.nio.charset.Charset;
@@ -22,6 +24,19 @@ public class Base64Util {
 
         byte[] b = Base64.decode(originStr, Base64.DEFAULT);
         return new String(b, Charset.forName("UTF-8"));
+    }
+
+    /**
+     * 将Base64的数据转为Bitmap
+     */
+    public static Bitmap base64ToBitmap(String originStr) {
+        // 解码Base64字符串为字节数组
+        byte[] decodedString = Base64.decode(originStr, Base64.DEFAULT);
+
+        // 将字节数组转换为Bitmap
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        return decodedByte;
     }
 
 }

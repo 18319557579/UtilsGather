@@ -20,6 +20,12 @@
             android:id="@+id/iv_pic_selected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/iv_pic_selected_netword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
 

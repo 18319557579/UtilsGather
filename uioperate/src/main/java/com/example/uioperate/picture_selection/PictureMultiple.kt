@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 
 class PictureMultiple :  ActivityResultContract<Void?, List<Uri>?>() {
     override fun createIntent(context: Context, input: Void?): Intent {
