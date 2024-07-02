@@ -27,9 +27,9 @@ import com.example.utilsgather.lifecycle_callback.CallbackActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
-import com.example.utilsgather.info.PackageInfoUtil
-import com.example.utilsgather.info.DeviceInfoUtil
-import com.example.utilsgather.info.NetworkInfoUtil
+import com.example.utilsgather.application_device_info.PackageInfoUtil
+import com.example.utilsgather.application_device_info.DeviceInfoUtil
+import com.example.utilsgather.application_device_info.NetworkInfoUtil
 import com.example.utilsgather.interaction.SniffingAppUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
 import com.example.utilsuser.qihang.one.RectPointView.UseRectPointViewActivity
@@ -361,6 +361,7 @@ class MainActivity : CallbackActivity() {
 
                 GuideItemEntity("获得APP信息") {
                     LogUtil.d("包名: " + PackageInfoUtil.getPackageName(ApplicationGlobal.getInstance()))
+                    LogUtil.d("app名: " + PackageInfoUtil.getAppName(ApplicationGlobal.getInstance()))
                     LogUtil.d("版本号: " + PackageInfoUtil.getPackageVersionCode(ApplicationGlobal.getInstance()))
                     LogUtil.d("版本名: " + PackageInfoUtil.getPackageVersionName(ApplicationGlobal.getInstance()))
                 },

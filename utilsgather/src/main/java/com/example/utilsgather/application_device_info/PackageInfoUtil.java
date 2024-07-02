@@ -1,11 +1,9 @@
-package com.example.utilsgather.info;
+package com.example.utilsgather.application_device_info;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
-
-import com.example.utilsgather.logcat.LogUtil;
 
 public class PackageInfoUtil {
     /**
@@ -21,6 +19,30 @@ public class PackageInfoUtil {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * 获得当前应用的包名，简单的方式
+     */
+    public static String getPackageNameSimple(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        return context.getPackageName(); // 获取当前应用的包名
+    }
+
+    /**
+     * 获取应用程序名称。
+     */
+    public static String getAppName(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        String packageName = context.getPackageName(); // 获取当前应用的包名
+        String appName = "";
+        try {
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+            appName = (String) packageManager.getApplicationLabel(applicationInfo);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return appName;
     }
 
     /**

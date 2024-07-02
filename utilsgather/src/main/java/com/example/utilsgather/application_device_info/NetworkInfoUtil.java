@@ -1,4 +1,4 @@
-package com.example.utilsgather.info;
+package com.example.utilsgather.application_device_info;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
