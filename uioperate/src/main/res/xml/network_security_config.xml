@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!--//允许在高版本上开启Http的明文传-->
+    <base-config cleartextTrafficPermitted="true" />
+    <!--debug-overrides标签，只在debuggable为true的情况下-->
+    <debug-overrides>
+        <trust-anchors>
+            <!--添加charles的证书文件charles.pem-->
+            <certificates src="@raw/charles" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>
