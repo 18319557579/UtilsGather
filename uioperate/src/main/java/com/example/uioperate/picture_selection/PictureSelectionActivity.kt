@@ -2,7 +2,9 @@ package com.example.uioperate.picture_selection
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,45 +32,14 @@ class PictureSelectionActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.GetContent()) {
             LogUtil.d("打印图片的uri: $it")
             it?.also {
-                val imageInputStream = contentResolver.openInputStream(it)
-                val bitmap = BitmapFactory.decodeStream(imageInputStream)
-                mBinding.ivPicSelected.setImageBitmap(bitmap)
-
                 val job = Job()
                 val scope = CoroutineScope(job)
-                scope.launch(Dispatchers.IO) {
-                    //1.发起网络请求，获得返回的数据
-                    val jsonResult = UploadFileTask().uploadImage("https://postman-echo.com/post", it,
-                        this@PictureSelectionActivity)
-                    LogUtil.d("打印最终结果: $jsonResult")
-
-                    //2.获得base64数据
-                    val base64Value = JSONObject(jsonResult).run {
-                        val jsonObject = getJSONObject("files")
-
-                        val keys = jsonObject.keys()
-
-                        //Kotlin中的if 和 else 都是有返回值的
-                        if (keys.hasNext()) {  //只取第一张图片
-                            val key = keys.next()
-                            jsonObject.getString(key)
-                        } else {
-                            //这里的返回值为Nothing
-                            return@launch
-                        }
-                    }
-
-                    //3.去除头部信息，提取实际数据
-                    val base64Data: String = base64Value.substring(base64Value.indexOf(",") + 1)
-
-                    //4.base64转为bitmap
-                    val decodedByte = Base64Util.base64ToBitmap(base64Data)
-
-                    //5.展示图片
-                    withContext(Dispatchers.Main) {
-                        mBinding.ivPicSelectedNetword.setImageBitmap(decodedByte)
-                    }
-
+                scope.launch {
+                    showPicture(it)
+                    val jsonResult = uploadPicture(it)
+                    val base64Data = getBase64Data(jsonResult) ?: return@launch
+                    val bitmap = base64ToBitmap(base64Data)
+                    showNetworkPicture(bitmap)
                 }
             }
         }
@@ -113,6 +84,55 @@ class PictureSelectionActivity : AppCompatActivity() {
                     LogUtil.d("图片选择失败")
                 }
             }
+        }
+    }
+
+    suspend fun showPicture(uri: Uri) {
+        withContext(Dispatchers.Main) {
+            val imageInputStream = contentResolver.openInputStream(uri)
+            val bitmap = BitmapFactory.decodeStream(imageInputStream)
+            mBinding.ivPicSelected.setImageBitmap(bitmap)
+        }
+    }
+
+    suspend fun uploadPicture(uri: Uri) : String{
+        return withContext(Dispatchers.IO) {
+            UploadFileTask().uploadImage("https://postman-echo.com/post", uri,
+                this@PictureSelectionActivity)
+        }
+    }
+
+    suspend fun getBase64Data(json: String) : String?{
+        return withContext(Dispatchers.IO) {
+            //2.获得base64数据
+            val base64Value = JSONObject(json).run {
+                val jsonObject = getJSONObject("files")
+
+                val keys = jsonObject.keys()
+
+                //Kotlin中的if 和 else 都是有返回值的
+                if (keys.hasNext()) {  //只取第一张图片
+                    val key = keys.next()
+                    jsonObject.getString(key)
+                } else {
+                    return@withContext null
+                }
+            }
+
+            //3.去除头部信息，提取实际数据
+            base64Value.substring(base64Value.indexOf(",") + 1)
+        }
+    }
+
+    suspend fun base64ToBitmap(base64Data: String): Bitmap {
+        return withContext(Dispatchers.IO) {
+            Base64Util.base64ToBitmap(base64Data)
+        }
+    }
+
+    suspend fun showNetworkPicture(bitmap: Bitmap) {
+        withContext(Dispatchers.Main) {
+            mBinding.ivPicSelectedNetword.setImageBitmap(bitmap)
         }
     }
 }
