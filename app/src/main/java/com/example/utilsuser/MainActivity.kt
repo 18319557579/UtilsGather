@@ -40,6 +40,7 @@ import com.example.utilsgather.string.InfoFromURI
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsuser.coroutine.CoroutineActivity
+import com.example.utilsuser.coroutine.flow.FlowActivity
 import com.example.utilsuser.databinding.ActivityMainBinding
 import com.example.utilsuser.delegate.DelegateActivity
 import com.example.utilsuser.file.FileActivity
@@ -443,6 +444,10 @@ class MainActivity : CallbackActivity() {
                 },
                 GuideItemEntity("跳转到 CoroutineActivity") {
                     val intent = Intent(this@MainActivity, CoroutineActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("跳转到 FlowActivity") {
+                    val intent = Intent(this@MainActivity, FlowActivity::class.java)
                     startActivity(intent)
                 },
             )
