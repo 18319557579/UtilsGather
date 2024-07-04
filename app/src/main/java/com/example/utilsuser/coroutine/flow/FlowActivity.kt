@@ -54,6 +54,13 @@ class FlowActivity : AppCompatActivity() {
                         }
                     }
                 },
+
+                /**
+                 * 上面的Start并没有很好地管理Flow的生命周期，它没有与Activity的生命周期同步，而是始终在接收着Flow上游发送过来的数据。
+                 * 因此会造成应用切换到后台，还是继续更新ui的情况
+                 *
+                 * 这里使用launchWhenStarted进行改造，可以达到在后台时，flow不会运行，但是切回前台时，从上次的位置继续。说明保存了数据，浪费空阿
+                 */
                 GuideItemEntity("使用launchWhenStarted") {
                     lifecycleScope.launchWhenStarted {
                         flowActivityViewModel.timeFlow.collect { time ->
@@ -62,6 +69,10 @@ class FlowActivity : AppCompatActivity() {
                         }
                     }
                 },
+
+                /**
+                 * 使用 repeatOnLifecycle (Lifecycle.State.STARTED)，可以到切换后台后，flow不会运行；切回前台，又重新开始了
+                 */
                 GuideItemEntity("使用 repeatOnLifecycle (Lifecycle.State.STARTED)") {
                     lifecycleScope.launch {
                         repeatOnLifecycle (Lifecycle.State.STARTED) {
@@ -72,6 +83,12 @@ class FlowActivity : AppCompatActivity() {
                         }
                     }
                 },
+
+                /**
+                 * 使用StateFlow来模拟livedata的效果
+                 *
+                 * 不过和前面两个不同的是，timer在后台继续运行，当切回前台时，会按timer的最新值显示在ui上
+                 */
                 GuideItemEntity("使用StateFlow来模拟livedata的效果") {
                     flowActivityViewModelTimer.startTimer()
 
