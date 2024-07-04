@@ -10,8 +10,10 @@ import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsuser.R
 import com.example.utilsuser.coroutine.flow.FlowActivity
 import com.example.utilsuser.coroutine.flow_operator.FlowOperatorActivity
+import com.example.utilsuser.coroutine.state_flow.SharedFlowActivityClick
 import com.example.utilsuser.coroutine.state_flow.StateFlowActivity
 import com.example.utilsuser.coroutine.state_flow.StateFlowActivity2
+import com.example.utilsuser.coroutine.state_flow.StateFlowActivityClick
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
@@ -36,6 +38,12 @@ class CoroutineActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("去 StateFlowActivity2") {
                     startActivity(Intent(this, StateFlowActivity2::class.java))
+                },
+                GuideItemEntity("去 StateFlowActivityClick") {
+                    startActivity(Intent(this, StateFlowActivityClick::class.java))
+                },
+                GuideItemEntity("去 SharedFlowActivityClick") {
+                    startActivity(Intent(this, SharedFlowActivityClick::class.java))
                 },
                 GuideItemEntity("去 FlowOperatorActivity") {
                     startActivity(Intent(this, FlowOperatorActivity::class.java))

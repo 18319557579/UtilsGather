@@ -25,6 +25,13 @@
             android:name=".coroutine.state_flow.StateFlowActivity2"
             android:exported="false" />
         <activity
+            android:name=".coroutine.state_flow.StateFlowActivityClick"
+            android:exported="false" />
+        <activity
+            android:name=".coroutine.state_flow.SharedFlowActivityClick"
+            android:exported="false" />
+
+        <activity
             android:name=".coroutine.flow_operator.FlowOperatorActivity"
             android:exported="false" />
         <activity
