@@ -24,6 +24,7 @@ import com.example.utilsuser.coroutine.flow_operator.FlowOperatorActivity
 
 class FlowActivity : AppCompatActivity() {
     private val flowActivityViewModel by viewModels<FlowActivityViewModel>()
+    private val flowActivityViewModelTimer by viewModels<FlowActivityViewModelTimer>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +66,18 @@ class FlowActivity : AppCompatActivity() {
                     lifecycleScope.launch {
                         repeatOnLifecycle (Lifecycle.State.STARTED) {
                             flowActivityViewModel.timeFlow.collect { time ->
+                                textView.text = time.toString()
+                                LogUtil.d("Update time $time in UI.")
+                            }
+                        }
+                    }
+                },
+                GuideItemEntity("使用StateFlow来模拟livedata的效果") {
+                    flowActivityViewModelTimer.startTimer()
+
+                    lifecycleScope.launch {
+                        repeatOnLifecycle (Lifecycle.State.STARTED) {
+                            flowActivityViewModelTimer.stateFlow.collect { time ->
                                 textView.text = time.toString()
                                 LogUtil.d("Update time $time in UI.")
                             }
