@@ -1,13 +1,19 @@
 package com.example.utilsuser.coroutine
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.utilsgather.list_guide.GuideItemEntity
+import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsuser.R
+import com.example.utilsuser.StyleImmersionActivity
+import com.example.utilsuser.coroutine.flow.FlowActivity
+import com.example.utilsuser.coroutine.flow_operator.FlowOperatorActivity
 import io.reactivex.schedulers.Schedulers.start
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -23,6 +29,17 @@ class CoroutineActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coroutine)
+
+        GuideSettings.set(findViewById(R.id.lv_launcher),
+            arrayOf(
+                GuideItemEntity("去 FlowActivity") {
+                    startActivity(Intent(this, FlowActivity::class.java))
+                },
+                GuideItemEntity("去 FlowOperatorActivity") {
+                    startActivity(Intent(this, FlowOperatorActivity::class.java))
+                },
+            )
+        )
 
         GlobalScope.launch {
             LogUtil.d("名称: ${Thread.currentThread().name}")

@@ -446,10 +446,6 @@ class MainActivity : CallbackActivity() {
                     val intent = Intent(this@MainActivity, CoroutineActivity::class.java)
                     startActivity(intent)
                 },
-                GuideItemEntity("跳转到 FlowActivity") {
-                    val intent = Intent(this@MainActivity, FlowActivity::class.java)
-                    startActivity(intent)
-                },
             )
 
         )
