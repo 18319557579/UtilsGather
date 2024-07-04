@@ -2,23 +2,19 @@ package com.example.utilsuser.coroutine
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsuser.R
-import com.example.utilsuser.StyleImmersionActivity
 import com.example.utilsuser.coroutine.flow.FlowActivity
 import com.example.utilsuser.coroutine.flow_operator.FlowOperatorActivity
-import io.reactivex.schedulers.Schedulers.start
+import com.example.utilsuser.coroutine.state_flow.StateFlowActivity
+import com.example.utilsuser.coroutine.state_flow.StateFlowActivity2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.concurrent.thread
@@ -34,6 +30,12 @@ class CoroutineActivity : AppCompatActivity() {
             arrayOf(
                 GuideItemEntity("去 FlowActivity") {
                     startActivity(Intent(this, FlowActivity::class.java))
+                },
+                GuideItemEntity("去 StateFlowActivity") {
+                    startActivity(Intent(this, StateFlowActivity::class.java))
+                },
+                GuideItemEntity("去 StateFlowActivity2") {
+                    startActivity(Intent(this, StateFlowActivity2::class.java))
                 },
                 GuideItemEntity("去 FlowOperatorActivity") {
                     startActivity(Intent(this, FlowOperatorActivity::class.java))

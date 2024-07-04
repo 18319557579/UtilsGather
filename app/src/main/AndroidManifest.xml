@@ -22,6 +22,9 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".coroutine.state_flow.StateFlowActivity2"
+            android:exported="false" />
+        <activity
             android:name=".coroutine.flow_operator.FlowOperatorActivity"
             android:exported="false" />
         <activity
