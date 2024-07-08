@@ -3,6 +3,12 @@
 
     <application android:networkSecurityConfig="@xml/network_security_config">
         <activity
+            android:name=".touch_event.two_simple_scrollview_optimize_1_2.TwoSimpleScrollviewOptimize_1_2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".touch_event.two_simple_scrollview_optimize_1_1.TwoSimpleScrollviewOptimize_1_1Activity"
+            android:exported="false" />
+        <activity
             android:name=".touch_event.two_scrollview.TwoScrollViewActivity"
             android:exported="false" />
         <activity
