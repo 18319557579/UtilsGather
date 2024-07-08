@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application
-        android:networkSecurityConfig="@xml/network_security_config">
+    <application android:networkSecurityConfig="@xml/network_security_config">
+        <activity
+            android:name=".touch_event.two_scrollview.TwoScrollViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".touch_event.two_simple_scrollview.TwoSimpleScrollviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".touch_event.TouchEventActivity"
+            android:exported="false" />
         <activity
             android:name=".picture_selection.PictureSelectionActivity"
             android:exported="false" />

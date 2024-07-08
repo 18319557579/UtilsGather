@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.databinding.ActivityUiOperateEntranceBinding
 import com.example.uioperate.picture_selection.PictureSelectionActivity
+import com.example.uioperate.touch_event.TouchEventActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 
@@ -22,6 +23,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             GuideItemEntity("替换ViewStud") { },
             GuideItemEntity("跳转 PictureSelectionActivity") {
                 startActivity(Intent(this, PictureSelectionActivity::class.java))
+            },
+            GuideItemEntity("跳转 TouchEventActivity") {
+                startActivity(Intent(this, TouchEventActivity::class.java))
             },
         ))
     }
