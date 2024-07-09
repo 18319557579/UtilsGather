@@ -3,6 +3,7 @@ package com.example.uioperate.touch_event.two_simple_scrollview_optimize_1_1
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.View
 import android.widget.ScrollView
 import com.example.utilsgather.logcat.LogUtil
 import java.lang.reflect.Field
@@ -74,5 +75,13 @@ class SimpleNestedScrollViewOptimize1_1(context: Context, attributeSet: Attribut
             e.printStackTrace()
         }
         return value
+    }
+
+    override fun scrollBy(x: Int, y: Int) {
+        if ((y > 0 && isScrollToTop()) || (y < 0 && isScrollToBottom())) {
+            (parent as View).scrollBy(x, y)
+        } else {
+            super.scrollBy(x, y)
+        }
     }
 }
