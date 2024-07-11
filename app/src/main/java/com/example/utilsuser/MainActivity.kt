@@ -35,6 +35,7 @@ import com.example.utilsgather.permission.permissionX.PermissionX
 import com.example.utilsuser.qihang.one.RectPointView.UseRectPointViewActivity
 import com.example.utilsgather.random.StringRandomUtil
 import com.example.utilsgather.source_file.assets.AssetsUtil
+import com.example.utilsgather.source_file.assets.PropertiesUtil
 import com.example.utilsgather.source_file.raw.SourceUtil
 import com.example.utilsgather.string.InfoFromURI
 import com.example.utilsgather.thread.ThreadUtil
@@ -286,6 +287,8 @@ class MainActivity : CallbackActivity() {
     ${AssetsUtil.readAssetsFile(this@MainActivity, "uiautomatorviewer.txt")}
     """.trimIndent()
                     )
+
+                    LogUtil.d("读取配置文件的信息String: ${PropertiesUtil.getString("appToken")}, int: ${PropertiesUtil.getInt("code")}")
                 },
                 GuideItemEntity("在应用商店中打开小红书") {
                     AppStoreUtil.jumpStore(
