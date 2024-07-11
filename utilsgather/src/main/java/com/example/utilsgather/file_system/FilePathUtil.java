@@ -2,11 +2,9 @@ package com.example.utilsgather.file_system;
 
 import android.content.Context;
 
-import com.example.utilsgather.logcat.LogUtil;
-
 import java.io.File;
 
-public class FileInfoGainUtil {
+public class FilePathUtil {
     /**
      * 获得内部存储的路径
      * /data/user/0/com.example.utilsuser/files

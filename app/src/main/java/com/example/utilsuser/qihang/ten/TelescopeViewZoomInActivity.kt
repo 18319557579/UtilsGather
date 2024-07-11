@@ -1,10 +1,9 @@
 package com.example.utilsuser.qihang.ten
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.utilsgather.file_system.FileInfoGainUtil
+import com.example.utilsgather.file_system.FilePathUtil
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsuser.R
 import java.io.File
@@ -32,7 +31,7 @@ class TelescopeViewZoomInActivity : AppCompatActivity() {
         LogUtil.d("bmpWidth: ${bitmap.width}, bmpHeight: ${bitmap.height}, bmpMemorySize: ${bitmap.byteCount}")
         LogUtil.d("是否可以改变: ${bitmap.isMutable}")
 
-        val path = FileInfoGainUtil.internalStoragePath(this) + File.separator + "scenery.png"
+        val path = FilePathUtil.internalStoragePath(this) + File.separator + "scenery.png"
         bitmap = BitmapFactory.decodeFile(path)
         LogUtil.d("bmpWidth: ${bitmap.width}, bmpHeight: ${bitmap.height}, bmpMemorySize: ${bitmap.byteCount}")
         LogUtil.d("是否可以改变: ${bitmap.isMutable}")

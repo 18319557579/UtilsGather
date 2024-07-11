@@ -4,10 +4,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Environment
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.utilsgather.file_system.FileInfoGainUtil
+import com.example.utilsgather.file_system.FilePathUtil
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsuser.R
 import java.io.ByteArrayOutputStream
@@ -79,7 +78,7 @@ class ScaleTypeActivity : AppCompatActivity() {
     }
 
     private fun saveBmp(bitmap: Bitmap) {
-        val fileDir = FileInfoGainUtil.internalStoragePath(this) +
+        val fileDir = FilePathUtil.internalStoragePath(this) +
                 File.separator +
                 "/lavor.webp"
 
