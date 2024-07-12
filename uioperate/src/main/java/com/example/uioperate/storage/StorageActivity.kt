@@ -9,6 +9,9 @@ import com.example.utilsgather.application_device_info.PackageInfoUtil
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.File
@@ -57,14 +60,27 @@ class StorageActivity : AppCompatActivity() {
                     LogUtil.d("5: ${externalCacheDir}")
                     LogUtil.d("6: ${externalMediaDirs}")
                 },
-                GuideItemEntity("") {
-
+                GuideItemEntity("写入文件到files目录下") {
+                    CoroutineScope(Job()).launch {
+                        val filesDir: File = filesDir
+                        val myFile = File(filesDir, "themyfile.txt")
+                        val path = myFile.absolutePath
+                        writeFile(path)
+                    }
+                },
+                GuideItemEntity("读取files目录下的文件") {
+                    CoroutineScope(Job()).launch {
+                        val filesDir: File = filesDir
+                        val myFile = File(filesDir, "themyfile.txt")
+                        val path = myFile.absolutePath
+                        readFile(path)
+                    }
                 },
             )
         )
     }
 
-    //从文件读取
+    //从文件读取（通过字节流）
     private fun readFile(filePath: String) {
         if (TextUtils.isEmpty(filePath)) return
 
@@ -86,7 +102,7 @@ class StorageActivity : AppCompatActivity() {
         }
     }
 
-    //写入文件
+    //写入文件（通过字节流）
     private fun writeFile(filePath: String) {
         if (TextUtils.isEmpty(filePath)) return
 
@@ -94,7 +110,7 @@ class StorageActivity : AppCompatActivity() {
             val file = File(filePath)
             val fileOutputStream: FileOutputStream = FileOutputStream(file)
             val bos: BufferedOutputStream = BufferedOutputStream(fileOutputStream)
-            val writeContent = "hello world\n"
+            val writeContent = "hello world!\n"
             bos.write(writeContent.toByteArray())
             bos.flush()
             bos.close()
