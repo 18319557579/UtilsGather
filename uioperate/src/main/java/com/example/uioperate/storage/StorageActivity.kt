@@ -1,5 +1,6 @@
 package com.example.uioperate.storage
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -87,6 +88,14 @@ class StorageActivity : AppCompatActivity() {
 
                     val databaseFile = getDatabasePath(TestSQLiteOpenHelper.DATABASE_NAME)
                     LogUtil.d("数据库 TestDatabase 的路径: ${databaseFile.path}")
+                },
+                GuideItemEntity("创建 SharedPreferences 目录") {
+                    //sp的目录也是自动创建的
+                    val sp = getSharedPreferences("test_sp", Context.MODE_PRIVATE)
+                    val edit = sp.edit()
+                    edit.putInt("id", 1)
+                    edit.putString("name", "Daisy")
+                    edit.commit()
                 },
             )
         )
