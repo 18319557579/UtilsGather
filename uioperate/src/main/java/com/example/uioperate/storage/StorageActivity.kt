@@ -76,6 +76,18 @@ class StorageActivity : AppCompatActivity() {
                         readFile(path)
                     }
                 },
+                GuideItemEntity("创建数据库的同时，会产生databases目录") {
+                    //这说明数据库目录是自动创建的
+                    val dbHelper = TestSQLiteOpenHelper(this, TestSQLiteOpenHelper.DATABASE_NAME, 1)
+                    dbHelper.getWritableDatabase()
+                },
+                GuideItemEntity("获得 TestDatabase 数据库的路径") {
+                    val dbHelper = TestSQLiteOpenHelper(this, TestSQLiteOpenHelper.DATABASE_NAME, 1)
+                    dbHelper.getWritableDatabase()
+
+                    val databaseFile = getDatabasePath(TestSQLiteOpenHelper.DATABASE_NAME)
+                    LogUtil.d("数据库 TestDatabase 的路径: ${databaseFile.path}")
+                },
             )
         )
     }
