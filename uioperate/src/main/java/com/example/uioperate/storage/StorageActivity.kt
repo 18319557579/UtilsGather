@@ -2,10 +2,12 @@ package com.example.uioperate.storage
 
 import android.Manifest
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -261,7 +263,7 @@ class StorageActivity : AppCompatActivity() {
                     ActivityCompat.requestPermissions(this@StorageActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
                 },
 
-                GuideItemEntity("") {
+                GuideItemEntity("共享存储空间-媒体文件-直接构造路径") {
                     //获取目录：/storage/emulated/0/
                     val externalRoot = Environment.getExternalStorageDirectory()
                     LogUtil.d("输出根路径: $externalRoot")
@@ -279,6 +281,27 @@ class StorageActivity : AppCompatActivity() {
                             ivShow.setImageBitmap(bitmap)
                         }
                     }
+
+                },
+
+                GuideItemEntity("共享存储空间-媒体文件-通过MediaStore获取路径: 遍历所有图片") {
+                    CoroutineScope(Job()).launch(Dispatchers.IO) {
+                        //这一步必须要动态申请存储权限，否则会闪退
+                        val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                            null, null, null, null)
+                        var bitmap: Bitmap? = null
+                        while (cursor!!.moveToNext()) {
+                            val dataIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+                            val imagePath = cursor.getString(dataIndex)
+                            LogUtil.d("打印图片路径: $imagePath")
+                            bitmap = BitmapFactory.decodeFile(imagePath)
+                        }
+
+                        withContext(Dispatchers.Main) {
+                            ivShow.setImageBitmap(bitmap)
+                        }
+                    }
+
 
                 },
             )
