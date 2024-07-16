@@ -15,9 +15,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
+import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.InputStreamReader
 
 class StorageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,6 +98,38 @@ class StorageActivity : AppCompatActivity() {
                     edit.putInt("id", 1)
                     edit.putString("name", "Daisy")
                     edit.commit()
+                },
+                GuideItemEntity("使用 openFileOutput()") {
+                    val filename = "example.txt"
+                    val fileContents = "Hello Internal!"
+                    CoroutineScope(Job()).launch {
+                        //其实就是获得 files 目录下的某路径的文件输出流
+                        val fileOutputStream = openFileOutput(filename, Context.MODE_PRIVATE)
+                        fileOutputStream.write(fileContents.toByteArray())
+                        fileOutputStream.close()
+                    }
+                },
+                GuideItemEntity("使用 openFileInput()") {
+                    val filename = "example.txt"
+
+                    //其实就是获得 files 目录下的某路径的文件输入流
+                    val inputStream = openFileInput(filename)
+                    val inputStreamReader = InputStreamReader(inputStream)
+                    val bufferedReader = BufferedReader(inputStreamReader)
+                    val stringBuilder = StringBuilder()
+                    var line: String? = null
+
+                    CoroutineScope(Job()).launch {
+                        line = bufferedReader.readLine()
+                        while ( line != null ) {
+                            stringBuilder.append(line).append("\n")
+                            line = bufferedReader.readLine()
+                        }
+
+                        inputStream.close()
+                        val fileContents = stringBuilder.toString()
+                        LogUtil.d("读取出的内容: $fileContents")
+                    }
                 },
             )
         )
