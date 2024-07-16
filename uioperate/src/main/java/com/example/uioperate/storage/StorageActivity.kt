@@ -355,6 +355,18 @@ class StorageActivity : AppCompatActivity() {
                     }
                     startActivityForResult(intent, theRequestCode)
                 },
+
+                //外部存储的其他目录需要存储权限
+                GuideItemEntity("其他目录-直接构造路径：创建一个目录") {
+                    val externalRoot = Environment.getExternalStorageDirectory()
+                    val imagePath = externalRoot.absolutePath + File.separator + "myDir"
+                    LogUtil.d("拼凑出的路径: $imagePath")
+
+                    val myDirFile = File(imagePath)
+                    if (!myDirFile.exists()) {
+                        myDirFile.mkdirs()
+                    }
+                },
             )
         )
     }
