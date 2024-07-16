@@ -381,6 +381,19 @@ class StorageActivity : AppCompatActivity() {
 
                     readFile(myFile.absolutePath)
                 },
+                GuideItemEntity("用直接构造路径的方式访问DCIM目录下的文件") {
+                    val externalRoot = Environment.getExternalStorageDirectory()
+                    val imagePath = externalRoot.absolutePath + File.separator + "DCIM" + File.separator + "daisy.jpg"
+                    LogUtil.d("拼凑出的路径: $imagePath")
+
+                    val bitmap = BitmapFactory.decodeFile(imagePath)
+                    ivShow.setImageBitmap(bitmap)
+                },
+                GuideItemEntity("用直接构造路径的方式访问DCIM目录下，在里面创建一个文件") {
+                    val externalRoot = Environment.getExternalStorageDirectory()
+                    val imagePath = externalRoot.absolutePath + File.separator + "DCIM" + File.separator + "newnewfile.txt"
+                    writeFile(imagePath)
+                },
             )
         )
     }
