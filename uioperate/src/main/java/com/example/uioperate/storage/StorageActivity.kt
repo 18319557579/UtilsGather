@@ -1,6 +1,7 @@
 package com.example.uioperate.storage
 
 import android.Manifest
+import android.content.ContentUris
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -301,8 +302,29 @@ class StorageActivity : AppCompatActivity() {
                             ivShow.setImageBitmap(bitmap)
                         }
                     }
+                },
 
+                GuideItemEntity("共享存储空间-媒体文件-通过MediaStore获取Uri: 遍历所有图片") {
+                    CoroutineScope(Job()).launch(Dispatchers.IO) {
+                        //这一步必须要动态申请存储权限，否则会闪退
+                        val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                            null, null, null, null)
+                        var bitmap: Bitmap? = null
+                        while (cursor!!.moveToNext()) {
+                            val idIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
+                            val id = cursor.getLong(idIndex)
+                            LogUtil.d("打印图片ID: $id")
+                            val uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                            LogUtil.d("打印图片Uri: $uri")
 
+                            val fis = contentResolver.openInputStream(uri)
+                            bitmap = BitmapFactory.decodeStream(fis)
+                        }
+
+                        withContext(Dispatchers.Main) {
+                            ivShow.setImageBitmap(bitmap)
+                        }
+                    }
                 },
             )
         )
