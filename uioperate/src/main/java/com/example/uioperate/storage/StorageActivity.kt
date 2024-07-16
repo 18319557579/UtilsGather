@@ -1,19 +1,25 @@
 package com.example.uioperate.storage
 
+import android.Manifest
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.text.TextUtils
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.example.uioperate.R
 import com.example.utilsgather.application_device_info.PackageInfoUtil
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
@@ -26,6 +32,8 @@ class StorageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_storage)
+
+        val ivShow = findViewById<ImageView>(R.id.iv_show)
 
         GuideSettings.set(
             findViewById(R.id.lv_launcher),
@@ -248,6 +256,30 @@ class StorageActivity : AppCompatActivity() {
                         LogUtil.d("DIRECTORY_DOWNLOADS : ${file.path}")
                     }
                     LogUtil.d("\n")
+                },
+                GuideItemEntity("申请存储权限") {
+                    ActivityCompat.requestPermissions(this@StorageActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+                },
+
+                GuideItemEntity("") {
+                    //获取目录：/storage/emulated/0/
+                    val externalRoot = Environment.getExternalStorageDirectory()
+                    LogUtil.d("输出根路径: $externalRoot")
+
+                    val imagePath = externalRoot.absolutePath + File.separator +
+                            Environment.DIRECTORY_DCIM + File.separator +
+                            "hsf.jpg"
+
+                    CoroutineScope(Job()).launch(Dispatchers.IO) {
+                        //这一步必须要动态申请存储权限，否则得到的bitmap为null
+                        val bitmap = BitmapFactory.decodeFile(imagePath)
+                        LogUtil.d("打印一下bitmap: $bitmap")
+
+                        withContext(Dispatchers.Main) {
+                            ivShow.setImageBitmap(bitmap)
+                        }
+                    }
+
                 },
             )
         )
