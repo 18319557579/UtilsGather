@@ -357,7 +357,7 @@ class StorageActivity : AppCompatActivity() {
                 },
 
                 //外部存储的其他目录需要存储权限
-                GuideItemEntity("其他目录-直接构造路径：创建一个目录") {
+                GuideItemEntity("其他目录-直接构造路径：创建一个目录，并在目录下创建一个文件") {
                     val externalRoot = Environment.getExternalStorageDirectory()
                     val imagePath = externalRoot.absolutePath + File.separator + "myDir"
                     LogUtil.d("拼凑出的路径: $imagePath")
@@ -366,6 +366,20 @@ class StorageActivity : AppCompatActivity() {
                     if (!myDirFile.exists()) {
                         myDirFile.mkdirs()
                     }
+
+                    val myFile = File(myDirFile, "createAFile.txt")
+                    val path = myFile.absolutePath
+                    LogUtil.d("要创建的文件路径: $path")
+                    writeFile(path)
+                },
+                GuideItemEntity("其他目录-直接构造路径：读取上面创建的文件中的内容") {
+                    val externalRoot = Environment.getExternalStorageDirectory()
+                    val imagePath = externalRoot.absolutePath + File.separator + "myDir"
+                            LogUtil.d("拼凑出的路径: $imagePath")
+
+                    val myFile = File(imagePath, "createAFile.txt")
+
+                    readFile(myFile.absolutePath)
                 },
             )
         )
