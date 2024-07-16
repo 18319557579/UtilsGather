@@ -3,6 +3,7 @@ package com.example.uioperate.storage
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.R
@@ -171,6 +172,80 @@ class StorageActivity : AppCompatActivity() {
                     val externalCacheDirs = getExternalCacheDirs()
                     for (file in externalCacheDirs) {
                         LogUtil.d("getExternalCacheDirs: ${file.path}")
+                    }
+                    LogUtil.d("\n")
+                },
+                GuideItemEntity("应用自身外部存储的 files 目录下的子目录") {
+                    //会在应用自身外部存储（机身 + sd卡）自动创建 DCIM 目录。下面的都是同理
+                    //  /storage/emulated/0/Android/data/com.example.utilsuser/files/DCIM
+                    //  /storage/7A9A8DFF9A8DB861/Android/data/com.example.utilsuser/files/DCIM
+                    var dcims = getExternalFilesDirs(Environment.DIRECTORY_DCIM)
+                    for (file in dcims) {
+                        LogUtil.d("DIRECTORY_DCIM: ${file.path}")
+                    }
+                    LogUtil.d("\n")
+
+                    //  /storage/emulated/0/Android/data/com.example.utilsuser/files/Music
+                    //  /storage/7A9A8DFF9A8DB861/Android/data/com.example.utilsuser/files/Music
+                    dcims = getExternalFilesDirs(Environment.DIRECTORY_MUSIC )
+                    for (file in dcims) {
+                        LogUtil.d("DIRECTORY_MUSIC: ${file.path}")
+                    }
+                    LogUtil.d("\n")
+
+                    //  /storage/emulated/0/Android/data/com.example.utilsuser/files/Podcasts
+                    //  /storage/7A9A8DFF9A8DB861/Android/data/com.example.utilsuser/files/Podcasts
+                    dcims = getExternalFilesDirs(Environment.DIRECTORY_PODCASTS )
+                    for (file in dcims) {
+                        LogUtil.d("DIRECTORY_PODCASTS : ${file.path}")
+                    }
+                    LogUtil.d("\n")
+
+                    //  /storage/emulated/0/Android/data/com.example.utilsuser/files/Ringtones
+                    //  /storage/7A9A8DFF9A8DB861/Android/data/com.example.utilsuser/files/Ringtones
+                    dcims = getExternalFilesDirs(Environment.DIRECTORY_RINGTONES )
+                    for (file in dcims) {
+                        LogUtil.d("DIRECTORY_RINGTONES : ${file.path}")
+                    }
+                    LogUtil.d("\n")
+
+                    //  /storage/emulated/0/Android/data/com.example.utilsuser/files/Alarms
+                    //  /storage/7A9A8DFF9A8DB861/Android/data/com.example.utilsuser/files/Alarms
+                    dcims = getExternalFilesDirs(Environment.DIRECTORY_ALARMS )
+                    for (file in dcims) {
+                        LogUtil.d("DIRECTORY_ALARMS : ${file.path}")
+                    }
+                    LogUtil.d("\n")
+
+                    //  /storage/emulated/0/Android/data/com.example.utilsuser/files/Notifications
+                    //  /storage/7A9A8DFF9A8DB861/Android/data/com.example.utilsuser/files/Notifications
+                    dcims = getExternalFilesDirs(Environment.DIRECTORY_NOTIFICATIONS )
+                    for (file in dcims) {
+                        LogUtil.d("DIRECTORY_NOTIFICATIONS : ${file.path}")
+                    }
+                    LogUtil.d("\n")
+
+                    //  /storage/emulated/0/Android/data/com.example.utilsuser/files/Pictures
+                    //  /storage/7A9A8DFF9A8DB861/Android/data/com.example.utilsuser/files/Pictures
+                    dcims = getExternalFilesDirs(Environment.DIRECTORY_PICTURES )
+                    for (file in dcims) {
+                        LogUtil.d("DIRECTORY_PICTURES : ${file.path}")
+                    }
+                    LogUtil.d("\n")
+
+                    //  /storage/emulated/0/Android/data/com.example.utilsuser/files/Movies
+                    //  /storage/7A9A8DFF9A8DB861/Android/data/com.example.utilsuser/files/Movies
+                    dcims = getExternalFilesDirs(Environment.DIRECTORY_MOVIES )
+                    for (file in dcims) {
+                        LogUtil.d("DIRECTORY_MOVIES : ${file.path}")
+                    }
+                    LogUtil.d("\n")
+
+                    //  /storage/emulated/0/Android/data/com.example.utilsuser/files/Download
+                    //  /storage/7A9A8DFF9A8DB861/Android/data/com.example.utilsuser/files/Download
+                    dcims = getExternalFilesDirs(Environment.DIRECTORY_DOWNLOADS )
+                    for (file in dcims) {
+                        LogUtil.d("DIRECTORY_DOWNLOADS : ${file.path}")
                     }
                     LogUtil.d("\n")
                 },
