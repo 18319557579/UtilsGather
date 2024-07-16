@@ -331,10 +331,26 @@ class StorageActivity : AppCompatActivity() {
                         }
                     }
                 },
+
+                //这个不需要存储权限
                 GuideItemEntity("共享存储空间-媒体文件-通过SAF访问: 选择一张图片") {
                     val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                         addCategory(Intent.CATEGORY_OPENABLE)
                         setType("image/*")
+                    }
+                    startActivityForResult(intent, theRequestCode)
+                },
+
+                GuideItemEntity("共享存储空间-文档-通过SAF访问：选择一个文档（通过设置mimeTypes）") {
+                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                        setType("*/*")
+                        val mimeTypes = arrayOf("text/html",
+                            "text/css",
+                            "application/javascript",
+                            "application/pdf",
+                            "text/plain",
+                            "application/msword")
+                        putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
                     }
                     startActivityForResult(intent, theRequestCode)
                 },
