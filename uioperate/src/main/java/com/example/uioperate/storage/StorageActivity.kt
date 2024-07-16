@@ -133,7 +133,9 @@ class StorageActivity : AppCompatActivity() {
                 },
                 //调用下面这些方法，是可以自动创建 files 和 data 目录
                 GuideItemEntity("应用自身外部存储的 files + data 目录") {
-                    //例子：storage/emulated/0/Android/media/com.example.utilsuser
+                    //例子：
+                    //  /storage/emulated/0/Android/media/com.example.utilsuser
+                    //  /storage/7A9A8DFF9A8DB861/Android/media/com.example.utilsuser
                     val externalMediaDirs = getExternalMediaDirs()
                     for (file in externalMediaDirs) {
                         LogUtil.d("getExternalMediaDirs: ${file.path}")
@@ -146,6 +148,10 @@ class StorageActivity : AppCompatActivity() {
                     LogUtil.d("getExternalFilesDir: ${externalFilesDir?.path}")
                     LogUtil.d("\n")
 
+                    //应用自身外部存储的 files 目录（包括SD卡）
+                    //例子：
+                    //  /storage/emulated/0/Android/data/com.example.utilsuser/files
+                    //  /storage/7A9A8DFF9A8DB861/Android/data/com.example.utilsuser/files
                     val fileList = getExternalFilesDirs(null)
                     for (file in fileList) {
                         LogUtil.d("getExternalFilesDirs: ${file.path}")
@@ -158,6 +164,10 @@ class StorageActivity : AppCompatActivity() {
                     LogUtil.d("getExternalCacheDir: ${externalCacheDir?.path}")
                     LogUtil.d("\n")
 
+                    //应用自身外部存储的 cache 目录（包括SD卡）
+                    //例子：
+                    //  /storage/emulated/0/Android/data/com.example.utilsuser/cache
+                    //  /storage/7A9A8DFF9A8DB861/Android/data/com.example.utilsuser/cache
                     val externalCacheDirs = getExternalCacheDirs()
                     for (file in externalCacheDirs) {
                         LogUtil.d("getExternalCacheDirs: ${file.path}")
