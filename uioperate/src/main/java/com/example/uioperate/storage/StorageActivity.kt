@@ -131,6 +131,39 @@ class StorageActivity : AppCompatActivity() {
                         LogUtil.d("读取出的内容: $fileContents")
                     }
                 },
+                //调用下面这些方法，是可以自动创建 files 和 data 目录
+                GuideItemEntity("应用自身外部存储的 files + data 目录") {
+                    //例子：storage/emulated/0/Android/media/com.example.utilsuser
+                    val externalMediaDirs = getExternalMediaDirs()
+                    for (file in externalMediaDirs) {
+                        LogUtil.d("getExternalMediaDirs: ${file.path}")
+                    }
+                    LogUtil.d("\n")
+
+                    //应用自身外部存储的 files 目录
+                    //例子：/storage/emulated/0/Android/data/com.example.utilsuser/files
+                    val externalFilesDir = getExternalFilesDir(null)
+                    LogUtil.d("getExternalFilesDir: ${externalFilesDir?.path}")
+                    LogUtil.d("\n")
+
+                    val fileList = getExternalFilesDirs(null)
+                    for (file in fileList) {
+                        LogUtil.d("getExternalFilesDirs: ${file.path}")
+                    }
+                    LogUtil.d("\n")
+
+                    //应用自身外部存储的 cache 目录
+                    //例子：/storage/emulated/0/Android/data/com.example.utilsuser/cache
+                    val externalCacheDir = getExternalCacheDir()
+                    LogUtil.d("getExternalCacheDir: ${externalCacheDir?.path}")
+                    LogUtil.d("\n")
+
+                    val externalCacheDirs = getExternalCacheDirs()
+                    for (file in externalCacheDirs) {
+                        LogUtil.d("getExternalCacheDirs: ${file.path}")
+                    }
+                    LogUtil.d("\n")
+                },
             )
         )
     }
