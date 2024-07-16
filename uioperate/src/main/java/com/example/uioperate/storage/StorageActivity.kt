@@ -1,8 +1,10 @@
 package com.example.uioperate.storage
 
 import android.Manifest
+import android.app.Activity
 import android.content.ContentUris
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -32,11 +34,14 @@ import java.io.FileOutputStream
 import java.io.InputStreamReader
 
 class StorageActivity : AppCompatActivity() {
+    val theRequestCode = 100
+    val ivShow by lazy {
+        findViewById<ImageView>(R.id.iv_show)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_storage)
-
-        val ivShow = findViewById<ImageView>(R.id.iv_show)
 
         GuideSettings.set(
             findViewById(R.id.lv_launcher),
@@ -326,6 +331,13 @@ class StorageActivity : AppCompatActivity() {
                         }
                     }
                 },
+                GuideItemEntity("共享存储空间-媒体文件-通过SAF访问: 选择一张图片") {
+                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                        setType("image/*")
+                    }
+                    startActivityForResult(intent, theRequestCode)
+                },
             )
         )
     }
@@ -365,6 +377,24 @@ class StorageActivity : AppCompatActivity() {
             bos.flush()
             bos.close()
         } catch (e: java.lang.Exception) {
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == theRequestCode) {
+            if (resultCode == Activity.RESULT_OK) {
+                val uri = data!!.data!!
+                LogUtil.d("打印选择的图片的uri：$uri")
+
+                val fis = contentResolver.openInputStream(uri)
+                val bitmap = BitmapFactory.decodeStream(fis)
+                ivShow.setImageBitmap(bitmap)
+
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                LogUtil.d("取消选择")
+            }
         }
     }
 }

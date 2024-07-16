@@ -12,7 +12,7 @@
         android:id="@+id/iv_show"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="center"/>
+        android:scaleType="centerInside"/>
 
     <ListView
         android:id="@+id/lv_launcher"
