@@ -3,10 +3,13 @@ package com.example.uioperate.storage
 import android.Manifest
 import android.app.Activity
 import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -28,9 +31,12 @@ import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.InputStream
 import java.io.InputStreamReader
 
 class StorageActivity : AppCompatActivity() {
@@ -394,8 +400,71 @@ class StorageActivity : AppCompatActivity() {
                     val imagePath = externalRoot.absolutePath + File.separator + "DCIM" + File.separator + "newnewfile.txt"
                     writeFile(imagePath)
                 },
+
+                GuideItemEntity("插入图片到相册中，包括更新数据库与本地文件") {
+                    CoroutineScope(Job()).launch(Dispatchers.IO) {
+                        val inputStream = getImageInputStream(this@StorageActivity, R.drawable.dog)
+                        insert2Album(inputStream, "dog.jpg")
+                    }
+                },
             )
         )
+    }
+
+    fun getImageInputStream(context: Context, drawableId: Int): InputStream {
+        // 获取Resources对象
+        val resources = context.resources
+
+        // 通过资源ID获取Drawable对象
+        val drawable = resources.getDrawable(drawableId, context.theme)
+
+        // 将Drawable转换为Bitmap
+        val bitmap = (drawable as BitmapDrawable).bitmap
+
+        // 创建一个ByteArrayOutputStream
+        val stream = ByteArrayOutputStream()
+
+        // 将Bitmap压缩成PNG格式，100表示不压缩，数据存储到stream中
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+
+        // 使用ByteArrayOutputStream创建ByteArrayInputStream
+        val inputStream = ByteArrayInputStream(stream.toByteArray())
+
+        // 返回InputStream
+        return inputStream
+    }
+
+    //fileName为需要保存到相册的图片名
+    private fun insert2Album(inputStream: InputStream, fileName: String) {
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Images.ImageColumns.DISPLAY_NAME, fileName)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.Images.ImageColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+            } else {
+                val dstPath = Environment.getExternalStorageDirectory().path + File.separator +
+                        Environment.DIRECTORY_PICTURES + File.separator +
+                        fileName
+                put(MediaStore.Images.ImageColumns.DATA, dstPath)
+            }
+        }
+        val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)!!
+        write2File(uri, inputStream)
+    }
+
+    //uri 关联着待写入的文件
+    //inputStream 表示原始的文件流
+    private fun write2File(uri: Uri, inputStream: InputStream) {
+        val outputStream = contentResolver.openOutputStream(uri)!!
+        val inMid = ByteArray(1024)
+
+        var len = inputStream.read(inMid)
+        while (len != -1) {
+            outputStream.write(inMid, 0, len)
+            outputStream.flush()
+            len = inputStream.read(inMid)
+        }
+        inputStream.close()
+        outputStream.close()
     }
 
     //从文件读取（通过字节流）
