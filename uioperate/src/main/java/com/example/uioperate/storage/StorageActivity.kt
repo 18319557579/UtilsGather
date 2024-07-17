@@ -417,6 +417,7 @@ class StorageActivity : AppCompatActivity() {
             }
             fileInputStream.close()
         } catch (e: Exception) {
+            LogUtil.d("读取出错了: $e")
         }
     }
 
@@ -433,6 +434,7 @@ class StorageActivity : AppCompatActivity() {
             bos.flush()
             bos.close()
         } catch (e: java.lang.Exception) {
+            LogUtil.d("写入出错了: $e")
         }
     }
 
