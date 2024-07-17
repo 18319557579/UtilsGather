@@ -438,8 +438,12 @@ class StorageActivity : AppCompatActivity() {
     private fun insert2Album(inputStream: InputStream, fileName: String) {
         val contentValues = ContentValues().apply {
             put(MediaStore.Images.ImageColumns.DISPLAY_NAME, fileName)
+
+            //Android 10.0(含)之后，DATA 被废弃，取而代之的是使用MediaStore.Images.ImageColumns.RELATIVE_PATH，表示相对路径
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 put(MediaStore.Images.ImageColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+
+                //Android 10.0之前，MediaStore.Images.ImageColumns.DATA 字段记录的是图片的绝对路径
             } else {
                 val dstPath = Environment.getExternalStorageDirectory().path + File.separator +
                         Environment.DIRECTORY_PICTURES + File.separator +
