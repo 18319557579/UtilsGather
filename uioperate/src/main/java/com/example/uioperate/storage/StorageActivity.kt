@@ -307,6 +307,16 @@ class StorageActivity : AppCompatActivity() {
                             val imagePath = cursor.getString(dataIndex)
                             LogUtil.d("打印图片路径: $imagePath")
                             bitmap = BitmapFactory.decodeFile(imagePath)
+
+                            //在Android 9 以下，还没有分区存储，路径可以读也可以写
+                            //在Android11及以上，可以用路径来读，但是不可以写
+                            if (bitmap != null) {
+                                LogUtil.d("打印图片信息: $bitmap, width: ${bitmap.width}, height: ${bitmap.height}")
+                            } else {
+
+                                //在Android 10上，如果没有禁用分区存储，且targetsdk >= 28，那么bitmap就为null，因为通过路径获得InputStream会报错
+                                LogUtil.d("bitmap为null imagePath: $imagePath")
+                            }
                         }
 
                         withContext(Dispatchers.Main) {
