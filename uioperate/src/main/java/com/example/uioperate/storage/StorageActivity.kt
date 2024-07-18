@@ -40,7 +40,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 
 class StorageActivity : AppCompatActivity() {
-    val theRequestCode = 100
+    val SAF_CODE = 100
     val ivShow by lazy {
         findViewById<ImageView>(R.id.iv_show)
     }
@@ -355,7 +355,7 @@ class StorageActivity : AppCompatActivity() {
                         addCategory(Intent.CATEGORY_OPENABLE)
                         setType("image/*")
                     }
-                    startActivityForResult(intent, theRequestCode)
+                    startActivityForResult(intent, SAF_CODE)
                 },
 
                 GuideItemEntity("共享存储空间-文档-通过SAF访问：选择一个文档（通过设置mimeTypes）") {
@@ -369,7 +369,7 @@ class StorageActivity : AppCompatActivity() {
                             "application/msword")
                         putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
                     }
-                    startActivityForResult(intent, theRequestCode)
+                    startActivityForResult(intent, SAF_CODE)
                 },
 
                 //外部存储的其他目录需要存储权限
@@ -415,6 +415,20 @@ class StorageActivity : AppCompatActivity() {
                     CoroutineScope(Job()).launch(Dispatchers.IO) {
                         val inputStream = getImageInputStream(this@StorageActivity, R.drawable.dog)
                         insert2Album(inputStream, "dog.jpg")
+                    }
+                },
+
+                /**
+                 * 我发现，除了Android 10 以外，都可以遍历外部存储目录，且无需存储权限
+                 * 而，Android 10 即使给了存储权限，也还是会闪退
+                 */
+                GuideItemEntity("遍历sdcard目录") {
+                    CoroutineScope(Job()).launch(Dispatchers.IO) {
+                        val file = Environment.getExternalStorageDirectory()
+                        val list = file.listFiles()
+                        for (item in list) {
+                            LogUtil.d("fileName: ${item.name}")
+                        }
                     }
                 },
             )
@@ -524,7 +538,7 @@ class StorageActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == theRequestCode) {
+        if (requestCode == SAF_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 val uri = data!!.data!!
                 LogUtil.d("打印选择的图片的uri：$uri")
