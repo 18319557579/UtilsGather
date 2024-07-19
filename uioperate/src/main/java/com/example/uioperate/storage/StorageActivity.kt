@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.Settings
 import android.text.TextUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +42,8 @@ import java.io.InputStreamReader
 
 class StorageActivity : AppCompatActivity() {
     val SAF_CODE = 100
+    val STORAGE_MANAGE_CODE = 101
+
     val ivShow by lazy {
         findViewById<ImageView>(R.id.iv_show)
     }
@@ -431,6 +434,43 @@ class StorageActivity : AppCompatActivity() {
                         }
                     }
                 },
+
+                /**
+                 * 申请了存储权限，但是没有申请存储管理权限
+                 *
+                 * 1.Android10 以下，没问题
+                 * 2.Android10及以上都闪退了
+                 *
+                 *
+                 * 申请了管理存储权限后：
+                 * Android11及以上的设备可以了（Android10压根没有这个权限）
+                 *
+                 */
+                GuideItemEntity("往/sdcard/目录下写入文件") {
+                    val rootFile = Environment.getExternalStorageDirectory()
+                    CoroutineScope(Job()).launch(Dispatchers.IO) {
+                        val file = File(rootFile, "hsfTest.txt")
+                        val fos = FileOutputStream(file)
+                        val content = "hsfTest world!!33"
+                        fos.write(content.toByteArray())
+                        fos.flush()
+                        fos.close()
+                    }
+                },
+
+                //我发现可申请管理存储权限后，可以不用申请管理权限了（猜测是管理存储权限更加高级）
+                GuideItemEntity("申请存储管理权限") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        if (Environment.isExternalStorageManager()) {
+                            LogUtil.d("已有存储管理权限")
+                        } else {
+                            val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                            startActivityForResult(intent, STORAGE_MANAGE_CODE)
+                        }
+                    } else {
+                        LogUtil.d("在Android11以下，还没有这个权限")
+                    }
+                }
             )
         )
     }
@@ -537,18 +577,29 @@ class StorageActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+            SAF_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val uri = data!!.data!!
+                    LogUtil.d("打印选择的图片的uri：$uri")
 
-        if (requestCode == SAF_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                val uri = data!!.data!!
-                LogUtil.d("打印选择的图片的uri：$uri")
+                    val fis = contentResolver.openInputStream(uri)
+                    val bitmap = BitmapFactory.decodeStream(fis)
+                    ivShow.setImageBitmap(bitmap)
 
-                val fis = contentResolver.openInputStream(uri)
-                val bitmap = BitmapFactory.decodeStream(fis)
-                ivShow.setImageBitmap(bitmap)
+                } else if (resultCode == Activity.RESULT_CANCELED) {
+                    LogUtil.d("取消选择")
+                }
+            }
 
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                LogUtil.d("取消选择")
+            STORAGE_MANAGE_CODE -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    if (Environment.isExternalStorageManager()) {
+                        LogUtil.d("访问所有文件权限申请成功")
+                    } else {
+                        LogUtil.d("访问所有文件权限 还是没有")
+                    }
+                }
             }
         }
     }
