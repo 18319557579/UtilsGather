@@ -46,6 +46,8 @@ import java.io.InputStreamReader
 
 
 class StorageActivity : AppCompatActivity() {
+    val WRITE_EXTERNAL_STORAGE_CODE = 10
+
     val SAF_CODE = 100
     val SAF_CODE_DELETE = 101
     val STORAGE_MANAGE_CODE = 1000
@@ -288,7 +290,12 @@ class StorageActivity : AppCompatActivity() {
                     LogUtil.d("\n")
                 },
                 GuideItemEntity("申请存储权限") {
-                    ActivityCompat.requestPermissions(this@StorageActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        LogUtil.d("已经有存储权限了")
+                    } else {
+                        LogUtil.d("没有存储权限")
+                        ActivityCompat.requestPermissions(this@StorageActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_EXTERNAL_STORAGE_CODE)
+                    }
                 },
 
                 GuideItemEntity("共享存储空间-媒体文件-直接构造路径") {
@@ -802,6 +809,22 @@ class StorageActivity : AppCompatActivity() {
                     LogUtil.d("移动到回收站成功")
                 } else {
                     LogUtil.d("移动到回收站失败")
+                }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode) {
+            WRITE_EXTERNAL_STORAGE_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    LogUtil.d("权限已授予")
+                } else {
+                    LogUtil.d("权限没授予")
                 }
             }
         }
