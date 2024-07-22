@@ -290,11 +290,25 @@ class StorageActivity : AppCompatActivity() {
                     LogUtil.d("\n")
                 },
                 GuideItemEntity("申请存储权限") {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                        LogUtil.d("已经有存储权限了")
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED &&
+                            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED &&
+                            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED) {
+                            LogUtil.d("Android13 已经有存储权限了")
+                        } else {
+                            LogUtil.d("Android13 没有存储权限")
+                            ActivityCompat.requestPermissions(this@StorageActivity,
+                                arrayOf(Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_AUDIO),
+                                WRITE_EXTERNAL_STORAGE_CODE)
+                        }
+
                     } else {
-                        LogUtil.d("没有存储权限")
-                        ActivityCompat.requestPermissions(this@StorageActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_EXTERNAL_STORAGE_CODE)
+                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                            LogUtil.d("已经有存储权限了")
+                        } else {
+                            LogUtil.d("没有存储权限")
+                            ActivityCompat.requestPermissions(this@StorageActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_EXTERNAL_STORAGE_CODE)
+                        }
                     }
                 },
 
