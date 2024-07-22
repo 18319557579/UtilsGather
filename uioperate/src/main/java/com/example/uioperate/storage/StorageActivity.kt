@@ -591,6 +591,7 @@ class StorageActivity : AppCompatActivity() {
                 },
 
                 //申请了MANAGE_MEDIA权限后，前面的删除和移动到回收站中将不会弹出确认框
+                //这个权限适配的意义不大，主要用于那些要大量修改媒体文件的情况
                 GuideItemEntity("申请管理媒体权限") {
                     //todo 根本就没有方法可以知道是否授予了管理媒体权限
                     val manageMedia = ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_MEDIA) == PackageManager.PERMISSION_GRANTED
