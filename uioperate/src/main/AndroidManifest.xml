@@ -30,6 +30,8 @@
         <activity
             android:name=".UiOperateEntranceActivity"
             android:exported="false" />
+        <activity android:name=".storage.image_selector.PhotoActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

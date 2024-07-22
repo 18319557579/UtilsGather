@@ -20,6 +20,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.uioperate.R
+import com.example.uioperate.storage.image_selector.PhotoActivity
 import com.example.utilsgather.application_device_info.PackageInfoUtil
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -45,6 +46,7 @@ class StorageActivity : AppCompatActivity() {
     val SAF_CODE = 100
     val SAF_CODE_DELETE = 101
     val STORAGE_MANAGE_CODE = 1000
+    val TO_PHOTOACTIVITY = 2000
 
     val ivShow by lazy {
         findViewById<ImageView>(R.id.iv_show)
@@ -481,6 +483,11 @@ class StorageActivity : AppCompatActivity() {
                     startActivityForResult(intent, SAF_CODE_DELETE)
                 },
 
+                GuideItemEntity("跳转PhotoActivity") {
+                    val intent = Intent(this, PhotoActivity::class.java)
+                    startActivityForResult(intent, TO_PHOTOACTIVITY)
+                },
+
             )
         )
     }
@@ -631,6 +638,12 @@ class StorageActivity : AppCompatActivity() {
                     } else {
                         LogUtil.d("访问所有文件权限 还是没有")
                     }
+                }
+            }
+            TO_PHOTOACTIVITY -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val returnedData = data?.getStringExtra("data_return")
+                    LogUtil.d("打印返回的数据: $returnedData")
                 }
             }
         }
