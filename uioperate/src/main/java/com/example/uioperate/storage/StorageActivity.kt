@@ -40,9 +40,11 @@ import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.InputStreamReader
 
+
 class StorageActivity : AppCompatActivity() {
     val SAF_CODE = 100
-    val STORAGE_MANAGE_CODE = 101
+    val SAF_CODE_DELETE = 101
+    val STORAGE_MANAGE_CODE = 1000
 
     val ivShow by lazy {
         findViewById<ImageView>(R.id.iv_show)
@@ -470,7 +472,15 @@ class StorageActivity : AppCompatActivity() {
                     } else {
                         LogUtil.d("在Android11以下，还没有这个权限")
                     }
-                }
+                },
+                GuideItemEntity("删除一张照片") {
+                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                        setType("image/*")
+                    }
+                    startActivityForResult(intent, SAF_CODE_DELETE)
+                },
+
             )
         )
     }
@@ -588,6 +598,27 @@ class StorageActivity : AppCompatActivity() {
                     val bitmap = BitmapFactory.decodeStream(fis)
                     ivShow.setImageBitmap(bitmap)
 
+                } else if (resultCode == Activity.RESULT_CANCELED) {
+                    LogUtil.d("取消选择")
+                }
+            }
+            SAF_CODE_DELETE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val uri = data!!.data!!
+                    LogUtil.d("打印选择的图片的uri：$uri")
+
+                    /*CoroutineScope(Job()).launch(Dispatchers.IO) {
+                        val deletedNum = contentResolver.delete(uri, null, null)
+                        LogUtil.d("删除的行数: $deletedNum")
+                    }*/
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        // 创建删除请求
+                        val pendingIntent = MediaStore.createDeleteRequest(contentResolver, listOf(uri))
+
+                        // 发送 Intent 提示用户批准删除操作
+                        startIntentSenderForResult(pendingIntent.intentSender, 200, null, 0, 0, 0, null)
+                    }
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     LogUtil.d("取消选择")
                 }
