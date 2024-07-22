@@ -596,7 +596,7 @@ class StorageActivity : AppCompatActivity() {
                     val manageMedia = ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_MEDIA) == PackageManager.PERMISSION_GRANTED
                     LogUtil.d("是否已经授权: $manageMedia")
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) { // Android 11 或更高
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { // Android 12 或更高
                         val intent = Intent(Settings.ACTION_REQUEST_MANAGE_MEDIA)
                         startActivity(intent)
                     }
