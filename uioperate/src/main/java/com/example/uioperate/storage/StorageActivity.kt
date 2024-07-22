@@ -6,6 +6,7 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -19,6 +20,7 @@ import android.text.TextUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.uioperate.R
 import com.example.uioperate.storage.image_selector.PhotoActivity
 import com.example.uioperate.storage.image_selector.SelectionBean
@@ -48,6 +50,7 @@ class StorageActivity : AppCompatActivity() {
     val SAF_CODE_DELETE = 101
     val STORAGE_MANAGE_CODE = 1000
     val TO_PHOTOACTIVITY_DELETE = 2000
+
     val TO_PHOTOACTIVITY_TRASH = 2001
     val TO_PHOTOACTIVITY_BIN = 2002
     val DELETE_CODE = 2100
@@ -586,6 +589,19 @@ class StorageActivity : AppCompatActivity() {
                     intent.putExtra(PhotoActivity.SELECTION_BEAN, selectionBean)
                     startActivityForResult(intent, TO_PHOTOACTIVITY_BIN)
                 },
+
+                //申请了MANAGE_MEDIA权限后，前面的删除和移动到回收站中将不会弹出确认框
+                GuideItemEntity("申请管理媒体权限") {
+                    //todo 根本就没有方法可以知道是否授予了管理媒体权限
+                    val manageMedia = ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_MEDIA) == PackageManager.PERMISSION_GRANTED
+                    LogUtil.d("是否已经授权: $manageMedia")
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) { // Android 11 或更高
+                        val intent = Intent(Settings.ACTION_REQUEST_MANAGE_MEDIA)
+                        startActivity(intent)
+                    }
+
+                },
             )
         )
     }
@@ -718,6 +734,8 @@ class StorageActivity : AppCompatActivity() {
                     }*/
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        //注意，哪怕有了MANAGE_MEDIA权限，这里的删除代码还是要这么写的，只是没有确认框弹出了，系统会默认用户确认
+
                         // 创建删除请求
                         val pendingIntent = MediaStore.createDeleteRequest(contentResolver, listOf(uri))
 
