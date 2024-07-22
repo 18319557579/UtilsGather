@@ -46,8 +46,10 @@ class StorageActivity : AppCompatActivity() {
     val SAF_CODE = 100
     val SAF_CODE_DELETE = 101
     val STORAGE_MANAGE_CODE = 1000
-    val TO_PHOTOACTIVITY = 2000
-    val DELETE_CODE = 2001
+    val TO_PHOTOACTIVITY_DELETE = 2000
+    val TO_PHOTOACTIVITY_TRASH = 2001
+    val DELETE_CODE = 2100
+    val TRASH_CODE = 2101
 
     val ivShow by lazy {
         findViewById<ImageView>(R.id.iv_show)
@@ -484,9 +486,13 @@ class StorageActivity : AppCompatActivity() {
                     startActivityForResult(intent, SAF_CODE_DELETE)
                 },
 
-                GuideItemEntity("跳转PhotoActivity") {
+                GuideItemEntity("跳转PhotoActivity，删除一张图片") {
                     val intent = Intent(this, PhotoActivity::class.java)
-                    startActivityForResult(intent, TO_PHOTOACTIVITY)
+                    startActivityForResult(intent, TO_PHOTOACTIVITY_DELETE)
+                },
+                GuideItemEntity("跳转PhotoActivity，放置到回收站") {
+                    val intent = Intent(this, PhotoActivity::class.java)
+                    startActivityForResult(intent, TO_PHOTOACTIVITY_TRASH)
                 },
 
             )
@@ -643,7 +649,7 @@ class StorageActivity : AppCompatActivity() {
             }
 
             //这里MediaStore中查找出来的图片包括了一张前面插入到其他目录中的小狗
-            TO_PHOTOACTIVITY -> {
+            TO_PHOTOACTIVITY_DELETE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val returnedData = data?.getStringExtra("data_return")
                     val returnedDataUri = data?.getParcelableExtra<Uri>("data_return_uri")
@@ -658,11 +664,34 @@ class StorageActivity : AppCompatActivity() {
                     }
                 }
             }
+            TO_PHOTOACTIVITY_TRASH -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val returnedData = data?.getStringExtra("data_return")
+                    val returnedDataUri = data?.getParcelableExtra<Uri>("data_return_uri")
+                    LogUtil.d("打印返回的数据: $returnedData, Uri: $returnedDataUri")
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        // 创建删除请求
+                        //value值为true代表移入回收站，value值为false代表移出回收站
+                        val pendingIntent = MediaStore.createTrashRequest(contentResolver, listOf(returnedDataUri), false)
+
+                        // 发送 Intent 提示用户批准删除操作
+                        startIntentSenderForResult(pendingIntent.intentSender, TRASH_CODE, null, 0, 0, 0, null)
+                    }
+                }
+            }
             DELETE_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     LogUtil.d("删除成功")
                 } else {
                     LogUtil.d("删除失败")
+                }
+            }
+            TRASH_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    LogUtil.d("移动到回收站成功")
+                } else {
+                    LogUtil.d("移动到回收站失败")
                 }
             }
         }
