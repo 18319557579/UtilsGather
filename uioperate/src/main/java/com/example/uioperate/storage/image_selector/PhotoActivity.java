@@ -23,6 +23,8 @@ import java.util.List;
 
 
 public class PhotoActivity extends AppCompatActivity {
+    public final static String SELECTION_BEAN = "SELECTION_BEAN";
+    private SelectionBean selectionBean;
 
     List<ImageBean> imageBeanList = new ArrayList<>();
 
@@ -34,6 +36,7 @@ public class PhotoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
+        selectionBean = getIntent().getParcelableExtra(SELECTION_BEAN);
 
         myHandler = new MyHandler(this);
 
@@ -79,7 +82,7 @@ public class PhotoActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                imageBeanList = FileUtils.initAllImgInThePhone();
+                imageBeanList = FileUtils.initAllImgInThePhone(selectionBean);
                 myHandler.sendEmptyMessage(MyHandler.SET_LIST);
             }
         }).start();

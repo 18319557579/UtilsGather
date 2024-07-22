@@ -21,26 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtils {
-    public static List<ImageBean> initAllImgInThePhone() {
+    public static List<ImageBean> initAllImgInThePhone(SelectionBean selectionBean) {
 
         List<ImageBean> imgList = new ArrayList<>();
 
-        String[] projection = {
-                MediaStore.Images.Media.DATA,
-                MediaStore.Images.Media.DISPLAY_NAME,
-                MediaStore.Images.Media.SIZE,
-                MediaStore.Images.Media._ID
-        };
-        //全部图片
-        String where = MediaStore.Images.Media.MIME_TYPE + "=? or "
-                + MediaStore.Images.Media.MIME_TYPE + "=? or "
-                + MediaStore.Images.Media.MIME_TYPE + "=?";
-        //指定格式
-        String[] whereArgs = {"image/jpeg", "image/png", "image/jpg"};
-        //查询
         Cursor cursor = ApplicationGlobal.getInstance().getContentResolver().query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, where, whereArgs,
-                MediaStore.Images.Media.DATE_MODIFIED + " desc ");
+                selectionBean.uri, selectionBean.projection, selectionBean.selection, selectionBean.selectionArgs,
+                selectionBean.sortOrder);
         List<String> dateList = new ArrayList<>();//存日期,因为照片按分组
         while (cursor.moveToNext()) {
             byte[] data = cursor.getBlob(cursor.getColumnIndex(MediaStore.Images.Media.DATA));

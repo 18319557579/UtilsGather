@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.uioperate.R
 import com.example.uioperate.storage.image_selector.PhotoActivity
+import com.example.uioperate.storage.image_selector.SelectionBean
 import com.example.utilsgather.application_device_info.PackageInfoUtil
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -48,8 +49,10 @@ class StorageActivity : AppCompatActivity() {
     val STORAGE_MANAGE_CODE = 1000
     val TO_PHOTOACTIVITY_DELETE = 2000
     val TO_PHOTOACTIVITY_TRASH = 2001
+    val TO_PHOTOACTIVITY_BIN = 2002
     val DELETE_CODE = 2100
     val TRASH_CODE = 2101
+
 
     val ivShow by lazy {
         findViewById<ImageView>(R.id.iv_show)
@@ -488,13 +491,101 @@ class StorageActivity : AppCompatActivity() {
 
                 GuideItemEntity("跳转PhotoActivity，删除一张图片") {
                     val intent = Intent(this, PhotoActivity::class.java)
+
+                    //列
+                    val projection = arrayOf(
+                        MediaStore.Images.Media.DATA,
+                        MediaStore.Images.Media.DISPLAY_NAME,
+                        MediaStore.Images.Media.SIZE,
+                        MediaStore.Images.Media._ID
+                    )
+
+                    //全部图片
+                    val where = (MediaStore.Images.Media.MIME_TYPE + "=? or "
+                            + MediaStore.Images.Media.MIME_TYPE + "=? or "
+                            + MediaStore.Images.Media.MIME_TYPE + "=?")
+
+                    //指定格式
+                    val whereArgs = arrayOf("image/jpeg", "image/png", "image/jpg")
+
+                    //排序方式
+                    val sort = MediaStore.Images.Media.DATE_MODIFIED + " desc "
+
+                    val selectionBean = SelectionBean(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        projection,
+                        where,
+                        whereArgs,
+                        sort
+                    )
+
+                    intent.putExtra(PhotoActivity.SELECTION_BEAN, selectionBean)
                     startActivityForResult(intent, TO_PHOTOACTIVITY_DELETE)
                 },
                 GuideItemEntity("跳转PhotoActivity，放置到回收站") {
                     val intent = Intent(this, PhotoActivity::class.java)
+
+                    //列
+                    val projection = arrayOf(
+                        MediaStore.Images.Media.DATA,
+                        MediaStore.Images.Media.DISPLAY_NAME,
+                        MediaStore.Images.Media.SIZE,
+                        MediaStore.Images.Media._ID
+                    )
+
+                    //全部图片
+                    val where = (MediaStore.Images.Media.MIME_TYPE + "=? or "
+                            + MediaStore.Images.Media.MIME_TYPE + "=? or "
+                            + MediaStore.Images.Media.MIME_TYPE + "=?")
+
+                    //指定格式
+                    val whereArgs = arrayOf("image/jpeg", "image/png", "image/jpg")
+
+                    //排序方式
+                    val sort = MediaStore.Images.Media.DATE_MODIFIED + " desc "
+
+                    val selectionBean = SelectionBean(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        projection,
+                        where,
+                        whereArgs,
+                        sort
+                    )
+
+                    intent.putExtra(PhotoActivity.SELECTION_BEAN, selectionBean)
                     startActivityForResult(intent, TO_PHOTOACTIVITY_TRASH)
                 },
+                //我发现查找回收站中的内容，始终为空
+                GuideItemEntity("查找回收站中的内容") {
+                    val intent = Intent(this, PhotoActivity::class.java)
 
+                    //列
+                    val projection = arrayOf(
+                        MediaStore.Images.Media._ID,
+                        MediaStore.Images.Media.DISPLAY_NAME,
+                        MediaStore.Images.Media.IS_TRASHED
+                    )
+
+                    //全部图片
+                    val where = MediaStore.Images.Media.IS_TRASHED + "=?";
+
+                    //指定格式
+                    val whereArgs = arrayOf("1")
+
+                    //排序方式
+                    val sort = null
+
+                    val selectionBean = SelectionBean(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        projection,
+                        where,
+                        whereArgs,
+                        sort
+                    )
+
+                    intent.putExtra(PhotoActivity.SELECTION_BEAN, selectionBean)
+                    startActivityForResult(intent, TO_PHOTOACTIVITY_BIN)
+                },
             )
         )
     }
@@ -673,7 +764,7 @@ class StorageActivity : AppCompatActivity() {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         // 创建删除请求
                         //value值为true代表移入回收站，value值为false代表移出回收站
-                        val pendingIntent = MediaStore.createTrashRequest(contentResolver, listOf(returnedDataUri), false)
+                        val pendingIntent = MediaStore.createTrashRequest(contentResolver, listOf(returnedDataUri), true)
 
                         // 发送 Intent 提示用户批准删除操作
                         startIntentSenderForResult(pendingIntent.intentSender, TRASH_CODE, null, 0, 0, 0, null)
