@@ -25,7 +25,7 @@
             android:id="@+id/btn_upload_rx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="上传"
+            android:text="删除"
             android:layout_alignParentRight="true"/>
 
 

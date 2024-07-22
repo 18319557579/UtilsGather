@@ -47,6 +47,7 @@ class StorageActivity : AppCompatActivity() {
     val SAF_CODE_DELETE = 101
     val STORAGE_MANAGE_CODE = 1000
     val TO_PHOTOACTIVITY = 2000
+    val DELETE_CODE = 2001
 
     val ivShow by lazy {
         findViewById<ImageView>(R.id.iv_show)
@@ -653,8 +654,15 @@ class StorageActivity : AppCompatActivity() {
                         val pendingIntent = MediaStore.createDeleteRequest(contentResolver, listOf(returnedDataUri))
 
                         // 发送 Intent 提示用户批准删除操作
-                        startIntentSenderForResult(pendingIntent.intentSender, 200, null, 0, 0, 0, null)
+                        startIntentSenderForResult(pendingIntent.intentSender, DELETE_CODE, null, 0, 0, 0, null)
                     }
+                }
+            }
+            DELETE_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    LogUtil.d("删除成功")
+                } else {
+                    LogUtil.d("删除失败")
                 }
             }
         }
