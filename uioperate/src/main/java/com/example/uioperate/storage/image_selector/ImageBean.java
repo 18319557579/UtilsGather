@@ -1,5 +1,7 @@
 package com.example.uioperate.storage.image_selector;
 
+import android.net.Uri;
+
 /**
  * Created by cyd on 19-4-11.
  */
@@ -9,6 +11,15 @@ public class ImageBean {
     private String abFilePath;
     private String date;
     private String uilFilePath;
+    private Uri uri;
+
+    public Uri getUri() {
+        return uri;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
+    }
 
     private boolean checked;
     private int index = -1;

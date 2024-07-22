@@ -1,6 +1,8 @@
 package com.example.uioperate.storage.image_selector;
 
+import android.content.ContentUris;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -26,7 +28,8 @@ public class FileUtils {
         String[] projection = {
                 MediaStore.Images.Media.DATA,
                 MediaStore.Images.Media.DISPLAY_NAME,
-                MediaStore.Images.Media.SIZE
+                MediaStore.Images.Media.SIZE,
+                MediaStore.Images.Media._ID
         };
         //全部图片
         String where = MediaStore.Images.Media.MIME_TYPE + "=? or "
@@ -48,6 +51,11 @@ public class FileUtils {
             String dateStr = sdf.format(time); // 2019-04-10
             StringBuffer imgPath = new StringBuffer("file://").append(dataStr);
             ImageBean bean = new ImageBean(dataStr, dateStr, imgPath.toString());
+
+            long id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID));
+            Uri deleteUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
+            bean.setUri(deleteUri);
+
             imgList.add(bean);
             if (!dateList.contains(dateStr)) {
                 dateList.add(dateStr);

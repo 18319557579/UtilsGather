@@ -475,7 +475,7 @@ class StorageActivity : AppCompatActivity() {
                         LogUtil.d("在Android11以下，还没有这个权限")
                     }
                 },
-                GuideItemEntity("删除一张照片") {
+                GuideItemEntity("企图通过SAF删除一张照片") {
                     val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                         addCategory(Intent.CATEGORY_OPENABLE)
                         setType("image/*")
@@ -640,10 +640,21 @@ class StorageActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            //这里MediaStore中查找出来的图片包括了一张前面插入到其他目录中的小狗
             TO_PHOTOACTIVITY -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val returnedData = data?.getStringExtra("data_return")
-                    LogUtil.d("打印返回的数据: $returnedData")
+                    val returnedDataUri = data?.getParcelableExtra<Uri>("data_return_uri")
+                    LogUtil.d("打印返回的数据: $returnedData, Uri: $returnedDataUri")
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        // 创建删除请求
+                        val pendingIntent = MediaStore.createDeleteRequest(contentResolver, listOf(returnedDataUri))
+
+                        // 发送 Intent 提示用户批准删除操作
+                        startIntentSenderForResult(pendingIntent.intentSender, 200, null, 0, 0, 0, null)
+                    }
                 }
             }
         }

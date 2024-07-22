@@ -2,6 +2,7 @@ package com.example.uioperate.storage.image_selector;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,10 +99,17 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
         }
     }
 
-    public String getUri() {
+    public String getAbFilePath() {
         if (choseIndex == -1)
             return null;
 
         return imageBeanList.get(choseIndex).getAbFilePath();
+    }
+
+    public Uri getUri() {
+        if (choseIndex == -1)
+            return null;
+
+        return imageBeanList.get(choseIndex).getUri();
     }
 }

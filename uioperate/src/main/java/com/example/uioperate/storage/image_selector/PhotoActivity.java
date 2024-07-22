@@ -1,12 +1,10 @@
 package com.example.uioperate.storage.image_selector;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,8 +16,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.uioperate.R;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +55,7 @@ public class PhotoActivity extends AppCompatActivity {
         findViewById(R.id.btn_upload_rx).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String filePath = photoAdapter.getUri();
+                String filePath = photoAdapter.getAbFilePath();
                 if (filePath == null) {
                     Toast.makeText(PhotoActivity.this, "你还未选择图片", Toast.LENGTH_SHORT).show();
                     return;
@@ -67,6 +63,7 @@ public class PhotoActivity extends AppCompatActivity {
 
                 Intent intent = new Intent();
                 intent.putExtra("data_return", filePath);
+                intent.putExtra("data_return_uri", photoAdapter.getUri());
                 setResult(RESULT_OK, intent);
                 myHandler.sendEmptyMessage(MyHandler.FINISH_ACTIVITY);
             }
