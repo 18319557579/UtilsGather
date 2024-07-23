@@ -1,6 +1,7 @@
 package com.example.uioperate.storage
 
 import android.Manifest
+import android.R.attr
 import android.app.Activity
 import android.content.ContentUris
 import android.content.ContentValues
@@ -57,6 +58,9 @@ class StorageActivity : AppCompatActivity() {
     val TO_PHOTOACTIVITY_BIN = 2002
     val DELETE_CODE = 2100
     val TRASH_CODE = 2101
+
+    val ANDROID13_PHOTO_SELECTOR_SINGLE = 3000
+    val ANDROID13_PHOTO_SELECTOR_MULTI = 3001
 
 
     val ivShow by lazy {
@@ -624,6 +628,39 @@ class StorageActivity : AppCompatActivity() {
                     }
 
                 },
+
+                GuideItemEntity("手机图片选择器-单选") {
+                    val intent = Intent(MediaStore.ACTION_PICK_IMAGES)
+                    startActivityForResult(intent, ANDROID13_PHOTO_SELECTOR_SINGLE)
+                },
+                GuideItemEntity("手机图片选择器-多选") {
+                    LogUtil.d("最大多选数量: ${MediaStore.getPickImagesMaxLimit()}")
+
+                    val intent = Intent(MediaStore.ACTION_PICK_IMAGES).apply {
+//                        setType("image/*")  //只有图片
+//                        setType("video/*")  //只有视频
+                        setType("image/png")  //只有png图片
+
+                        putExtra(MediaStore.EXTRA_PICK_IMAGES_MAX, 10)
+                    }
+                    startActivityForResult(intent, ANDROID13_PHOTO_SELECTOR_MULTI)
+                },
+
+                //我发现没有方式能够在打开手机图片选择器时，设置两种type，无论是setType("image/png,video/*")，还是下面这种方式都是不可行的
+                GuideItemEntity("手机图片选择器-多选-企图多种形式") {
+                    val intent1 = Intent(MediaStore.ACTION_PICK_IMAGES).apply {
+                        setType("image/png")  //png图片
+                    }
+                    val intent2 = Intent(MediaStore.ACTION_PICK_IMAGES).apply {
+                        setType("video/*")  //视频
+                    }
+                    val chooseIntent = Intent.createChooser(intent1, "22222").apply {
+                        putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(intent2))
+                        putExtra(MediaStore.EXTRA_PICK_IMAGES_MAX, 6)
+                    }
+
+                    startActivityForResult(chooseIntent, ANDROID13_PHOTO_SELECTOR_MULTI)
+                },
             )
         )
     }
@@ -823,6 +860,41 @@ class StorageActivity : AppCompatActivity() {
                     LogUtil.d("移动到回收站成功")
                 } else {
                     LogUtil.d("移动到回收站失败")
+                }
+            }
+
+            ANDROID13_PHOTO_SELECTOR_SINGLE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    LogUtil.d("图片选择器选择 单选 成功")
+
+                    val currentUri: Uri = data?.data!!
+                    LogUtil.d("获得的Uri: $currentUri")
+
+                    val fis = contentResolver.openInputStream(currentUri)
+                    val bitmap = BitmapFactory.decodeStream(fis)
+                    ivShow.setImageBitmap(bitmap)
+
+                } else {
+                    LogUtil.d("图片选择器选择 单选 失败")
+                }
+            }
+            ANDROID13_PHOTO_SELECTOR_MULTI -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    LogUtil.d("图片选择器选择 多选 成功")
+
+                    var lastUri: Uri? = null
+                    for (i in 0 until data?.clipData!!.itemCount) {
+                        val currentUri: Uri = data.clipData!!.getItemAt(i).uri
+                        LogUtil.d("获得的Uri: $currentUri")
+                        lastUri = currentUri
+                    }
+
+                    val fis = contentResolver.openInputStream(lastUri!!)
+                    val bitmap = BitmapFactory.decodeStream(fis)
+                    ivShow.setImageBitmap(bitmap)
+
+                } else {
+                    LogUtil.d("图片选择器选择 多选 失败")
                 }
             }
         }
