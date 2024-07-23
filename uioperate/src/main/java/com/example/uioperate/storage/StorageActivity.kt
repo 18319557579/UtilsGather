@@ -647,7 +647,7 @@ class StorageActivity : AppCompatActivity() {
                 },
 
                 //我发现没有方式能够在打开手机图片选择器时，设置两种type，无论是setType("image/png,video/*")，还是下面这种方式都是不可行的
-                GuideItemEntity("手机图片选择器-多选-企图多种形式") {
+                GuideItemEntity("手机图片选择器-多种形式错误示范") {
                     val intent1 = Intent(MediaStore.ACTION_PICK_IMAGES).apply {
                         setType("image/png")  //png图片
                     }
@@ -660,6 +660,16 @@ class StorageActivity : AppCompatActivity() {
                     }
 
                     startActivityForResult(chooseIntent, ANDROID13_PHOTO_SELECTOR_MULTI)
+                },
+                //上面的方式不对，要使用下面的 putExtra(Intent.EXTRA_MIME_TYPES, XXX)
+                GuideItemEntity("手机图片选择器-多种形式正确示范") {
+                    val intent1 = Intent(MediaStore.ACTION_PICK_IMAGES).apply {
+                        setType("*/*")
+                        putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("video/*", "image/png"))
+                        putExtra(MediaStore.EXTRA_PICK_IMAGES_MAX, 6)
+                    }
+
+                    startActivityForResult(intent1, ANDROID13_PHOTO_SELECTOR_MULTI)
                 },
             )
         )
