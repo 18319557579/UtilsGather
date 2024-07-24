@@ -101,6 +101,11 @@ class StorageActivity : AppCompatActivity() {
                         LogUtil.d("api获得内部存储的应用根目录: ${dataDir.path}")
                     }
 
+                    val files = fileList()
+                    for (file in files) {
+                        LogUtil.d("  遍历files目录: $file")
+                    }
+
                     //该目录不会被备份（避免备份到云端）
                     LogUtil.d("4: ${noBackupFilesDir}")
 
@@ -108,9 +113,7 @@ class StorageActivity : AppCompatActivity() {
                     //没搞清楚什么作用（可能压根就不是内部存储的）
                     LogUtil.d("1: ${packageCodePath}")
                     LogUtil.d("2: ${packageResourcePath}")
-                    LogUtil.d("3: ${obbDirs}")
-                    LogUtil.d("5: ${externalCacheDir}")
-                    LogUtil.d("6: ${externalMediaDirs}")
+                    LogUtil.d("3: ${obbDir}")
                 },
                 GuideItemEntity("写入文件到files目录下") {
                     CoroutineScope(Job()).launch {
