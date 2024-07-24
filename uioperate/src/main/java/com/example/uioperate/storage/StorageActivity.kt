@@ -8,6 +8,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -61,6 +62,9 @@ class StorageActivity : AppCompatActivity() {
 
     val ANDROID13_PHOTO_SELECTOR_SINGLE = 3000
     val ANDROID13_PHOTO_SELECTOR_MULTI = 3001
+
+    val CODE_1 = 4000
+    val CODE_2 = 4001
 
 
     val ivShow by lazy {
@@ -295,16 +299,12 @@ class StorageActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("申请存储权限") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED &&
-                            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED &&
-                            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED) {
+                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED) {
                             LogUtil.d("Android13 已经有存储权限了")
-                        } else {
-                            LogUtil.d("Android13 没有存储权限")
-                            ActivityCompat.requestPermissions(this@StorageActivity,
-                                arrayOf(Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_AUDIO),
-                                WRITE_EXTERNAL_STORAGE_CODE)
                         }
+                        ActivityCompat.requestPermissions(this@StorageActivity,
+                            arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                            WRITE_EXTERNAL_STORAGE_CODE)
 
                     } else {
                         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -671,6 +671,24 @@ class StorageActivity : AppCompatActivity() {
 
                     startActivityForResult(intent1, ANDROID13_PHOTO_SELECTOR_MULTI)
                 },
+
+                GuideItemEntity("单独请求 READ_MEDIA_VISUAL_USER_SELECTED 权限") {
+                    ActivityCompat.requestPermissions(this@StorageActivity,
+                        arrayOf(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED), CODE_1)
+                },
+                GuideItemEntity("同时请求 READ_MEDIA_VISUAL_USER_SELECTED 和 READ_MEDIA_IMAGES 权限") {
+                    ActivityCompat.requestPermissions(this@StorageActivity,
+                        arrayOf(Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED), CODE_2)
+                },
+                GuideItemEntity("检查权限的授予情况") {
+                     val permissionArray = arrayOf(
+                         Manifest.permission.READ_MEDIA_IMAGES,
+                         Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+                     )
+                    for (permission in permissionArray) {
+                        LogUtil.d("$permission 是否授予了: ${ContextCompat.checkSelfPermission(this@StorageActivity, permission) == PERMISSION_GRANTED}")
+                    }
+                },
             )
         )
     }
@@ -921,6 +939,34 @@ class StorageActivity : AppCompatActivity() {
                     LogUtil.d("权限已授予")
                 } else {
                     LogUtil.d("权限没授予")
+                }
+            }
+            CODE_1 -> {
+                val deniedList = ArrayList<String>()
+                for ((index, result) in grantResults.withIndex()) {
+                    if (result != PackageManager.PERMISSION_GRANTED) {
+                        deniedList.add(permissions[index])
+                        LogUtil.d("未授予的权限: ${permissions[index]}")
+                    } else {
+                        LogUtil.d("已授予的权限：${permissions[index]}")
+                    }
+                }
+                if (deniedList.isEmpty()) {
+                    LogUtil.d("所有权限已授予")
+                }
+            }
+            CODE_2 -> {
+                val deniedList = ArrayList<String>()
+                for ((index, result) in grantResults.withIndex()) {
+                    if (result != PackageManager.PERMISSION_GRANTED) {
+                        deniedList.add(permissions[index])
+                        LogUtil.d("未授予的权限: ${permissions[index]}")
+                    } else {
+                        LogUtil.d("已授予的权限：${permissions[index]}")
+                    }
+                }
+                if (deniedList.isEmpty()) {
+                    LogUtil.d("所有权限已授予")
                 }
             }
         }
