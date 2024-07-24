@@ -683,10 +683,18 @@ class StorageActivity : AppCompatActivity() {
                 GuideItemEntity("检查权限的授予情况") {
                      val permissionArray = arrayOf(
                          Manifest.permission.READ_MEDIA_IMAGES,
-                         Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+                         Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED,
+                         Manifest.permission.MANAGE_MEDIA,  //这个权限无法被api检查是否授权了
+                         Manifest.permission.READ_EXTERNAL_STORAGE,
                      )
                     for (permission in permissionArray) {
                         LogUtil.d("$permission 是否授予了: ${ContextCompat.checkSelfPermission(this@StorageActivity, permission) == PERMISSION_GRANTED}")
+                    }
+
+                    if (Environment.isExternalStorageManager()) {
+                        LogUtil.d("授予了 管理存储权限")
+                    } else {
+                        LogUtil.d("没有 管理存储权限")
                     }
                 },
             )
