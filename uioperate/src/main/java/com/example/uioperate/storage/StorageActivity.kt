@@ -16,6 +16,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.storage.StorageManager
+import android.os.storage.StorageManager.ACTION_MANAGE_STORAGE
 import android.provider.MediaStore
 import android.provider.Settings
 import android.text.TextUtils
@@ -47,6 +48,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.util.UUID
 
 
 class StorageActivity : AppCompatActivity() {
@@ -354,6 +356,33 @@ class StorageActivity : AppCompatActivity() {
                     CoroutineScope(Job()).launch {
                         writeFile(file.absolutePath)
                     }
+                },
+                GuideItemEntity("查看可用空间") {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+                        return@GuideItemEntity
+
+                    // App needs 10 TB within internal storage.
+                    val NUM_BYTES_NEEDED_FOR_MY_APP = 1024 * 1024 * 10L * 1024 * 1024;
+
+                    val storageManager: StorageManager = applicationContext.getSystemService(STORAGE_SERVICE) as StorageManager
+                    val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(filesDir)
+                    val availableBytes: Long =
+                        storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
+                    LogUtil.d("可用的空间大小: ${ FormatTransfer.byteFormat(availableBytes) }")
+
+                    if (availableBytes >= NUM_BYTES_NEEDED_FOR_MY_APP) {
+                        storageManager.allocateBytes(
+                            appSpecificInternalDirUuid, NUM_BYTES_NEEDED_FOR_MY_APP)
+                    } else {
+                        val storageIntent = Intent().apply {
+                            // To request that the user remove all app cache files instead, set
+                            // "action" to ACTION_CLEAR_APP_CACHE.
+                            action = ACTION_MANAGE_STORAGE
+                        }
+                        startActivity(storageIntent)
+                    }
+
+
                 },
                 GuideItemEntity("申请存储权限") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
