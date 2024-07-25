@@ -30,6 +30,7 @@ import com.example.uioperate.R
 import com.example.uioperate.storage.image_selector.PhotoActivity
 import com.example.uioperate.storage.image_selector.SelectionBean
 import com.example.utilsgather.application_device_info.PackageInfoUtil
+import com.example.utilsgather.file_system.ExternalStorage
 import com.example.utilsgather.format_trans.FormatTransfer
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -213,8 +214,13 @@ class StorageActivity : AppCompatActivity() {
                         LogUtil.d("读取出的内容: $fileContents")
                     }
                 },
+
+                GuideItemEntity("外部存储可用性检查") {
+                    LogUtil.d("外部存储是否可以读: ${ExternalStorage.isExternalStorageReadable()}")
+                    LogUtil.d("外部存储是否可以读写: ${ExternalStorage.isExternalStorageWritable()}")
+                },
                 //调用下面这些方法，是可以自动创建 files 和 data 目录
-                GuideItemEntity("应用自身外部存储的 files + data 目录") {
+                GuideItemEntity("应用自身外部存储目录") {
                     //例子：
                     //  /storage/emulated/0/Android/media/com.example.utilsuser
                     //  /storage/7A9A8DFF9A8DB861/Android/media/com.example.utilsuser
