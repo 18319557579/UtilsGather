@@ -16,6 +16,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Process
+import android.os.storage.StorageManager
 import android.provider.MediaStore
 import android.provider.Settings
 import android.text.TextUtils
@@ -23,10 +25,12 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import com.example.uioperate.R
 import com.example.uioperate.storage.image_selector.PhotoActivity
 import com.example.uioperate.storage.image_selector.SelectionBean
 import com.example.utilsgather.application_device_info.PackageInfoUtil
+import com.example.utilsgather.format_trans.FormatTransfer
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
@@ -130,6 +134,32 @@ class StorageActivity : AppCompatActivity() {
                         val path = myFile.absolutePath
                         readFile(path)
                     }
+                },
+                GuideItemEntity("操作缓存文件") {
+                    // 获取 StorageManager 实例
+                    val storageManager: StorageManager = getSystemService(STORAGE_SERVICE) as StorageManager
+
+                    // 获取缓存配额
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        val uuid = storageManager.getUuidForPath(cacheDir)
+                        //应用当前可用的缓存空间大小
+                        val cacheQuota = storageManager.getCacheQuotaBytes(uuid)
+                        val formatting = FormatTransfer.byteFormat(cacheQuota)
+                        LogUtil.d("可用的缓存空间大小: $formatting")
+                    }
+
+                    //创建临时文件时，不能明确指定文件的名称，只能指定前缀和后缀（即文件格式）
+                    val tempFile = File.createTempFile("mycacheA", ".tmp", cacheDir)
+                    LogUtil.d("文件名: ${tempFile.name}, 路径: ${tempFile.absolutePath}")
+
+                    val tempFile2 = File.createTempFile("mycacheB", null, cacheDir)
+                    LogUtil.d("文件名: ${tempFile2.name}, 路径: ${tempFile2.absolutePath}")
+                    LogUtil.d("B文件是否删除成功: ${tempFile2.delete()}")
+
+                    val tempFile3 = File.createTempFile("mycacheC", null, cacheDir)
+                    LogUtil.d("文件名: ${tempFile3.name}, 路径: ${tempFile3.absolutePath}")
+                    //原因不详，删不成功
+                    LogUtil.d("C文件是否删除成功: ${deleteFile(tempFile3.name)}")
                 },
                 GuideItemEntity("创建数据库的同时，会产生databases目录") {
                     //这说明数据库目录是自动创建的
