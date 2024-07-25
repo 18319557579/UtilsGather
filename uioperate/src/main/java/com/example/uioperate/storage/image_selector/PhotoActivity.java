@@ -1,5 +1,6 @@
 package com.example.uioperate.storage.image_selector;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +24,12 @@ import java.util.List;
 
 
 public class PhotoActivity extends AppCompatActivity {
+    public static void start(Context context, SelectionBean selectionBean) {
+        Intent intent = new Intent(context, PhotoActivity.class);
+        intent.putExtra(PhotoActivity.SELECTION_BEAN, selectionBean);
+        context.startActivity(intent);
+    }
+
     public final static String SELECTION_BEAN = "SELECTION_BEAN";
     private SelectionBean selectionBean;
 

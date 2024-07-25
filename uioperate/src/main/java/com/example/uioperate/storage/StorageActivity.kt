@@ -12,6 +12,7 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+//import android.icu.util.TimeUnit
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +20,7 @@ import android.os.Environment
 import android.os.storage.StorageManager
 import android.os.storage.StorageManager.ACTION_MANAGE_STORAGE
 import android.provider.MediaStore
+import android.provider.MediaStore.Audio.Media
 import android.provider.Settings
 import android.text.TextUtils
 import android.widget.ImageView
@@ -50,6 +52,7 @@ import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.UUID
+import java.util.concurrent.TimeUnit
 
 
 class StorageActivity : AppCompatActivity() {
@@ -391,23 +394,50 @@ class StorageActivity : AppCompatActivity() {
                     LogUtil.d("freeBytes: ${FormatTransfer.byteFormat(freeBytes)}")
                     LogUtil.d("totalBytes: ${FormatTransfer.byteFormat(totalBytes)}")
                 },
-                GuideItemEntity("申请存储权限") {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED) {
-                            LogUtil.d("Android13 已经有存储权限了")
-                        }
-                        ActivityCompat.requestPermissions(this@StorageActivity,
-                            arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
-                            WRITE_EXTERNAL_STORAGE_CODE)
 
+                GuideItemEntity("企图展示视频") {
+                    val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
                     } else {
-                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                            LogUtil.d("已经有存储权限了")
-                        } else {
-                            LogUtil.d("没有存储权限")
-                            ActivityCompat.requestPermissions(this@StorageActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_EXTERNAL_STORAGE_CODE)
-                        }
+                        MediaStore.Video.Media.EXTERNAL_CONTENT_URI
                     }
+
+                    //列
+                    val projection = arrayOf(
+                        MediaStore.Video.Media._ID,
+                        MediaStore.Video.Media.DISPLAY_NAME,
+                        MediaStore.Video.Media.DURATION,
+                        MediaStore.Video.Media.SIZE
+                    )
+
+                    // Show only videos that are at least 5 minutes in duration.
+                    val selection = "${MediaStore.Video.Media.DURATION} >= ?"
+                    val selectionArgs = arrayOf(
+                        TimeUnit.MILLISECONDS.convert(30, TimeUnit.SECONDS).toString()
+                    )
+
+                    val sortOrder = "${MediaStore.Video.Media.DISPLAY_NAME} ASC"
+
+                    val selectionBean = SelectionBean(
+                        collection,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        sortOrder
+                    )
+
+                    PhotoActivity.start(this@StorageActivity, selectionBean)
+                },
+
+                GuideItemEntity("申请存储权限") {
+                    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+                        ActivityCompat.requestPermissions(this@StorageActivity,
+                            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), CODE_1)
+                        return@GuideItemEntity
+                    }
+
+                    ActivityCompat.requestPermissions(this@StorageActivity,
+                        arrayOf(Manifest.permission.READ_MEDIA_IMAGES), CODE_1)
                 },
 
                 GuideItemEntity("共享存储空间-媒体文件-直接构造路径") {
@@ -776,20 +806,23 @@ class StorageActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("检查权限的授予情况") {
                      val permissionArray = arrayOf(
-                         Manifest.permission.READ_MEDIA_IMAGES,
-                         Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED,
-                         Manifest.permission.MANAGE_MEDIA,  //这个权限无法被api检查是否授权了
                          Manifest.permission.READ_EXTERNAL_STORAGE,
+                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
+
+                         Manifest.permission.READ_MEDIA_IMAGES,
+                         Manifest.permission.READ_MEDIA_VIDEO,
                          Manifest.permission.READ_MEDIA_AUDIO,
+
+                         Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED,
+
+                         Manifest.permission.MANAGE_MEDIA,  //这个权限无法被api检查是否授权了(目前没有任何方法)
                      )
                     for (permission in permissionArray) {
                         LogUtil.d("$permission 是否授予了: ${ContextCompat.checkSelfPermission(this@StorageActivity, permission) == PERMISSION_GRANTED}")
                     }
 
-                    if (Environment.isExternalStorageManager()) {
-                        LogUtil.d("授予了 管理存储权限")
-                    } else {
-                        LogUtil.d("没有 管理存储权限")
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        LogUtil.d("是否授予了管理存储权限：${Environment.isExternalStorageManager()}")
                     }
                 },
 
