@@ -1,7 +1,6 @@
 package com.example.uioperate.storage
 
 import android.Manifest
-import android.R.attr
 import android.app.Activity
 import android.content.ContentUris
 import android.content.ContentValues
@@ -16,7 +15,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.Process
 import android.os.storage.StorageManager
 import android.provider.MediaStore
 import android.provider.Settings
@@ -25,7 +23,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import com.example.uioperate.R
 import com.example.uioperate.storage.image_selector.PhotoActivity
 import com.example.uioperate.storage.image_selector.SelectionBean
@@ -335,6 +332,28 @@ class StorageActivity : AppCompatActivity() {
                         LogUtil.d("DIRECTORY_DOWNLOADS : ${file.path}")
                     }
                     LogUtil.d("\n")
+                },
+
+
+                GuideItemEntity("在外部存储上创建自己的应用专用目录") {
+                    val filesDir = getExternalFilesDir("hsfown")
+                    LogUtil.d("创建目录是否成功: ${filesDir?.mkdir()}")
+                    val filesDir_file = File(filesDir, "under_file.txt");
+                    filesDir_file.createNewFile()
+                    CoroutineScope(Job()).launch {
+                        writeFile(filesDir_file.absolutePath)
+                    }
+
+                    //todo 不知道为什么压根就没有新建，但是返回的结果还说注册成功了，Android 9 都不行
+                    val externalMediaDirs = getExternalMediaDirs()
+                    LogUtil.d("根目录: ${externalMediaDirs[0].absolutePath}")
+                    val dir = File(externalMediaDirs[0], "myown")
+                    LogUtil.d("2创建目录是否成功: ${dir.mkdir()}")
+                    val file = File(dir, "under_file.txt");
+                    file.createNewFile()
+                    CoroutineScope(Job()).launch {
+                        writeFile(file.absolutePath)
+                    }
                 },
                 GuideItemEntity("申请存储权限") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
