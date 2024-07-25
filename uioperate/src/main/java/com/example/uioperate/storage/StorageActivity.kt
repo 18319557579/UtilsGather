@@ -2,6 +2,7 @@ package com.example.uioperate.storage
 
 import android.Manifest
 import android.app.Activity
+import android.app.usage.StorageStatsManager
 import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
@@ -382,7 +383,13 @@ class StorageActivity : AppCompatActivity() {
                         startActivity(storageIntent)
                     }
 
-
+                    //又有两个看可用空间的
+                    val StorageStatsManager: StorageStatsManager = applicationContext.getSystemService(
+                        STORAGE_STATS_SERVICE) as StorageStatsManager
+                    val freeBytes = StorageStatsManager.getFreeBytes(appSpecificInternalDirUuid)
+                    val totalBytes =  StorageStatsManager.getTotalBytes(appSpecificInternalDirUuid)
+                    LogUtil.d("freeBytes: ${FormatTransfer.byteFormat(freeBytes)}")
+                    LogUtil.d("totalBytes: ${FormatTransfer.byteFormat(totalBytes)}")
                 },
                 GuideItemEntity("申请存储权限") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
