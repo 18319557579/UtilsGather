@@ -361,6 +361,15 @@ class MainActivity : CallbackActivity() {
                     val content = "SGVsbG8gSSBhbSBGcm9tIENoaW5hLg==";
                     LogUtil.d("解码后: " + Base64Util.base64Decode(content))
                 },
+                GuideItemEntity("文件长度格式化") {
+                    LogUtil.d("格式化: " + FormatTransfer.byteFormat(123L))
+                    LogUtil.d("格式化: " + FormatTransfer.byteFormat(1234L))
+                    LogUtil.d("格式化: " + FormatTransfer.byteFormat(1234567L))
+                    LogUtil.d("格式化: " + FormatTransfer.byteFormat(1234567890L))
+                    LogUtil.d("格式化: " + FormatTransfer.byteFormat(123456789048484L))
+                    LogUtil.d("格式化: " + FormatTransfer.byteFormat(0L))
+                    LogUtil.d("格式化: " + FormatTransfer.byteFormat(123456789048484848L))
+                },
 
 
                 GuideItemEntity("获得APP信息") {

@@ -1,20 +1,40 @@
 package com.example.utilsgather.format_trans;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FormatTransfer {
-    public static String byteFormat(long bytes) {
-        BigDecimal fileSize = new BigDecimal(bytes);
-        BigDecimal megabyte = new BigDecimal(1024 * 1024);
-        float returnValue = fileSize.divide(megabyte, 2, BigDecimal.ROUND_UP).floatValue();
-        if (returnValue > 1) {
-            return returnValue + "MB";
+    /**
+     * 文件大小格式化
+     * @param size long类型数据
+     * @return B, KB, MB, GB, TB 结尾的字符串
+     */
+    public static String byteFormat(long size) {
+        BigDecimal bytes = new BigDecimal(size);
+        BigDecimal kilobytes = new BigDecimal(1024);
+        if (bytes.compareTo(kilobytes) < 0) {
+            return bytes + " B";  //Bytes
         }
-        BigDecimal kilobyte = new BigDecimal(1024);
-        returnValue = fileSize.divide(kilobyte, 2, BigDecimal.ROUND_UP).floatValue();
-        return returnValue + "KB";
+
+        BigDecimal megabytes = kilobytes.multiply(kilobytes);
+        if (bytes.compareTo(megabytes) < 0) {
+            //除以KB，保留2位小数，小数四舍五入
+            return bytes.divide(kilobytes, 2, RoundingMode.HALF_UP) + " KB";  //Kilobytes
+        }
+
+        BigDecimal gigabytes = kilobytes.multiply(megabytes);
+        if (bytes.compareTo(gigabytes) < 0) {
+            return bytes.divide(megabytes, 2, RoundingMode.HALF_UP) + " MB";  //Megabytes
+        }
+
+        BigDecimal teraByte = kilobytes.multiply(gigabytes);
+        if (bytes.compareTo(teraByte) < 0) {
+            return bytes.divide(gigabytes, 2, RoundingMode.HALF_UP) + " GB";  //Gigabytes
+        }
+
+        return bytes.divide(teraByte, 2, RoundingMode.HALF_UP) + " TB";  //TeraByte
     }
 
     /**
