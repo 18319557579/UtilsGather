@@ -429,6 +429,17 @@ class StorageActivity : AppCompatActivity() {
                     PhotoActivity.start(this@StorageActivity, selectionBean)
                 },
 
+                //如果有内存卡的话，会看到除了external_primary以外的其他卷
+                GuideItemEntity("查看存储卷") {
+                    val volumeNames: Set<String> = MediaStore.getExternalVolumeNames(this@StorageActivity)
+                    val iii = volumeNames.iterator()
+                    while(iii.hasNext()) {
+                        val firstVolumeName = iii.next()
+                        LogUtil.d("卷: $firstVolumeName")
+                    }
+                },
+
+
                 GuideItemEntity("申请存储权限") {
                     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
                         ActivityCompat.requestPermissions(this@StorageActivity,
