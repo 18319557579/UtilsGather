@@ -13,49 +13,56 @@ public class CallbackActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         LogUtil.d("Daisy", canonicalName + " 回调onCreate");
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
         LogUtil.d("Daisy", canonicalName + " 回调onResume");
+        super.onResume();
+
     }
 
     @Override
     protected void onStart() {
-        super.onStart();
         LogUtil.d("Daisy", canonicalName + " 回调onStart");
+        super.onStart();
+
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
         LogUtil.d("Daisy", canonicalName + " 回调onPause");
+        super.onPause();
+
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
         LogUtil.d("Daisy", canonicalName + " 回调onStop");
+        super.onStop();
+
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         LogUtil.d("Daisy", canonicalName + " 回调onDestroy");
+        super.onDestroy();
+
     }
 
     @Override
     protected void onRestart() {
-        super.onRestart();
         LogUtil.d("Daisy", canonicalName + " 回调onRestart");
+        super.onRestart();
+
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
         LogUtil.d("Daisy", canonicalName + " 回调onNewIntent");
+        super.onNewIntent(intent);
+
     }
 }
