@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.utilsgather.logcat.LogUtil;
 
-public class CallbackActivity extends AppCompatActivity {
+public class LifecycleLogActivity extends AppCompatActivity {
     protected final String canonicalName = getClass().getCanonicalName();
 
     @Override

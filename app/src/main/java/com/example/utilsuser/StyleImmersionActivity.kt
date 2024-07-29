@@ -8,14 +8,14 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.ListView
 
-import com.example.utilsgather.lifecycle_callback.CallbackActivity
+import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 
 /**
  * 配合style使用的Activity，但效果还是不佳
  */
-class StyleImmersionActivity : CallbackActivity() {
+class StyleImmersionActivity : LifecycleLogActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_immersion)

@@ -9,7 +9,7 @@ import android.view.WindowManager
 import android.widget.ListView
 
 import com.example.utilsuser.kt_room.KtRoomActivity
-import com.example.utilsgather.lifecycle_callback.CallbackActivity
+import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.ui.immersion.ImmersionUtil
@@ -17,7 +17,7 @@ import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsgather.ui.status.OtherStatusBarUtil
 
 
-class TestImmersionActivity : CallbackActivity() {
+class TestImmersionActivity : LifecycleLogActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_immersion)

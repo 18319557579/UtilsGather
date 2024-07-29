@@ -23,7 +23,7 @@ import com.example.utilsgather.exit.ExitUtil
 import com.example.utilsgather.format_trans.FormatTransfer
 import com.example.utilsgather.handler.HandlerUI
 import com.example.utilsgather.jump.JumpActivityUtils
-import com.example.utilsgather.lifecycle_callback.CallbackActivity
+import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
@@ -41,7 +41,6 @@ import com.example.utilsgather.string.InfoFromURI
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsuser.coroutine.CoroutineActivity
-import com.example.utilsuser.coroutine.flow.FlowActivity
 import com.example.utilsuser.databinding.ActivityMainBinding
 import com.example.utilsuser.delegate.DelegateActivity
 import com.example.utilsuser.file.FileActivity
@@ -96,7 +95,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class MainActivity : CallbackActivity() {
+class MainActivity : LifecycleLogActivity() {
     var mainBinding: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
