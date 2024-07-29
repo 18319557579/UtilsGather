@@ -15,7 +15,7 @@ class AppleFragment : LifecycleLogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        LogUtil.d("Daisy", "$canonicalName 回调 onCreateView")
+        onCreateViewCalled()
         return inflater.inflate(R.layout.fragment_static_load, container, false)
     }
 }

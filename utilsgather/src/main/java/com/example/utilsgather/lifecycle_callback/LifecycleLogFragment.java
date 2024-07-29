@@ -17,74 +17,113 @@ public class LifecycleLogFragment extends Fragment {
 
     @Override
     public void onAttach(@NonNull Context context) {
-        LogUtil.d("Daisy", canonicalName + " 回调 onAttach");
+        onAttachCalled();
         super.onAttach(context);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        LogUtil.d("Daisy", canonicalName + " 回调 onCreate");
+        onCreateCalled();
         super.onCreate(savedInstanceState);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LogUtil.d("Daisy", canonicalName + " 回调 onCreateView");
+        onCreateViewCalled();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        LogUtil.d("Daisy", canonicalName + " 回调 onViewCreated");
+        onViewCreatedCalled();
         super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        LogUtil.d("Daisy", canonicalName + " 回调 onActivityCreated");
+        onActivityCreatedCalled();
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public void onStart() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onStart");
+        onStartCalled();
         super.onStart();
     }
 
     @Override
     public void onResume() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onResume");
+        onResumeCalled();
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onPause");
+        onPauseCalled();
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onStop");
+        onStopCalled();
         super.onStop();
     }
 
     @Override
     public void onDestroyView() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onDestroyView");
+        onDestroyViewCalled();
         super.onDestroyView();
     }
 
     @Override
     public void onDestroy() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onDestroy");
+        onDestroyCalled();
         super.onDestroy();
     }
 
     @Override
     public void onDetach() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onDetach");
+        onDetachCalled();
         super.onDetach();
+    }
+
+    //如果子类继承 LifecycleLogFragment 时，有些方法不super的话，那么日志就打印不了了。所以就要手动调用下面这些方法了：
+
+    protected void onAttachCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onAttach");
+    }
+    protected void onCreateCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onCreate");
+    }
+    protected void onCreateViewCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onCreateView");
+    }
+    protected void onViewCreatedCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onViewCreated");
+    }
+    protected void onActivityCreatedCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onActivityCreated");
+    }
+    protected void onStartCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onStart");
+    }
+    protected void onResumeCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onResume");
+    }
+    protected void onPauseCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onPause");
+    }
+    protected void onStopCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onStop");
+    }
+    protected void onDestroyViewCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onDestroyView");
+    }
+    protected void onDestroyCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onDestroy");
+    }
+    protected void onDetachCalled() {
+        LogUtil.d("Daisy", canonicalName + " 回调 onDetach");
     }
 }
