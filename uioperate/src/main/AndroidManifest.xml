@@ -17,6 +17,9 @@
 
     <application android:networkSecurityConfig="@xml/network_security_config">
         <activity
+            android:name=".fragment.communication.ZooActivity"
+            android:exported="false" />
+        <activity
             android:name=".fragment.DynamicLoadActivity"
             android:exported="false" />
         <activity

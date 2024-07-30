@@ -2,14 +2,11 @@ package com.example.uioperate.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.example.uioperate.R
+import com.example.uioperate.fragment.communication.ZooActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
-import com.example.utilsgather.logcat.LogUtil
 
 
 class FragmentRouterActivity : AppCompatActivity() {
@@ -25,6 +22,9 @@ class FragmentRouterActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("动态加载Fragment") {
                     startActivity(Intent(this, DynamicLoadActivity::class.java))
+                },
+                GuideItemEntity("测试Fragment的通信") {
+                    startActivity(Intent(this, ZooActivity::class.java))
                 }
             )
         )

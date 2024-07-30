@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.communication.ZooActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_bulletin_board"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@android:color/holo_green_dark"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_fish"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="这是当前的告示："/>
+
+        <TextView
+            android:id="@+id/tv_board_cotent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_start_acrobatics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始杂技表演"/>
+
+        <Button
+            android:id="@+id/btn_start_aquashow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始水上表演"/>
+
+    </LinearLayout>
+
+
+    <fragment
+        android:id="@+id/fragment_fish"
+        android:name="com.example.uioperate.fragment.communication.FishFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintVertical_weight="1"
+
+        app:layout_constraintTop_toTopOf="@id/ll_bulletin_board"
+        app:layout_constraintBottom_toTopOf="@id/fragment_monkey"/>
+
+    <fragment
+        android:id="@+id/fragment_monkey"
+        android:name="com.example.uioperate.fragment.communication.MonkeyFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintVertical_weight="1"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_fish"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+</LinearLayout>
