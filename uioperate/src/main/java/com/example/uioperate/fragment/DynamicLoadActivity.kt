@@ -19,7 +19,10 @@ class DynamicLoadActivity : LifecycleLogActivity() {
     lateinit var rlMain: FrameLayout
 
     val oneFragment by lazy {
-        BananaFragment("一万")
+        BananaFragment("一万", "one")
+    }
+    val twoFragment by lazy {
+        BananaFragment("两万", "two")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,26 +42,33 @@ class DynamicLoadActivity : LifecycleLogActivity() {
 
                 //重复添加会报错闪退
                 GuideItemEntity("add") {
-                    addFragment(oneFragment)
+                    addFragment(twoFragment)
                 },
 
                 //本质上调用View.setVisibility(GONE)，不会回调Fragment 生命周期中的方法。
                 GuideItemEntity("hide") {
-                    hideFragment(oneFragment)
+                    hideFragment(twoFragment)
                 },
 
                 //本质上调用View.setVisibility(VISIBLE) 不会回调Fragment 生命周期中的方法。
                 GuideItemEntity("show") {
-                    showFragment(oneFragment)
+                    showFragment(twoFragment)
                 },
 
                 //将Fragment 从Activity 中移除，实际上是将Fragment 关联的View 从ViewTree中移除，但还在回退栈中
                 GuideItemEntity("detach") {
-                    detachFragment(oneFragment)
+                    detachFragment(twoFragment)
                 },
 
+                //除了将Fragment 从Activity 中移除，还将Fragment从回退栈里移除。
                 GuideItemEntity("remove") {
-                    removeFragment(oneFragment)
+                    removeFragment(twoFragment)
+                },
+
+                //效果同 remove + add
+                //测试replace，最好不要先调用add，出发你就是想测试add后，也使用replace的情况
+                GuideItemEntity("replace") {
+                    replaceFragment(twoFragment)
                 }
             )
         )
@@ -68,7 +78,6 @@ class DynamicLoadActivity : LifecycleLogActivity() {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.add(R.id.rl_main, fragment)
-//        transaction.addToBackStack("hsf")
         if (isCommitNow) {
             transaction.commitNow()
         } else {
@@ -101,6 +110,13 @@ class DynamicLoadActivity : LifecycleLogActivity() {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.remove(fragment)
+        transaction.commit()
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.rl_main, fragment)
         transaction.commit()
     }
 

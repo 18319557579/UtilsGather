@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.uioperate.R
 import com.example.utilsgather.lifecycle_callback.LifecycleLogFragment
 
-class BananaFragment(val desc: String) : LifecycleLogFragment() {
+class BananaFragment(val desc: String, tag: String? = null) : LifecycleLogFragment(tag) {
 
     lateinit var tvShow: TextView
 

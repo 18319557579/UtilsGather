@@ -13,7 +13,17 @@ import androidx.fragment.app.Fragment;
 import com.example.utilsgather.logcat.LogUtil;
 
 public class LifecycleLogFragment extends Fragment {
-    protected final String canonicalName = getClass().getCanonicalName();
+//    protected final String canonicalName = getClass().getCanonicalName();
+
+    //如果打印的日志需要tag前缀，使用有参的构造函数
+    private String tag;
+    public LifecycleLogFragment(String tag) {
+        this.tag = tag;
+    }
+
+    //如果打印的日志不需要tag前缀，使用无参的构造函数
+    public LifecycleLogFragment() {}
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -90,40 +100,49 @@ public class LifecycleLogFragment extends Fragment {
 
     //如果子类继承 LifecycleLogFragment 时，有些方法不super的话，那么日志就打印不了了。所以就要手动调用下面这些方法了：
 
+    private String getPrefix() {
+        String canonicalName = getClass().getCanonicalName();
+        if (tag == null) {
+            return canonicalName;
+        } else {
+            return canonicalName + "-" + tag;
+        }
+    }
+
     protected void onAttachCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onAttach");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onAttach");
     }
     protected void onCreateCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onCreate");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onCreate");
     }
     protected void onCreateViewCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onCreateView");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onCreateView");
     }
     protected void onViewCreatedCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onViewCreated");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onViewCreated");
     }
     protected void onActivityCreatedCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onActivityCreated");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onActivityCreated");
     }
     protected void onStartCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onStart");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onStart");
     }
     protected void onResumeCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onResume");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onResume");
     }
     protected void onPauseCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onPause");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onPause");
     }
     protected void onStopCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onStop");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onStop");
     }
     protected void onDestroyViewCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onDestroyView");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onDestroyView");
     }
     protected void onDestroyCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onDestroy");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onDestroy");
     }
     protected void onDetachCalled() {
-        LogUtil.d("Daisy", canonicalName + " 回调 onDetach");
+        LogUtil.d("Daisy", getPrefix() + " 回调 onDetach");
     }
 }
