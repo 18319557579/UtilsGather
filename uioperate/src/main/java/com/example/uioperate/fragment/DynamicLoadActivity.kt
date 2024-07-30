@@ -60,6 +60,10 @@ class DynamicLoadActivity : LifecycleLogActivity() {
                     detachFragment(twoFragment)
                 },
 
+                GuideItemEntity("attach") {
+                    attachFragment(twoFragment)
+                },
+
                 //除了将Fragment 从Activity 中移除，还将Fragment从回退栈里移除。
                 GuideItemEntity("remove") {
                     removeFragment(twoFragment)
@@ -103,6 +107,13 @@ class DynamicLoadActivity : LifecycleLogActivity() {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.detach(fragment)
+        transaction.commit()
+    }
+
+    fun attachFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.attach(fragment)
         transaction.commit()
     }
 
