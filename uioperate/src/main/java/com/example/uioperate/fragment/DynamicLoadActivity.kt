@@ -1,12 +1,7 @@
 package com.example.uioperate.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.FrameLayout
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.uioperate.R
@@ -19,10 +14,20 @@ class DynamicLoadActivity : LifecycleLogActivity() {
     lateinit var rlMain: FrameLayout
 
     val oneFragment by lazy {
-        BananaFragment("一万", "one")
+        BananaFragment().apply {
+            setFragmentTag("one")
+            arguments = Bundle().apply {
+                putString(ARG_PARAM_DESC, "一万")
+            }
+        }
     }
     val twoFragment by lazy {
-        BananaFragment("两万", "two")
+        BananaFragment().apply {
+            setFragmentTag("two")
+            arguments = Bundle().apply {
+                putString(ARG_PARAM_DESC, "两万")
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

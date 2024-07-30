@@ -24,6 +24,9 @@ public class LifecycleLogFragment extends Fragment {
     //如果打印的日志不需要tag前缀，使用无参的构造函数
     public LifecycleLogFragment() {}
 
+    protected void setTag(String tag) {
+        this.tag = tag;
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
