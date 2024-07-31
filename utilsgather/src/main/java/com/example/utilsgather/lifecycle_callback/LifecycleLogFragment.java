@@ -13,16 +13,9 @@ import androidx.fragment.app.Fragment;
 import com.example.utilsgather.logcat.LogUtil;
 
 public class LifecycleLogFragment extends Fragment {
-//    protected final String canonicalName = getClass().getCanonicalName();
 
     //如果打印的日志需要tag前缀，使用有参的构造函数
     private String tag;
-    public LifecycleLogFragment(String tag) {
-        this.tag = tag;
-    }
-
-    //如果打印的日志不需要tag前缀，使用无参的构造函数
-    public LifecycleLogFragment() {}
 
     protected void setTag(String tag) {
         this.tag = tag;
