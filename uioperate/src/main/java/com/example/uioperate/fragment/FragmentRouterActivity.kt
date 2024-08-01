@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.R
 import com.example.uioperate.fragment.communication.ZooActivity
+import com.example.uioperate.fragment.function_cache.FunctionCacheActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 
@@ -25,6 +26,9 @@ class FragmentRouterActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("测试Fragment的通信") {
                     startActivity(Intent(this, ZooActivity::class.java))
+                },
+                GuideItemEntity("测试Fragment的通信，使用 function cache") {
+                    startActivity(Intent(this, FunctionCacheActivity::class.java))
                 }
             )
         )
