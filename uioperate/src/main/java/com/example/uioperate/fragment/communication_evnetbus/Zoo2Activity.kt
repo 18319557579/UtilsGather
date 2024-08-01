@@ -2,12 +2,8 @@ package com.example.uioperate.fragment.communication_evnetbus
 
 import android.os.Bundle
 import android.widget.Button
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.uioperate.R
-import com.example.uioperate.fragment.communication.MonkeyWork
 import com.example.utilsgather.logcat.LogUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -43,18 +39,16 @@ class Zoo2Activity : AppCompatActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
-        if (event.type != MessageEvent.EventType.ZOO_TO_ZOO)
-            return
         LogUtil.d("动物园收到的通知，详情: $event, 所在线程: ${Thread.currentThread()}")
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    fun onMessageEvent(event: MonkeyCall) {
+    fun onMessageEvent(event: MonkeyCallZoo) {
         LogUtil.d("收到猴子的通知，详情: $event, 所在线程: ${Thread.currentThread()}")
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    fun onMessageEvent(event: FishCall) {
+    fun onMessageEvent(event: FishCallZoo) {
         LogUtil.d("收到鱼的通知，详情: $event, 所在线程: ${Thread.currentThread()}")
     }
 }

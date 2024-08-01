@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.example.uioperate.R
-import com.example.uioperate.fragment.communication.MonkeyCallFish
 import com.example.utilsgather.lifecycle_callback.LifecycleLogFragment
 import com.example.utilsgather.logcat.LogUtil
 import org.greenrobot.eventbus.EventBus
@@ -26,11 +25,11 @@ class MonkeyFragment2 : LifecycleLogFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<Button>(R.id.btn_call).setOnClickListener {
-            EventBus.getDefault().post(MonkeyCall("我要喝水啦"))
-            EventBus.getDefault().post(MonkeyCall("我要撒尿啦"))
+            EventBus.getDefault().post(MonkeyCallZoo("我要喝水啦"))
+            EventBus.getDefault().post(MonkeyCallZoo("我要撒尿啦"))
         }
         view.findViewById<Button>(R.id.btn_call_fish).setOnClickListener {
-
+            EventBus.getDefault().post(MonkeyCallFish(654321))
         }
     }
 
