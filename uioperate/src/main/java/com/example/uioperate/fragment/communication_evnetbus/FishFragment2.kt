@@ -46,8 +46,17 @@ class FishFragment2 : LifecycleLogFragment() {
         LogUtil.d("动物园通知鱼表演了，详情: $event, 所在线程: ${Thread.currentThread()}")
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    //以下三个方法接收同样的事件类型，所以都会回调，以此可以更细粒度地控制线程、优先级
+    @Subscribe(threadMode = ThreadMode.ASYNC, priority = 3)
     fun onMessageEvent(event: MonkeyCallFish) {
-        LogUtil.d("通知了鱼，详情: $event, 所在线程: ${Thread.currentThread()}")
+        LogUtil.d("通知了鱼1，详情: $event, 所在线程: ${Thread.currentThread()}")
+    }
+    @Subscribe(threadMode = ThreadMode.POSTING, priority = 2)
+    fun onMessageEvent2(event: MonkeyCallFish) {
+        LogUtil.d("通知了鱼2，详情: $event, 所在线程: ${Thread.currentThread()}")
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND, priority = 3)
+    fun onMessageEvent3(event: MonkeyCallFish) {
+        LogUtil.d("通知了鱼3，详情: $event, 所在线程: ${Thread.currentThread()}")
     }
 }
