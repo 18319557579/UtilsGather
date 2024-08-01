@@ -21,7 +21,7 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.My
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_horizontal_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_horizontal_item_daisy, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
         holder.btnItem.setOnClickListener(v -> {
             datas[holder.getBindingAdapterPosition()].getRunnable().run();
