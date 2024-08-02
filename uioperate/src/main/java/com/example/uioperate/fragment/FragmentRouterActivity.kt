@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.R
 import com.example.uioperate.fragment.communication.ZooActivity
 import com.example.uioperate.fragment.communication_evnetbus.Zoo2Activity
+import com.example.uioperate.fragment.communication_viewmodel.Zoo3Activity
 import com.example.uioperate.fragment.function_cache.FunctionCacheActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -33,6 +34,9 @@ class FragmentRouterActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("测试Fragment的通信，使用 EventBus") {
                     startActivity(Intent(this, Zoo2Activity::class.java))
+                },
+                GuideItemEntity("测试Fragment的通信，使用 ViewModel") {
+                    startActivity(Intent(this, Zoo3Activity::class.java))
                 }
             )
         )
