@@ -17,7 +17,7 @@ public class LifecycleLogFragment extends Fragment {
     //如果打印的日志需要tag前缀，使用有参的构造函数
     private String tag;
 
-    protected void setTag(String tag) {
+    protected final void setTag(String tag) {
         this.tag = tag;
     }
 
@@ -105,40 +105,43 @@ public class LifecycleLogFragment extends Fragment {
         }
     }
 
-    protected void onAttachCalled() {
+    /*
+    规范父类的方式，使得不需要被重写的方法使用final修饰，这样子类重写父类的方法时，就看不到这些方法了，避免误重写
+     */
+    protected final void onAttachCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onAttach");
     }
-    protected void onCreateCalled() {
+    protected final void onCreateCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onCreate");
     }
-    protected void onCreateViewCalled() {
+    protected final void onCreateViewCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onCreateView");
     }
-    protected void onViewCreatedCalled() {
+    protected final void onViewCreatedCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onViewCreated");
     }
-    protected void onActivityCreatedCalled() {
+    protected final void onActivityCreatedCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onActivityCreated");
     }
-    protected void onStartCalled() {
+    protected final void onStartCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onStart");
     }
-    protected void onResumeCalled() {
+    protected final void onResumeCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onResume");
     }
-    protected void onPauseCalled() {
+    protected final void onPauseCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onPause");
     }
-    protected void onStopCalled() {
+    protected final void onStopCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onStop");
     }
-    protected void onDestroyViewCalled() {
+    protected final void onDestroyViewCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onDestroyView");
     }
-    protected void onDestroyCalled() {
+    protected final void onDestroyCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onDestroy");
     }
-    protected void onDetachCalled() {
+    protected final void onDetachCalled() {
         LogUtil.d("Daisy", getPrefix() + " 回调 onDetach");
     }
 }
