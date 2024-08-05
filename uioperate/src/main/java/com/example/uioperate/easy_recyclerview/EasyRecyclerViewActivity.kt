@@ -32,8 +32,8 @@ class EasyRecyclerViewActivity : AppCompatActivity() {
                 GuideItemEntity("两种类型") {
                     startActivity(Intent(this, TwoTypeActivity::class.java))
                 },
-                GuideItemEntity("") {
-
+                GuideItemEntity("ViewPager2使用fast-list") {
+                    startActivity(Intent(this, ViewPager2Activity::class.java))
                 },
             )
         )
