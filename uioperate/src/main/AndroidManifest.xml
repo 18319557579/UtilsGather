@@ -26,6 +26,10 @@
             android:name=".easy_recyclerview.OneTypeActivity"
             android:exported="false" />
         <activity
+            android:name=".easy_recyclerview.MyOneTypeActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".easy_recyclerview.EasyRecyclerViewActivity"
             android:exported="false" />
         <activity

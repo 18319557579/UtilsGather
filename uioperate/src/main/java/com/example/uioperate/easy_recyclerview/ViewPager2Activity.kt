@@ -2,13 +2,10 @@ package com.example.uioperate.easy_recyclerview
 
 import android.os.Bundle
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.uioperate.R
+
 import com.list.rados.fast_list.bind
 
 class ViewPager2Activity : AppCompatActivity() {
