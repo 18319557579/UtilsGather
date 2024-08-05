@@ -17,9 +17,59 @@ class OneTypeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_one_type)
 
-        val list = mutableListOf(Item("fast", 1), Item("recycler", 2), Item("view", 1))
+        val list = mutableListOf(
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),
+            Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1),Item("fast", 1),
+            Item("recycler", 2),
+            Item("view", 1)
+        )
 
-        findViewById<RecyclerView>(R.id.rv_content).bind(list, R.layout.recycler_item_easy) { it : Item, position: Int ->
+        findViewById<RecyclerView>(R.id.rv_content).bind(
+            list,
+            R.layout.recycler_item_easy
+        ) { it: Item, position: Int ->
             findViewById<TextView>(R.id.tv_content).text = it.value
         }
 
