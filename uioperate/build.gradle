@@ -52,4 +52,6 @@ dependencies {
     // https://mvnrepository.com/artifact/androidx.fragment/fragment-ktx
     implementation 'androidx.fragment:fragment-ktx:1.6.2'
 
+    implementation 'bg.devlabs.fastlist:fast-list:1.4'
+
 }
