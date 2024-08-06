@@ -28,6 +28,9 @@
         <activity
             android:name=".easy_recyclerview.MyOneTypeActivity"
             android:exported="false" />
+        <activity
+            android:name=".easy_recyclerview.self_optimize.OptimizeActivity"
+            android:exported="false" />
 
         <activity
             android:name=".easy_recyclerview.EasyRecyclerViewActivity"

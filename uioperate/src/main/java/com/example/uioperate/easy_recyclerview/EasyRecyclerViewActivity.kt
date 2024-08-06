@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.R
+import com.example.uioperate.easy_recyclerview.self_optimize.OptimizeActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 
@@ -24,8 +25,11 @@ class EasyRecyclerViewActivity : AppCompatActivity() {
                 GuideItemEntity("ViewPager2使用fast-list") {
                     startActivity(Intent(this, ViewPager2Activity::class.java))
                 },
-                GuideItemEntity("优化后，只有一种类型") {
+                GuideItemEntity("ViewHolder优化，只有一种类型") {
                     startActivity(Intent(this, MyOneTypeActivity::class.java))
+                },
+                GuideItemEntity("缓存优化，只有一种类型") {
+                    startActivity(Intent(this, OptimizeActivity::class.java))
                 },
             )
         )
