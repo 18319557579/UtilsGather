@@ -15,7 +15,18 @@ import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 
 import java.security.InvalidKeyException;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -25,8 +36,14 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class CryptologyActivity extends AppCompatActivity {
     String plainText = "abcd123黄绍飞";
+
     String originKey = "11525949";  // 提供原始秘钥:长度64位,8字节
     String base64Encipher = null;
+
+    public static String RSA_ALGORITHM = "RSA";
+    byte[] RSA_publicKey = null;
+    byte[] RSA_privateKey = null;
+    byte[] encryptByPrivateKeyData = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,42 +107,104 @@ public class CryptologyActivity extends AppCompatActivity {
                         }
                     }
                 }),
-                new GuideItemEntity("DES加密", new Runnable() {
+                new GuideItemEntity("RSA 生成密钥", new Runnable() {
                     @Override
                     public void run() {
-
+                        try {
+                            createKeys();
+                        } catch (NoSuchAlgorithmException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }),
-                new GuideItemEntity("DES加密", new Runnable() {
+                new GuideItemEntity("RSA 私钥加密", new Runnable() {
                     @Override
                     public void run() {
+                        try {
+                            encryptByPrivateKeyData = encryptByPrivateKey(plainText.getBytes(), RSA_privateKey);
+                            LogUtil.d("RSA 私钥加密: " + Base64.encodeToString(encryptByPrivateKeyData, Base64.DEFAULT));
 
+                        } catch (NoSuchAlgorithmException e) {
+                            throw new RuntimeException(e);
+                        } catch (InvalidKeySpecException e) {
+                            throw new RuntimeException(e);
+                        } catch (NoSuchPaddingException e) {
+                            throw new RuntimeException(e);
+                        } catch (InvalidKeyException e) {
+                            throw new RuntimeException(e);
+                        } catch (IllegalBlockSizeException e) {
+                            throw new RuntimeException(e);
+                        } catch (BadPaddingException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }),
-                new GuideItemEntity("DES加密", new Runnable() {
+                new GuideItemEntity("RSA 公钥解密", new Runnable() {
                     @Override
                     public void run() {
+                        try {
+                            byte[] plaintext = decryptByPublicKey(encryptByPrivateKeyData, RSA_publicKey);
+                            LogUtil.d("RSA 公钥解密: " + new String(plaintext));
 
-                    }
-                }),
-                new GuideItemEntity("DES加密", new Runnable() {
-                    @Override
-                    public void run() {
 
-                    }
-                }),
-                new GuideItemEntity("DES加密", new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                }),
-                new GuideItemEntity("DES加密", new Runnable() {
-                    @Override
-                    public void run() {
-
+                        } catch (NoSuchAlgorithmException e) {
+                            throw new RuntimeException(e);
+                        } catch (InvalidKeySpecException e) {
+                            throw new RuntimeException(e);
+                        } catch (IllegalBlockSizeException e) {
+                            throw new RuntimeException(e);
+                        } catch (BadPaddingException e) {
+                            throw new RuntimeException(e);
+                        } catch (NoSuchPaddingException e) {
+                            throw new RuntimeException(e);
+                        } catch (InvalidKeyException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }),
         });
+    }
+
+    private void createKeys() throws NoSuchAlgorithmException {
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSA_ALGORITHM);
+        keyPairGenerator.initialize(1024);  //1024位的密钥长度
+
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+
+        RSA_publicKey = publicKey.getEncoded();
+        RSA_privateKey = privateKey.getEncoded();
+
+        LogUtil.d("公钥(Base64编码): " + Base64.encodeToString(RSA_publicKey, Base64.DEFAULT));
+        LogUtil.d("私钥(Base64编码): " + Base64.encodeToString(RSA_privateKey, Base64.DEFAULT));
+    }
+
+    /**
+     * 私钥加密
+     */
+    public static byte[] encryptByPrivateKey(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(key);
+        KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
+        //生成私钥
+        PrivateKey privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec);
+        //数据加密
+        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+        return cipher.doFinal(data);
+    }
+
+    /**
+     * 公钥解密
+     */
+    public static byte[] decryptByPublicKey(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
+        KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
+        X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(key);
+        //产生公钥
+        PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
+        //数据解密
+        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        cipher.init(Cipher.DECRYPT_MODE, publicKey);
+        return cipher.doFinal(data);
     }
 }
