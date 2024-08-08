@@ -11,6 +11,7 @@ import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -225,55 +226,119 @@ public class CryptologyActivity extends AppCompatActivity {
      * 私钥加密
      */
     public static byte[] encryptByPrivateKey(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(key);
+        /*PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(key);
         KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
         //生成私钥
         PrivateKey privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec);
         //数据加密
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(Cipher.ENCRYPT_MODE, privateKey);
-        return cipher.doFinal(data);
+        return cipher.doFinal(data);*/
+
+        Key theKey = getKeyFromByteArray(key, 1);
+        return encryptionOrDecryption(data, theKey, 0);
     }
 
     /**
      * 公钥解密
      */
     public static byte[] decryptByPublicKey(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
-        KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
+        /*KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
         X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(key);
         //产生公钥
         PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
         //数据解密
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(Cipher.DECRYPT_MODE, publicKey);
-        return cipher.doFinal(data);
+        return cipher.doFinal(data);*/
+
+        Key theKey = getKeyFromByteArray(key, 0);
+        return encryptionOrDecryption(data, theKey, 1);
     }
 
     /**
      * 公钥加密
      */
     public static byte[] encryptByPublicKey(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
+        /*KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
         X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(key);
         //产生公钥
         PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
 
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        return cipher.doFinal(data);
+        return cipher.doFinal(data);*/
+
+        Key theKey = getKeyFromByteArray(key, 0);
+        return encryptionOrDecryption(data, theKey, 0);
     }
 
     /**
      * 私钥解密
      */
     public static byte[] decryptByPrivateKey(byte[] data,byte[] key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException {
-        PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(key);
+        /*PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(key);
         KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
         //生成私钥
         PrivateKey privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec);
         //数据解密
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        return cipher.doFinal(data);*/
+
+        Key theKey = getKeyFromByteArray(key, 1);
+        return encryptionOrDecryption(data, theKey, 1);
+    }
+
+    /**
+     * 将字节数组转为密钥
+     * @param key 密钥的 byte[] 形式
+     * @param keyType 0代表公钥，1代表私钥
+     * @return
+     */
+    public static Key getKeyFromByteArray(byte[] key, int keyType) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
+        Key theKey = null;
+
+        switch (keyType) {
+            case 0:
+                X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(key);
+                //产生公钥
+                PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
+                theKey = publicKey;
+                break;
+
+            case 1:
+                PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(key);
+                PrivateKey privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec);
+                theKey = privateKey;
+                break;
+        }
+
+        return theKey;
+    }
+
+    /**
+     * 加密或解密
+     * @param data 如果是加密的，就是明文；如果是解密的h话，就是密文
+     * @param key 公钥或者私钥
+     * @param type 0代表加密，1代表解密
+     * @return
+     */
+    public static byte[] encryptionOrDecryption(byte[] data, Key key, int type) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
+        //数据解密
+        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+
+        switch (type) {
+            case 0:
+                cipher.init(Cipher.ENCRYPT_MODE, key);
+                break;
+            case 1:
+                cipher.init(Cipher.DECRYPT_MODE, key);
+                break;
+        }
+
         return cipher.doFinal(data);
     }
 }
