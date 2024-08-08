@@ -41,6 +41,7 @@ import com.example.utilsgather.string.InfoFromURI
 import com.example.utilsgather.thread.ThreadUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsuser.coroutine.CoroutineActivity
+import com.example.utilsuser.cryptology.CryptologyActivity
 import com.example.utilsuser.databinding.ActivityMainBinding
 import com.example.utilsuser.delegate.DelegateActivity
 import com.example.utilsuser.file.FileActivity
@@ -455,6 +456,10 @@ class MainActivity : LifecycleLogActivity() {
                 },
                 GuideItemEntity("跳转到 CoroutineActivity") {
                     val intent = Intent(this@MainActivity, CoroutineActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("加解密") {
+                    val intent = Intent(this@MainActivity, CryptologyActivity::class.java)
                     startActivity(intent)
                 },
             )

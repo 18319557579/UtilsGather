@@ -10,10 +10,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-<!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
 
-    <!--第三种方法 android:requestLegacyExternalStorage="true" 可禁用分区存储-->
-    <!--在Android 11会忽略该字段，强制开启分区存储，该字段也不怎么靠谱。-->
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -24,6 +21,9 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".cryptology.CryptologyActivity"
+            android:exported="false" />
+        <activity
             android:name=".coroutine.state_flow.StateFlowActivity2"
             android:exported="false" />
         <activity
@@ -32,7 +32,6 @@
         <activity
             android:name=".coroutine.state_flow.SharedFlowActivityClick"
             android:exported="false" />
-
         <activity
             android:name=".coroutine.flow_operator.FlowOperatorActivity"
             android:exported="false" />
