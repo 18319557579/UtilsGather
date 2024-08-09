@@ -15,6 +15,7 @@ import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -216,7 +217,31 @@ public class CryptologyActivity extends AppCompatActivity {
                         LogUtil.d("1字节: " + Base64.encodeToString(data_1_byte, Base64.DEFAULT));
                     }
                 }),
+                new GuideItemEntity("md5 加密", new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String md5 = md5(plainText.getBytes());
+                            LogUtil.d("md5加密前：" + plainText);
+                            LogUtil.d("md5加密后：" + md5);
+                        } catch (NoSuchAlgorithmException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }),
         });
+    }
+
+    public static String md5(byte[] sourceData) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] md5 = md.digest(sourceData);  //md5编码后的数据为128位，16个字节
+
+        // 将处理后的字节转成 16 进制，由于1个字节存储2位16进制字符，所以得到最终 32 个字符
+        StringBuilder sb = new StringBuilder();
+        for (byte b : md5) {
+            sb.append(String.format("%02x", b));  //转为十六进制，位数为2位数字，如果不足2位则前面补0
+        }
+        return sb.toString();
     }
 
     private void createKeys() throws NoSuchAlgorithmException {
