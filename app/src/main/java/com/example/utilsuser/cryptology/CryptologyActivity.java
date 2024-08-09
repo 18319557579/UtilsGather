@@ -24,6 +24,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.StringTokenizer;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -224,6 +225,21 @@ public class CryptologyActivity extends AppCompatActivity {
                             String md5 = md5(plainText.getBytes());
                             LogUtil.d("md5加密前：" + plainText);
                             LogUtil.d("md5加密后：" + md5);
+                        } catch (NoSuchAlgorithmException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }),
+                new GuideItemEntity("md5 加密，加盐", new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String salt = "fix_hello_28";
+                            String addSalt = plainText + salt;
+
+                            String md5 = md5(addSalt.getBytes());
+                            LogUtil.d("md5加密前：" + plainText);
+                            LogUtil.d("md5加密后（加盐）：" + md5);
                         } catch (NoSuchAlgorithmException e) {
                             throw new RuntimeException(e);
                         }
