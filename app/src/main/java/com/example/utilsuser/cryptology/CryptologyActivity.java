@@ -203,6 +203,19 @@ public class CryptologyActivity extends AppCompatActivity {
                         }
                     }
                 }),
+                new GuideItemEntity("base64 编码，剩余字节数的三种情况", new Runnable() {
+                    @Override
+                    public void run() {
+                        byte[] data_3_byte = { (byte) 0xfa, (byte) 0x7b, (byte) 0x12 };
+                        LogUtil.d("三字节: " + Base64.encodeToString(data_3_byte, Base64.DEFAULT));
+
+                        byte[] data_2_byte = { (byte) 0xF3, (byte) 0x27};
+                        LogUtil.d("2字节: " + Base64.encodeToString(data_2_byte, Base64.DEFAULT));
+
+                        byte[] data_1_byte = { (byte) 0xF3};
+                        LogUtil.d("1字节: " + Base64.encodeToString(data_1_byte, Base64.DEFAULT));
+                    }
+                }),
         });
     }
 
