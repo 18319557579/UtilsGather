@@ -245,16 +245,56 @@ public class CryptologyActivity extends AppCompatActivity {
                         }
                     }
                 }),
+
+                new GuideItemEntity("SHA 加密", new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                           String SHA_1 = "SHA-1";
+                           String SHA_224 = "SHA-224";
+                           String SHA_256 = "SHA-256";
+                           String SHA_384 = "SHA-384";
+                           String SHA_512 = "SHA-512";
+
+                           LogUtil.d("SHA-1 加密: " + sha(plainText.getBytes(), SHA_1));
+                           LogUtil.d("SHA-224 加密: " + sha(plainText.getBytes(), SHA_224));
+                           LogUtil.d("SHA-256 加密: " + sha(plainText.getBytes(), SHA_256));
+                           LogUtil.d("SHA-384 加密: " + sha(plainText.getBytes(), SHA_384));
+                           LogUtil.d("SHA-512 加密: " + sha(plainText.getBytes(), SHA_512));
+                        } catch (NoSuchAlgorithmException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }),
         });
     }
 
+    /**
+     * 将源数据进行sha散列加密，返回十六进制字符串
+     * @param sourceData 源数据
+     * @param algorithm sha算法的种类
+     */
+    public static String sha(byte[] sourceData, String algorithm) throws NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
+        messageDigest.update(sourceData);
+        byte[] shaResult = messageDigest.digest();
+        return byteArray2Hex(shaResult);
+    }
+
+    //对字节数组进行md5，并返回十六进制的字符串
     public static String md5(byte[] sourceData) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         byte[] md5 = md.digest(sourceData);  //md5编码后的数据为128位，16个字节
+        return byteArray2Hex(md5);
+    }
 
+    /**
+     * 将字节数组转为十六进制字符串
+     */
+    private static String byteArray2Hex(byte[] bytes) {
         // 将处理后的字节转成 16 进制，由于1个字节存储2位16进制字符，所以得到最终 32 个字符
         StringBuilder sb = new StringBuilder();
-        for (byte b : md5) {
+        for (byte b : bytes) {
             sb.append(String.format("%02x", b));  //转为十六进制，位数为2位数字，如果不足2位则前面补0
         }
         return sb.toString();
