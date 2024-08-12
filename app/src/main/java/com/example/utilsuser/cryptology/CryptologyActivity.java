@@ -278,7 +278,7 @@ public class CryptologyActivity extends AppCompatActivity {
         MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
         messageDigest.update(sourceData);
         byte[] shaResult = messageDigest.digest();
-        return byteArray2Hex(shaResult);
+        return byteArray2Hex_Second(shaResult);
     }
 
     //对字节数组进行md5，并返回十六进制的字符串
@@ -296,6 +296,25 @@ public class CryptologyActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
             sb.append(String.format("%02x", b));  //转为十六进制，位数为2位数字，如果不足2位则前面补0
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 将字节数组转为十六进制字符串
+     */
+    private static String byteArray2Hex_Second(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            // 首先将每个字节与 0xFF 进行位与操作以消除负数效应
+            int value = b & 0xFF;
+            // 使用 Integer.toHexString 转换为十六进制
+            String hex = Integer.toHexString(value);
+            // 确保每个字节转换后都是两位数
+            if (hex.length() < 2) {
+                sb.append('0');
+            }
+            sb.append(hex);
         }
         return sb.toString();
     }
