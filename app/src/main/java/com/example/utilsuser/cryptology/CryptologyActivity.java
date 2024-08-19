@@ -1,5 +1,6 @@
 package com.example.utilsuser.cryptology;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 
@@ -10,6 +11,9 @@ import com.example.utilsgather.list_guide.GuideSettings;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyFactory;
@@ -264,6 +268,75 @@ public class CryptologyActivity extends AppCompatActivity {
                         } catch (NoSuchAlgorithmException e) {
                             throw new RuntimeException(e);
                         }
+                    }
+                }),
+
+                //也可以使用GBK、GB2312的编码
+                new GuideItemEntity("URL编码，解码", new Runnable() {
+                    @Override
+                    public void run() {
+                        String originUrl = "https://www.baidu.com/sss#section2?wd=马龙";
+                        LogUtil.d("URL原文: " + originUrl);
+
+                        String encoded = null;
+                        try {
+                            encoded = URLEncoder.encode(originUrl, "UTF-8");
+                            LogUtil.d("URL编码后: " + encoded);
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        String decoded = null;
+                        try {
+                            decoded = URLDecoder.decode(encoded, "UTF-8");
+                            LogUtil.d("URL解码后: " + decoded);
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }),
+                new GuideItemEntity("URL编码。value中包含保留字符（Java手动拼凑）", new Runnable() {
+                    @Override
+                    public void run() {
+                        // http://www.baidu.com/index?name=hsf&country=cn&age=23。这里的name实际上是hsf&country=cn
+                        String base = "http://www.baidu.com/index?";
+                        String name_key = "name";
+                        String name_value = "hsf&country=cn";
+                        String age_key = "age";
+                        String age_value = "23";
+
+                        String encodedNameValue;
+                        try {
+                            encodedNameValue = URLEncoder.encode(name_value, "UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        String fullURL = base +
+                                name_key + "="  + encodedNameValue + "&" +
+                                age_key + "=" + age_value;
+                        LogUtil.d("URL编码后: " + fullURL);
+                    }
+                }),
+                new GuideItemEntity("URL编码，解码。value中包含保留字符（Android的Uri类）", new Runnable() {
+                    @Override
+                    public void run() {
+                        // http://www.baidu.com/index?name=hsf&country=cn&age=23。这里的name实际上是hsf&country=cn
+                        Uri uri = new Uri.Builder()
+                                .scheme("http")
+                                .authority("www.baidu.com")
+                                .appendPath("index")
+                                .appendQueryParameter("name", "hsf&country=cn")
+                                .appendQueryParameter("age", "23")
+                                .build();
+                        String encodedUrl = uri.toString();
+                        LogUtil.d("URL编码后: " + encodedUrl);
+
+                        Uri parseUri = Uri.parse(encodedUrl);
+                        String name = parseUri.getQueryParameter("name");
+                        String age = parseUri.getQueryParameter("age");
+                        LogUtil.d("name: " + name);
+                        LogUtil.d("age: " + age);
                     }
                 }),
         });
