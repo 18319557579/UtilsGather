@@ -17,6 +17,9 @@
 
     <application android:networkSecurityConfig="@xml/network_security_config">
         <activity
+            android:name=".custom_qiujuer.CustomQiujuerActivity"
+            android:exported="false" />
+        <activity
             android:name=".easy_recyclerview.ViewPager2Activity"
             android:exported="false" />
         <activity
@@ -31,7 +34,6 @@
         <activity
             android:name=".easy_recyclerview.self_optimize.OptimizeActivity"
             android:exported="false" />
-
         <activity
             android:name=".easy_recyclerview.EasyRecyclerViewActivity"
             android:exported="false" />
