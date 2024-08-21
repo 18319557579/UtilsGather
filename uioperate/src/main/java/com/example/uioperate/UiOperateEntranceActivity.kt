@@ -3,6 +3,7 @@ package com.example.uioperate
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.uioperate.custom_qiujuer.MoocBezierActivity
 import com.example.uioperate.custom_qiujuer.CustomQiujuerActivity
 import com.example.uioperate.databinding.ActivityUiOperateEntranceBinding
 import com.example.uioperate.easy_recyclerview.EasyRecyclerViewActivity
@@ -42,6 +43,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("跳转 自定义View Qiujuer") {
                 startActivity(Intent(this, CustomQiujuerActivity::class.java))
+            },
+            GuideItemEntity("跳转 BezierActivity") {
+                startActivity(Intent(this, MoocBezierActivity::class.java))
             },
         ))
     }
