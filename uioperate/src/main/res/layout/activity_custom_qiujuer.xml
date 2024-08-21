@@ -13,4 +13,8 @@
         android:layout_height="wrap_content"
         android:background="#80FF7D7D"/>
 
+    <com.example.uioperate.custom_qiujuer.BezierTest
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>
