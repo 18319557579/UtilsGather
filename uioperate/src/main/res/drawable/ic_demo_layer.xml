@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--写在后面的后绘制-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap android:src="@mipmap/christmas"/>
+    </item>
+
+    <item>
+        <shape>
+            <solid android:color="#96ff4444"/>
+        </shape>
+    </item>
+</layer-list>

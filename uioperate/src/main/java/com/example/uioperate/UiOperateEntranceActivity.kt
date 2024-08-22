@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.custom_qiujuer.MoocBezierActivity
 import com.example.uioperate.custom_qiujuer.CustomQiujuerActivity
+import com.example.uioperate.custom_qiujuer.DrawableTestActivity
 import com.example.uioperate.databinding.ActivityUiOperateEntranceBinding
 import com.example.uioperate.easy_recyclerview.EasyRecyclerViewActivity
 import com.example.uioperate.fragment.FragmentRouterActivity
@@ -46,6 +47,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("跳转 BezierActivity") {
                 startActivity(Intent(this, MoocBezierActivity::class.java))
+            },
+            GuideItemEntity("跳转 DrawableTestActivity") {
+                startActivity(Intent(this, DrawableTestActivity::class.java))
             },
         ))
     }
