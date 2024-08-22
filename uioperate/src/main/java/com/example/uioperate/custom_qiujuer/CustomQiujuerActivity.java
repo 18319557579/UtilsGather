@@ -39,6 +39,9 @@ public class CustomQiujuerActivity extends AppCompatActivity {
                             float progress = moveSize >= MOVE_TOUCH_MAX_Y ? 1 : moveSize / MOVE_TOUCH_MAX_Y;
                             mTouchFullView.setProgress(progress);
                         }
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        mTouchFullView.release();
                 }
 
                 return false;
