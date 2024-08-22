@@ -2,9 +2,11 @@ package com.example.uioperate.custom_qiujuer;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -14,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.animation.PathInterpolatorCompat;
 
+import com.example.uioperate.R;
 import com.example.utilsgather.logcat.LogUtil;
 
 public class TouchFullView extends View {
@@ -45,27 +48,44 @@ public class TouchFullView extends View {
     private Interpolator mProgressInterpolator = new DecelerateInterpolator();
     private Interpolator mTangentAngleInterpolator;
 
+    private Drawable mContent = null;
+    private int mContentMargin = 0;
+
     public TouchFullView(Context context) {
         super(context);
-        init();
+        init(null);
     }
 
     public TouchFullView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(attrs);
     }
 
     public TouchFullView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(attrs);
     }
 
     public TouchFullView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
+        init(attrs);
     }
 
-    private void init() {
+    private void init(AttributeSet attrs) {
+        final Context context = getContext();
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TouchPullView, 0, 0);
+        int color = array.getColor(R.styleable.TouchPullView_pColor, 0xFFFF0000);
+        mCircleRadius = array.getDimension(R.styleable.TouchPullView_pRadius, mCircleRadius);
+        mDragHeight = array.getDimensionPixelOffset(R.styleable.TouchPullView_pDragHeight, mDragHeight);
+        mTargetAngle = array.getInteger(R.styleable.TouchPullView_pTangentAngle, mTargetAngle);
+        mTargetWidth = array.getDimensionPixelOffset(R.styleable.TouchPullView_pTargetWidth, mTargetWidth);
+        mTargetGravityHeight = array.getDimensionPixelOffset(R.styleable.TouchPullView_pTargetGravityHeight, mTargetGravityHeight);
+
+        mContent = array.getDrawable(R.styleable.TouchPullView_pContentDrawable);
+        mContentMargin = array.getDimensionPixelOffset(R.styleable.TouchPullView_pContentDrawableMargin, mContentMargin);
+
+        array.recycle();
+
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
         // 设置抗锯齿
         p.setAntiAlias(true);
@@ -73,7 +93,7 @@ public class TouchFullView extends View {
         p.setDither(true);
         // 设置为填充方式
         p.setStyle(Paint.Style.FILL);
-        p.setColor(0xFFFF4081);
+        p.setColor(color);
         mCirclePaint = p;
 
         // 初始化路径部分画笔
@@ -81,13 +101,15 @@ public class TouchFullView extends View {
         p.setAntiAlias(true);
         p.setDither(true);
         p.setStyle(Paint.Style.FILL);
-        p.setColor(0xFFFF4081);
+        p.setColor(color);
         mPathPaint = p;
 
+        // 切角路径插值器
         mTangentAngleInterpolator = PathInterpolatorCompat.create(
                 (mCircleRadius * 2.0f) / mDragHeight,
                 90.0f / mTargetAngle
         );
+
 
     }
 
@@ -103,6 +125,13 @@ public class TouchFullView extends View {
         canvas.drawPath(mPath, mPathPaint);
 
         canvas.drawCircle(mCirclePointX, mCirclePointY, mCircleRadius, mCirclePaint);
+
+        Drawable drawable = mContent;
+        if (drawable != null) {
+            canvas.save();
+            canvas.clipRect(drawable.getBounds());
+            drawable.draw(canvas);
+        }
 
         canvas.restoreToCount(count);
     }
@@ -223,6 +252,27 @@ public class TouchFullView extends View {
         path.lineTo(cPointX + (cPointX - lEndPointX), lEndPointY);
         // 画右边的贝赛尔曲线
         path.quadTo(cPointX + cPointX - lControlPointX, lControlPointY, w, 0);
+
+        // 更新内容部分Drawable
+        updateContentLayout(cPointX, cPointY, cRadius);
+    }
+
+    /**
+     * 对内容部分进行测量并设置
+     * @param cx
+     * @param cy
+     * @param radius
+     */
+    private void updateContentLayout(float cx, float cy, float radius) {
+        Drawable drawable = mContent;
+        if (drawable != null) {
+            int margin = mContentMargin;
+            int l = (int) (cx - radius + margin);
+            int r = (int) (cx + radius - margin);
+            int t = (int) (cy - radius + margin);
+            int b = (int) (cy + radius - margin);
+            drawable.setBounds(l, t, r, b);
+        }
     }
 
     // 通过 起始值、结束值、当前进度，来获得当前值

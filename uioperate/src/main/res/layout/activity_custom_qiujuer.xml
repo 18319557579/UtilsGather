@@ -11,6 +11,15 @@
         android:id="@+id/touchFull"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#80FF7D7D"/>
+        android:background="#80FF7D7D"
+
+        app:pContentDrawable="@drawable/ic_draw_circle"
+        app:pContentDrawableMargin="2dp"
+        app:pDragHeight="100dp"
+        app:pColor="@android:color/holo_orange_dark"
+        app:pRadius="20dp"
+        app:pTangentAngle="110"
+        app:pTargetGravityHeight="4dp"
+        app:pTargetWidth="200dp"/>
 
 </RelativeLayout>
