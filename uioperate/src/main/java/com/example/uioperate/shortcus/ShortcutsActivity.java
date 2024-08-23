@@ -111,6 +111,14 @@ public class ShortcutsActivity extends AppCompatActivity {
                         addShortCutAbove26(ShortcutsActivity.this, "fixed_scan", "固定扫描", R.mipmap.uioperate_settings_fixed, null);
                     }
                 }),
+
+                // 既可以查出来前面 静态添加/动态添加 的然后用户拖到桌面的快捷方式，也可以查到固定的快捷方式
+                new GuideItemEntity("查看已固定到桌面的快捷方式", new Runnable() {
+                    @Override
+                    public void run() {
+                        showPinnedShortcuts(ShortcutsActivity.this);
+                    }
+                }),
         });
     }
 
@@ -180,5 +188,18 @@ public class ShortcutsActivity extends AppCompatActivity {
             }
         }
         return false;   // 指定的快捷方式未固定或设备不支持固定快捷方式
+    }
+
+    private void showPinnedShortcuts(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null && shortcutManager.isRequestPinShortcutSupported()) {
+
+                List<ShortcutInfo> shortcutInfoList = shortcutManager.getPinnedShortcuts();
+                for (ShortcutInfo shortcut : shortcutInfoList) {
+                    LogUtil.d("已固定的Id：" + shortcut.getId());
+                }
+            }
+        }
     }
 }
