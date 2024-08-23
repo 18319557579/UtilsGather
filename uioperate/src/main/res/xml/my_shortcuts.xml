@@ -53,14 +53,14 @@
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
 
-    <shortcut
+    <!--<shortcut
         android:enabled="true"
         android:icon="@mipmap/uioperate_settings_page"
         android:shortcutId="settings"
         android:shortcutShortLabel="@string/settings_shortcut_short_label"
         android:shortcutLongLabel="@string/settings_shortcut_long_label">
 
-        <!--targetPackage 一定要用应用的包名，否则无法正常启动。例如如果这里用com.example.uioperate，将会启动失败-->
+        &lt;!&ndash;targetPackage 一定要用应用的包名，否则无法正常启动。例如如果这里用com.example.uioperate，将会启动失败&ndash;&gt;
         <intent
             android:action="android.intent.action.VIEW"
             android:targetClass="com.example.uioperate.shortcus.ShortcutsOtherActivity"
@@ -70,6 +70,6 @@
                 android:value="2"/>
         </intent>
         <categories android:name="android.shortcut.conversation" />
-    </shortcut>
+    </shortcut>-->
 
 </shortcuts>
