@@ -1,4 +1,7 @@
 <resources>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="scan_shortcut_short_label">扫一扫</string>
+    <string name="scan_shortcut_long_label">扫一扫的全称</string>
 </resources>

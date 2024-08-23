@@ -10,6 +10,7 @@ import com.example.uioperate.databinding.ActivityUiOperateEntranceBinding
 import com.example.uioperate.easy_recyclerview.EasyRecyclerViewActivity
 import com.example.uioperate.fragment.FragmentRouterActivity
 import com.example.uioperate.picture_selection.PictureSelectionActivity
+import com.example.uioperate.shortcus.ShortcutsActivity
 import com.example.uioperate.storage.StorageActivity
 import com.example.uioperate.touch_event.TouchEventActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
@@ -50,6 +51,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("跳转 DrawableTestActivity") {
                 startActivity(Intent(this, DrawableTestActivity::class.java))
+            },
+            GuideItemEntity("桌面快捷方式 ShortcutsActivity") {
+                startActivity(Intent(this, ShortcutsActivity::class.java))
             },
         ))
     }
