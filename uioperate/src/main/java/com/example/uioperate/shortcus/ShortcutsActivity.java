@@ -1,11 +1,14 @@
 package com.example.uioperate.shortcus;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -91,8 +94,30 @@ public class ShortcutsActivity extends AppCompatActivity {
                     }
                 }),
 
-
+                new GuideItemEntity("跳转到设置页面开启权限", new Runnable() {
+                    @Override
+                    public void run() {
+                        requestShortcutPermission(ShortcutsActivity.this);
+                    }
+                }),
         });
+    }
+
+    public static void requestShortcutPermission(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null && shortcutManager.isRequestPinShortcutSupported()) {
+                // 引导用户到应用的系统设置页面
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+                intent.setData(uri);
+
+                // 检查是否有活动可以处理我们的Intent
+                if (intent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(intent);
+                }
+            }
+        }
     }
 
     /**
