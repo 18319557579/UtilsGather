@@ -6,12 +6,70 @@
         android:shortcutId="scan"
         android:shortcutShortLabel="@string/scan_shortcut_short_label"
         android:shortcutLongLabel="@string/scan_shortcut_long_label">
+
+        <!--targetPackage 一定要用应用的包名，否则无法正常启动。例如如果这里用com.example.uioperate，将会启动失败-->
         <intent
             android:action="android.intent.action.VIEW"
             android:targetClass="com.example.uioperate.shortcus.ShortcutsScanActivity"
             android:targetPackage="com.example.utilsuser" />
         <categories android:name="android.shortcut.conversation" />
-        <capability-binding android:key="actions.intent.SCAN" />
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/uioperate_query_data"
+        android:shortcutId="query"
+        android:shortcutShortLabel="@string/query_shortcut_short_label"
+        android:shortcutLongLabel="@string/query_shortcut_long_label">
+
+        <!--targetPackage 一定要用应用的包名，否则无法正常启动。例如如果这里用com.example.uioperate，将会启动失败-->
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.example.uioperate.shortcus.ShortcutsOtherActivity"
+            android:targetPackage="com.example.utilsuser" >
+            <extra
+                android:name="EXTRA_KEY"
+                android:value="0"/>
+        </intent>
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/uioperate_receipt_and_payment"
+        android:shortcutId="payment"
+        android:shortcutShortLabel="@string/payment_shortcut_short_label"
+        android:shortcutLongLabel="@string/payment_shortcut_long_label">
+
+        <!--targetPackage 一定要用应用的包名，否则无法正常启动。例如如果这里用com.example.uioperate，将会启动失败-->
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.example.uioperate.shortcus.ShortcutsOtherActivity"
+            android:targetPackage="com.example.utilsuser" >
+            <extra
+                android:name="EXTRA_KEY"
+                android:value="1"/>
+        </intent>
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/uioperate_settings_page"
+        android:shortcutId="settings"
+        android:shortcutShortLabel="@string/settings_shortcut_short_label"
+        android:shortcutLongLabel="@string/settings_shortcut_long_label">
+
+        <!--targetPackage 一定要用应用的包名，否则无法正常启动。例如如果这里用com.example.uioperate，将会启动失败-->
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.example.uioperate.shortcus.ShortcutsOtherActivity"
+            android:targetPackage="com.example.utilsuser" >
+            <extra
+                android:name="EXTRA_KEY"
+                android:value="2"/>
+        </intent>
+        <categories android:name="android.shortcut.conversation" />
     </shortcut>
 
 </shortcuts>

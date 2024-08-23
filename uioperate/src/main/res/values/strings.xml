@@ -4,4 +4,13 @@
 
     <string name="scan_shortcut_short_label">扫一扫</string>
     <string name="scan_shortcut_long_label">扫一扫的全称</string>
+
+    <string name="query_shortcut_short_label">搜索</string>
+    <string name="query_shortcut_long_label">搜索的全称</string>
+
+    <string name="payment_shortcut_short_label">收付款</string>
+    <string name="payment_shortcut_long_label">就是在收钱以及付款的场景下使用的呀</string>
+
+    <string name="settings_shortcut_short_label">设置页面</string>
+    <string name="settings_shortcut_long_label">设置的全称</string>
 </resources>
