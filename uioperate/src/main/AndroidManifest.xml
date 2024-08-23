@@ -106,6 +106,13 @@
         <activity
             android:name=".storage.image_selector.PhotoActivity"
             android:exported="false" />
+
+        <receiver android:name=".shortcus.ShortcutReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.broadcast.PIN_SHORTCUT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -1,10 +1,14 @@
 package com.example.uioperate.shortcus;
 
+import android.annotation.TargetApi;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -100,7 +104,42 @@ public class ShortcutsActivity extends AppCompatActivity {
                         requestShortcutPermission(ShortcutsActivity.this);
                     }
                 }),
+
+                new GuideItemEntity("添加固定桌面快捷方式", new Runnable() {
+                    @Override
+                    public void run() {
+                        addShortCutAbove26(ShortcutsActivity.this, "fixed_scan", "固定扫描", R.mipmap.uioperate_settings_fixed, null);
+                    }
+                }),
         });
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private static void addShortCutAbove26(Context context, String id, String title, int iconId, String protocol) {
+        try {
+            ShortcutManager shortCutManager = (ShortcutManager) context.getSystemService(Context.SHORTCUT_SERVICE);
+            if (shortCutManager != null && shortCutManager.isRequestPinShortcutSupported()) {
+                Intent shortcutInfoIntent = new Intent();
+                //action必须设置，不然报错
+                shortcutInfoIntent.setAction(Intent.ACTION_VIEW);
+                shortcutInfoIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                shortcutInfoIntent.setComponent(new ComponentName(context, "com.example.uioperate.shortcus.ShortcutsScanActivity"));
+//                shortcutInfoIntent.setData(Uri.parse(protocol));
+                ShortcutInfo info = new ShortcutInfo.Builder(context, id)
+                        .setIcon(Icon.createWithResource(context, iconId))
+                        .setShortLabel(title)
+                        .setIntent(shortcutInfoIntent)
+                        .build();
+
+                Intent broadcastIntent = new Intent(context, ShortcutReceiver.class);
+                broadcastIntent.setAction("com.example.broadcast.PIN_SHORTCUT");
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                IntentSender intentSender = pendingIntent.getIntentSender();
+                shortCutManager.requestPinShortcut(info, intentSender);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void requestShortcutPermission(Context context) {
