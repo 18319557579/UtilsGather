@@ -24,6 +24,7 @@ class ApertureView @JvmOverloads constructor(
         val DEF_WIDTH = 200.dp
         val DEF_HEIGHT = DEF_WIDTH
         private val RADIUS = 20.dp
+        private val INNER_BORER = 30.dp
     }
 
     private val animator by lazy {
@@ -93,10 +94,10 @@ class ApertureView @JvmOverloads constructor(
 
     // 内矩形
     private val rectF by lazy {
-        val left = 0f + RADIUS / 2f
-        val top = 0f + RADIUS / 2f
-        val right = left + DEF_WIDTH - RADIUS
-        val bottom = top + DEF_HEIGHT - RADIUS
+        val left = 0f + INNER_BORER / 2f
+        val top = 0f + INNER_BORER / 2f
+        val right = left + DEF_WIDTH - INNER_BORER
+        val bottom = top + DEF_HEIGHT - INNER_BORER
         RectF(left, top, right, bottom)
     }
     override fun onDraw(canvas: Canvas) {
