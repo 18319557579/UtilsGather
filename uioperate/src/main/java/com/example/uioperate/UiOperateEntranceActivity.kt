@@ -3,6 +3,7 @@ package com.example.uioperate
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.uioperate.custom_juejin_s10g.JuejinS10gActivity
 import com.example.uioperate.custom_qiujuer.MoocBezierActivity
 import com.example.uioperate.custom_qiujuer.CustomQiujuerActivity
 import com.example.uioperate.custom_qiujuer.DrawableTestActivity
@@ -54,6 +55,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("桌面快捷方式 ShortcutsActivity") {
                 startActivity(Intent(this, ShortcutsActivity::class.java))
+            },
+            GuideItemEntity("自定义View-掘金-s10g JuejinS10gActivity") {
+                startActivity(Intent(this, JuejinS10gActivity::class.java))
             },
         ))
     }
