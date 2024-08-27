@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ApertureViewGroup">
+        <!--边框宽度-->
+        <attr name="aperture_border_width" format="dimension"/>
+        <!--边框角度-->
+        <attr name="aperture_border_angle" format="dimension"/>
+
+        <!--颜色一-->
+        <attr name="aperture_color1" format="color"/>
+        <!--颜色二-->
+        <attr name="aperture_color2" format="color"/>
+
+        <!--周期时长-->
+        <attr name="aperture_duration" format="integer"/>
+    </declare-styleable>
+
+
+</resources>
