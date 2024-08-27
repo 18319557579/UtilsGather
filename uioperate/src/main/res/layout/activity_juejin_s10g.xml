@@ -14,6 +14,22 @@
             android:layout_height="wrap_content"
             android:background="#ccc"/>
 
+        <com.example.uioperate.custom_juejin_s10g.ApertureViewGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ccc"
+
+            android:layout_marginTop="10dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:src="@mipmap/emoji_2"/>
+
+        </com.example.uioperate.custom_juejin_s10g.ApertureViewGroup>
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
