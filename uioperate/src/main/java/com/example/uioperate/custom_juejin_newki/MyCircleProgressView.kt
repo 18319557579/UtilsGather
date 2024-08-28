@@ -1,5 +1,6 @@
 package com.example.uioperate.custom_juejin_newki
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Canvas
@@ -14,6 +15,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.StyleableRes
 import com.example.uioperate.R
+import kotlin.math.max
 
 class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View(context, attrs){
     //是否开启抗锯齿
@@ -31,18 +33,18 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
     //声明背景圆画笔
     private lateinit var mBgCirPaint: Paint //画笔
     private var mBgCirColor = Color.GRAY //颜色
-    private var mBgCirWidth: Float = 15f //圆环背景宽度
+    private var mBgCirWidth: Float = 10f //圆环背景宽度
 
     //声明进度圆的画笔
     private lateinit var mCirPaint: Paint //画笔
     private var mCirColor = Color.YELLOW //颜色
-    private var mCirWidth: Float = 15f //主圆的宽度
+    private var mCirWidth: Float = 18f //主圆的宽度
 
     //是否需要动画(默认需要动画)
     private var isAnim: Boolean = true
 
-    //保留的小数位数(默认2位)
-    private var mDigit: Int = 2
+    //保留的小数位数(默认0位)
+    private var mDigit: Int = 0
 
     //动画时间（默认一秒）
     private var mAnimTime: Int = 1000
@@ -50,7 +52,7 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
     //进度值
     private var mValue = 0
     //最大值(默认为100)
-    private var mMaxValue: Float = 100f
+    private var mMaxValue = 100
 
     //绘制的起始角度和滑过角度(默认从顶部开始绘制，绘制360度)
     private var mStartAngle: Float = 270f
@@ -71,15 +73,21 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
     private var mUnit = "%"
 
     //阴影
-    private var mShadowColor = Color.BLACK
+    private var mShadowColor = Color.LTGRAY
     private var mShadowSize = 8f
     private var mShadowIsShow: Boolean = false
+
+    //动画进度
+    private var mAnimPercent: Float = 0f
 
     //颜色渐变色
     private var isGradient = false
     private var mGradientColors: IntArray? = intArrayOf(Color.RED, Color.GRAY, Color.BLUE)
     private var mGradientColor = 0
     private var mSweepGradient: SweepGradient? = null
+
+    //属性动画
+    private lateinit var mAnimator: ValueAnimator
 
     init {
         // 关闭硬件加速
@@ -101,7 +109,7 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
         mCirWidth = typedArray.getDimension(R.styleable.MyCircleProgressView_mCirWidth, mCirWidth)
         mAnimTime = typedArray.getInt(R.styleable.MyCircleProgressView_animTime, mAnimTime)
         mValue = typedArray.getInt(R.styleable.MyCircleProgressView_value, mValue)
-        mMaxValue = typedArray.getFloat(R.styleable.MyCircleProgressView_maxvalue, mMaxValue)
+        mMaxValue = typedArray.getInt(R.styleable.MyCircleProgressView_maxvalue, mMaxValue)
         mStartAngle = typedArray.getFloat(R.styleable.MyCircleProgressView_startAngle, mStartAngle)
         mSweepAngle = typedArray.getFloat(R.styleable.MyCircleProgressView_sweepAngle, mSweepAngle)
         mValueSize = typedArray.getDimension(R.styleable.MyCircleProgressView_valueSize, mValueSize)
@@ -188,12 +196,25 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawText(canvas)
+        drawCircle(canvas)
     }
 
     private fun drawText(canvas: Canvas) {
+        val rectPaint = Paint().apply {
+            color = Color.RED
+            strokeWidth = 3f
+        }
+        canvas.drawRect(mRectF, rectPaint)
+
+        val pointPaint = Paint().apply {
+            color = Color.GREEN
+            strokeWidth = 5f
+        }
+        canvas.drawPoint(centerPosition.x, centerPosition.y, pointPaint)
+
         // 绘制上方的数字
         canvas.drawText(
-            mValue.toString() + mUnit,
+            CircleUtil.roundByScale((mAnimPercent * mMaxValue).toDouble(), mDigit) + mUnit,
             centerPosition.x,
             centerPosition.y,
             mValuePaint
@@ -212,5 +233,42 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
             centerPosition.y + lineSpace,
             mHintPaint
         )
+    }
+
+    private fun drawCircle(canvas: Canvas) {
+
+
+        canvas.drawArc(mRectF, mStartAngle, mSweepAngle, false, mBgCirPaint)
+
+        if (mShadowIsShow) {
+            mCirPaint.setShadowLayer(mShadowSize, 0f, 0f, mShadowColor)
+        }
+        canvas.drawArc(mRectF, mStartAngle, mSweepAngle * mAnimPercent, false, mCirPaint)
+    }
+
+    fun setupValue(targetValue: Int, maxValue: Int) {
+        mValue = targetValue
+        mMaxValue = maxValue
+
+        //当前的进度和最大的进度，去做动画的绘制
+        val start = mAnimPercent
+        val end = targetValue.toFloat() / maxValue
+
+        if (!isAnim) {
+            mAnimPercent = end
+            postInvalidate()
+            return
+        }
+
+        mAnimator = ValueAnimator.ofFloat(start, end).apply {
+            duration = mAnimTime.toLong()
+            addUpdateListener {
+                //得到当前的动画进度并赋值
+                mAnimPercent = it.animatedValue as Float
+                //不停的重绘当前值-表现出动画的效果
+                postInvalidate()
+            }
+        }
+        mAnimator.start()
     }
 }
