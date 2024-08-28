@@ -8,6 +8,11 @@
     tools:context=".custom_juejin_newki.CustomJuejinNewkiActivity"
     android:orientation="vertical">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/btn_set_progress"
         android:layout_width="wrap_content"
@@ -21,14 +26,7 @@
         android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal"
 
-        app:hint="出勤率"
-        app:hintColor="#8098B2"
-        app:hintSize="13sp"
-
-        app:valueColor="#5456A4"
-        app:valueSize="25dp"
-
-        app:isanim="true">
+        >
 
     </com.example.uioperate.custom_juejin_newki.MyCircleProgressView>
 

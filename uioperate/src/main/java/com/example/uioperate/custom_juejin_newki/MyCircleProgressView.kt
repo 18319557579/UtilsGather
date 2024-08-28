@@ -17,6 +17,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import androidx.annotation.StyleableRes
 import com.example.uioperate.R
+import com.example.uioperate.custom_juejin_s10g.sp
 import com.example.utilsgather.logcat.LogUtil
 import kotlin.math.max
 
@@ -68,13 +69,13 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
 
     //绘制数值
     private lateinit var mValuePaint: TextPaint
-    private var mValueSize = 15f
+    private var mValueSize = 25.sp
     private var mValueColor = Color.BLACK
 
     //绘制描述
-    private var mHint: String? = null
+    private var mHint = "进度"
     private lateinit var mHintPaint: TextPaint
-    private var mHintSize = 15f
+    private var mHintSize = 13.sp
     private var mHintColor = Color.GRAY
 
     //阴影
@@ -119,7 +120,7 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
         mSweepAngle = typedArray.getFloat(R.styleable.MyCircleProgressView_sweepAngle, mSweepAngle)
         mValueSize = typedArray.getDimension(R.styleable.MyCircleProgressView_valueSize, mValueSize)
         mValueColor = typedArray.getColor(R.styleable.MyCircleProgressView_valueColor, mValueColor)
-        mHint = typedArray.getString(R.styleable.MyCircleProgressView_hint)
+        mHint = typedArray.getStringWithDefaultValue(R.styleable.MyCircleProgressView_hint, mHint)
         mHintSize = typedArray.getDimension(R.styleable.MyCircleProgressView_hintSize, mHintSize)
         mHintColor = typedArray.getColor(R.styleable.MyCircleProgressView_hintColor, mHintColor)
         mShadowColor = typedArray.getColor(R.styleable.MyCircleProgressView_shadowColor, mShadowColor)
@@ -224,8 +225,6 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
     }
 
     private fun drawText(canvas: Canvas) {
-
-
         // 绘制上方的数字
         canvas.drawText(
             CircleUtil.roundByScale((mCurrentProgress * 100).toDouble(), mDigit) + "%",
