@@ -45,13 +45,10 @@
         <attr name="mBgCirWidth" format="dimension" />  <!--背景圆弧的宽度-->
         <attr name="mBgCirColor" format="color" />  <!--背景圆弧的颜色-->
         <attr name="animTime" format="integer" />  <!--动画时间-->
-        <attr name="value" format="integer" />  <!--值-->
-        <attr name="maxvalue" format="integer" />  <!--最大值-->
         <attr name="startAngle" format="float" />  <!--开始角度-->
         <attr name="sweepAngle" format="float" />  <!--要扫过的角度-->
         <attr name="valueSize" format="dimension" />  <!--中间显示值的尺寸-->
         <attr name="valueColor" format="color" />  <!--中间显示值的颜色-->
-        <attr name="unit" format="string" />  <!---->
         <attr name="hint" format="string" />  <!--提示的文字-->
         <attr name="hintSize" format="dimension" />  <!--提示文字的尺寸-->
         <attr name="hintColor" format="color" />  <!--提示文字的颜色-->

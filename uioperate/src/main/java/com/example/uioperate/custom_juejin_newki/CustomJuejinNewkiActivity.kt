@@ -20,7 +20,7 @@ class CustomJuejinNewkiActivity : AppCompatActivity() {
         myCircleProgressView = findViewById(R.id.mcpv)
 
         btnSetProgress.setOnClickListener {
-            myCircleProgressView.setupValue(60, 100)
+            myCircleProgressView.setupValue(0.2f, 0.8f)
         }
     }
 }
