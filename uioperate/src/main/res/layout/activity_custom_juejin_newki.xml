@@ -1,101 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".custom_juejin_newki.CustomJuejinNewkiActivity"
-    android:orientation="vertical">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_horizontal"
+    tools:context=".custom_juejin_newki.CustomJuejinNewkiActivity">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
 
-    <com.example.uioperate.custom_juejin_newki.MyCircleProgressView
-        android:id="@+id/mcpv"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal"/>
+        <com.example.uioperate.custom_juejin_newki.MyCircleProgressView
+            android:id="@+id/mcpv"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"/>
 
-    <Button
-        android:id="@+id/btn_set_progress_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="设置进度"/>
+        <Button
+            android:id="@+id/btn_set_progress_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置进度"/>
 
-    <com.example.uioperate.custom_juejin_newki.MyCircleProgressView
-        android:id="@+id/mcpv2"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal"
+        <com.example.uioperate.custom_juejin_newki.MyCircleProgressView
+            android:id="@+id/mcpv2"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
 
-        app:isanim="true"
-        app:animTime="1500"
+            app:isanim="true"
+            app:animTime="1500"
 
-        app:digit="2"
+            app:digit="2"
 
-        app:hint="出勤率"
-        app:hintColor="#8098B2"
-        app:hintSize="13sp"
+            app:hint="出勤率"
+            app:hintColor="#8098B2"
+            app:hintSize="13sp"
 
-        app:mBgCirColor="#DDE3F6"
-        app:mBgCirWidth="5sp"
+            app:mBgCirColor="#DDE3F6"
+            app:mBgCirWidth="5sp"
 
-        app:mCirColor="#3277f9"
-        app:mCirWidth="15sp"
+            app:mCirColor="#3277f9"
+            app:mCirWidth="15sp"
 
-        app:shadowColor="#734947B2"
-        app:shadowShow="true"
-        app:shadowSize="9"
+            app:shadowColor="#734947B2"
+            app:shadowShow="true"
+            app:shadowSize="9"
 
-        app:startAngle="270"
-        app:sweepAngle="360"
+            app:startAngle="270"
+            app:sweepAngle="360"
 
-        app:valueColor="#5456A4"
-        app:valueSize="25dp"/>
+            app:valueColor="#5456A4"
+            app:valueSize="25dp"/>
 
-    <!--<Button
-        android:id="@+id/btn_set_progress_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="设置进度"/>
+        <Button
+            android:id="@+id/btn_set_progress_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置进度"/>
 
-    <com.example.uioperate.custom_juejin_newki.MyCircleProgressView
-        android:id="@+id/mcpv3"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal"
+        <com.example.uioperate.custom_juejin_newki.MyCircleProgressView
+            android:id="@+id/mcpv3"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
 
-        app:isanim="true"
-        app:animTime="1500"
+            app:isanim="true"
+            app:animTime="1500"
 
-        app:digit="2"
+            app:digit="2"
 
-        app:hint="出勤率"
-        app:hintColor="#8098B2"
-        app:hintSize="13sp"
+            app:hint="出勤率"
+            app:hintColor="#8098B2"
+            app:hintSize="13sp"
 
-        app:mBgCirColor="#DDE3F6"
-        app:mBgCirWidth="5sp"
+            app:mBgCirColor="#DDE3F6"
+            app:mBgCirWidth="5sp"
 
-        app:mCirColor="#3277f9"
-        app:mCirWidth="15sp"
+            app:mCirColor="#3277f9"
+            app:mCirWidth="15sp"
 
-        app:shadowColor="#734947B2"
-        app:shadowShow="true"
-        app:shadowSize="9"
+            app:shadowColor="#734947B2"
+            app:shadowShow="true"
+            app:shadowSize="9"
 
-        app:startAngle="270"
-        app:sweepAngle="360"
+            app:startAngle="270"
+            app:sweepAngle="360"
 
-        app:valueColor="#5456A4"
-        app:valueSize="25dp"/>-->
+            app:valueColor="#5456A4"
+            app:valueSize="25dp"
+
+            app:isGradient="true"/>
 
 
-</LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+

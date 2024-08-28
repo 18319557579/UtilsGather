@@ -16,6 +16,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import androidx.annotation.StyleableRes
+import androidx.core.graphics.withSave
 import com.example.uioperate.R
 import com.example.uioperate.custom_juejin_s10g.sp
 import com.example.utilsgather.logcat.LogUtil
@@ -88,9 +89,7 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
 
     //颜色渐变色
     private var isGradient = false
-    private var mGradientColors: IntArray? = intArrayOf(Color.RED, Color.GRAY, Color.BLUE)
-    private var mGradientColor = 0
-    private var mSweepGradient: SweepGradient? = null
+    private var mGradientColors: IntArray = intArrayOf(Color.RED, Color.GRAY, Color.BLUE)
 
     //属性动画
     private var mAnimator: ValueAnimator? = null
@@ -127,10 +126,6 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
         mShadowIsShow = typedArray.getBoolean(R.styleable.MyCircleProgressView_shadowShow, mShadowIsShow)
         mShadowSize = typedArray.getFloat(R.styleable.MyCircleProgressView_shadowSize, mShadowSize)
         isGradient = typedArray.getBoolean(R.styleable.MyCircleProgressView_isGradient, isGradient)
-        mGradientColor = typedArray.getResourceId(R.styleable.MyCircleProgressView_gradient, mGradientColor)
-        if (mGradientColor != 0) {
-            mGradientColors = resources.getIntArray(mGradientColor)
-        }
         typedArray.recycle()
     }
 
@@ -196,6 +191,24 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
             it.right = centerPosition.x + raduis + maxCirWidth / 2
             it.bottom = centerPosition.y + raduis + maxCirWidth / 2
         }
+
+        if (isGradient) {
+            setupGradientCircle() //设置圆环画笔颜色渐变
+        }
+    }
+
+    /**
+     * 使用渐变色画圆
+     */
+    private fun setupGradientCircle() {
+        mCirPaint.shader = SweepGradient(
+            centerPosition.x,
+            centerPosition.y,
+            mGradientColors,
+            null
+        )
+        // 渐变色如果使用ROUND的线头实在是太奇怪了，只能舍弃使用BUTT平头
+        mCirPaint.strokeCap = Paint.Cap.BUTT
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -254,7 +267,26 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
         if (mShadowIsShow) {
             mCirPaint.setShadowLayer(mShadowSize, 0f, 0f, mShadowColor)
         }
-        canvas.drawArc(mRectF, mStartAngle, mSweepAngle * mCurrentProgress, false, mCirPaint)
+
+        if (isGradient) {
+            gradientCorrector(canvas)
+        } else {
+            canvas.drawArc(mRectF, mStartAngle, mSweepAngle * mCurrentProgress, false, mCirPaint)
+        }
+
+    }
+
+    private fun gradientCorrector(canvas: Canvas) {
+        val eliminateDegrees = 90f
+        canvas.withSave {
+            canvas.rotate(-eliminateDegrees, centerPosition.x, centerPosition.y)
+            canvas.drawArc(
+                mRectF,
+                mStartAngle + eliminateDegrees,
+                mSweepAngle * mCurrentProgress,
+                false,
+                mCirPaint)
+        }
     }
 
     fun setupValue(currentProgress: Float, targetProgress: Float) {
