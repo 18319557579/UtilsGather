@@ -192,19 +192,15 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
         mRectF.also {
             it.left = centerPosition.x - raduis - maxCirWidth / 2
             it.top = centerPosition.y - raduis - maxCirWidth / 2
-            it.right = centerPosition.x + raduis - maxCirWidth / 2
-            it.bottom = centerPosition.y + raduis - maxCirWidth / 2
+            it.right = centerPosition.x + raduis + maxCirWidth / 2
+            it.bottom = centerPosition.y + raduis + maxCirWidth / 2
         }
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawText(canvas)
-        drawCircle(canvas)
-    }
 
-    private fun drawText(canvas: Canvas) {
-        val rectPaint = Paint().apply {
+        /*val rectPaint = Paint().apply {
             color = Color.RED
             strokeWidth = 3f
         }
@@ -215,6 +211,20 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
             strokeWidth = 5f
         }
         canvas.drawPoint(centerPosition.x, centerPosition.y, pointPaint)
+
+        val outerPaint = Paint().apply {
+            color = Color.BLUE
+            strokeWidth = 3f
+            style = Paint.Style.STROKE
+        }
+        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), outerPaint)*/
+
+        drawText(canvas)
+        drawCircle(canvas)
+    }
+
+    private fun drawText(canvas: Canvas) {
+
 
         // 绘制上方的数字
         canvas.drawText(
