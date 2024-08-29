@@ -18,6 +18,9 @@ import com.example.uioperate.custom_juejin_s10g.sp
 import com.example.utilsgather.format_trans.NumberTransfer
 import com.example.utilsgather.logcat.LogUtil
 
+/**
+ * 该 View 没有重写 onMeasure()，意思是使用系统测量的方式，用户配置多少就是多少好了
+ */
 class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View(context, attrs){
     //是否开启抗锯齿
     private var antiAlias: Boolean = true
