@@ -52,13 +52,15 @@
         <attr name="hint" format="string" />  <!--提示的文字-->
         <attr name="hintSize" format="dimension" />  <!--提示文字的尺寸-->
         <attr name="hintColor" format="color" />  <!--提示文字的颜色-->
-        <attr name="gradient" format="dimension" />  <!--渐变的颜色-->
-        <attr name="isGradient" format="boolean" />  <!--是否渐变-->
         <attr name="shadowSize" format="float" />  <!--阴影尺寸-->
         <attr name="shadowColor" format="color" />  <!--阴影颜色-->
         <attr name="shadowShow" format="boolean" />  <!--是否展示阴影-->
         <attr name="digit" format="integer" />  <!--小数的位数-->
         <attr name="isanim" format="boolean" />  <!--是否开启动画-->
+
+        <attr name="isGradient" format="boolean" />  <!--是否渐变-->
+        <attr name="gradientColor" format="reference"/>  <!--渐变的颜色-->
+        
     </declare-styleable>
 
 </resources>

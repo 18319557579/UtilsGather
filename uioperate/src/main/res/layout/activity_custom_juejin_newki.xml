@@ -101,7 +101,8 @@
             app:valueColor="#5456A4"
             app:valueSize="25dp"
 
-            app:isGradient="true"/>
+            app:isGradient="true"
+            app:gradientColor="@array/gradient_color"/>
 
         <Button
             android:id="@+id/btn_set_progress_4"

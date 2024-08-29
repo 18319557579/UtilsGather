@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.R
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
+import com.example.utilsgather.logcat.LogUtil
 
 class CustomJuejinNewkiActivity : AppCompatActivity() {
     lateinit var btnSetProgress2: Button
@@ -45,6 +46,11 @@ class CustomJuejinNewkiActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.btn_set_progress_4).setOnClickListener {
             findViewById<MyCircleProgressView>(R.id.mcpv4).setupValue(0f, 1f)
+        }
+
+        val gradientColorArray = resources.getIntArray(R.array.gradient_color)
+        for (i in gradientColorArray) {
+            LogUtil.d("颜色有哪些: $i")
         }
     }
 }

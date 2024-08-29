@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="gradient_color">
+        <item>0xFFE91E63</item>
+        <item>0xFF2196F3</item>
+    </integer-array>
+</resources>

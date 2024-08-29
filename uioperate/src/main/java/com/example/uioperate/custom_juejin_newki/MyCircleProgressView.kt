@@ -126,6 +126,10 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
         mShadowIsShow = typedArray.getBoolean(R.styleable.MyCircleProgressView_shadowShow, mShadowIsShow)
         mShadowSize = typedArray.getFloat(R.styleable.MyCircleProgressView_shadowSize, mShadowSize)
         isGradient = typedArray.getBoolean(R.styleable.MyCircleProgressView_isGradient, isGradient)
+        typedArray.getResourceId(R.styleable.MyCircleProgressView_gradientColor, 0).takeIf { it > 0 }?.let {
+            mGradientColors = context.resources.getIntArray(it)
+        }
+
         typedArray.recycle()
     }
 
