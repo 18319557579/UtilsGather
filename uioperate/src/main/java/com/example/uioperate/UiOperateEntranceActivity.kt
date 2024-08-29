@@ -4,7 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.custom_github_blankj.CustomGithubBlankjActivity
-import com.example.uioperate.custom_juejin_newki.CustomJuejinNewkiActivity
+import com.example.uioperate.custom_juejin_newki.progress_ring.CustomJuejinNewkiActivity
+import com.example.uioperate.custom_juejin_newki.thermometer.TemperatureViewActivity
 import com.example.uioperate.custom_juejin_s10g.JuejinS10gActivity
 import com.example.uioperate.custom_qiujuer.MoocBezierActivity
 import com.example.uioperate.custom_qiujuer.CustomQiujuerActivity
@@ -66,6 +67,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("自定义View-Github-Newki CustomJuejinNewkiActivity") {
                 startActivity(Intent(this, CustomJuejinNewkiActivity::class.java))
+            },
+            GuideItemEntity("自定义View-Github-Newki TemperatureViewActivity") {
+                startActivity(Intent(this, TemperatureViewActivity::class.java))
             },
         ))
     }

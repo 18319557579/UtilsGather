@@ -1,4 +1,4 @@
-package com.example.uioperate.custom_juejin_newki
+package com.example.uioperate.custom_juejin_newki.progress_ring
 
 import android.os.Bundle
 import android.widget.Button
@@ -20,7 +20,7 @@ class CustomJuejinNewkiActivity : AppCompatActivity() {
         myCircleProgressView = findViewById(R.id.mcpv)
 
         btnSetProgress2.setOnClickListener {
-            val vvv : MyCircleProgressView= findViewById(R.id.mcpv2)
+            val vvv : MyCircleProgressView = findViewById(R.id.mcpv2)
             vvv.setupValue(0f, 1f)
         }
         GuideSettings.setHorizontal(

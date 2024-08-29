@@ -21,7 +21,10 @@
 
     <application android:networkSecurityConfig="@xml/network_security_config">
         <activity
-            android:name=".custom_juejin_newki.CustomJuejinNewkiActivity"
+            android:name=".custom_juejin_newki.thermometer.TemperatureViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".custom_juejin_newki.progress_ring.CustomJuejinNewkiActivity"
             android:exported="false" />
         <activity
             android:name=".custom_github_blankj.CustomGithubBlankjActivity"
