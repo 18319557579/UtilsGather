@@ -43,5 +43,8 @@ class CustomJuejinNewkiActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_set_progress_3).setOnClickListener {
             findViewById<MyCircleProgressView>(R.id.mcpv3).setupValue(0f, 1f)
         }
+        findViewById<Button>(R.id.btn_set_progress_4).setOnClickListener {
+            findViewById<MyCircleProgressView>(R.id.mcpv4).setupValue(0f, 1f)
+        }
     }
 }

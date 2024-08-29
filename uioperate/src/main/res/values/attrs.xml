@@ -45,7 +45,7 @@
         <attr name="mBgCirWidth" format="dimension" />  <!--背景圆弧的宽度-->
         <attr name="mBgCirColor" format="color" />  <!--背景圆弧的颜色-->
         <attr name="animTime" format="integer" />  <!--动画时间-->
-        <attr name="startAngle" format="float" />  <!--开始角度-->
+        <attr name="startAngle" format="float" />  <!--开始角度，以正右方为0度-->
         <attr name="sweepAngle" format="float" />  <!--要扫过的角度-->
         <attr name="valueSize" format="dimension" />  <!--中间显示值的尺寸-->
         <attr name="valueColor" format="color" />  <!--中间显示值的颜色-->

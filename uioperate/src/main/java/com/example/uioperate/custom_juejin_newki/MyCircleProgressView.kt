@@ -276,13 +276,15 @@ class MyCircleProgressView(context: Context, attrs: AttributeSet? = null) : View
 
     }
 
+
     private fun gradientCorrector(canvas: Canvas) {
-        val eliminateDegrees = 90f
         canvas.withSave {
-            canvas.rotate(-eliminateDegrees, centerPosition.x, centerPosition.y)
+            // 跟随 mStartAngle 旋转指定角度，使得渐变画笔还是从0度开始算的
+            canvas.rotate(mStartAngle, centerPosition.x, centerPosition.y)
+            // 由于画布已经旋转了指定角度了，所以直接从 0 度开始绘制
             canvas.drawArc(
                 mRectF,
-                mStartAngle + eliminateDegrees,
+                0f,
                 mSweepAngle * mCurrentProgress,
                 false,
                 mCirPaint)
