@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsgather.ui.CustomViewUtil;
 
+import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -31,6 +32,8 @@ public class TemperatureView extends View {
     private float totalAngle = 0f;  //刻度的角度(根据此计算需要绘制有色的进度)
 
     private float mCurPercent = 0f;  //当前进度
+    private DecimalFormat mDecimalFormat = new DecimalFormat("0.0");
+    private String mCurTemperature = mDecimalFormat.format(0f);
 
     private final float TOTAL_DIAL = 100f;
 
@@ -43,6 +46,8 @@ public class TemperatureView extends View {
     private int[] slow = {10, 10, 10, 8, 8, 8, 6, 6, 6, 6, 4, 4, 4, 4, 2};
 
     private Paint mSmallCirclePaint;  //小圆的画笔
+
+    private Paint mTextPaint;
 
     public TemperatureView(Context context) {
         super(context);
@@ -76,6 +81,12 @@ public class TemperatureView extends View {
         Paint smallCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         smallCirclePaint.setDither(true);
         mSmallCirclePaint = smallCirclePaint;
+
+        Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setDither(true);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+        textPaint.setColor(Color.WHITE);
+        mTextPaint = textPaint;
     }
 
     @Override
@@ -108,6 +119,8 @@ public class TemperatureView extends View {
 
         int evaluateColor = ViewUtil.getCurrentColor(Color.GREEN, Color.RED, mCurPercent);
         drawSmallCircle(canvas, evaluateColor);
+
+        drawTemperatureText(canvas);
     }
 
     /**
@@ -161,6 +174,20 @@ public class TemperatureView extends View {
         canvas.drawCircle(centerPosition.x, centerPosition.y, mSmallRadius, mSmallCirclePaint);
     }
 
+    private void drawTemperatureText(Canvas canvas) {
+        // 提示文字
+        mTextPaint.setTextSize(mSmallRadius / 6f);
+        canvas.drawText("当前温度", centerPosition.x, centerPosition.y - mSmallRadius / 2f, mTextPaint);
+
+        // 温度数字
+        mTextPaint.setTextSize(mSmallRadius / 2f);
+        canvas.drawText(mCurTemperature, centerPosition.x, centerPosition.y + mSmallRadius / 4f, mTextPaint);
+
+        // 绘制单位
+        mTextPaint.setTextSize(mSmallRadius / 6f);
+        canvas.drawText("°C", centerPosition.x + (mSmallRadius / 1.5f), centerPosition.y, mTextPaint);
+    }
+
     // 设置温度，入口的开始
     public void setupTemperature(float temperature) {
         if (isAnimRunning) {
@@ -195,6 +222,7 @@ public class TemperatureView extends View {
                     mAnimTimer.cancel();
                 }
                 mCurPercent = mTargetAngle / mSweepAngle;
+                mCurTemperature = mDecimalFormat.format(mCurPercent * 100);
                 postInvalidate();
             }
         }, 250, 30);
