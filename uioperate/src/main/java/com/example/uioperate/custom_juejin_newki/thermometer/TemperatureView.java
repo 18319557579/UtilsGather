@@ -23,12 +23,14 @@ public class TemperatureView extends View {
     private final Point centerPosition = new Point();   //中心点
     private final RectF mRectF = new RectF();   //边界矩形
     private float radius = 0f;   //半径
-    private float mSmallRadius = 0f;
+    private float mSmallRadius = 0f;  //中间小圆的半径
 
     private float mStartAngle = 120f;  // 圆弧的起始角度
     private float mSweepAngle = 300f; //绘制的起始角度和滑过角度(绘制300度)
     private float mTargetAngle = 0f;  //刻度的角度(根据此计算需要绘制有色的进度)
     private float totalAngle = 0f;  //刻度的角度(根据此计算需要绘制有色的进度)
+
+    private float mCurPercent = 0f;  //当前进度
 
     private final float TOTAL_DIAL = 100f;
 
@@ -39,6 +41,8 @@ public class TemperatureView extends View {
     private boolean isAnimRunning;
     private Timer mAnimTimer;
     private int[] slow = {10, 10, 10, 8, 8, 8, 6, 6, 6, 6, 4, 4, 4, 4, 2};
+
+    private Paint mSmallCirclePaint;  //小圆的画笔
 
     public TemperatureView(Context context) {
         super(context);
@@ -68,6 +72,10 @@ public class TemperatureView extends View {
         degreelinePaint.setStrokeWidth(2f);
         degreelinePaint.setAntiAlias(true);
         mDegreelinePaint = degreelinePaint;
+
+        Paint smallCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        smallCirclePaint.setDither(true);
+        mSmallCirclePaint = smallCirclePaint;
     }
 
     @Override
@@ -86,6 +94,7 @@ public class TemperatureView extends View {
         centerPosition.x = width / 2;
         centerPosition.y = height / 2;
         radius = width / 2f;
+        mSmallRadius = radius - 45f;
         mRectF.set(0f, 0f, width, height);
 
         super.onMeasure(newWidthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
@@ -96,6 +105,9 @@ public class TemperatureView extends View {
         super.onDraw(canvas);
         drawArc(canvas);
         drawDegreeLine(canvas);
+
+        int evaluateColor = ViewUtil.getCurrentColor(Color.GREEN, Color.RED, mCurPercent);
+        drawSmallCircle(canvas, evaluateColor);
     }
 
     /**
@@ -124,7 +136,7 @@ public class TemperatureView extends View {
         float currentAngle = 0;
 
         for (int i = 0; i <= TOTAL_DIAL; i++) {
-            if (currentAngle <= mTargetAngle) {  //最后的目标刻度
+            if (currentAngle <= mTargetAngle && mTargetAngle != 0) {  //最后的目标刻度。当mTargetAngle为0时，代表还没开始，所以也要花白色
                 // 计算累计划过的刻度百分比
                 float percent = currentAngle / mSweepAngle;
                 // 不同百分比位置使用不同的颜色刻度
@@ -142,6 +154,13 @@ public class TemperatureView extends View {
         canvas.restoreToCount(count);
     }
 
+    private void drawSmallCircle(Canvas canvas, int evaluateColor) {
+        mSmallCirclePaint.setColor(evaluateColor);
+        // 其实这里就是将 alpha 的值改为65
+        mSmallCirclePaint.setAlpha(65);
+        canvas.drawCircle(centerPosition.x, centerPosition.y, mSmallRadius, mSmallCirclePaint);
+    }
+
     // 设置温度，入口的开始
     public void setupTemperature(float temperature) {
         if (isAnimRunning) {
@@ -150,6 +169,7 @@ public class TemperatureView extends View {
 
         totalAngle = (temperature / 100) * mSweepAngle;
         mTargetAngle = 0f;
+        mCurPercent = 0f;
 
         startTimerAnim();
     }
@@ -167,11 +187,14 @@ public class TemperatureView extends View {
                 if (goIndex.get() == slow.length) {
                     goIndex.getAndDecrement();
                 }
+
+                // 原来这里有一个校准的步骤，就是如果例如目标温度设置得比较小，例如2.5f，会导致mTargetAngle小于slow数组的第1个值，这里就会校正回来
                 if (mTargetAngle >= totalAngle) {
                     mTargetAngle = totalAngle;
                     isAnimRunning = false;
                     mAnimTimer.cancel();
                 }
+                mCurPercent = mTargetAngle / mSweepAngle;
                 postInvalidate();
             }
         }, 250, 30);

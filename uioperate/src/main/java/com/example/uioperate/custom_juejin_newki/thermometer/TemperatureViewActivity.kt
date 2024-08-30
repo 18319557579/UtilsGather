@@ -18,7 +18,7 @@ class TemperatureViewActivity : AppCompatActivity() {
             findViewById(R.id.rv_horizontal),
             arrayOf(
                 GuideItemEntity("设置温度70") {
-                    findViewById<TemperatureView>(R.id.temperature_view).setupTemperature(70f)
+                    findViewById<TemperatureView>(R.id.temperature_view).setupTemperature(2.5f)
                 },
                 GuideItemEntity("") {
 
