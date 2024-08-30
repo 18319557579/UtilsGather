@@ -15,6 +15,10 @@ import androidx.annotation.Nullable;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsgather.ui.CustomViewUtil;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class TemperatureView extends View {
     private final Point centerPosition = new Point();   //中心点
     private final RectF mRectF = new RectF();   //边界矩形
@@ -23,12 +27,18 @@ public class TemperatureView extends View {
 
     private float mStartAngle = 120f;  // 圆弧的起始角度
     private float mSweepAngle = 300f; //绘制的起始角度和滑过角度(绘制300度)
-    private float mTargetAngle = 300f;  //刻度的角度(根据此计算需要绘制有色的进度)
+    private float mTargetAngle = 0f;  //刻度的角度(根据此计算需要绘制有色的进度)
+    private float totalAngle = 0f;  //刻度的角度(根据此计算需要绘制有色的进度)
 
     private final float TOTAL_DIAL = 100f;
 
     private Paint mDegreeCirPaint;  //刻度圆环
     private Paint mDegreelinePaint;  //刻度线
+
+    //动画状态
+    private boolean isAnimRunning;
+    private Timer mAnimTimer;
+    private int[] slow = {10, 10, 10, 8, 8, 8, 6, 6, 6, 6, 4, 4, 4, 4, 2};
 
     public TemperatureView(Context context) {
         super(context);
@@ -75,7 +85,7 @@ public class TemperatureView extends View {
 
         centerPosition.x = width / 2;
         centerPosition.y = height / 2;
-        radius = width / 2;
+        radius = width / 2f;
         mRectF.set(0f, 0f, width, height);
 
         super.onMeasure(newWidthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
@@ -125,10 +135,45 @@ public class TemperatureView extends View {
             currentAngle += rotateAngle;
             // 从外面往里画 20px
             canvas.drawLine(0, radius, 0, radius - 20, mDegreelinePaint);
-            // 画完一个刻度就要旋转一个刻度的位置
+            // 画完一个刻度就要顺时针旋转一个刻度的位置
             canvas.rotate(rotateAngle);
         }
 
         canvas.restoreToCount(count);
+    }
+
+    // 设置温度，入口的开始
+    public void setupTemperature(float temperature) {
+        if (isAnimRunning) {
+            return;
+        }
+
+        totalAngle = (temperature / 100) * mSweepAngle;
+        mTargetAngle = 0f;
+
+        startTimerAnim();
+    }
+
+    // 使用定时任务做动画
+    private void startTimerAnim() {
+
+        AtomicInteger goIndex = new AtomicInteger(0);
+        mAnimTimer = new Timer();
+        mAnimTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                isAnimRunning = true;
+                mTargetAngle += slow[goIndex.getAndIncrement()];
+                if (goIndex.get() == slow.length) {
+                    goIndex.getAndDecrement();
+                }
+                if (mTargetAngle >= totalAngle) {
+                    mTargetAngle = totalAngle;
+                    isAnimRunning = false;
+                    mAnimTimer.cancel();
+                }
+                postInvalidate();
+            }
+        }, 250, 30);
     }
 }

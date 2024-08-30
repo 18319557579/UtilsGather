@@ -17,16 +17,16 @@ class TemperatureViewActivity : AppCompatActivity() {
         GuideSettings.setHorizontal(
             findViewById(R.id.rv_horizontal),
             arrayOf(
-                GuideItemEntity("当前进度0,目标进度0.8") {
+                GuideItemEntity("设置温度70") {
+                    findViewById<TemperatureView>(R.id.temperature_view).setupTemperature(70f)
+                },
+                GuideItemEntity("") {
 
                 },
-                GuideItemEntity("当前进度0,目标进度1") {
+                GuideItemEntity("") {
 
                 },
-                GuideItemEntity("当前进度0.2,目标进度0.98") {
-
-                },
-                GuideItemEntity("当前进度0.2,目标进度0.99") {
+                GuideItemEntity("") {
 
                 },
             )
