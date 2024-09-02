@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -49,6 +50,13 @@ public class TemperatureView extends View {
 
     private Paint mTextPaint;
 
+    private float[] mFirstWaterLine;
+    private float[] mSecondWaterLine;
+    private Timer mWaveTimer;  // 水波纹左右摆动的定时任务
+    private float mWaveUpValue = 0;  // 水波纹的高度
+
+    private float mWaveMoveValue = 0f;  // 相位偏移量
+
     public TemperatureView(Context context) {
         super(context);
         init();
@@ -87,6 +95,22 @@ public class TemperatureView extends View {
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setColor(Color.WHITE);
         mTextPaint = textPaint;
+
+        moveWaterLine();
+    }
+
+    public void moveWaterLine() {
+        mWaveTimer = new Timer();
+        mWaveTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mWaveMoveValue += 1;
+                if (mWaveMoveValue == 100) {
+                    mWaveMoveValue = 1;
+                }
+                postInvalidate();
+            }
+        }, 500, 200);
     }
 
     @Override
@@ -108,6 +132,9 @@ public class TemperatureView extends View {
         mSmallRadius = radius - 45f;
         mRectF.set(0f, 0f, width, height);
 
+        mFirstWaterLine = new float[width];
+        mSecondWaterLine = new float[width];
+
         super.onMeasure(newWidthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
     }
 
@@ -119,6 +146,8 @@ public class TemperatureView extends View {
 
         int evaluateColor = ViewUtil.getCurrentColor(Color.GREEN, Color.RED, mCurPercent);
         drawSmallCircle(canvas, evaluateColor);
+
+        drawWaterWave(canvas, evaluateColor);
 
         drawTemperatureText(canvas);
     }
@@ -174,6 +203,38 @@ public class TemperatureView extends View {
         canvas.drawCircle(centerPosition.x, centerPosition.y, mSmallRadius, mSmallCirclePaint);
     }
 
+    private void drawWaterWave(Canvas canvas, int color) {
+        int len = (int) mRectF.right;  //总宽度
+
+        // 当前的 x 坐标映射到一个完整的正弦波周期内（即从 0 到 2𝜋）
+        float mCycleFactorW = (float) (2 * Math.PI / len);
+
+        for (int i = 0; i < len; i++) {
+            mFirstWaterLine[i] = (float) (15 * Math.sin(mCycleFactorW * i + mWaveMoveValue) - mWaveUpValue);
+            mSecondWaterLine[i] = (float) (20 * Math.sin(mCycleFactorW * i + mWaveMoveValue + 10) - mWaveUpValue);
+        }
+
+        canvas.save();
+        Path path = new Path();
+        path.addCircle(centerPosition.x, centerPosition.y, mSmallRadius, Path.Direction.CCW);
+        canvas.clipPath(path);
+        path.reset();
+
+        // 移到下方刚好和小圆相切
+        canvas.translate(0, centerPosition.y + mSmallRadius);
+
+        mSmallCirclePaint.setColor(color);
+
+        for (int i = 0; i < len; i++) {
+            // 由于正坐标是往下，其实就是正弦那一块的上面的点，连接下面len长度的点（len肯定会比小圆大）。所以这个正弦图像是由一条一条的竖线拼成的
+            canvas.drawLine(i, mFirstWaterLine[i], i, len, mSmallCirclePaint);
+        }
+        for (int i = 0; i < len; i++) {
+            canvas.drawLine(i, mSecondWaterLine[i], i, len, mSmallCirclePaint);
+        }
+        canvas.restore();
+    }
+
     private void drawTemperatureText(Canvas canvas) {
         // 提示文字
         mTextPaint.setTextSize(mSmallRadius / 6f);
@@ -223,6 +284,10 @@ public class TemperatureView extends View {
                 }
                 mCurPercent = mTargetAngle / mSweepAngle;
                 mCurTemperature = mDecimalFormat.format(mCurPercent * 100);
+
+                // 这里水波纹的最高值正好是淹没小圆，因为最大值为直径了
+                mWaveUpValue = (mCurPercent * (mSmallRadius * 2));
+
                 postInvalidate();
             }
         }, 250, 30);
