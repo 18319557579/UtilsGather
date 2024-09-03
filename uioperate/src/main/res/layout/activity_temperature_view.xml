@@ -36,6 +36,12 @@
             android:layout_height="200dp"
             android:layout_marginHorizontal="20dp"/>
 
+        <com.example.uioperate.custom_juejin_newki.thermometer.SineWaveViewLineToSurface
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginHorizontal="20dp"/>
+
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 
