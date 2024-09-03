@@ -4,7 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+
+import androidx.annotation.NonNull;
 
 public class BitmapGainUtil {
     /**
@@ -15,14 +18,22 @@ public class BitmapGainUtil {
     }
 
     /**
-     * 从Drawable中获得bitmap
+     * 将 Drawable 转为 Bitmap
      */
-    public static Bitmap getBitmapFromDrawable_2(Drawable drawable, int width, int height) {
+    public static Bitmap drawableToBitmap(@NonNull Drawable drawable, int width, int height) {
+        // 检查Drawable是否是BitmapDrawable的实例，如果是，可以直接调用getBitmap()方法获取Bitmap。
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+
+        // 为drawable创建一个bitmap
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 
+        // 将drawable的内容绘制到bitmap上
         Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, width, height);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
+
         return bitmap;
     }
 
