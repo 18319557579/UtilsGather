@@ -7,12 +7,14 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.uioperate.R;
+import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsgather.source_file.BitmapGainUtil;
 
 public class StarScoreView extends View {
@@ -90,5 +92,38 @@ public class StarScoreView extends View {
         canvas.drawRect(0, 0, mStarSize * decimalPart, mStarSize, mPaint);
 
         canvas.restore();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        LogUtil.d("触摸行为: " + event.toString());
+
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                updateScoreNum(event);
+
+                // 因为可能放置在可滚动的布局内，例如ScrollView，会导致滑动时触发父View的滚动，导致收到ACTION_CANCEL
+                // 这里让父View不要拦截事件了
+                getParent().requestDisallowInterceptTouchEvent(true);
+                return true;
+
+            case MotionEvent.ACTION_MOVE:
+                updateScoreNum(event);
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private void updateScoreNum(MotionEvent event) {
+        //x轴的宽度做一下最大最小的限制
+        int x = (int) event.getX();
+        if (x < 0) {
+            x = 0;
+        }
+        if (x > getMeasuredWidth()) {
+            x = getMeasuredWidth();
+        }
+
+        mScoreNum = x * 1.0f / (getMeasuredWidth() * 1.0f / mStarCount);
+        invalidate();
     }
 }
