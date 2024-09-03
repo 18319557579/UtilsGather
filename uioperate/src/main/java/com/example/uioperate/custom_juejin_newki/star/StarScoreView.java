@@ -3,11 +3,13 @@ package com.example.uioperate.custom_juejin_newki.star;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.uioperate.R;
@@ -29,6 +31,8 @@ public class StarScoreView extends View {
     private int mStarCount = 5;  // 星星的个数
     private Drawable mStarScoredDrawable;  //已经评分的星星图片
     private Drawable mStarUnscoredDrawable;  //还未评分的星星图片
+
+    private float mScoreNum = 2.5F;  //当前的评分值
 
     private Paint mPaint;
 
@@ -61,5 +65,30 @@ public class StarScoreView extends View {
         int measureWidth = mStarSize * mStarCount + mStarDistance * (mStarCount - 1);
         // 星星的高度就是控件的高度
         setMeasuredDimension(measureWidth, mStarSize);
+    }
+
+    @Override
+    protected void onDraw(@NonNull Canvas canvas) {
+        super.onDraw(canvas);
+
+        for (int i = 0; i < mStarCount; i++) {
+            mStarUnscoredDrawable.setBounds((mStarDistance + mStarSize) * i, 0, (mStarDistance + mStarSize) * i + mStarSize, mStarSize);
+            mStarUnscoredDrawable.draw(canvas);
+        }
+
+        int integerPart = (int) mScoreNum; // 获取整数部分
+        float decimalPart = mScoreNum - integerPart; // 获取小数部分
+
+        canvas.save();
+
+        // 整数部分的星星
+        for (int i = 0; i < integerPart; i++) {
+            canvas.drawRect(0, 0, mStarSize, mStarSize, mPaint);
+            canvas.translate(mStarDistance + mStarSize, 0);
+        }
+        // 小数部分的星星
+        canvas.drawRect(0, 0, mStarSize * decimalPart, mStarSize, mPaint);
+
+        canvas.restore();
     }
 }
