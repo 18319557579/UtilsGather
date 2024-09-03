@@ -9,28 +9,37 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class SineWaveView extends View {
-    public SineWaveView(Context context) {
+import com.example.utilsgather.logcat.LogUtil;
+import com.example.utilsgather.ui.CustomViewUtil;
+
+public class SineWaveViewPoint extends View {
+    public SineWaveViewPoint(Context context) {
         super(context);
         init();
     }
 
-    public SineWaveView(Context context, @Nullable AttributeSet attrs) {
+    public SineWaveViewPoint(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public SineWaveView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public SineWaveViewPoint(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
-
     Paint paint;
-
     private void init() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(0xFF00000F);
-//        paint.setStrokeWidth(2);
+        paint.setColor(0xFFff000F);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(5);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        LogUtil.d(CustomViewUtil.getWidthHeightInfo(widthMeasureSpec, heightMeasureSpec));
     }
 
     @Override
@@ -45,19 +54,10 @@ public class SineWaveView extends View {
 
         float pixelX = (float) (2 * Math.PI / width);
 
-        float previousY = originY;
         for (int x = 0; x < width; x++) {
-            float newX = pixelX * x;  //计算新的X值
+            float newX = pixelX * x;  //计算新的X值。newX 仅仅是用于映射Y的值
             float newY = (float)(Math.sin(newX) * 100);  //计算新的Y值，振幅设为100像素
-            canvas.drawLine(x - 1, previousY, x, originY - newY, paint);
-            previousY = originY - newY; // 更新前一个点的Y坐标，用于下一次绘制
+            canvas.drawPoint(x, originY - newY, paint);
         }
-    }
-
-    /**
-     * 根据当前的 x 值（像素做单位），求出对应的 sinx 值
-     */
-    private float sinCalculate(int x, float frequency, float phaseShift, float A, float C) {
-        return 0f;
     }
 }
