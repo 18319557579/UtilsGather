@@ -36,7 +36,11 @@ public class StarScoreView extends View {
 
     private float mScoreNum = 2.5F;  //当前的评分值
 
+    private boolean isSupportDecimals = true;
+
     private Paint mPaint;
+
+    private OnStarChangeListener onStarChangeListener;
 
     private void init(Context context, @Nullable AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.StarScoreView);
@@ -45,9 +49,14 @@ public class StarScoreView extends View {
         this.mStarCount = typedArray.getInteger(R.styleable.StarScoreView_starCount, mStarCount);
         this.mStarScoredDrawable = typedArray.getDrawable(R.styleable.StarScoreView_starScoredDrawable);
         this.mStarUnscoredDrawable = typedArray.getDrawable(R.styleable.StarScoreView_starUnscoredDrawable);
+        this.isSupportDecimals = typedArray.getBoolean(R.styleable.StarScoreView_isSupportDecimals, isSupportDecimals);
         typedArray.recycle();
 
         initPaint();
+
+        if (! isSupportDecimals) {
+            mScoreNum = (int) Math.floor(mScoreNum);
+        }
     }
 
     private void initPaint() {
@@ -123,7 +132,33 @@ public class StarScoreView extends View {
             x = getMeasuredWidth();
         }
 
-        mScoreNum = x * 1.0f / (getMeasuredWidth() * 1.0f / mStarCount);
+        float scoreNum = x * 1.0f / (getMeasuredWidth() * 1.0f / mStarCount);
+
+        setStarMark(scoreNum);
+    }
+
+    public void setStarMark(float mark) {
+        if (isSupportDecimals) {
+            mScoreNum = mark;
+        } else {
+            mScoreNum = (int) Math.floor(mark);
+        }
+        if (this.onStarChangeListener != null) {
+            this.onStarChangeListener.onStarChange(mScoreNum);  //调用监听接口
+        }
         invalidate();
+    }
+
+    /**
+     * 定义星星点击的监听接口
+     */
+    public interface OnStarChangeListener {
+        void onStarChange(float mark);
+    }
+    /**
+     * 设置监听
+     */
+    public void setOnStarChangeListener(OnStarChangeListener onStarChangeListener) {
+        this.onStarChangeListener = onStarChangeListener;
     }
 }

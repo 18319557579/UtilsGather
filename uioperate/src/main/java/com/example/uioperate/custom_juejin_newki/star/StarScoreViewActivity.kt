@@ -17,5 +17,12 @@ class StarScoreViewActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.ll_outer_container).setOnClickListener {
             LogUtil.d("外部容器的点击事件")
         }
+
+        findViewById<StarScoreView>(R.id.star_view).setOnStarChangeListener { mark ->
+            LogUtil.d("第一个控件的分数: $mark")
+        }
+        findViewById<StarScoreView>(R.id.star_view2).setOnStarChangeListener { mark ->
+            LogUtil.d("第二个控件的分数: $mark")
+        }
     }
 }

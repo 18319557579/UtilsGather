@@ -73,6 +73,8 @@
         <attr name="starScoredDrawable" format="reference" />
         <!--星星未评分图片-->
         <attr name="starUnscoredDrawable" format="reference" />
+        
+        <attr name="isSupportDecimals" format="boolean"/>
     </declare-styleable>
 
 </resources>
