@@ -58,6 +58,8 @@ public class RangeView extends View {
     private Paint mRightCirclePaint;
     private Paint mRightCircleStrokePaint;
 
+    private boolean touchLeftCircle;
+
     private void init() {
         mDefaultLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mDefaultLinePaint.setDither(true);
@@ -87,7 +89,7 @@ public class RangeView extends View {
         mRightCirclePaint.setAntiAlias(true);
         mRightCirclePaint.setDither(true);
         mRightCirclePaint.setStyle(Paint.Style.FILL);
-        mRightCirclePaint.setColor(Color.parseColor("#0689FD"));
+        mRightCirclePaint.setColor(Color.parseColor("#00FF00"));
 
         //初始化右边圆的边框
         mRightCircleStrokePaint = new Paint();
@@ -190,12 +192,18 @@ public class RangeView extends View {
      * @return true表示按下的左侧，false表示按下的右侧
      */
     private boolean checkTouchCircleLeftOrRight(float downX) {
+        if (downX < mLeftCircleCenterX) {
+            return true;
+        }
+        if (downX > mRightCircleCenterX) {
+            return false;
+        }
         return Math.abs(mLeftCircleCenterX - downX) < Math.abs(mRightCircleCenterX - downX);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        boolean touchLeftCircle;
+//        boolean touchLeftCircle;
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             float downX = event.getX();
             touchLeftCircle = checkTouchCircleLeftOrRight(downX);
@@ -204,8 +212,29 @@ public class RangeView extends View {
             } else {
                 mRightCircleCenterX = downX;
             }
+        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            float moveX = event.getX();
+            if (touchLeftCircle) {
+                if (moveX > mRightCircleCenterX) {
+                    touchLeftCircle = false;
+                    mRightCircleCenterX = moveX;
+                } else {
+                    mLeftCircleCenterX = moveX;
+                }
+
+            } else {
+                if (moveX < mLeftCircleCenterX) {
+                    touchLeftCircle = true;
+                    mLeftCircleCenterX = moveX;
+                } else {
+                    mRightCircleCenterX = moveX;
+                }
+            }
         }
+
+
         limitMinAndMax();
+
         mSelectedCornerLineRect.left = mLeftCircleCenterX;
         mSelectedCornerLineRect.right = mRightCircleCenterX;
 
@@ -218,6 +247,7 @@ public class RangeView extends View {
         if (mLeftCircleCenterX < mLeftBorder) {
             mLeftCircleCenterX = mLeftBorder;
         }
+
         //如果是操作的右侧限制圆，超过最小值了
         if (mRightCircleCenterX > mRightBorder) {
             mRightCircleCenterX = mRightBorder;
