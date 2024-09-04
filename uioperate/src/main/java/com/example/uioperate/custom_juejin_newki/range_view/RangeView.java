@@ -61,6 +61,8 @@ public class RangeView extends View {
 
     private boolean touchLeftCircle;
 
+    private int maxValue = 100;  //最大值，默认为100
+
     private void init() {
         mDefaultLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mDefaultLinePaint.setDither(true);
@@ -221,10 +223,8 @@ public class RangeView extends View {
                     // 这里在越过右边圆的时候，将右边圆的坐标给左边的。因为在快速滑动的过程中，event会回调得不够及时，导致left的坐标会滞后
                     mLeftCircleCenterX = mRightCircleCenterX;
                     mRightCircleCenterX = moveX;
-                    LogUtil.d("右边发生了变化: " + moveX);
                 } else {
                     mLeftCircleCenterX = moveX;
-                    LogUtil.d("左边发生了变化: " + moveX);
                 }
 
             } else {
@@ -232,12 +232,14 @@ public class RangeView extends View {
                     touchLeftCircle = true;
                     mRightCircleCenterX = mLeftCircleCenterX;
                     mLeftCircleCenterX = moveX;
-                    LogUtil.d("左边发生了变化2: " + moveX);
                 } else {
                     mRightCircleCenterX = moveX;
-                    LogUtil.d("右边发生了变化2: " + moveX);
                 }
             }
+        } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+            int leftValue = getPercentMax(mLeftCircleCenterX);
+            int rightValue = getPercentMax(mRightCircleCenterX);
+            if (mListener != null) mListener.onMoveValue(leftValue, rightValue);
         }
 
 
@@ -250,6 +252,13 @@ public class RangeView extends View {
         return true;
     }
 
+    private int getPercentMax(float distance) {
+        // 完整的长度
+        float totalDistance = mRightBorder - mLeftBorder;
+        float diffValue = distance - mLeftBorder;
+        return (int) ((diffValue / totalDistance) * maxValue);
+    }
+
     private void limitMinAndMax() {
         //如果是操作的左侧限制圆，超过最小值了
         if (mLeftCircleCenterX < mLeftBorder) {
@@ -260,5 +269,14 @@ public class RangeView extends View {
         if (mRightCircleCenterX > mRightBorder) {
             mRightCircleCenterX = mRightBorder;
         }
+    }
+
+    //回调区间值的监听
+    private OnRangeValueListener mListener;
+    public interface OnRangeValueListener {
+        void onMoveValue(int leftValue, int rightValue);
+    }
+    public void setRangeValueListener(OnRangeValueListener listener) {
+        this.mListener = listener;
     }
 }
