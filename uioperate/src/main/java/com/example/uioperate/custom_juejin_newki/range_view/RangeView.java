@@ -129,6 +129,8 @@ public class RangeView extends View {
 
         mTopDialogRect.top = getPaddingTop();
         mTopDialogRect.bottom = getPaddingTop() + mTopDialogCornerRadius * 2;
+
+        mTrianglePath = new Path();
     }
 
     @Override
@@ -204,6 +206,7 @@ public class RangeView extends View {
         drawLeftCircle(canvas);
         drawRightCircle(canvas);
         drawTopTextRectDialog(canvas);
+        drawSmallTriangle(canvas);
     }
 
     //左侧的控制圆与边框
@@ -326,6 +329,16 @@ public class RangeView extends View {
         Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
         float baseline = mTopDialogRect.centerY() + (fontMetrics.descent - fontMetrics.ascent) / 2f - fontMetrics.descent;
         canvas.drawText(textDesc, mTopDialogRect.centerX(), baseline, textPaint);
+    }
+
+    // 画小三角形
+    private void drawSmallTriangle(Canvas canvas) {
+        mTrianglePath.reset();
+        mTrianglePath.moveTo(mTopDialogRect.left + mTopDialogWidth / 2f - mTriangleLength / 2f, getPaddingTop() + mTopDialogCornerRadius * 2);
+        mTrianglePath.rLineTo(mTriangleLength, 0);
+        mTrianglePath.rLineTo(- mTriangleLength / 2f, mTriangleHeight);
+        mTrianglePath.close();
+        canvas.drawPath(mTrianglePath, mSelectedLinePaint);
     }
 
     //回调区间值的监听
