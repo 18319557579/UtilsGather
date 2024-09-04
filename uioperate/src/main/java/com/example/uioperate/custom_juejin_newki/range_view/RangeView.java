@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -63,6 +64,21 @@ public class RangeView extends View {
 
     private int maxValue = 100;  //最大值，默认为100
 
+    private int leftValue;  //当前左边数值，
+    private int rightValue;  //当前右边数值
+
+    private int mTopDialogTextSize = getResources().getDimensionPixelSize(R.dimen.d_12dp);  //顶部文字的大小
+    private int mTopDialogTextColor = Color.parseColor("#000000");  //顶部文字的颜色
+    private int mTopDialogWidth = getResources().getDimensionPixelSize(R.dimen.d_70dp);  //顶部描述信息弹窗的宽度
+    private int mTopDialogCornerRadius = getResources().getDimensionPixelSize(R.dimen.d_15dp);  //顶部描述信息弹窗圆角半径
+    private int mTopDialogSpaceToProgress = getResources().getDimensionPixelSize(R.dimen.d_2dp); //顶部描述信息弹窗距离进度条的间距(配置)
+
+    private RectF mTopDialogRect = new RectF();      //顶部表示具体数值的矩形
+    private Path mTrianglePath;     //画小三角形路径
+    private int mTriangleLength = 15;  //等边三角形边长
+    private int mTriangleHeight;     //等边三角形的高
+    private Paint textPaint;
+
     private void init() {
         mDefaultLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mDefaultLinePaint.setDither(true);
@@ -101,6 +117,18 @@ public class RangeView extends View {
         mRightCircleStrokePaint.setStyle(Paint.Style.STROKE);
         mRightCircleStrokePaint.setColor(Color.parseColor("#FFFFFF"));
         mRightCircleStrokePaint.setStrokeWidth(mCircleStrokeWidth);
+
+        // 小三角形的高。用于确定控件的整体高度，以及绘制小三角形
+        mTriangleHeight = (int) (mTriangleLength * Math.sqrt(3) / 2);
+
+        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setDither(true);
+        textPaint.setTextSize(mTopDialogTextSize);
+        textPaint.setColor(mTopDialogTextColor);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+
+        mTopDialogRect.top = getPaddingTop();
+        mTopDialogRect.bottom = getPaddingTop() + mTopDialogCornerRadius * 2;
     }
 
     @Override
@@ -115,7 +143,8 @@ public class RangeView extends View {
 
         // 计算的宽度和高度
         int calWidthSize = mCircleRadius * 2 + mCircleStrokeWidth * 2 + getPaddingLeft() + getPaddingRight();
-        int calHeightSize = mCircleRadius * 2 + mCircleStrokeWidth * 2 + getPaddingTop() + getPaddingBottom();
+        int calHeightSize = mCircleRadius * 2 + mCircleStrokeWidth * 2 + getPaddingTop() + getPaddingBottom()
+                + mTopDialogCornerRadius * 2 + mTriangleHeight + mTopDialogSpaceToProgress ;  //下面这行就是提示框的
 
         if (widthMode == MeasureSpec.EXACTLY) {
             finalWidth = widthSize;
@@ -145,19 +174,26 @@ public class RangeView extends View {
 //        int realWidth = w - getPaddingLeft() - getPaddingRight();
         mStrokeRadius = mCircleRadius + mCircleStrokeWidth;  //半径+边框的总值
 
+        //顶部多的距离
+        int topDialogHeight = mTopDialogCornerRadius * 2 + mTriangleHeight + mTopDialogSpaceToProgress;
+
         // 左边圆的圆心坐标
         mLeftCircleCenterX = mLeftBorder = getPaddingLeft() + mStrokeRadius;
-        mLeftCircleCenterY = getPaddingTop() + mStrokeRadius;
+        mLeftCircleCenterY = getPaddingTop() + mStrokeRadius
+            + topDialogHeight;
 
         // 右边圆的圆心坐标
         mRightCircleCenterX = mRightBorder = w - getPaddingRight() - mStrokeRadius;
-        mRightCircleCenterY = getPaddingTop() + mStrokeRadius;
+        mRightCircleCenterY = getPaddingTop() + mStrokeRadius
+            + topDialogHeight;
 
         mDefaultCornerLineRect.left = mSelectedCornerLineRect.left = mLeftCircleCenterX;
         // 因为圆的高是支撑整个空间的高度的，所以限定中间条的高时，要去用 mStrokeRadius - mRangLineCornerRadius
-        mDefaultCornerLineRect.top = mSelectedCornerLineRect.top = getPaddingTop() + mStrokeRadius - mRangLineCornerRadius;
+        mDefaultCornerLineRect.top = mSelectedCornerLineRect.top = getPaddingTop() + mStrokeRadius - mRangLineCornerRadius
+            + topDialogHeight;
         mDefaultCornerLineRect.right = mSelectedCornerLineRect.right = mRightCircleCenterX;
-        mDefaultCornerLineRect.bottom = mSelectedCornerLineRect.bottom = getPaddingTop() + mStrokeRadius + mRangLineCornerRadius;
+        mDefaultCornerLineRect.bottom = mSelectedCornerLineRect.bottom = getPaddingTop() + mStrokeRadius + mRangLineCornerRadius
+            + topDialogHeight;
     }
 
     @Override
@@ -167,6 +203,7 @@ public class RangeView extends View {
         drawSelectedRectLine(canvas);
         drawLeftCircle(canvas);
         drawRightCircle(canvas);
+        drawTopTextRectDialog(canvas);
     }
 
     //左侧的控制圆与边框
@@ -236,17 +273,24 @@ public class RangeView extends View {
                     mRightCircleCenterX = moveX;
                 }
             }
+
+
+
         } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-            int leftValue = getPercentMax(mLeftCircleCenterX);
-            int rightValue = getPercentMax(mRightCircleCenterX);
             if (mListener != null) mListener.onMoveValue(leftValue, rightValue);
         }
 
 
         limitMinAndMax();
 
+        leftValue = getPercentMax(mLeftCircleCenterX);
+        rightValue = getPercentMax(mRightCircleCenterX);
+
         mSelectedCornerLineRect.left = mLeftCircleCenterX;
         mSelectedCornerLineRect.right = mRightCircleCenterX;
+
+        mTopDialogRect.left = (mRightCircleCenterX + mLeftCircleCenterX) / 2 - mTopDialogWidth / 2f;
+        mTopDialogRect.right = (mRightCircleCenterX + mLeftCircleCenterX) / 2 + mTopDialogWidth / 2f;
 
         invalidate();
         return true;
@@ -269,6 +313,19 @@ public class RangeView extends View {
         if (mRightCircleCenterX > mRightBorder) {
             mRightCircleCenterX = mRightBorder;
         }
+    }
+
+    //顶部的文字框
+    private void drawTopTextRectDialog(Canvas canvas) {
+
+        // 绘制圆角矩形框
+        canvas.drawRoundRect(mTopDialogRect, mTopDialogCornerRadius, mTopDialogCornerRadius, mSelectedLinePaint);
+
+        // 绘制文字
+        String textDesc = leftValue + " - " + rightValue;
+        Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
+        float baseline = mTopDialogRect.centerY() + (fontMetrics.descent - fontMetrics.ascent) / 2f - fontMetrics.descent;
+        canvas.drawText(textDesc, mTopDialogRect.centerX(), baseline, textPaint);
     }
 
     //回调区间值的监听
