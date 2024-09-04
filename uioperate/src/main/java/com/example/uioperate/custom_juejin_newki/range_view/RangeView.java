@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,8 @@ public class RangeView extends View {
     private float mLeftCircleCenterY;
     private float mRightCircleCenterX;
     private float mRightCircleCenterY;
+    private float mLeftBorder;
+    private float mRightBorder;
 
     private int mRangLineHeight = getResources().getDimensionPixelSize(R.dimen.d_4dp);  //中间圆角矩形线的高
     private int mRangLineCornerRadius = mRangLineHeight / 2;     //圆角矩形线的圆角半径
@@ -128,6 +131,8 @@ public class RangeView extends View {
         setMeasuredDimension(finalWidth, finalHeight);
     }
 
+
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -136,11 +141,11 @@ public class RangeView extends View {
         mStrokeRadius = mCircleRadius + mCircleStrokeWidth;  //半径+边框的总值
 
         // 左边圆的圆心坐标
-        mLeftCircleCenterX = getPaddingLeft() + mStrokeRadius;
+        mLeftCircleCenterX = mLeftBorder = getPaddingLeft() + mStrokeRadius;
         mLeftCircleCenterY = getPaddingTop() + mStrokeRadius;
 
         // 右边圆的圆心坐标
-        mRightCircleCenterX = w - getPaddingRight() - mStrokeRadius;
+        mRightCircleCenterX = mRightBorder = w - getPaddingRight() - mStrokeRadius;
         mRightCircleCenterY = getPaddingTop() + mStrokeRadius;
 
         mDefaultCornerLineRect.left = mSelectedCornerLineRect.left = mLeftCircleCenterX;
@@ -176,5 +181,46 @@ public class RangeView extends View {
     //中心的圆角矩形进度条-已经选中的颜色
     private void drawSelectedRectLine(Canvas canvas) {
         canvas.drawRoundRect(mSelectedCornerLineRect, mRangLineCornerRadius, mRangLineCornerRadius, mSelectedLinePaint);
+    }
+
+    /**
+     * 判断当前移动的是左侧限制圆，还是右侧限制圆
+     *
+     * @param downX 按下的坐标点
+     * @return true表示按下的左侧，false表示按下的右侧
+     */
+    private boolean checkTouchCircleLeftOrRight(float downX) {
+        return Math.abs(mLeftCircleCenterX - downX) < Math.abs(mRightCircleCenterX - downX);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        boolean touchLeftCircle;
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            float downX = event.getX();
+            touchLeftCircle = checkTouchCircleLeftOrRight(downX);
+            if (touchLeftCircle) {
+                mLeftCircleCenterX = downX;
+            } else {
+                mRightCircleCenterX = downX;
+            }
+        }
+        limitMinAndMax();
+        mSelectedCornerLineRect.left = mLeftCircleCenterX;
+        mSelectedCornerLineRect.right = mRightCircleCenterX;
+
+        invalidate();
+        return true;
+    }
+
+    private void limitMinAndMax() {
+        //如果是操作的左侧限制圆，超过最小值了
+        if (mLeftCircleCenterX < mLeftBorder) {
+            mLeftCircleCenterX = mLeftBorder;
+        }
+        //如果是操作的右侧限制圆，超过最小值了
+        if (mRightCircleCenterX > mRightBorder) {
+            mRightCircleCenterX = mRightBorder;
+        }
     }
 }
