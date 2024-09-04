@@ -68,6 +68,7 @@ public class StarScoreView extends View {
         mPaint = paint;
     }
 
+    // 这里测量宽高的时候，没有考虑padding的情况
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // super.onMeasure(); 其实内部还是调用了 setMeasuredDimension

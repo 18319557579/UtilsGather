@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.custom_github_blankj.CustomGithubBlankjActivity
 import com.example.uioperate.custom_juejin_newki.progress_ring.CustomJuejinNewkiActivity
+import com.example.uioperate.custom_juejin_newki.range_view.RangeViewActivity
 import com.example.uioperate.custom_juejin_newki.star.StarScoreViewActivity
 import com.example.uioperate.custom_juejin_newki.thermometer.TemperatureViewActivity
 import com.example.uioperate.custom_juejin_s10g.JuejinS10gActivity
@@ -74,6 +75,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("自定义View-Github-Newki StarScoreViewActivity") {
                 startActivity(Intent(this, StarScoreViewActivity::class.java))
+            },
+            GuideItemEntity("自定义View-Github-Newki RangeViewActivity") {
+                startActivity(Intent(this, RangeViewActivity::class.java))
             },
         ))
     }
