@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.uioperate.R;
+import com.example.utilsgather.logcat.LogUtil;
 
 public class RangeView extends View {
     public RangeView(Context context) {
@@ -217,17 +218,24 @@ public class RangeView extends View {
             if (touchLeftCircle) {
                 if (moveX > mRightCircleCenterX) {
                     touchLeftCircle = false;
+                    // 这里在越过右边圆的时候，将右边圆的坐标给左边的。因为在快速滑动的过程中，event会回调得不够及时，导致left的坐标会滞后
+                    mLeftCircleCenterX = mRightCircleCenterX;
                     mRightCircleCenterX = moveX;
+                    LogUtil.d("右边发生了变化: " + moveX);
                 } else {
                     mLeftCircleCenterX = moveX;
+                    LogUtil.d("左边发生了变化: " + moveX);
                 }
 
             } else {
                 if (moveX < mLeftCircleCenterX) {
                     touchLeftCircle = true;
+                    mRightCircleCenterX = mLeftCircleCenterX;
                     mLeftCircleCenterX = moveX;
+                    LogUtil.d("左边发生了变化2: " + moveX);
                 } else {
                     mRightCircleCenterX = moveX;
+                    LogUtil.d("右边发生了变化2: " + moveX);
                 }
             }
         }
