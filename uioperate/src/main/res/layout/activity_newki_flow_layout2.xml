@@ -10,7 +10,7 @@
     <com.example.uioperate.custom_juejin_newki.flow_layout.NewkiFlowLayout2
         android:id="@+id/view_group2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#38FFEB3B">
 
         <View

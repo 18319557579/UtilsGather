@@ -20,9 +20,53 @@ public class NewkiFlowLayout2 extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // 让子View去测量自己的宽高，这一步是必须要的
-        measureChildren(widthMeasureSpec, heightMeasureSpec);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        final int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+
+        final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        final int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
+            // 让子View去测量自己的宽高，这一步是必须要的
+            measureChildren(widthMeasureSpec, heightMeasureSpec);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        } else if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.AT_MOST) {
+            int layoutChildViewCurX = getPaddingLeft();
+
+            int totalControlHeight = 0;
+
+            for (int i = 0; i < getChildCount(); i++) {
+                final View childView = getChildAt(i);
+                if (childView.getVisibility() == View.GONE) {
+                    continue;
+                }
+
+                final MyLayoutParams lp = (MyLayoutParams) childView.getLayoutParams();
+                childView.measure(
+                        getChildMeasureSpec(widthMeasureSpec, getPaddingLeft() + getPaddingRight(), lp.width),
+                        getChildMeasureSpec(heightMeasureSpec, getPaddingTop() + getPaddingBottom(), lp.height)
+                );
+                // 获得子View测量出来的高度和宽度
+                int width = childView.getMeasuredWidth();
+                int height = childView.getMeasuredHeight();
+
+                if (totalControlHeight == 0) {
+                    totalControlHeight = height + lp.topMargin + lp.bottomMargin;
+                }
+
+                if (layoutChildViewCurX + width + lp.leftMargin + lp.rightMargin > widthSize) {
+                    layoutChildViewCurX = getPaddingLeft();  // 超过之后，从左边重新开始
+                    totalControlHeight += height + lp.topMargin + lp.bottomMargin;
+                }
+                layoutChildViewCurX += width + lp.leftMargin + lp.rightMargin;
+            }
+
+            // 满足一下父View的要求
+            int cachedTotalWidth = resolveSize(widthSize, widthMeasureSpec);
+            int cachedTotalHeight = resolveSize(totalControlHeight, heightMeasureSpec);
+            // 提交自己的宽高
+            setMeasuredDimension(cachedTotalWidth, cachedTotalHeight);
+        }
     }
 
     @Override
