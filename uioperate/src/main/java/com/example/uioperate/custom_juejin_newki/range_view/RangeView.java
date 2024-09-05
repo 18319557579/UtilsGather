@@ -79,6 +79,8 @@ public class RangeView extends View {
     private int mTriangleHeight;     //等边三角形的高
     private Paint textPaint;
 
+    private boolean isShowRectDialog = false;  //是否展示顶部弹窗
+
     private void init() {
         mDefaultLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mDefaultLinePaint.setDither(true);
@@ -246,8 +248,14 @@ public class RangeView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        boolean touchLeftCircle;
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (dismissRunnable != null) {
+                removeCallbacks(dismissRunnable);
+                LogUtil.d("按下的时候runnable不为null");
+            } else {
+                LogUtil.d("按下的时候runnable已经为null");
+            }
+            isShowRectDialog = true;
             float downX = event.getX();
             touchLeftCircle = checkTouchCircleLeftOrRight(downX);
             if (touchLeftCircle) {
@@ -256,6 +264,10 @@ public class RangeView extends View {
                 mRightCircleCenterX = downX;
             }
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            if (dismissRunnable != null) {
+                removeCallbacks(dismissRunnable);
+            }
+            isShowRectDialog = true;
             float moveX = event.getX();
             if (touchLeftCircle) {
                 if (moveX > mRightCircleCenterX) {
@@ -277,10 +289,22 @@ public class RangeView extends View {
                 }
             }
 
-
-
         } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
             if (mListener != null) mListener.onMoveValue(leftValue, rightValue);
+
+            if (dismissRunnable != null) {
+                removeCallbacks(dismissRunnable);
+            }
+            dismissRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    isShowRectDialog = false;
+                    postInvalidate();
+                    dismissRunnable = null;
+                }
+            };
+
+            postDelayed(dismissRunnable, 1000);
         }
 
 
@@ -320,6 +344,7 @@ public class RangeView extends View {
 
     //顶部的文字框
     private void drawTopTextRectDialog(Canvas canvas) {
+        if (!isShowRectDialog) return;
 
         // 绘制圆角矩形框
         canvas.drawRoundRect(mTopDialogRect, mTopDialogCornerRadius, mTopDialogCornerRadius, mSelectedLinePaint);
@@ -333,6 +358,8 @@ public class RangeView extends View {
 
     // 画小三角形
     private void drawSmallTriangle(Canvas canvas) {
+        if (!isShowRectDialog) return;
+
         mTrianglePath.reset();
         mTrianglePath.moveTo(mTopDialogRect.left + mTopDialogWidth / 2f - mTriangleLength / 2f, getPaddingTop() + mTopDialogCornerRadius * 2);
         mTrianglePath.rLineTo(mTriangleLength, 0);
@@ -349,4 +376,6 @@ public class RangeView extends View {
     public void setRangeValueListener(OnRangeValueListener listener) {
         this.mListener = listener;
     }
+
+    Runnable dismissRunnable;
 }
