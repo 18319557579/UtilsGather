@@ -5,6 +5,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class NewkiFlowLayout2 extends ViewGroup {
     public NewkiFlowLayout2(Context context) {
         this(context, null);
@@ -66,6 +70,52 @@ public class NewkiFlowLayout2 extends ViewGroup {
             int cachedTotalHeight = resolveSize(totalControlHeight, heightMeasureSpec);
             // 提交自己的宽高
             setMeasuredDimension(cachedTotalWidth, cachedTotalHeight);
+
+        } else if (widthMode == MeasureSpec.AT_MOST && heightMode == MeasureSpec.AT_MOST) {
+            int layoutChildViewCurX = this.getPaddingLeft();
+
+            int totalControlHeight = 0;
+            List<Integer> lineWidths = new ArrayList<>();
+
+            for (int i = 0; i < getChildCount(); i++) {
+                final View childView = getChildAt(i);
+                if (childView.getVisibility() == View.GONE) {
+                    continue;
+                }
+
+                final MyLayoutParams lp = (MyLayoutParams) childView.getLayoutParams();
+                childView.measure(
+                        getChildMeasureSpec(widthMeasureSpec, getPaddingLeft() + getPaddingRight(), lp.width),
+                        getChildMeasureSpec(heightMeasureSpec, getPaddingTop() + getPaddingBottom(), lp.height)
+                );
+                // 获得子View测量出来的高度和宽度
+                int width = childView.getMeasuredWidth();
+                int height = childView.getMeasuredHeight();
+
+                if (totalControlHeight == 0) {
+                    totalControlHeight = height + lp.topMargin + lp.bottomMargin;
+                }
+
+                if (layoutChildViewCurX + width + lp.leftMargin + lp.rightMargin > widthSize) {
+                    lineWidths.add(layoutChildViewCurX);
+                    layoutChildViewCurX = getPaddingLeft();  // 超过之后，从左边重新开始
+                    totalControlHeight += height + lp.topMargin + lp.bottomMargin;
+                }
+                layoutChildViewCurX += width + lp.leftMargin + lp.rightMargin;
+
+                // 到最后一个元素时，还是将该行的宽度添加到list中了。因为如果到最后一个元素时，没有触发换行，最后一行的宽度是不会记入list的
+                if (i == getChildCount() - 1) {
+                    lineWidths.add(layoutChildViewCurX);
+                }
+            }
+
+            int maxLineWidth = Collections.max(lineWidths);
+            // 满足一下父View的要求
+            int cachedTotalWidth = resolveSize(maxLineWidth, widthMeasureSpec);
+            int cachedTotalHeight = resolveSize(totalControlHeight, heightMeasureSpec);
+            // 提交自己的宽高
+            setMeasuredDimension(cachedTotalWidth, cachedTotalHeight);
+
         }
     }
 
@@ -88,7 +138,7 @@ public class NewkiFlowLayout2 extends ViewGroup {
 
 
             if (layoutChildViewCurX + width + lp.leftMargin + lp.rightMargin> mViewGroupWidth) {
-                layoutChildViewCurX = 1;
+                layoutChildViewCurX = l;
                 layoutChildViewCurY += height + lp.leftMargin + lp.rightMargin;
             }
 
