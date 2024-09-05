@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".custom_juejin_newki.flow_layout.NewkiFlowLayout2Activity">
+
+    <com.example.uioperate.custom_juejin_newki.flow_layout.NewkiFlowLayout2
+        android:id="@+id/view_group2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#38FFEB3B">
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="#ff00ff"
+            android:layout_marginLeft="@dimen/d_5dp"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="#F44336"
+            android:layout_marginLeft="@dimen/d_5dp"/>
+
+        <View
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="#E91E63"
+            android:layout_marginLeft="@dimen/d_5dp"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="#3F51B5"
+            android:layout_marginLeft="@dimen/d_5dp"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="#03A9F4"
+            android:layout_marginLeft="@dimen/d_5dp"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="#009688"
+            android:layout_marginLeft="@dimen/d_5dp"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="#8BC34A"
+            android:layout_marginLeft="@dimen/d_5dp"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="#FFC107"
+            android:layout_marginLeft="@dimen/d_5dp"/>
+    </com.example.uioperate.custom_juejin_newki.flow_layout.NewkiFlowLayout2>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

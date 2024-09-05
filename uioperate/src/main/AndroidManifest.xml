@@ -21,6 +21,12 @@
 
     <application android:networkSecurityConfig="@xml/network_security_config">
         <activity
+            android:name=".custom_juejin_newki.flow_layout.NewkiFlowLayout2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".custom_juejin_newki.flow_layout.NewkiFlowLayout1Activity"
+            android:exported="false" />
+        <activity
             android:name=".custom_juejin_newki.range_view.RangeViewActivity"
             android:exported="false" />
         <activity

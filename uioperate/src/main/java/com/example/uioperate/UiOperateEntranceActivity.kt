@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.custom_github_blankj.CustomGithubBlankjActivity
+import com.example.uioperate.custom_juejin_newki.flow_layout.NewkiFlowLayout1Activity
+import com.example.uioperate.custom_juejin_newki.flow_layout.NewkiFlowLayout2Activity
 import com.example.uioperate.custom_juejin_newki.progress_ring.CustomJuejinNewkiActivity
 import com.example.uioperate.custom_juejin_newki.range_view.RangeViewActivity
 import com.example.uioperate.custom_juejin_newki.star.StarScoreViewActivity
@@ -78,6 +80,12 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("自定义View-Github-Newki RangeViewActivity") {
                 startActivity(Intent(this, RangeViewActivity::class.java))
+            },
+            GuideItemEntity("自定义View-Github-Newki NewkiFlowLayout1Activity") {
+                startActivity(Intent(this, NewkiFlowLayout1Activity::class.java))
+            },
+            GuideItemEntity("自定义View-Github-Newki NewkiFlowLayout2Activity") {
+                startActivity(Intent(this, NewkiFlowLayout2Activity::class.java))
             },
         ))
     }
