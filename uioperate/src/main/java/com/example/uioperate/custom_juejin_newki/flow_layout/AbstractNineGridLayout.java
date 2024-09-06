@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.utilsgather.ui.SizeTransferUtil;
+
 public class AbstractNineGridLayout extends ViewGroup {
     public AbstractNineGridLayout(Context context) {
         super(context);
@@ -23,12 +25,15 @@ public class AbstractNineGridLayout extends ViewGroup {
         init(context);
     }
 
-    private static int MAX_CHILDREN_COUNT = 9;
+    private static int MAX_CHILDREN_COUNT = 5;
     private int horizontalSpacing = 20;  // 左右边距
     private int verticalSpacing = 20;  // 上下边距
 
     private int itemWidth;
     private int itemHeight;
+
+    private int singleWidth = SizeTransferUtil.dip2px(200, getContext());
+    private int singleHeight = SizeTransferUtil.dip2px(300, getContext());;
 
     private void init(Context context) {
         for (int i = 0; i < MAX_CHILDREN_COUNT; i++) {
@@ -45,8 +50,19 @@ public class AbstractNineGridLayout extends ViewGroup {
         int widthSize = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft() - getPaddingRight();
         int notGoneChildCount = getNotGoneChildCount();
 
-        itemWidth = (widthSize - horizontalSpacing * 2) / 3;
-        itemHeight = itemWidth;
+        if (notGoneChildCount == 1) {
+            // 如果用于有自定义View的宽高，就使用用户自定义的，否则都使用最大宽度
+            itemWidth = singleWidth > 0 ? singleWidth : widthSize;
+            itemHeight = singleHeight > 0 ? singleHeight : widthSize;
+            // 如果用户自定义的宽度比最大宽度还要大，那么就削宽度，并让高度以比例进行调整
+            if (itemWidth > widthSize) {
+                itemWidth = widthSize;
+                itemHeight = (widthSize / singleWidth) * singleHeight;
+            }
+        } else {
+            itemWidth = (widthSize - horizontalSpacing * 2) / 3;
+            itemHeight = itemWidth;
+        }
 
         measureChildren(MeasureSpec.makeMeasureSpec(itemWidth, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(itemHeight, MeasureSpec.EXACTLY));
@@ -60,6 +76,7 @@ public class AbstractNineGridLayout extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int childCount = getChildCount();
+        int notGoneChildCount = getNotGoneChildCount();
         int position = 0;
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
@@ -67,8 +84,16 @@ public class AbstractNineGridLayout extends ViewGroup {
                 continue;
             }
 
-            int row = position / 3;
-            int column = position % 3;
+            int row;
+            int column;
+            if (notGoneChildCount == 4) {
+                row = position / 2;
+                column = position % 2;
+            } else {
+                row = position / 3;
+                column = position % 3;
+            }
+
 
             int x = getPaddingLeft() + column * (horizontalSpacing + itemWidth);
             int y = getPaddingTop() + row * (verticalSpacing + itemHeight);

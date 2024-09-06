@@ -11,8 +11,6 @@
     <com.example.uioperate.custom_juejin_newki.flow_layout.AbstractNineGridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f1f1f1"
-
-        android:padding="20dp"/>
+        android:background="#f1f1f1"/>
 
 </LinearLayout>
