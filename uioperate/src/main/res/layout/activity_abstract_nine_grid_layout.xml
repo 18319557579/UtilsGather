@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
     <com.example.uioperate.custom_juejin_newki.flow_layout.AbstractNineGridLayout
+        android:id="@+id/abstract_nine_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#f1f1f1"/>

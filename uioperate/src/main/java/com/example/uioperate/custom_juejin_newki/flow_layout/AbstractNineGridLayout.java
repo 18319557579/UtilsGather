@@ -25,7 +25,7 @@ public class AbstractNineGridLayout extends ViewGroup {
         init(context);
     }
 
-    private static int MAX_CHILDREN_COUNT = 5;
+    private static int MAX_CHILDREN_COUNT = 9;
     private int horizontalSpacing = 20;  // 左右边距
     private int verticalSpacing = 20;  // 上下边距
 
@@ -34,6 +34,8 @@ public class AbstractNineGridLayout extends ViewGroup {
 
     private int singleWidth = SizeTransferUtil.dip2px(200, getContext());
     private int singleHeight = SizeTransferUtil.dip2px(300, getContext());;
+
+    private AbstractNineGridAdapter mAdapter;
 
     private void init(Context context) {
         for (int i = 0; i < MAX_CHILDREN_COUNT; i++) {
@@ -49,6 +51,11 @@ public class AbstractNineGridLayout extends ViewGroup {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft() - getPaddingRight();
         int notGoneChildCount = getNotGoneChildCount();
+
+        if (mAdapter == null || notGoneChildCount == 0 ) {
+            setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), 0);
+            return;
+        }
 
         if (notGoneChildCount == 1) {
             // 如果用于有自定义View的宽高，就使用用户自定义的，否则都使用最大宽度
@@ -104,6 +111,8 @@ public class AbstractNineGridLayout extends ViewGroup {
             if (position == MAX_CHILDREN_COUNT)
                 break;
         }
+
+        performBind();
     }
 
     private int getNotGoneChildCount() {
@@ -119,5 +128,49 @@ public class AbstractNineGridLayout extends ViewGroup {
 
     private int calculateRows(int x) {
         return (x + 2) / 3;
+    }
+
+    public void setAdapter(AbstractNineGridAdapter adapter) {
+        mAdapter = adapter;
+        inflateAllViews();
+    }
+
+    private void inflateAllViews() {
+        removeAllViewsInLayout();
+
+        if (mAdapter == null || mAdapter.getItemCount() == 0) {
+            return;
+        }
+
+        int displayCount = Math.min(mAdapter.getItemCount(), MAX_CHILDREN_COUNT);
+
+        if (displayCount == 1) {
+            View view = mAdapter.onCreateItemView(getContext(), this, -1);
+            addView(view);
+            requestLayout();
+            return;
+        }
+
+        for (int i = 0; i < displayCount; i++) {
+            int itemType = mAdapter.getItemViewType(i);
+            View view = mAdapter.onCreateItemView(getContext(), this, itemType);
+            view.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            addView(view);
+        }
+        requestLayout();
+    }
+
+    private void performBind() {
+        if (mAdapter == null || mAdapter.getItemCount() == 0) {
+            return;
+        }
+
+        post(() -> {
+            for (int i = 0; i < getNotGoneChildCount(); i++) {
+                int itemType = mAdapter.getItemViewType(i);
+                View view = getChildAt(i);
+                mAdapter.onBindItemView(view, itemType, i);
+            }
+        });
     }
 }

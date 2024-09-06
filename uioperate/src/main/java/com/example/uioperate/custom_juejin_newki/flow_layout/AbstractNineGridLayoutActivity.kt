@@ -11,5 +11,11 @@ class AbstractNineGridLayoutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_abstract_nine_grid_layout)
+
+        val imgList = listOf("1", "2", "3", "1", "2", "3", "1", "2", "3")
+        val myNineGridAdapter = MyNineGridAdapter(imgList);
+
+        findViewById<AbstractNineGridLayout>(R.id.abstract_nine_grid)
+            .setAdapter(myNineGridAdapter)
     }
 }
