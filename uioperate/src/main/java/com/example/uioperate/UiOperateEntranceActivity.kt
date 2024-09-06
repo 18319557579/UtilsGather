@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.custom_github_blankj.CustomGithubBlankjActivity
+import com.example.uioperate.custom_juejin_newki.flow_layout.AbstractNineGridLayoutActivity
 import com.example.uioperate.custom_juejin_newki.flow_layout.NewkiFlowLayout1Activity
 import com.example.uioperate.custom_juejin_newki.flow_layout.NewkiFlowLayout2Activity
 import com.example.uioperate.custom_juejin_newki.progress_ring.CustomJuejinNewkiActivity
@@ -86,6 +87,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("自定义View-Github-Newki NewkiFlowLayout2Activity") {
                 startActivity(Intent(this, NewkiFlowLayout2Activity::class.java))
+            },
+            GuideItemEntity("自定义View-Github-Newki AbstractNineGridLayoutActivity") {
+                startActivity(Intent(this, AbstractNineGridLayoutActivity::class.java))
             },
         ))
     }
