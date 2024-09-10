@@ -10,7 +10,7 @@
 
     <com.example.uioperate.custom_shangshan.ProtractorView
         android:layout_width="@dimen/d_400dp"
-        android:layout_height="300dp"
+        android:layout_height="150dp"
         android:background="#ffffff"
 
         android:layout_centerInParent="true"/>

@@ -20,6 +20,22 @@ class ProtractorView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr){
 
+    private val TEST_MODE = true
+
+    val bgPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        setColor(Color.parseColor("#80A9A9A9"))
+    }
+    val linePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.BLACK
+        strokeWidth = 1f
+        strokeCap = Paint.Cap.ROUND
+    }
+    val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.BLACK
+        textSize = 20f
+        textAlign = Paint.Align.CENTER  // 居中绘制能解决非常多的计算问题
+    }
+
     private val rectF = RectF()  // 中间小矩形
     private var radius = 0f  // 半径
 
@@ -51,45 +67,16 @@ class ProtractorView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-
-        val greenPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            setColor(Color.GREEN)
-        }
-        canvas.drawRect(rectF, greenPaint)
-
-        val centerCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            setColor(Color.RED)
-            strokeWidth = 10f
-            strokeCap = Paint.Cap.ROUND
-        }
-
         val centerX = width / 2f
         val centerY = height / 2f + rectF.height() / 2f
-        canvas.drawPoint(centerX, centerY, centerCircle)
 
-        val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            setColor(Color.parseColor("#80A9A9A9"))
-        }
-
-
+        testShow(canvas, centerX, centerY)
 
         canvas.withSave {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 clipOutRect(0, centerY.toInt() + 30, width, height)
             }
             canvas.drawCircle(centerX, centerY, radius, bgPaint)
-        }
-
-        val linePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.BLACK
-            strokeWidth = 1f
-            strokeCap = Paint.Cap.ROUND
-        }
-
-        val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.BLACK
-            textSize = 20f
-            textAlign = Paint.Align.CENTER  // 居中绘制能解决非常多的计算问题
         }
 
         val unit = PI / 180
@@ -122,4 +109,20 @@ class ProtractorView @JvmOverloads constructor(
         }
     }
 
+    private fun testShow(canvas: Canvas, centerX: Float, centerY: Float) {
+        if (TEST_MODE) {
+            val greenPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                setColor(Color.GREEN)
+            }
+            canvas.drawRect(rectF, greenPaint)
+
+            val centerCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                setColor(Color.RED)
+                strokeWidth = 10f
+                strokeCap = Paint.Cap.ROUND
+            }
+
+            canvas.drawPoint(centerX, centerY, centerCircle)
+        }
+    }
 }
