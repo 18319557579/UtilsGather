@@ -86,6 +86,12 @@ class ProtractorView @JvmOverloads constructor(
             strokeCap = Paint.Cap.ROUND
         }
 
+        val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color.BLACK
+            textSize = 20f
+            textAlign = Paint.Align.CENTER  // 居中绘制能解决非常多的计算问题
+        }
+
         val unit = PI / 180
         var angle = 0
         while (angle <= 180) {
@@ -93,7 +99,18 @@ class ProtractorView @JvmOverloads constructor(
             val startY = centerY - radius * sin(angle * unit)
 
             val lineLength = when {
-                angle % 10 == 0 -> minLength * 2f
+                angle % 10 == 0 -> {
+                    (minLength * 2f).also {  // 下面是画度数
+                        val startTextX = centerX + (radius - it * 1.5f) * cos(angle * unit)
+                        val startTextY = centerY - (radius - it * 1.5f) * sin(angle * unit)
+                        val valueString = "$angle°"
+
+                        canvas.withSave {
+                            rotate(90f - angle, startTextX.toFloat(), startTextY.toFloat())
+                            drawText(valueString, startTextX.toFloat(), startTextY.toFloat(), textPaint)
+                        }
+                    }
+                }
                 angle % 5 == 0 -> minLength * 1.5f
                 else -> minLength
             }
