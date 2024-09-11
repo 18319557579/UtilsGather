@@ -15,6 +15,7 @@ import com.example.uioperate.custom_juejin_s10g.JuejinS10gActivity
 import com.example.uioperate.custom_qiujuer.MoocBezierActivity
 import com.example.uioperate.custom_qiujuer.CustomQiujuerActivity
 import com.example.uioperate.custom_qiujuer.DrawableTestActivity
+import com.example.uioperate.custom_scrolltext_canger.RecyclerViewScrollActivity
 import com.example.uioperate.custom_shangshan.ProtractorViewActivity
 import com.example.uioperate.databinding.ActivityUiOperateEntranceBinding
 import com.example.uioperate.easy_recyclerview.EasyRecyclerViewActivity
@@ -94,6 +95,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("自定义View-Github-Newki ProtractorViewActivity") {
                 startActivity(Intent(this, ProtractorViewActivity::class.java))
+            },
+            GuideItemEntity("滚动RecyclerView RecyclerViewScrollActivity") {
+                startActivity(Intent(this, RecyclerViewScrollActivity::class.java))
             },
         ))
     }
