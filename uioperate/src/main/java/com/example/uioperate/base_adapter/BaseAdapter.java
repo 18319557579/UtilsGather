@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
 
-    public List<T> dataList;
+    private List<T> dataList;
 
     public List<T> getDataList() {
         return dataList;
@@ -34,6 +34,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
         }
         onMyBindViewHolder(holder, position);
     }
+    // bind 的时候有自定义需求，重写这个方法
     public void onMyBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
     };
@@ -63,5 +64,15 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
 
     public View getResId(ViewGroup viewGroup, int resId) {
         return LayoutInflater.from(viewGroup.getContext()).inflate(resId, viewGroup, false);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return getMyItemViewType(position);
+    }
+
+    // 如果有多布局的要求，重写这个方法
+    public int getMyItemViewType(int position) {
+        return 0;
     }
 }

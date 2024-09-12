@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.base_adapter.BaseAdapterActivity
+import com.example.uioperate.base_adapter.multi_layout.MultiLayoutActivity
 import com.example.uioperate.custom_github_blankj.CustomGithubBlankjActivity
 import com.example.uioperate.custom_juejin_newki.flow_layout.AbstractNineGridLayoutActivity
 import com.example.uioperate.custom_juejin_newki.flow_layout.NewkiFlowLayout1Activity

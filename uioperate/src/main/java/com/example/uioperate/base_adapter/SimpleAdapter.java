@@ -13,7 +13,7 @@ public class SimpleAdapter extends BaseAdapter<String>{
     @Override
     public void onMyBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         SimpleViewHolder simpleViewHolder = (SimpleViewHolder) holder;
-        simpleViewHolder.textContent.setText("测试" + dataList.get(position));
+        simpleViewHolder.textContent.setText("测试" + getDataList().get(position));
     }
 
     @Override
