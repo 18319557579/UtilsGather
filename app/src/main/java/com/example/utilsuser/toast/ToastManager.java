@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.example.utilsgather.logcat.LogUtil;
+
 import java.util.ArrayDeque;
 import java.util.Queue;
 
@@ -54,11 +56,19 @@ public class ToastManager {
         handler.postDelayed(() -> showNextToast(context, duration), MIN_DISPLAY_TIME);
     }
 
+    // 看具体业务调用这个方法取消Toast展示吧。取消的同时，这个单例也要别重置了
     public static void cancelAllToast() {
-        if (instance != null && instance.currentToast != null) {
+        if (instance == null) return;  // 没使用过ToastManager
+
+        if (instance.currentToast != null) {
             instance.currentToast.cancel();
             instance.currentToast = null;
             instance.handler.removeCallbacksAndMessages(null); // 移除所有回调和消息，防止新的Toast弹出
         }
+        instance = null;
     }
+
+    /* todo 其实取消这里存在一点点问题，就是前面 currentToast = null; 会导致currentToast为空，因此会有可能取消不了在展示的，
+        造成退出时如果正好是最后一个Toast被置null，那它是cancel不了的。不过问题不大吧
+     */
 }
