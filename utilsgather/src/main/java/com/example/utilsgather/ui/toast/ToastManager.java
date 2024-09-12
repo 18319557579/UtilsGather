@@ -1,10 +1,8 @@
-package com.example.utilsuser.toast;
+package com.example.utilsgather.ui.toast;
 
 import android.content.Context;
 import android.os.Handler;
 import android.widget.Toast;
-
-import com.example.utilsgather.logcat.LogUtil;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

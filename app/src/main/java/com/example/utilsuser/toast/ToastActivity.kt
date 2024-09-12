@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
+import com.example.utilsgather.ui.toast.ToastHelper
+import com.example.utilsgather.ui.toast.ToastManager
 import com.example.utilsuser.R
 import java.util.Random
 

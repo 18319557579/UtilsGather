@@ -1,4 +1,4 @@
-package com.example.utilsuser.toast;
+package com.example.utilsgather.ui.toast;
 
 import android.content.Context;
 import android.widget.Toast;
