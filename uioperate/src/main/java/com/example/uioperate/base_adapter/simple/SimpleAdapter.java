@@ -1,4 +1,4 @@
-package com.example.uioperate.base_adapter;
+package com.example.uioperate.base_adapter.simple;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uioperate.R;
+import com.example.uioperate.base_adapter.BaseAdapter;
 
-public class SimpleAdapter extends BaseAdapter<String>{
+public class SimpleAdapter extends BaseAdapter<String> {
     @Override
     public void onMyBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         SimpleViewHolder simpleViewHolder = (SimpleViewHolder) holder;

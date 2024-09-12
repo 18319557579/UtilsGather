@@ -24,7 +24,7 @@
             android:name=".base_adapter.multi_layout.MultiLayoutActivity"
             android:exported="false" />
         <activity
-            android:name=".base_adapter.SimpleActivity"
+            android:name=".base_adapter.simple.SimpleActivity"
             android:exported="false" />
         <activity
             android:name=".base_adapter.BaseAdapterActivity"

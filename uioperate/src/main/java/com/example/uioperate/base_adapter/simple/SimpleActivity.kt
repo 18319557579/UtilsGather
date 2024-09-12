@@ -1,4 +1,4 @@
-package com.example.uioperate.base_adapter
+package com.example.uioperate.base_adapter.simple
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
