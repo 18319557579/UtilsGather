@@ -21,6 +21,12 @@
 
     <application android:networkSecurityConfig="@xml/network_security_config">
         <activity
+            android:name=".base_adapter.SimpleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".base_adapter.BaseAdapterActivity"
+            android:exported="false" />
+        <activity
             android:name=".custom_scrolltext_canger.RecyclerViewScrollActivity"
             android:exported="false" />
         <activity
