@@ -26,7 +26,7 @@ class ToastActivity : AppCompatActivity() {
                 ToastHelper.showToast(this, "大家好: ${Random().nextInt(10) + 1}", Toast.LENGTH_SHORT)
             },
             GuideItemEntity("取消前一个，但是有最短展示时间显示") {
-                ToastManager.showToast(this, "大家好: ${Random().nextInt(10000) + 1}", Toast.LENGTH_SHORT)
+                ToastManager.showToast("大家好: ${Random().nextInt(10000) + 1}")
             },
         ))
 

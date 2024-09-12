@@ -1,12 +1,11 @@
 package com.example.uioperate.base_adapter
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uioperate.R
+import com.example.utilsgather.logcat.LogUtil
+import com.example.utilsgather.ui.toast.ToastManager
 
 class SimpleActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
@@ -30,9 +29,15 @@ class SimpleActivity : AppCompatActivity() {
         val simpleAdapter = SimpleAdapter().apply {
             setDataList(dataList)
             setOnItemClickListener { item, position ->
-
+                ToastManager.showToast(item)
             }
         }
         recyclerView.adapter = simpleAdapter
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LogUtil.d("回调onPause")
+        ToastManager.cancelAllToast()
     }
 }
