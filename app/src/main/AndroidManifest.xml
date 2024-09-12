@@ -21,6 +21,9 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".toast.ToastActivity"
+            android:exported="false" />
+        <activity
             android:name=".cryptology.CryptologyActivity"
             android:exported="false" />
         <activity
@@ -223,8 +226,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data android:name="android.app.shortcuts"
-                android:resource="@xml/my_shortcuts"/>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/my_shortcuts" />
         </activity>
         <activity
             android:name=".TextExitHandleActivity"

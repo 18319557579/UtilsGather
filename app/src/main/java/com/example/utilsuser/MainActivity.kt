@@ -90,6 +90,7 @@ import com.example.utilsuser.recyclerview.swipe.RvSwipeActivity
 import com.example.utilsuser.rxjava.RxJavaActivity
 import com.example.utilsuser.service.MyServiceActivity
 import com.example.utilsuser.sqlite.SQLiteActivity
+import com.example.utilsuser.toast.ToastActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -460,6 +461,10 @@ class MainActivity : LifecycleLogActivity() {
                 },
                 GuideItemEntity("加解密") {
                     val intent = Intent(this@MainActivity, CryptologyActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("Toast的工具类") {
+                    val intent = Intent(this@MainActivity, ToastActivity::class.java)
                     startActivity(intent)
                 },
             )
