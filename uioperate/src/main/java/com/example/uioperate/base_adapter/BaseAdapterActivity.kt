@@ -8,6 +8,7 @@ import com.example.uioperate.base_adapter.add_head_foot.AddHeadFootActivity
 import com.example.uioperate.base_adapter.grid.GridActivity
 import com.example.uioperate.base_adapter.multi_layout.MultiLayoutActivity
 import com.example.uioperate.base_adapter.simple.SimpleActivity
+import com.example.uioperate.base_adapter.staggered_grid.StaggeredGridActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 
@@ -29,6 +30,9 @@ class BaseAdapterActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("网格布局") {
                     startActivity(Intent(this, GridActivity::class.java))
+                },
+                GuideItemEntity("瀑布网格布局") {
+                    startActivity(Intent(this, StaggeredGridActivity::class.java))
                 },
             )
         )

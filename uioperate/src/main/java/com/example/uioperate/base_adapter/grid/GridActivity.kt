@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.uioperate.R
 import com.example.utilsgather.ui.SizeTransferUtil
 import com.example.utilsgather.ui.toast.ToastManager
@@ -27,7 +28,7 @@ class GridActivity : AppCompatActivity() {
         }
 
         findViewById<RecyclerView>(R.id.recyclerView).also {
-            it.layoutManager = GridLayoutManager(this, 4)
+            it.layoutManager = GridLayoutManager(this, 2)
             it.setOverScrollMode(View.OVER_SCROLL_NEVER)
             it.adapter = GridAdapter().apply {
                 setDataList(dataList)

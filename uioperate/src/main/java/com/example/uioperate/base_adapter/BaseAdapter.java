@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.uioperate.R;
 import com.example.utilsgather.logcat.LogUtil;
@@ -182,11 +183,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
 
                 if (layoutManager instanceof GridLayoutManager) {
                     int spanCount = ((GridLayoutManager) layoutManager).getSpanCount();
-                    int column = position % spanCount;  // 计算当前列位置
+
+                    GridLayoutManager.LayoutParams layoutParams = (GridLayoutManager.LayoutParams) view.getLayoutParams();
+                    // 当前列的位置
+                    int spanIndex = layoutParams.getSpanIndex();
 
                     // 计算左右间距
-                    outRect.left = spacing - column * spacing / spanCount;
-                    outRect.right = (column + 1) * spacing / spanCount;
+                    outRect.left = spacing - spanIndex * spacing / spanCount;
+                    outRect.right = (spanIndex + 1) * spacing / spanCount;
 
                     // 为了使间隔看起来均等，需要调整顶部和底部的间隔
                     if (position < spanCount) {  // 如果是第一行，添加顶部间隔
@@ -194,8 +198,25 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
                     }
                     outRect.bottom = spacing;  // item底部间隔
 
-                    // 像LinearLayoutManager这种，可以在Item的内边距等下功夫，用间隔的无法触发点击事件
-                } else if (layoutManager instanceof LinearLayoutManager) {
+                } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+                    int spanCount = ((StaggeredGridLayoutManager) layoutManager).getSpanCount();
+
+                    StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
+                    // 当前列的位置
+                    int spanIndex = layoutParams.getSpanIndex();
+
+                    // 计算左右间距
+                    outRect.left = spacing - spanIndex * spacing / spanCount;
+                    outRect.right = (spanIndex + 1) * spacing / spanCount;
+
+                    // 为了使间隔看起来均等，需要调整顶部和底部的间隔
+                    if (position < spanCount) {  // 如果是第一行，添加顶部间隔
+                        outRect.top = spacing;
+                    }
+                    outRect.bottom = spacing;  // item底部间隔
+
+                    // 像LinearLayoutManager这种，可以在Item的内边距等下功夫，因为用间隔的话无法触发点击事件
+                }else if (layoutManager instanceof LinearLayoutManager) {
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
                     if (linearLayoutManager.getOrientation() == LinearLayoutManager.VERTICAL) {
                         if (position == 0) {
