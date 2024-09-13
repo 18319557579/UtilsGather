@@ -158,8 +158,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
                 int position = parent.getChildAdapterPosition(view);  // 获取当前item的位置
+                // 头布局和底布局不需要增加间隔
+                if (getItemViewType(position) <= TYPE_HEAD || getItemViewType(position) >= TYPE_FOOT) {
+                    return;
+                }
+
+                position = position - headViews.size();
+                RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
 
                 if (layoutManager instanceof GridLayoutManager) {
                     int spanCount = ((GridLayoutManager) layoutManager).getSpanCount();
@@ -192,5 +198,23 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
                 }
             }
         });
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        if (layoutManager instanceof GridLayoutManager) {
+            final GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if (getItemViewType(position) <= TYPE_HEAD || getItemViewType(position) >= TYPE_FOOT) {
+                        return gridLayoutManager.getSpanCount();
+                    }
+                    return 1;
+                }
+            });
+
+        }
     }
 }
