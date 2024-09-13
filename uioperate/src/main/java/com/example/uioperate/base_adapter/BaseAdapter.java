@@ -50,10 +50,20 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void addFootView(View view) {
+        footViews.add(view);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         LogUtil.d("回调onBindViewHolder：" + position);
-        if (getItemViewType(position) <= headViews.size() - 1) return;
+        if (getItemViewType(position) <= TYPE_HEAD) {
+            return;
+        }
+        if (getItemViewType(position) >= TYPE_FOOT) {
+            return;
+        }
 
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +88,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
         if (viewType <= TYPE_HEAD) {
             // 就是 viewType = TYPE_HEAD - position; 公式推导过来的
             return new HeadHolder(headViews.get(TYPE_HEAD - viewType));
-        } else {
+        } else if (viewType >= TYPE_FOOT) {
+            // 例如 viewType == 101，TYPE_FOOT == 100，这拿的就是 footViews 的index为1的元素
+            return new HeadHolder(footViews.get(viewType - TYPE_FOOT));
+        }else {
             return onMyCreateViewHolder(parent, viewType);
         }
     }
@@ -112,6 +125,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
         int viewType;
         if (position <= headViews.size() - 1) {
             viewType = TYPE_HEAD - position;
+        } else if(position >= headViews.size() + dataList.size()) {
+            viewType = TYPE_FOOT + position - (headViews.size() + dataList.size());
         } else {
             viewType = getMyItemViewType(position);
         }

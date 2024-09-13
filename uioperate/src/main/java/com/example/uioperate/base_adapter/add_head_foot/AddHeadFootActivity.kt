@@ -43,5 +43,14 @@ class AddHeadFootActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_add_2).setOnClickListener {
 
         }
+        findViewById<Button>(R.id.btn_addfoot).setOnClickListener {
+            val headLayout = LayoutInflater.from(this).inflate(R.layout.layout_foot, null)
+            val textView = headLayout.findViewById<TextView>(R.id.head_txt)
+            val red = Random().nextInt(255)
+            val green = Random().nextInt(255)
+            val blue = Random().nextInt(255)
+            textView.setBackgroundColor(Color.rgb(red, green, blue))
+            mAdapter.addFootView(headLayout)
+        }
     }
 }
