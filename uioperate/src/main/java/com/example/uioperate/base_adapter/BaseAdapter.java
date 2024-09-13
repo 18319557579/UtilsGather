@@ -48,14 +48,27 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }*/
 
+    // todo 我发现，无论是添加/移除 头部/底部 的哪个Index上的View，始终显示的都是List中前面的那几个View，这里肯定是涉及了某些复用的问题
     public void addHeadView(View view) {
         headViews.add(view);
         notifyDataSetChanged();
+    }
+    public void removeHeadView(int index) {
+        if (index < headViews.size()) {
+            headViews.remove(index);
+            notifyDataSetChanged();
+        }
     }
 
     public void addFootView(View view) {
         footViews.add(view);
         notifyDataSetChanged();
+    }
+    public void removeFootView(int index) {
+        if (index < footViews.size()) {
+            footViews.remove(index);
+            notifyDataSetChanged();
+        }
     }
 
     @Override

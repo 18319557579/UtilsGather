@@ -57,5 +57,11 @@ class GridActivity : AppCompatActivity() {
             textView.setBackgroundColor(Color.rgb(red, green, blue))
             gridAdapter.addFootView(headLayout)
         }
+        findViewById<Button>(R.id.btn_remove).setOnClickListener {
+            gridAdapter.removeHeadView(0)
+        }
+        findViewById<Button>(R.id.btn_removefoot).setOnClickListener {
+            gridAdapter.removeFootView(0);
+        }
     }
 }

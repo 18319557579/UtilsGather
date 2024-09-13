@@ -40,6 +40,9 @@ class AddHeadFootActivity : AppCompatActivity() {
             textView.setBackgroundColor(Color.rgb(red, green, blue))
             mAdapter.addHeadView(headLayout)
         }
+        findViewById<Button>(R.id.btn_remove).setOnClickListener {
+            mAdapter.removeHeadView(0)
+        }
         findViewById<Button>(R.id.btn_add_2).setOnClickListener {
 
         }
@@ -51,6 +54,9 @@ class AddHeadFootActivity : AppCompatActivity() {
             val blue = Random().nextInt(255)
             textView.setBackgroundColor(Color.rgb(red, green, blue))
             mAdapter.addFootView(headLayout)
+        }
+        findViewById<Button>(R.id.btn_removefoot).setOnClickListener {
+            mAdapter.removeFootView(0);
         }
     }
 }
