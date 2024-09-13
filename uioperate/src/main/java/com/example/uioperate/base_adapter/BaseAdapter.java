@@ -3,6 +3,7 @@ package com.example.uioperate.base_adapter;
 import static kotlin.random.RandomKt.Random;
 
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uioperate.R;
@@ -148,5 +151,46 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
     // 如果有多布局的要求，重写这个方法
     public int getMyItemViewType(int position) {
         return 0;
+    }
+
+    // 设置间隔
+    public void setGridSpace(RecyclerView recyclerView, int spacing) {
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+                int position = parent.getChildAdapterPosition(view);  // 获取当前item的位置
+
+                if (layoutManager instanceof GridLayoutManager) {
+                    int spanCount = ((GridLayoutManager) layoutManager).getSpanCount();
+                    int column = position % spanCount;  // 计算当前列位置
+
+                    // 计算左右间距
+                    outRect.left = spacing - column * spacing / spanCount;
+                    outRect.right = (column + 1) * spacing / spanCount;
+
+                    // 为了使间隔看起来均等，需要调整顶部和底部的间隔
+                    if (position < spanCount) {  // 如果是第一行，添加顶部间隔
+                        outRect.top = spacing;
+                    }
+                    outRect.bottom = spacing;  // item底部间隔
+
+                    // 像LinearLayoutManager这种，可以在Item的内边距等下功夫，用间隔的无法触发点击事件
+                } else if (layoutManager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
+                    if (linearLayoutManager.getOrientation() == LinearLayoutManager.VERTICAL) {
+                        if (position == 0) {
+                            outRect.top = spacing;
+                        }
+                        outRect.bottom = spacing;
+                    } else {
+                        if (position == 0) {
+                            outRect.left = spacing;
+                        }
+                        outRect.right = spacing;
+                    }
+                }
+            }
+        });
     }
 }

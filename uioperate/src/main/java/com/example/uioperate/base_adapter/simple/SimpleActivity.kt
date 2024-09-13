@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uioperate.R
 import com.example.utilsgather.logcat.LogUtil
+import com.example.utilsgather.ui.SizeTransferUtil
 import com.example.utilsgather.ui.toast.ToastManager
 
 class SimpleActivity : AppCompatActivity() {
@@ -31,6 +32,7 @@ class SimpleActivity : AppCompatActivity() {
             setOnItemClickListener { item, position ->
                 ToastManager.showToast(item)
             }
+            setGridSpace(recyclerView, SizeTransferUtil.dip2px(10f, this@SimpleActivity))
         }
         recyclerView.adapter = simpleAdapter
     }
