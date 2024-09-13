@@ -69,8 +69,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    LogUtil.d("position: " + position +
+                            ", getBindingAdapterPosition: " + holder.getBindingAdapterPosition() +
+                            ", getLayoutPosition: " + holder.getLayoutPosition() +
+                            ", getAbsoluteAdapterPosition: " + holder.getAbsoluteAdapterPosition() +
+                            ", getOldPosition: " + holder.getOldPosition());
+
                     // todo 这里的 position 到底使用哪一个
-                    onItemClickListener.onItemClick(dataList.get(holder.getBindingAdapterPosition()), holder.getBindingAdapterPosition());
+                    onItemClickListener.onItemClick(dataList.get(getRealPosition(holder)), getRealPosition(holder));
                 }
             });
         }
@@ -79,7 +85,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
     // bind 的时候有自定义需求，重写这个方法
     public void onMyBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-    };
+    }
+
+    private int getRealPosition(RecyclerView.ViewHolder holder) {
+        return holder.getBindingAdapterPosition() - headViews.size();
+    }
+
 
     @NonNull
     @Override
