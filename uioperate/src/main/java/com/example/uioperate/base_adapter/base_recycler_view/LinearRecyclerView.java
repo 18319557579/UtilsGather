@@ -27,5 +27,6 @@ public class LinearRecyclerView extends RecyclerView {
     private void init(Context context) {
         LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         setLayoutManager(layoutManager);
+        setOverScrollMode(OVER_SCROLL_NEVER);
     }
 }

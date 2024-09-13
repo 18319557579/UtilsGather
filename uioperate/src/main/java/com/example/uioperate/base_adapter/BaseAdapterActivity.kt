@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.R
+import com.example.uioperate.base_adapter.add_head_foot.AddHeadFootActivity
 import com.example.uioperate.base_adapter.multi_layout.MultiLayoutActivity
 import com.example.uioperate.base_adapter.simple.SimpleActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
@@ -21,6 +22,9 @@ class BaseAdapterActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("多布局的RecyclerView") {
                     startActivity(Intent(this, MultiLayoutActivity::class.java))
+                },
+                GuideItemEntity("添加头部和底部") {
+                    startActivity(Intent(this, AddHeadFootActivity::class.java))
                 },
             )
         )

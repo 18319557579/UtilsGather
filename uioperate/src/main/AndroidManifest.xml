@@ -21,6 +21,9 @@
 
     <application android:networkSecurityConfig="@xml/network_security_config">
         <activity
+            android:name=".base_adapter.add_head_foot.AddHeadFootActivity"
+            android:exported="false" />
+        <activity
             android:name=".base_adapter.multi_layout.MultiLayoutActivity"
             android:exported="false" />
         <activity

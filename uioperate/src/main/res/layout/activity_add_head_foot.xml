@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".base_adapter.add_head_foot.AddHeadFootActivity">
+
+    <com.example.uioperate.base_adapter.base_recycler_view.LinearRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <Button
+        android:id="@+id/btn_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="移除头部"
+        />
+    <Button
+        android:layout_alignParentRight="true"
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="添加头部"
+        />
+    <Button
+        android:layout_alignParentRight="true"
+        android:id="@+id/btn_add_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="添加头部2"
+        android:layout_below="@id/btn_add"
+        />
+
+    <Button
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_addfoot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="添加底部"
+        />
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_removefoot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="移除底部"
+        />
+
+</RelativeLayout>
