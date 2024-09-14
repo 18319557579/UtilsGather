@@ -97,13 +97,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
                 }
             });
         }
-        onMyBindViewHolder(holder, position);
+        onMyBindViewHolder(holder, getRealPosition(holder));
     }
     // bind 的时候有自定义需求，重写这个方法
     public void onMyBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
     }
 
+    // 其实就是减去头布局的数量
     private int getRealPosition(RecyclerView.ViewHolder holder) {
         return holder.getBindingAdapterPosition() - headViews.size();
     }
@@ -249,6 +250,21 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
                 }
             });
 
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) { //这里是防止瀑布流自带动画，引起子view乱跳。第一行出现空白格
+            recyclerView.setAnimation(null);
+            recyclerView.setItemAnimator(null);
+            final StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
+            staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+        }
+    }
+
+    // 使得头部、底部布局可以完整展示
+    @Override
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
+        ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
+        if (lp instanceof StaggeredGridLayoutManager.LayoutParams && holder instanceof HeadHolder) {
+            StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
+            p.setFullSpan(true);
         }
     }
 }

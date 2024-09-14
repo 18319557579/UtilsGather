@@ -18,7 +18,7 @@ public class StaggeredGridAdapter extends BaseAdapter<String> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onMyBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         GridHolder gridHolder = (GridHolder) holder;
         ViewGroup.LayoutParams layoutParams = gridHolder.image.getLayoutParams();
         layoutParams.height = SizeTransferUtil.dip2px((position % 6 + 3) * 50, gridHolder.itemView.getContext());
