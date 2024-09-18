@@ -4,25 +4,19 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uioperate.R
 import com.example.uioperate.base_adapter.AnimationType
-import com.example.uioperate.base_adapter.grid.GridAdapter
 import com.example.uioperate.base_adapter.simple.SimpleAdapter
 import com.example.utilsgather.ui.SizeTransferUtil
 import com.example.utilsgather.ui.toast.ToastManager
 
-class AnimActivity : AppCompatActivity() {
+class LinearAnimActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_anim)
+        setContentView(R.layout.activity_linear_anim)
 
         init();
     }
@@ -42,7 +36,7 @@ class AnimActivity : AppCompatActivity() {
                 setOnItemClickListener { item, _ ->
                     ToastManager.showToast(item)
                 }
-                setGridSpace(it, SizeTransferUtil.dip2px(3f, this@AnimActivity))
+                setGridSpace(it, SizeTransferUtil.dip2px(3f, this@LinearAnimActivity))
                 setAnimatorType(AnimationType.TRANSLATE_FROM_RIGHT)
             }
         }
