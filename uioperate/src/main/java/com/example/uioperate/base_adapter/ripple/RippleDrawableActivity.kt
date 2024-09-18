@@ -2,17 +2,14 @@ package com.example.uioperate.base_adapter.ripple
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uioperate.R
 import com.example.uioperate.base_adapter.simple.SimpleAdapter
 import com.example.utilsgather.ui.SizeTransferUtil
 import com.example.utilsgather.ui.toast.ToastManager
 
-class RippleActivity : AppCompatActivity() {
+class RippleDrawableActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,9 +33,10 @@ class RippleActivity : AppCompatActivity() {
             setOnItemClickListener { item, position ->
                 ToastManager.showToast(item)
             }
-            setGridSpace(recyclerView, SizeTransferUtil.dip2px(10f, this@RippleActivity))
+            setGridSpace(recyclerView, SizeTransferUtil.dip2px(10f, this@RippleDrawableActivity))
 
             setRippleMaskColor(Color.parseColor("#EE7600"))
+            setRippleDrawableId(R.drawable.linerlayout_water_selector)
         }
         recyclerView.adapter = simpleAdapter
     }

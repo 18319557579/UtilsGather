@@ -3,9 +3,7 @@ package com.example.uioperate.base_adapter;
 import static kotlin.random.RandomKt.Random;
 
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.view.LayoutInflater;
@@ -13,11 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
-import androidx.annotation.AnimRes;
 import androidx.annotation.ColorInt;
-import androidx.annotation.LayoutRes;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -25,15 +21,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.uioperate.R;
-import com.example.utilsgather.context.ApplicationGlobal;
 import com.example.utilsgather.logcat.LogUtil;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
 
@@ -42,11 +33,20 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
         this.animatorType = animatorType;
     }
 
+    // 涟漪的资源文件（用这种方式的话，会覆盖掉原来的item的background）
+    @DrawableRes
+    private int rippleDrawableId = -1;
+    public void setRippleDrawableId(int rippleDrawableId) {
+        this.rippleDrawableId = rippleDrawableId;
+    }
+
+    // 涟漪的颜色（优先级低于上面的，如果上面的设置了，那么这个将会失效）
     @ColorInt
     private int rippleMaskColor = -1;
     public void setRippleMaskColor(int rippleMaskColor) {
         this.rippleMaskColor = rippleMaskColor;
     }
+
 
     private List<T> dataList;
     public List<T> getDataList() {
@@ -155,7 +155,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
             return new HeadHolder(footViews.get(viewType - TYPE_FOOT));
         }else {
             RecyclerView.ViewHolder viewHolder = onMyCreateViewHolder(parent, viewType);
-            if (rippleMaskColor != -1) {
+            if (rippleDrawableId != -1) {
+                Drawable rDrawable = AppCompatResources.getDrawable(parent.getContext(), rippleDrawableId);
+                viewHolder.itemView.setBackground(rDrawable);
+
+            } else if (rippleMaskColor != -1) {
                 // 创建颜色状态列表
                 ColorStateList rippleColor = ColorStateList.valueOf(rippleMaskColor);
                 // 将原本的背景取出来作为内容
