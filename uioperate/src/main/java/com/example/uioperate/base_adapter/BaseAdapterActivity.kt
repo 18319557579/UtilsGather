@@ -10,6 +10,7 @@ import com.example.uioperate.base_adapter.anim.LinearAnimActivity
 import com.example.uioperate.base_adapter.anim.StaggeredGridAnimActivity
 import com.example.uioperate.base_adapter.grid.GridActivity
 import com.example.uioperate.base_adapter.multi_layout.MultiLayoutActivity
+import com.example.uioperate.base_adapter.ripple.RippleActivity
 import com.example.uioperate.base_adapter.simple.SimpleActivity
 import com.example.uioperate.base_adapter.staggered_grid.StaggeredGridActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
@@ -45,6 +46,9 @@ class BaseAdapterActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("StaggeredGrid 动画") {
                     startActivity(Intent(this, StaggeredGridAnimActivity::class.java))
+                },
+                GuideItemEntity("涟漪效果") {
+                    startActivity(Intent(this, RippleActivity::class.java))
                 },
             )
         )

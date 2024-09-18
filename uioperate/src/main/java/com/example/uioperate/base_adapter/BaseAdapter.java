@@ -2,8 +2,12 @@ package com.example.uioperate.base_adapter;
 
 import static kotlin.random.RandomKt.Random;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +16,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.AnimRes;
+import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,9 +38,14 @@ import java.util.Random;
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
 
     private AnimationType animatorType;
-
     public void setAnimatorType(AnimationType animatorType) {
         this.animatorType = animatorType;
+    }
+
+    @ColorInt
+    private int rippleMaskColor = -1;
+    public void setRippleMaskColor(int rippleMaskColor) {
+        this.rippleMaskColor = rippleMaskColor;
     }
 
     private List<T> dataList;
@@ -143,7 +154,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
             // 例如 viewType == 101，TYPE_FOOT == 100，这拿的就是 footViews 的index为1的元素
             return new HeadHolder(footViews.get(viewType - TYPE_FOOT));
         }else {
-            return onMyCreateViewHolder(parent, viewType);
+            RecyclerView.ViewHolder viewHolder = onMyCreateViewHolder(parent, viewType);
+            if (rippleMaskColor != -1) {
+                // 创建颜色状态列表
+                ColorStateList rippleColor = ColorStateList.valueOf(rippleMaskColor);
+                // 将原本的背景取出来作为内容
+                Drawable contentDrawable = viewHolder.itemView.getBackground();
+                RippleDrawable rippleDrawable = new RippleDrawable(rippleColor, contentDrawable, null);
+                viewHolder.itemView.setBackground(rippleDrawable);
+            }
+            return viewHolder;
         }
     }
     public abstract RecyclerView.ViewHolder onMyCreateViewHolder(ViewGroup viewGroup, int viewType);
