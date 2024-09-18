@@ -118,6 +118,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
 
     }
 
+    // todo 增加 只有未加载的才有动画 的情况
     private void addItemAnimation(RecyclerView.ViewHolder viewHolder, int position) {
         if (animatorType == null) return;
 
