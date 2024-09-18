@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.R
 import com.example.uioperate.base_adapter.add_head_foot.AddHeadFootActivity
+import com.example.uioperate.base_adapter.anim.GridAnimActivity
 import com.example.uioperate.base_adapter.anim.LinearAnimActivity
+import com.example.uioperate.base_adapter.anim.StaggeredGridAnimActivity
 import com.example.uioperate.base_adapter.grid.GridActivity
 import com.example.uioperate.base_adapter.multi_layout.MultiLayoutActivity
 import com.example.uioperate.base_adapter.simple.SimpleActivity
@@ -37,6 +39,12 @@ class BaseAdapterActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("Linear 动画") {
                     startActivity(Intent(this, LinearAnimActivity::class.java))
+                },
+                GuideItemEntity("Grid 动画") {
+                    startActivity(Intent(this, GridAnimActivity::class.java))
+                },
+                GuideItemEntity("StaggeredGrid 动画") {
+                    startActivity(Intent(this, StaggeredGridAnimActivity::class.java))
                 },
             )
         )

@@ -4,45 +4,47 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uioperate.R
 import com.example.uioperate.base_adapter.AnimationType
-import com.example.uioperate.base_adapter.simple.SimpleAdapter
+import com.example.uioperate.base_adapter.grid.GridAdapter
 import com.example.utilsgather.ui.SizeTransferUtil
 import com.example.utilsgather.ui.toast.ToastManager
 import java.lang.RuntimeException
 
-class LinearAnimActivity : AppCompatActivity() {
-    lateinit var mAdapter: SimpleAdapter
+class GridAnimActivity : AppCompatActivity() {
+    lateinit var gridAdapter: GridAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_linear_anim)
-
         init()
     }
 
     private fun init() {
         val dataList = mutableListOf<String>().apply {
             repeat(100) {
-                add(it.toString())
+                add("position ==> $it")
             }
         }
 
         findViewById<RecyclerView>(R.id.recyclerView).also {
-            it.layoutManager = LinearLayoutManager(this)
+            it.layoutManager = GridLayoutManager(this, 2)
             it.setOverScrollMode(View.OVER_SCROLL_NEVER)
-            mAdapter = SimpleAdapter().apply {
+            it.adapter = GridAdapter().apply {
                 setDataList(dataList)
                 setOnItemClickListener { item, _ ->
                     ToastManager.showToast(item)
                 }
-                setGridSpace(it, SizeTransferUtil.dip2px(3f, this@LinearAnimActivity))
+                setGridSpace(it, SizeTransferUtil.dip2px(10f, this@GridAnimActivity))
                 setAnimatorType(AnimationType.TRANSLATE_FROM_RIGHT)
+                gridAdapter = this
             }
-            it.adapter = mAdapter
         }
     }
 
@@ -60,8 +62,8 @@ class LinearAnimActivity : AppCompatActivity() {
             R.id.anim_alpha -> AnimationType.ALPHA
             else -> throw RuntimeException()
         }
-        mAdapter.setAnimatorType(animationType)
-        mAdapter.notifyDataSetChanged()
+        gridAdapter.setAnimatorType(animationType)
+        gridAdapter.notifyDataSetChanged()
         return super.onOptionsItemSelected(item)
     }
 }
