@@ -39,27 +39,27 @@ public class LogUtil {
     //下面的这些传入自定义TAG进行打印
     public static void v(String tag, String msg) {
         if (level <= VERBOSE) {
-            Log.v(tag, msg);
+            Log.v(tag, msg == null ? "null-object" : msg);
         }
     }
     public static void d(String tag, String msg) {
         if (level <= DEBUG) {
-            Log.d(tag, msg);
+            Log.d(tag, msg == null ? "null-object" : msg);
         }
     }
     public static void i(String tag, String msg) {
         if (level <= INFO) {
-            Log.i(tag, msg);
+            Log.i(tag, msg == null ? "null-object" : msg);
         }
     }
     public static void w(String tag, String msg) {
         if (level <= WARN) {
-            Log.w(tag, msg);
+            Log.w(tag, msg == null ? "null-object" : msg);
         }
     }
     public static void e(String tag, String msg) {
         if (level <= ERROR) {
-            Log.e(tag, msg);
+            Log.e(tag, msg == null ? "null-object" : msg);
         }
     }
 

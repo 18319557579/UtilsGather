@@ -467,6 +467,22 @@ class MainActivity : LifecycleLogActivity() {
                     val intent = Intent(this@MainActivity, ToastActivity::class.java)
                     startActivity(intent)
                 },
+                GuideItemEntity("测试一下 ThreadLocal") {
+                    Thread {
+                        threadLocalOne.set("线程一的数据 --- threadLocalOne")
+                        threadLocalTwo.set("线程一的数据 --- threadLocalTwo")
+                        LogUtil.d(threadLocalOne.get())
+                        LogUtil.d(threadLocalTwo.get())
+                    }.start()
+                    Thread {
+                        LogUtil.d(threadLocalOne.get())
+                        LogUtil.d(threadLocalTwo.get())
+                        threadLocalOne.set("线程二的数据 --- threadLocalOne")
+                        threadLocalTwo.set("线程二的数据 --- threadLocalTwo")
+                        LogUtil.d(threadLocalOne.get())
+                        LogUtil.d(threadLocalTwo.get())
+                    }.start()
+                },
             )
 
         )
@@ -478,4 +494,8 @@ class MainActivity : LifecycleLogActivity() {
         }
         super.onBackPressed()
     }
+
+
+    var threadLocalOne: ThreadLocal<String> = ThreadLocal()
+    var threadLocalTwo: ThreadLocal<String> = ThreadLocal()
 }

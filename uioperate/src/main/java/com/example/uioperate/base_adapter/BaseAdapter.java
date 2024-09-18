@@ -7,8 +7,11 @@ import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import androidx.annotation.AnimRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.uioperate.R;
+import com.example.utilsgather.context.ApplicationGlobal;
 import com.example.utilsgather.logcat.LogUtil;
 
 import java.util.ArrayList;
@@ -27,6 +31,14 @@ import java.util.Random;
 
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
 
+    public Animation animator;
+    @AnimRes
+    private int animatorId = -1;
+
+    public void setAnimatorId(int animatorId) {
+        this.animatorId = animatorId;
+    }
+
     private List<T> dataList;
     public List<T> getDataList() {
         return dataList;
@@ -34,6 +46,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
     public void setDataList(List<T> dataList) {
         this.dataList = dataList;
     }
+
+    private int currentMillons = 0;
+    private int delyTimePosi = 1;
 
 
     final int TYPE_HEAD = -100;
@@ -98,10 +113,18 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
             });
         }
         onMyBindViewHolder(holder, getRealPosition(holder));
+        addItemAnimation(holder, position);
     }
     // bind 的时候有自定义需求，重写这个方法
     public void onMyBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+    }
+
+    private void addItemAnimation(RecyclerView.ViewHolder viewHolder, int position) {
+        if (animatorId == -1) return;
+
+        Animation animator = AnimationUtils.loadAnimation(viewHolder.itemView.getContext(), animatorId);
+        viewHolder.itemView.startAnimation(animator);
     }
 
     // 其实就是减去头布局的数量
@@ -256,6 +279,23 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
             final StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
             staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         }
+
+        /*recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // 检测当前屏幕上可见的item
+                int firstVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+
+                // 为进入屏幕的item运行动画
+                for (int position = firstVisibleItemPosition; position <= lastVisibleItemPosition; position++) {
+                    View itemView = recyclerView.getLayoutManager().findViewByPosition(position);
+                    if (itemView != null) {
+                        itemView.startAnimation(animator);
+                    }
+                }
+            }
+        });*/
     }
 
     // 使得头部、底部布局可以完整展示
