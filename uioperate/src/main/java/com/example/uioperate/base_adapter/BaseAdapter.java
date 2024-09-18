@@ -31,12 +31,10 @@ import java.util.Random;
 
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
 
-    public Animation animator;
-    @AnimRes
-    private int animatorId = -1;
+    private AnimationType animatorType;
 
-    public void setAnimatorId(int animatorId) {
-        this.animatorId = animatorId;
+    public void setAnimatorType(AnimationType animatorType) {
+        this.animatorType = animatorType;
     }
 
     private List<T> dataList;
@@ -121,9 +119,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
     }
 
     private void addItemAnimation(RecyclerView.ViewHolder viewHolder, int position) {
-        if (animatorId == -1) return;
+        if (animatorType == null) return;
 
-        Animation animator = AnimationUtils.loadAnimation(viewHolder.itemView.getContext(), animatorId);
+        Animation animator = AnimationUtils.loadAnimation(viewHolder.itemView.getContext(), animatorType.resId);
         viewHolder.itemView.startAnimation(animator);
     }
 
@@ -191,6 +189,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
         return 0;
     }
 
+    // todo 最前面和最后面的间隔，可以使用开关来控制是否开启
     // 设置间隔
     public void setGridSpace(RecyclerView recyclerView, int spacing) {
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {

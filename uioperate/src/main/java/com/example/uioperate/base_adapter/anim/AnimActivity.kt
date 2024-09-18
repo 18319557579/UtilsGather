@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uioperate.R
+import com.example.uioperate.base_adapter.AnimationType
 import com.example.uioperate.base_adapter.grid.GridAdapter
 import com.example.uioperate.base_adapter.simple.SimpleAdapter
 import com.example.utilsgather.ui.SizeTransferUtil
@@ -42,7 +43,7 @@ class AnimActivity : AppCompatActivity() {
                     ToastManager.showToast(item)
                 }
                 setGridSpace(it, SizeTransferUtil.dip2px(3f, this@AnimActivity))
-                setAnimatorId(R.anim.item_translate_byright)
+                setAnimatorType(AnimationType.TRANSLATE_FROM_RIGHT)
             }
         }
     }
