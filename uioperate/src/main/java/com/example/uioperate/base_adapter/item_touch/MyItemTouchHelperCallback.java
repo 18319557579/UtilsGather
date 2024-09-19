@@ -9,15 +9,21 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     private final IItemTouchHelperAdapter mAdapter;
 
-    public MyItemTouchHelperCallback(IItemTouchHelperAdapter mAdapter) {
+    // 拖拽默认是上下
+    private final int mDragFlags;
+    // 侧滑默认是左右
+    private final int mSwipeFlags;
+
+    public MyItemTouchHelperCallback(IItemTouchHelperAdapter mAdapter, int dragFlags, int swipeFlags) {
         this.mAdapter = mAdapter;
+        mDragFlags = dragFlags;
+        mSwipeFlags = swipeFlags;
     }
 
+    // 这里可以限制整个的拖拽、侧滑行为（也会影响到）
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-        int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-        int swipeFlags = ItemTouchHelper.RIGHT;
-        return makeMovementFlags(dragFlags, swipeFlags);
+        return makeMovementFlags(mDragFlags, mSwipeFlags);
     }
 
     @Override
@@ -45,13 +51,14 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
         mAdapter.onItemClear(viewHolder);
     }
 
+    // 下面这两个方法只是说是否能够通过触控行为来触发侧滑、拖拽，但是不影响item主动触发的
     @Override
     public boolean isItemViewSwipeEnabled() {
-        return true;
+        return mSwipeFlags != 0;
     }
 
     @Override
     public boolean isLongPressDragEnabled() {
-        return true;
+        return mDragFlags != 0;
     }
 }
