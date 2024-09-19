@@ -9,6 +9,7 @@ import com.example.uioperate.base_adapter.anim.GridAnimActivity
 import com.example.uioperate.base_adapter.anim.LinearAnimActivity
 import com.example.uioperate.base_adapter.anim.StaggeredGridAnimActivity
 import com.example.uioperate.base_adapter.grid.GridActivity
+import com.example.uioperate.base_adapter.item_touch.ItemTouchActivity
 import com.example.uioperate.base_adapter.multi_layout.MultiLayoutActivity
 import com.example.uioperate.base_adapter.ripple.RippleColorActivity
 import com.example.uioperate.base_adapter.ripple.RippleDrawableActivity
@@ -53,6 +54,9 @@ class BaseAdapterActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("涟漪效果，修改背景") {
                     startActivity(Intent(this, RippleDrawableActivity::class.java))
+                },
+                GuideItemEntity("触控Activity") {
+                    startActivity(Intent(this, ItemTouchActivity::class.java))
                 },
             )
         )

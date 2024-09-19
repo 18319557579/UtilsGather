@@ -2,6 +2,7 @@ package com.example.uioperate.base_adapter.item_touch;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+// 这些都是触控通知到下面的方法
 public interface IItemTouchHelperAdapter {
 
     // item 发生了交换后，回调该方法

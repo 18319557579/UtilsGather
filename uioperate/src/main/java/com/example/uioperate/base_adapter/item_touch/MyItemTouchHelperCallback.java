@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
-    private IItemTouchHelperAdapter mAdapter;
+    private final IItemTouchHelperAdapter mAdapter;
 
     public MyItemTouchHelperCallback(IItemTouchHelperAdapter mAdapter) {
         this.mAdapter = mAdapter;
