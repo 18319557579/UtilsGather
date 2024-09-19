@@ -10,6 +10,7 @@ import com.example.uioperate.base_adapter.anim.LinearAnimActivity
 import com.example.uioperate.base_adapter.anim.StaggeredGridAnimActivity
 import com.example.uioperate.base_adapter.grid.GridActivity
 import com.example.uioperate.base_adapter.item_touch.ItemTouchActivity
+import com.example.uioperate.base_adapter.item_touch.custom.ItemTouchCustomActivity
 import com.example.uioperate.base_adapter.multi_layout.MultiLayoutActivity
 import com.example.uioperate.base_adapter.ripple.RippleColorActivity
 import com.example.uioperate.base_adapter.ripple.RippleDrawableActivity
@@ -57,6 +58,9 @@ class BaseAdapterActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("触控Activity") {
                     startActivity(Intent(this, ItemTouchActivity::class.java))
+                },
+                GuideItemEntity("触控Activity，再自定义Adapter") {
+                    startActivity(Intent(this, ItemTouchCustomActivity::class.java))
                 },
             )
         )

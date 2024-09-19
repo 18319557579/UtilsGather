@@ -20,9 +20,9 @@ public class ItemTouchManager implements OnStartDragListener{
         可以让item主动触发拖动行为
          */
         if (adapter instanceof IAssembleDrag) {
-            IAssembleDrag baseItemTouchAdapter = (IAssembleDrag) adapter;
+            IAssembleDrag iAssembleDrag = (IAssembleDrag) adapter;
             // 将OnStartDragListener接口实例设置到BaseItemTouchAdapter
-            baseItemTouchAdapter.assembleDrag(this);
+            iAssembleDrag.assembleDrag(this);
         }
     }
 
