@@ -21,6 +21,9 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".email.EmailActivity"
+            android:exported="false" />
+        <activity
             android:name=".toast.ToastActivity"
             android:exported="false" />
         <activity
