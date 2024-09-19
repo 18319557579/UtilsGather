@@ -8,11 +8,12 @@ import com.example.uioperate.base_adapter.BaseAdapter;
 
 import java.util.Collections;
 
-public abstract class BaseItemTouchAdapter<T> extends BaseAdapter<T> implements IItemTouchHelperAdapter{
+public abstract class BaseItemTouchAdapter<T> extends BaseAdapter<T> implements IItemTouchHelperAdapter, IAssembleDrag{
     // 使得BaseItemTouchAdapter有能力可以从item触发拖到到RecyclerView
     protected OnStartDragListener mOnStartDragListener;
-    public void setOnStartDragListener(OnStartDragListener mOnStartDragListener) {
-        this.mOnStartDragListener = mOnStartDragListener;
+    @Override
+    public void assembleDrag(OnStartDragListener onStartDragListener) {
+        this.mOnStartDragListener = onStartDragListener;
     }
 
     @Override
