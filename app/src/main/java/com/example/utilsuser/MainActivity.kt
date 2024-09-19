@@ -25,6 +25,8 @@ import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
 import com.example.utilsgather.random.StringRandomUtil
+import com.example.utilsgather.share.email.EmailEntity
+import com.example.utilsgather.share.email.EmailSendUtil
 import com.example.utilsgather.source_file.assets.AssetsUtil
 import com.example.utilsgather.source_file.assets.PropertiesUtil
 import com.example.utilsgather.source_file.raw.SourceUtil
@@ -549,11 +551,31 @@ class MainActivity : LifecycleLogActivity() {
                 GuideItemEntity("发送邮件 复刻了bingo（传送信息）") {
                     val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
                         setData(Uri.parse("mailto:"))
-                        putExtra(Intent.EXTRA_EMAIL, arrayOf("recipient@example.com"))
+                        putExtra(Intent.EXTRA_EMAIL, arrayOf("recipient@example.com", "hsf@example.com"))
                         putExtra(Intent.EXTRA_SUBJECT, "这是邮件主题")
                         putExtra(Intent.EXTRA_TEXT, "这是邮件内容")
+
+                        putExtra(Intent.EXTRA_CC, arrayOf("csr1@example.com", "csr2@example.com"));
+                        putExtra(Intent.EXTRA_BCC, arrayOf("msr1@example.com", "msr2@example.com"));
                     }
                     startActivity(emailIntent)
+                },
+                GuideItemEntity("发送邮件 复刻了bingo（封装好的）") {
+                    val emailEntity = EmailEntity().putRecipientEmail("recipient@example.com", "hsf@example.com")
+                        .setEmailSubject("这是邮件主题")
+                        .setEmailText("这是邮件内容")
+                        .putCcEmail("csr1@example.com")
+                        .putBccEmail("msr1@example.com", "msr2@example.com")
+                    EmailSendUtil.sendEmail(this@MainActivity, emailEntity)
+                },
+                GuideItemEntity("发送邮件 复刻了bingo（封装好的，无抄送人、密送人）") {
+                    val emailEntity = EmailEntity().putRecipientEmail("recipient@example.com", "hsf@example.com")
+                        .setEmailSubject("这是邮件主题")
+                        .setEmailText("这是邮件内容")
+                    EmailSendUtil.sendEmail(this@MainActivity, emailEntity)
+                },
+                GuideItemEntity("发送邮件 复刻了bingo（封装好的，不填信息）") {
+                    EmailSendUtil.sendEmail(this@MainActivity)
                 },
             )
 
