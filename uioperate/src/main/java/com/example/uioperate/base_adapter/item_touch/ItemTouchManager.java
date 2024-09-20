@@ -6,15 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ItemTouchManager implements OnStartDragListener {
     private final ItemTouchHelper mItemTouchHelper;
 
-    // todo 这里还是不够人性化，如果要单独修改拖拖拽或侧滑比较麻烦
-    public ItemTouchManager(RecyclerView recyclerView) {
-        this(recyclerView,
-                ItemTouchHelper.UP | ItemTouchHelper.DOWN,  // 拖拽默认上下
-                ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT  // 侧滑默认左右
-        );
-    }
-
-    public ItemTouchManager(RecyclerView recyclerView, int dragFlags, int swipeFlags) {
+    private ItemTouchManager(RecyclerView recyclerView, int dragFlags, int swipeFlags) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         IItemTouchHelperAdapter iItemTouchHelperAdapter = (IItemTouchHelperAdapter) adapter;
         // 往ItemTouchHelper.Callback中传入IItemTouchHelperAdapter接口的实例，使得触控行为发生后可以通知给Adapter
@@ -37,5 +29,17 @@ public class ItemTouchManager implements OnStartDragListener {
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
         mItemTouchHelper.startDrag(viewHolder);
+    }
+
+    // 虽然这个方法是静态的，但是每一次对它的调用都会创建一个ItemTouchManager的实例，所以不用担心实例是重复的
+    public static ItemTouchManager attachTo(RecyclerView recyclerView) {
+        return new ItemTouchManager(recyclerView,
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN,  // 拖拽默认上下
+                ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT  // 侧滑默认左右
+        );
+    }
+
+    public static ItemTouchManager attachTo(RecyclerView recyclerView, int dragFlags, int swipeFlags) {
+        return new ItemTouchManager(recyclerView, dragFlags, swipeFlags);
     }
 }

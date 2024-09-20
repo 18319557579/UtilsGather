@@ -43,6 +43,6 @@ class ItemTouchActivity : AppCompatActivity() {
         }
         recyclerView.adapter = adapter
 
-        ItemTouchManager(recyclerView)
+        ItemTouchManager.attachTo(recyclerView)
     }
 }
