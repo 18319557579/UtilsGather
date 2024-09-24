@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.R
 import com.example.uioperate.touch_event_gcssloop.boss_call_1.Situation1Activity
 import com.example.uioperate.touch_event_gcssloop.boss_call_2.Situation2Activity
+import com.example.uioperate.touch_event_gcssloop.boss_call_3.Situation3Activity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 
@@ -22,6 +23,9 @@ class TouchEventGcssloopActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("点击 View1 区域且事件被 View1 消费") {
                     startActivity(Intent(this@TouchEventGcssloopActivity, Situation2Activity::class.java))
+                },
+                GuideItemEntity("点击 View1 区域但事件被 ViewGroupA 拦截") {
+                    startActivity(Intent(this@TouchEventGcssloopActivity, Situation3Activity::class.java))
                 },
             )
         )
