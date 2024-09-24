@@ -21,6 +21,15 @@
 
     <application android:networkSecurityConfig="@xml/network_security_config">
         <activity
+            android:name=".touch_event_gcssloop.boss_call_1.Situation1Activity"
+            android:exported="false" />
+        <activity
+            android:name=".touch_event_gcssloop.boss_call_2.Situation2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".touch_event_gcssloop.TouchEventGcssloopActivity"
+            android:exported="false" />
+        <activity
             android:name=".base_adapter.item_touch.custom.ItemTouchCustomActivity"
             android:exported="false" />
         <activity

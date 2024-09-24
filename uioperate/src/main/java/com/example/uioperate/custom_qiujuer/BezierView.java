@@ -1,16 +1,19 @@
 package com.example.uioperate.custom_qiujuer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.utilsgather.logcat.LogUtil;
 
 
 public class BezierView extends View {
@@ -96,4 +99,44 @@ public class BezierView extends View {
         super.onDraw(canvas);
         canvas.drawPath(mBezier, mPaint);
     }
+
+//    @SuppressLint("ClickableViewAccessibility")
+
+
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int index = event.getActionIndex();
+
+
+
+//        LogUtil.d("当前index: " + index);
+        performClick();
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                LogUtil.d("第1个手指按下");
+                break;
+            case MotionEvent.ACTION_UP:
+                LogUtil.d("最后1个手指抬起");
+                break;
+            case MotionEvent.ACTION_MOVE:
+                for (int i = 0; i < event.getPointerCount(); i++) {
+                    LogUtil.i("pointerIndex = " + i + ", pointerId = " + event.getPointerId(i));
+                }
+
+
+                LogUtil.d("发生了移动");
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                LogUtil.d("第"+(index+1)+"个手指按下");
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                LogUtil.d("第"+(index+1)+"个手指抬起");
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
+
 }

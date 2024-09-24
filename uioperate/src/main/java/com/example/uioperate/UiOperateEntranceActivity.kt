@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.base_adapter.BaseAdapterActivity
-import com.example.uioperate.base_adapter.multi_layout.MultiLayoutActivity
 import com.example.uioperate.custom_github_blankj.CustomGithubBlankjActivity
 import com.example.uioperate.custom_juejin_newki.flow_layout.AbstractNineGridLayoutActivity
 import com.example.uioperate.custom_juejin_newki.flow_layout.NewkiFlowLayout1Activity
@@ -26,6 +25,7 @@ import com.example.uioperate.picture_selection.PictureSelectionActivity
 import com.example.uioperate.shortcus.ShortcutsActivity
 import com.example.uioperate.storage.StorageActivity
 import com.example.uioperate.touch_event.TouchEventActivity
+import com.example.uioperate.touch_event_gcssloop.TouchEventGcssloopActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 
@@ -46,6 +46,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("跳转 TouchEventActivity") {
                 startActivity(Intent(this, TouchEventActivity::class.java))
+            },
+            GuideItemEntity("触摸反馈的 GcsSloop") {
+                startActivity(Intent(this, TouchEventGcssloopActivity::class.java))
             },
             GuideItemEntity("跳转 StorageActivity") {
                 startActivity(Intent(this, StorageActivity::class.java))
