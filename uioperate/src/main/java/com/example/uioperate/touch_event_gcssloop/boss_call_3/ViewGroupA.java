@@ -42,6 +42,11 @@ public class ViewGroupA extends RelativeLayout {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             LogUtil.d(Static.TAG3 + Static.onTouchEvent + "正在测试,明天就测试完了");
         }
-        return true;
+
+        // 这种情况的话，属于事件被ViewGroupA消费掉了，不会回调MyRootView和Situation3Activity的onTouchEvent了
+//        return true;
+
+        //这种情况，事件并没有被ViewGroupA消费掉，还会向上回传，因此会回调MyRootView和Situation3Activity的onTouchEvent
+        return super.onTouchEvent(event);
     }
 }

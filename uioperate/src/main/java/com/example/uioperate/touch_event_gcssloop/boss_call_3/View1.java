@@ -26,7 +26,7 @@ public class View1 extends View {
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            LogUtil.d(Static.TAG4 + Static.dispatchTouchEvent + "333333");
+            LogUtil.d(Static.TAG4 + Static.dispatchTouchEvent + "33333333");
         }
         return super.dispatchTouchEvent(event);
     }
