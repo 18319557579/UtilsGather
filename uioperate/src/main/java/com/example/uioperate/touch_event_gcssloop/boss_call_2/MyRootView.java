@@ -31,6 +31,9 @@ public class MyRootView extends RelativeLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            LogUtil.d(Static.TAG2 + Static.onInterceptTouchEvent);
+        }
         return super.onInterceptTouchEvent(ev);
     }
 

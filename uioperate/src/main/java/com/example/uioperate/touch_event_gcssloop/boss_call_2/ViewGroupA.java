@@ -31,6 +31,9 @@ public class ViewGroupA extends RelativeLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            LogUtil.d(Static.TAG3 + Static.dispatchTouchEvent);
+        }
         return super.onInterceptTouchEvent(ev);
     }
 
