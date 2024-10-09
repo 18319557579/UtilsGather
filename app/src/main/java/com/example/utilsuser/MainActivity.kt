@@ -23,6 +23,7 @@ import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
+import com.example.utilsgather.manifest.ManifestUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
 import com.example.utilsgather.random.StringRandomUtil
 import com.example.utilsgather.share.email.EmailEntity
@@ -493,6 +494,15 @@ class MainActivity : LifecycleLogActivity() {
                 GuideItemEntity("测试各种发送Email") {
                     val intent = Intent(this@MainActivity, EmailActivity::class.java)
                     startActivity(intent)
+                },
+                GuideItemEntity("获得AndroidManifest中meta-data") {
+                    val userAge = ManifestUtil.getMetaDataValue(this@MainActivity, "user_age", Integer::class.java)
+                    val userMale = ManifestUtil.getMetaDataValue(this@MainActivity, "user_male", java.lang.Boolean::class.java)
+                    val userName = ManifestUtil.getMetaDataValue(this@MainActivity, "user_name", String::class.java)
+
+                    LogUtil.d("userAge: $userAge")
+                    LogUtil.d("userMale: $userMale")
+                    LogUtil.d("userName: $userName")
                 },
             )
 

@@ -20,6 +20,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
+
+        <meta-data
+            android:name="user_age"
+            android:value="${USER_AGE}"/>
+        <meta-data
+            android:name="user_male"
+            android:value="${USER_MALE}"/>
+        <meta-data
+            android:name="user_name"
+            android:value="${USER_NAME}"/>
+
         <activity
             android:name=".email.EmailActivity"
             android:exported="false" />
