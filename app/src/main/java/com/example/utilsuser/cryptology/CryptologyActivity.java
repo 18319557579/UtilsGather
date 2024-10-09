@@ -6,6 +6,7 @@ import android.util.Base64;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.utilsgather.cryptography.AESUtil;
 import com.example.utilsgather.list_guide.GuideItemEntity;
 import com.example.utilsgather.list_guide.GuideSettings;
 import com.example.utilsgather.logcat.LogUtil;
@@ -337,6 +338,30 @@ public class CryptologyActivity extends AppCompatActivity {
                         String age = parseUri.getQueryParameter("age");
                         LogUtil.d("name: " + name);
                         LogUtil.d("age: " + age);
+                    }
+                }),
+                new GuideItemEntity("AES 加密", new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            base64Encipher = AESUtil.aesEncrypt("hsf哈哈哈123...", "UTF-8",
+                                    "AES/CBC/PKCS7Padding", "123456kkk5556666", "123456789ABCDEF0");
+                            LogUtil.d("AES加密后: " + base64Encipher);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }),
+                new GuideItemEntity("AES 解密", new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String after = AESUtil.aesDecrypt(base64Encipher, "UTF-8",
+                                    "AES/CBC/PKCS7Padding", "123456kkk5556666", "123456789ABCDEF0");
+                            LogUtil.d("AES解密后: " + after);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }),
         });
