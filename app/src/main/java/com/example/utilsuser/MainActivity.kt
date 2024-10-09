@@ -96,6 +96,7 @@ import com.example.utilsuser.rxjava.RxJavaActivity
 import com.example.utilsuser.service.MyServiceActivity
 import com.example.utilsuser.sqlite.SQLiteActivity
 import com.example.utilsuser.toast.ToastActivity
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -395,6 +396,12 @@ class MainActivity : LifecycleLogActivity() {
                     LogUtil.d("获取当前手机系统语言: " + DeviceInfoUtil.getDeviceLanguage())
                     LogUtil.d("获得sim卡国家: " + DeviceInfoUtil.getSimCountry(ApplicationGlobal.getInstance()))
                     LogUtil.d("获得国家代码: " + DeviceInfoUtil.getCountryCode())
+                    LogUtil.d("AndroidId: " + DeviceInfoUtil.getAndroidId(ApplicationGlobal.getInstance()))
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val adId = DeviceInfoUtil.getAdvertisingId(ApplicationGlobal.getInstance())
+                        LogUtil.d("Retrieved Advertising ID: $adId")
+                    }
                 },
                 GuideItemEntity("获得网络信息") {
                     LogUtil.d("网络连接情况: " + NetworkInfoUtil.getNetType(ApplicationGlobal.getInstance()))

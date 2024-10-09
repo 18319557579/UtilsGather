@@ -5,6 +5,11 @@ import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Locale;
 
@@ -86,5 +91,25 @@ public class DeviceInfoUtil {
         return tm.getSimCountryIso();
     }
 
+    /**
+     * 获得广告 ID（Google Advertising ID，简称 GAID）
+     * 设备前提：有谷歌服务，且用户没有在设置中关闭广告ID
+     * 代码前提：有依赖：implementation 'com.google.android.gms:play-services-ads-identifier:18.1.0'
+     */
+    public static String getAdvertisingId(Context context) {
+        AdvertisingIdClient.Info adInfo = null;
+        try {
+            adInfo = AdvertisingIdClient.getAdvertisingIdInfo(context);
+            if (adInfo != null && !adInfo.isLimitAdTrackingEnabled()) {
+                // If the user has not opted out, then get the Advertising ID
+                return adInfo.getId();
+            }
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException |
+                 IOException e) {
+            e.printStackTrace();
+            // Handle the exception as needed
+        }
+        return null; // Return null or handle the case where ad info is not available or user has opted out
+    }
 
 }
