@@ -30,6 +30,9 @@
         <meta-data
             android:name="user_name"
             android:value="${USER_NAME}"/>
+        <meta-data
+            android:name="config_list"
+            android:resource="@bool/config_switch" />
 
         <activity
             android:name=".email.EmailActivity"

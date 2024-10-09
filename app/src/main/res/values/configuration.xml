@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="config_name">配置单名称</string>
+    <bool name="config_switch">true</bool>
+    <integer name="config_num">100</integer>
+</resources>

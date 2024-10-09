@@ -504,6 +504,12 @@ class MainActivity : LifecycleLogActivity() {
                     LogUtil.d("userMale: $userMale")
                     LogUtil.d("userName: $userName")
                 },
+                GuideItemEntity("获得AndroidManifest中meta-data") {
+                    val resId = ManifestUtil.getMetaDataValue(this@MainActivity, "config_list", Integer::class.java)
+                    val theResId: Int = resId.toInt()
+                    val isSwitch = resources.getBoolean(theResId)
+                    LogUtil.d("开关是否开启: $isSwitch")
+                },
             )
 
         )
