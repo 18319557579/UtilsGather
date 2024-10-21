@@ -21,4 +21,20 @@
         android:textSize="20sp"
         android:background="#60CACACA"/>
 
+    <com.example.uioperate.custom_marquee_textview.MarqueeTextViewTwo
+        android:id="@+id/mtv_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kotlin 实现文本横向滚动，跑马灯效果。123...6666"
+
+        app:layout_constraintTop_toBottomOf="@id/mtv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+
+        android:textColor="@color/blue_middle"
+        android:textSize="20sp"
+        android:background="#60CACACA"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
