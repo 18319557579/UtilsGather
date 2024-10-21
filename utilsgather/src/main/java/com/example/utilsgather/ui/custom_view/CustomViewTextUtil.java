@@ -58,9 +58,9 @@ public class CustomViewTextUtil {
     public static float getBaselineY(int viewHeight, Paint textPaint) {
         Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
         // 该值为文本中心位置相对到baseline的位置，为负值，在baseline上方
-        float baselineY = (fontMetrics.descent + fontMetrics.ascent) / 2;
+        float originBaselineY = (fontMetrics.top + fontMetrics.bottom) / 2;
         // 用控件的中心位置去 和 文本中心位置到baseline距离 相加，这样做的结果是文本的垂直中心会精确地对齐到控件的中心线
-        // 得到的结果为，对于该控件我们应该设置的baseline的位置。换言之，我们以该baseline进行drawText()，文本会准确地垂直居中
-        return viewHeight / 2f - baselineY;
+        // 得到的结果为，对于该控件我们应该设置的baseline的位置。换言之，我们以该baseline进行drawText()，文本会垂直居中
+        return viewHeight / 2f - originBaselineY;
     }
 }
