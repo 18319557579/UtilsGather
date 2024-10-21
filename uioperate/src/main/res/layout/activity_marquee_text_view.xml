@@ -40,11 +40,14 @@
         android:id="@+id/mtv_three"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Kotlin 实现文本横向滚动，跑马灯效果。123...33333"
+        android:text="Kotlin 实现文本gjqy横向滚动，跑马灯效果。123...33333"
 
         app:layout_constraintTop_toBottomOf="@id/mtv_two"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="10dp"
+        android:paddingLeft="100dp"
+        android:paddingRight="50dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="5dp"
         android:layout_marginTop="20dp"
 
         android:textColor="#E91E63"

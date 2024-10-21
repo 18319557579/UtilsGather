@@ -15,6 +15,7 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.annotation.ColorInt
 import androidx.annotation.Px
+import androidx.core.graphics.withSave
 import com.example.uioperate.R
 import com.example.utilsgather.kotlin.spread.getStringWithDefaultValue
 import com.example.utilsgather.logcat.LogUtil
@@ -103,18 +104,25 @@ class MarqueeTextViewThree @JvmOverloads constructor(
         LogUtil.d("回调onMeasure \n" + CustomViewUtil.getWidthHeightInfo(widthMeasureSpec, heightMeasureSpec))
 
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
+        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
 
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
 
         val myHeightSize = CustomViewTextUtil.getWholeCharacterHeight(mTextPaint) + paddingTop + paddingBottom
         val measureHeight = when(heightMode) {
-            MeasureSpec.EXACTLY -> heightSize
-            MeasureSpec.AT_MOST -> min(myHeightSize.toInt(), heightSize)
-            else -> myHeightSize.toInt()
+            MeasureSpec.EXACTLY -> heightSize  // 如果是确切的，那么直接使用给的
+            MeasureSpec.AT_MOST -> min(myHeightSize.toInt(), heightSize)  // 如果有上限，不超过上限的话就用我们测量的，否则只能使用上限
+            else -> myHeightSize.toInt()  // 如果不约束，那么直接使用我们的
         }
 
-        setMeasuredDimension(widthSize, measureHeight);
+        val measureWidth = when(widthMode) {
+            MeasureSpec.EXACTLY -> widthSize  // 如果是确切的，那么直接使用给的
+            MeasureSpec.AT_MOST -> widthSize  // 如果宽度有上限，那直接使用上限吧
+            else -> mSingleContentWidth.toInt() + paddingLeft + paddingRight  // 如果不约束，那么直接使用我们的
+        }
+
+        setMeasuredDimension(measureWidth, measureHeight);
     }
 
     /**
@@ -149,7 +157,7 @@ class MarqueeTextViewThree @JvmOverloads constructor(
 
         if (mObjectAnimator == null) {
             mObjectAnimator = ObjectAnimator.ofFloat(this, "mXLocation", 0f, 1f).apply {
-                setDuration(2000)
+                setDuration(5000)
                 repeatCount = ValueAnimator.INFINITE
                 repeatMode = ValueAnimator.RESTART
                 interpolator = LinearInterpolator()
@@ -160,7 +168,17 @@ class MarqueeTextViewThree @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
-        canvas.drawText(mFinalDrawText, mXLocation, CustomViewTextUtil.getBaselineY(height, mTextPaint), mTextPaint)
+        canvas.withSave {
+            // 略掉四边的padding，只留下中间显示的部分
+            clipRect(paddingLeft, paddingTop, measuredWidth - paddingRight, measuredHeight - paddingBottom)
+            // 实际的高度
+            val actualHeight = measuredHeight - paddingTop - paddingBottom
+            // 注意，开始的起点要加上paddingLeft，因为左右的padding是显示不了的
+            // 注意，算出来baselineY之后，要加上paddingTop，这样才能实现在显示的范围内使用垂直居中
+            drawText(mFinalDrawText, mXLocation + paddingLeft,
+                CustomViewTextUtil.getBaselineY(actualHeight, mTextPaint) + paddingTop, mTextPaint)
+        }
+
     }
 
     override fun onAttachedToWindow() {
