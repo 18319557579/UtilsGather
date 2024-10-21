@@ -48,7 +48,7 @@ class MarqueeTextViewThree @JvmOverloads constructor(
 
     // 单个文本间的间隔
     @Px
-    var textItemDistance = 50f
+    var textItemDistance = 100f
 
     // 单个显示内容的宽度
     private var mSingleContentWidth: Float = 0f
@@ -58,8 +58,6 @@ class MarqueeTextViewThree @JvmOverloads constructor(
     private lateinit var mFinalDrawText: String
 
     private var mXLocation = 0f //文本的x坐标
-
-    var speed = 5f
 
     private var mObjectAnimator: ObjectAnimator? = null
 
@@ -189,5 +187,23 @@ class MarqueeTextViewThree @JvmOverloads constructor(
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         LogUtil.d("回调 onDetachedFromWindow")
+    }
+
+    fun setText(text: String) {
+        mText = text
+
+        mSingleContent = (mText + getItemEndBlank()).also { singleContent ->
+            mSingleContentWidth = CustomViewTextUtil.getMeasureTextWidth(singleContent, mTextPaint)
+        }
+
+        // 向上取整后 + 1
+        val maxVisibleCount = ceil(width / mSingleContentWidth).toInt() + 1
+
+        // 计算出最终显示的文本内容
+        mFinalDrawText = StringBuilder(mSingleContent.length * maxVisibleCount).apply {
+            repeat(maxVisibleCount) {
+                append(mSingleContent)
+            }
+        }.toString()
     }
 }

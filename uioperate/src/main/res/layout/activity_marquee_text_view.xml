@@ -54,6 +54,30 @@
         android:textSize="20sp"
         android:background="#60CACACA"/>
 
+    <com.example.uioperate.custom_marquee_textview.MarqueeTextViewThree
+        android:id="@+id/mtv_three2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kotlin 实现文本gjqy横向滚动，跑马灯效果。123...33333"
+
+        app:layout_constraintTop_toBottomOf="@id/mtv_three"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+
+        android:textColor="#E91E63"
+        android:textSize="20sp"
+        android:background="#60CACACA"/>
+
+    <Button
+        android:id="@+id/btn_set_new_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置新内容"
+        app:layout_constraintTop_toBottomOf="@id/mtv_three2"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"/>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
