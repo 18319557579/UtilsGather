@@ -13,6 +13,7 @@ import com.example.uioperate.custom_juejin_newki.range_view.RangeViewActivity
 import com.example.uioperate.custom_juejin_newki.star.StarScoreViewActivity
 import com.example.uioperate.custom_juejin_newki.thermometer.TemperatureViewActivity
 import com.example.uioperate.custom_juejin_s10g.JuejinS10gActivity
+import com.example.uioperate.custom_marquee_textview.MarqueeTextViewActivity
 import com.example.uioperate.custom_qiujuer.MoocBezierActivity
 import com.example.uioperate.custom_qiujuer.CustomQiujuerActivity
 import com.example.uioperate.custom_qiujuer.DrawableTestActivity
@@ -106,6 +107,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("封装的BaseAdapter") {
                 startActivity(Intent(this, BaseAdapterActivity::class.java))
+            },
+            GuideItemEntity("自定义MarqueeTextView") {
+                startActivity(Intent(this, MarqueeTextViewActivity::class.java))
             },
         ))
     }

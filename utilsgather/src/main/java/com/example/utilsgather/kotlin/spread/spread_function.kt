@@ -1,4 +1,4 @@
-package com.example.uioperate.custom_juejin_newki.progress_ring
+package com.example.utilsgather.kotlin.spread
 
 import android.content.res.TypedArray
 import androidx.annotation.StyleableRes

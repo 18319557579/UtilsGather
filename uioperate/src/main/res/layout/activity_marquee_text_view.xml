@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".custom_marquee_textview.MarqueeTextViewActivity">
+    
+    <com.example.uioperate.custom_marquee_textview.MarqueeTextView
+        android:id="@+id/mtv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kotlin 实现文本横向滚动，跑马灯效果。123..."
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:background="#60CACACA"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

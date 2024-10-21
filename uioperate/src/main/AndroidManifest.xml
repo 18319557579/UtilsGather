@@ -21,6 +21,9 @@
 
     <application android:networkSecurityConfig="@xml/network_security_config">
         <activity
+            android:name=".custom_marquee_textview.MarqueeTextViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".touch_event_gcssloop.test_action_outside.ActionOutsideActivity"
             android:exported="false" />
         <activity

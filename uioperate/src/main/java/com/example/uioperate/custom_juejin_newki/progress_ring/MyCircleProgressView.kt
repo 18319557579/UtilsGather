@@ -17,6 +17,7 @@ import com.example.uioperate.R
 import com.example.uioperate.custom_juejin_s10g.sp
 import com.example.utilsgather.format_trans.NumberTransfer
 import com.example.utilsgather.logcat.LogUtil
+import com.example.utilsgather.kotlin.spread.getStringWithDefaultValue
 
 /**
  * 该 View 没有重写 onMeasure()，意思是使用系统测量的方式，用户配置多少就是多少好了
