@@ -12,6 +12,8 @@ class StyleImmersion2Activity : LifecycleLogActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_immersion)
 
+        supportActionBar?.hide()
+
         ImmersionUtil.hideVirtualButton(this)
 
         ImmersionUtil.screenFull(this)

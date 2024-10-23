@@ -22,6 +22,8 @@ class TestImmersionActivity : LifecycleLogActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_immersion)
 
+        supportActionBar?.hide()
+
         val listView = findViewById<ListView>(R.id.lv_launcher)
         GuideSettings.set(
             listView, arrayOf<GuideItemEntity>(

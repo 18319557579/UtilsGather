@@ -6,16 +6,24 @@
     >
 <!--android:fitsSystemWindows="true"-->
 
+    <TextView
+        android:id="@+id/view_color"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#2196F3"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="我就是显示在顶部的，hahahahahahahahahahaha"/>
+
+
     <ListView
         android:id="@+id/lv_launcher"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#DADADA"/>
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我就是一些头部的内容Head!!!"/>
+        android:background="#DADADA"
+
+        app:layout_constraintTop_toBottomOf="@id/view_color"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 
 
