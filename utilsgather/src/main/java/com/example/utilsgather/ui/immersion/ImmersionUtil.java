@@ -67,4 +67,81 @@ public class ImmersionUtil {
             e.printStackTrace();
         }
     }
+
+    public static void screenFull_JustStatusBar_hide_once(Activity activity) {
+        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+        try {
+            Field field = lp.getClass().getField("layoutInDisplayCutoutMode");
+            Field constValue = lp.getClass().getDeclaredField("LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES");
+            field.setInt(lp, constValue.getInt(null));
+
+
+            int flag =
+                    // 这是是隐藏的前提，没有它的话：1.状态栏不会隐藏了 2.要主动设置状态栏为透明才行
+                    View.SYSTEM_UI_FLAG_FULLSCREEN
+                            |
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            |
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    ;
+
+            View view = activity.getWindow().getDecorView();
+            view.setSystemUiVisibility(flag);
+
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void screenFull_JustStatusBar_hide_sticky(Activity activity) {
+        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+        try {
+            Field field = lp.getClass().getField("layoutInDisplayCutoutMode");
+            Field constValue = lp.getClass().getDeclaredField("LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES");
+            field.setInt(lp, constValue.getInt(null));
+
+
+            int flag =
+                    View.SYSTEM_UI_FLAG_FULLSCREEN  // 这是是隐藏的前提
+                        |
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        |
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        |
+                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    ;
+
+            View view = activity.getWindow().getDecorView();
+            view.setSystemUiVisibility(flag);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void screenFull_JustStatusBar_no_foremost_flag(Activity activity) {
+        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+        try {
+            Field field = lp.getClass().getField("layoutInDisplayCutoutMode");
+            Field constValue = lp.getClass().getDeclaredField("LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES");
+            field.setInt(lp, constValue.getInt(null));
+
+
+            int flag =
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    |
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    |
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            ;
+
+            View view = activity.getWindow().getDecorView();
+            view.setSystemUiVisibility(flag);
+
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 }
