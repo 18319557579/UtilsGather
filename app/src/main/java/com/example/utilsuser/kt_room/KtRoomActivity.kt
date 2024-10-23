@@ -1,8 +1,9 @@
 package com.example.utilsuser.kt_room
 
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import android.widget.ListView
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
@@ -47,8 +48,35 @@ class KtRoomActivity : LifecycleLogActivity() {
                     WindowCompat.getInsetsController(window, window.decorView)
                         .isAppearanceLightStatusBars = false
                 },
+                GuideItemEntity("沉浸式 0.5的透明度。用一行代码简单实现，日间模式会出现白底，夜间模式会出现黑底") {
+                    window.statusBarColor = 0x80CD69C
+                },
+                GuideItemEntity("沉浸式 0.5的透明度。只这么设置的话（内容不嵌入），是半透明红色遮盖在白色上（日间）或黑色上（夜间）。这里的白色和黑色我认为是主题颜色，后续可以证实") {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    window.statusBarColor = 0x80FF0000.toInt()
+                },
+                GuideItemEntity("沉浸式 0的透明度。只这么设置的话（内容不嵌入）") {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    window.statusBarColor = 0x00FF0000.toInt()
+                },
+                GuideItemEntity("沉浸式 1的透明度。只这么设置的话（内容不嵌入）") {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    window.statusBarColor = 0xFFFF0000.toInt()
+                },
+                GuideItemEntity("内容嵌入状态栏") {
+                    var systemUiVisibility = window.decorView.systemUiVisibility
+                    systemUiVisibility = systemUiVisibility or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    systemUiVisibility = systemUiVisibility or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    window.decorView.systemUiVisibility = systemUiVisibility
+                },
                 GuideItemEntity("沉浸式 0.5的透明度") {
                     StatusBarUtils.immersive(this, 0xCD69C, 0.5f)
+                },
+                GuideItemEntity("沉浸式 0.8的透明度") {
+                    StatusBarUtils.immersive(this, 0xCD69C, 0.8f)
                 },
                 GuideItemEntity("沉浸式 0的透明度") {
                     StatusBarUtils.immersive(this, 0xCD69C, 0f)
@@ -69,6 +97,12 @@ class KtRoomActivity : LifecycleLogActivity() {
 
                     val height2 = OtherStatusBarUtil.getStatusBarHeight(this);
                     LogUtil.d("状态栏高度2：$height2")
+                },
+                GuideItemEntity("") {
+                },
+                GuideItemEntity("") {
+                },
+                GuideItemEntity("") {
                 },
             )
         )
