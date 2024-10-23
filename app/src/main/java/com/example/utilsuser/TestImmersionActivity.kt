@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.ListView
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -25,6 +28,12 @@ class TestImmersionActivity : LifecycleLogActivity() {
         setContentView(R.layout.activity_test_immersion)
 
         supportActionBar?.hide()
+
+        val windowInsetsController =
+            WindowCompat.getInsetsController(window, window.decorView)
+        // Configure the behavior of the hidden system bars.
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         val listView = findViewById<ListView>(R.id.lv_launcher)
         GuideSettings.set(
@@ -237,7 +246,6 @@ class TestImmersionActivity : LifecycleLogActivity() {
                     StatusBarUtils.setStatusBarWhiteText(this)
                 },
                 GuideItemEntity("------------------------------------------------") {
-
                 },
                 GuideItemEntity("实现状态栏沉浸式，只隐藏一次，后续只要下拉就会还原了") {
                     ImmersionUtil.screenFull_JustStatusBar_hide_once(this)
@@ -265,6 +273,14 @@ class TestImmersionActivity : LifecycleLogActivity() {
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
                     window.statusBarColor = 0x00FF0000.toInt()
+                },
+                GuideItemEntity("------------------------------------------------") {
+                },
+                GuideItemEntity("官方的沉浸式") {
+                    windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
+                },
+                GuideItemEntity("官方的反沉浸式") {
+                    windowInsetsController.show(WindowInsetsCompat.Type.statusBars())
                 },
             )
         )
