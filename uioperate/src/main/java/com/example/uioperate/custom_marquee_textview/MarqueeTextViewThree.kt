@@ -6,9 +6,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
@@ -21,8 +18,6 @@ import com.example.utilsgather.kotlin.spread.getStringWithDefaultValue
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.ui.CustomViewUtil
 import com.example.utilsgather.ui.custom_view.CustomViewTextUtil
-import java.lang.ref.WeakReference
-import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -34,6 +29,8 @@ class MarqueeTextViewThree @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr){
     companion object {
         const val BLANK = " "
+        // 用一个时间比例常数，这样子无论是多长的文本，速度都将会一致了。因为越长的，一次动画的时间也越长了
+        const val BASE_RATIO = 3
     }
 
     var mText = ""
@@ -155,7 +152,7 @@ class MarqueeTextViewThree @JvmOverloads constructor(
 
         if (mObjectAnimator == null) {
             mObjectAnimator = ObjectAnimator.ofFloat(this, "mXLocation", 0f, 1f).apply {
-                setDuration(5000)
+                setDuration(((mSingleContentWidth * BASE_RATIO).toLong()))
                 repeatCount = ValueAnimator.INFINITE
                 repeatMode = ValueAnimator.RESTART
                 interpolator = LinearInterpolator()
