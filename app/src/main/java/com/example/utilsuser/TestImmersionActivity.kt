@@ -171,6 +171,14 @@ class TestImmersionActivity : LifecycleLogActivity() {
                                     View.SYSTEM_UI_FLAG_FULLSCREEN.inv()
                     }
                 },
+                GuideItemEntity("设为自动隐藏模式") {
+                    window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                },
+                GuideItemEntity("设为临时隐藏模式") {
+                    window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and
+                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY.inv()
+                },
                 /**
                  * 状态栏不可见，但从顶端往下拉时又会出现，之后不再消失
                  * 导航栏不可见，但从底部往上拉时又会出现，之后不再消失
