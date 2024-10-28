@@ -9,9 +9,10 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.ListView
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -22,6 +23,7 @@ import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsgather.ui.status.OtherStatusBarUtil
 import com.example.utilsuser.kt_room.KtRoomActivity
 import com.example.utilsuser.kt_room.StatusBarUtils
+
 
 // todo 发现 ImmersionUtil.screenFull(this) -> StatusBarUtils.setColor(this, ColorUtil.getRandomColor()) 可以实现cocos游戏效果
 class TestImmersionActivity : LifecycleLogActivity() {
@@ -330,6 +332,18 @@ class TestImmersionActivity : LifecycleLogActivity() {
                         controller?.show(WindowInsets.Type.statusBars())
                     }
                 },
+                GuideItemEntity("设为自动隐藏模式") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = window.insetsController
+                        controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE)
+                    }
+                },
+                GuideItemEntity("设为临时隐藏模式") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = window.insetsController
+                        controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_DEFAULT);
+                    }
+                },
                 GuideItemEntity("临时隐藏状态栏-AndroidX兼容") {
                     val windowInsetsController =
                         WindowCompat.getInsetsController(window, window.decorView)
@@ -341,7 +355,7 @@ class TestImmersionActivity : LifecycleLogActivity() {
                     windowInsetsController.show(WindowInsetsCompat.Type.statusBars())
                 },
                 GuideItemEntity("内容从状态栏和导航栏出来了-AndroidX兼容") {
-                    WindowCompat.setDecorFitsSystemWindows(window, true); // 让内容延伸到系统窗口边界
+                    WindowCompat.setDecorFitsSystemWindows(window, true)
                 },
                 GuideItemEntity("将内容延伸到了状态栏和导航栏-AndroidX兼容") {
                     WindowCompat.setDecorFitsSystemWindows(window, false); // 让内容延伸到系统窗口边界
