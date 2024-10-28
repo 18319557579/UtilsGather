@@ -9,8 +9,6 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.ListView
-import androidx.core.graphics.Insets
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -22,6 +20,7 @@ import com.example.utilsgather.ui.ColorUtil
 import com.example.utilsgather.ui.immersion.ImmersionUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsgather.ui.status.OtherStatusBarUtil
+import com.example.utilsuser.immersion.OfficialImmersionActivity
 import com.example.utilsuser.kt_room.KtRoomActivity
 import com.example.utilsuser.kt_room.StatusBarUtils
 
@@ -43,6 +42,9 @@ class TestImmersionActivity : LifecycleLogActivity() {
         val listView = findViewById<ListView>(R.id.lv_launcher)
         GuideSettings.set(
             listView, arrayOf<GuideItemEntity>(
+                GuideItemEntity("跳转利用原子功能组装起来的组合沉浸式效果") {
+                    startActivity(Intent(this, OfficialImmersionActivity::class.java))
+                },
                 GuideItemEntity("去StyleImmersionActivity") {
                     startActivity(Intent(this, StyleImmersionActivity::class.java))
                 },
