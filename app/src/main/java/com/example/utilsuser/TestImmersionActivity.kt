@@ -311,6 +311,16 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 GuideItemEntity("官方的反沉浸式") {
 //                    windowInsetsController.show(WindowInsetsCompat.Type.statusBars())
                 },
+                GuideItemEntity("将内容延伸到了状态栏和导航栏，setDecorFitsSystemWindows") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        window.setDecorFitsSystemWindows(false)
+                    }
+                },
+                GuideItemEntity("内容从状态栏和导航栏出来了，setDecorFitsSystemWindows") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        window.setDecorFitsSystemWindows(true)
+                    }
+                },
             )
         )
 
