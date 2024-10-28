@@ -321,6 +321,18 @@ class TestImmersionActivity : LifecycleLogActivity() {
                         window.setDecorFitsSystemWindows(true)
                     }
                 },
+                GuideItemEntity("临时隐藏状态栏") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = window.insetsController
+                        controller?.hide(WindowInsets.Type.statusBars())
+                    }
+                },
+                GuideItemEntity("立即显示状态栏") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = window.insetsController
+                        controller?.show(WindowInsets.Type.statusBars())
+                    }
+                },
             )
         )
 
