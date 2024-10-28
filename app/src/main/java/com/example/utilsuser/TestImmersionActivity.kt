@@ -85,6 +85,11 @@ class TestImmersionActivity : LifecycleLogActivity() {
                         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                     }
                 },
+                GuideItemEntity("上面的取反操作") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    }
+                },
 
                 /**
                  * 效果：
