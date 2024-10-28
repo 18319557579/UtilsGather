@@ -340,6 +340,13 @@ class TestImmersionActivity : LifecycleLogActivity() {
                         WindowCompat.getInsetsController(window, window.decorView)
                     windowInsetsController.show(WindowInsetsCompat.Type.statusBars())
                 },
+                GuideItemEntity("内容从状态栏和导航栏出来了-AndroidX兼容") {
+                    WindowCompat.setDecorFitsSystemWindows(window, true); // 让内容延伸到系统窗口边界
+                },
+                GuideItemEntity("将内容延伸到了状态栏和导航栏-AndroidX兼容") {
+                    WindowCompat.setDecorFitsSystemWindows(window, false); // 让内容延伸到系统窗口边界
+                },
+
             )
         )
 
