@@ -158,11 +158,15 @@ class TestImmersionActivity : LifecycleLogActivity() {
                  */
                 GuideItemEntity("让状态栏消失（16）") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        window.decorView.systemUiVisibility =
-                            window.decorView.systemUiVisibility or
-                                    View.SYSTEM_UI_FLAG_FULLSCREEN and
-                                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY.inv()
+                        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                                    View.SYSTEM_UI_FLAG_FULLSCREEN
                         LogUtil.d("并一下看看：${window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY}")
+                    }
+                },
+                GuideItemEntity("立即显示状态栏") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and
+                                    View.SYSTEM_UI_FLAG_FULLSCREEN.inv()
                     }
                 },
                 /**
