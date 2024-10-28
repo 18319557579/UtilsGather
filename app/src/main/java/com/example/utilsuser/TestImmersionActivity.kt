@@ -13,6 +13,7 @@ import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -328,7 +329,7 @@ class TestImmersionActivity : LifecycleLogActivity() {
                         window.setDecorFitsSystemWindows(true)
                     }
                 },
-                GuideItemEntity("临时隐藏状态栏") {
+                GuideItemEntity("隐藏状态栏") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         controller?.hide(WindowInsets.Type.statusBars())
@@ -352,15 +353,25 @@ class TestImmersionActivity : LifecycleLogActivity() {
                         controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_DEFAULT);
                     }
                 },
-                GuideItemEntity("临时隐藏状态栏-AndroidX兼容") {
+                GuideItemEntity("隐藏状态栏-AndroidX兼容") {
                     val windowInsetsController =
                         WindowCompat.getInsetsController(window, window.decorView)
                     windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
                 },
-                GuideItemEntity("立即显示状态栏-AndroidX兼容") {
+                GuideItemEntity("显示状态栏-AndroidX兼容") {
                     val windowInsetsController =
                         WindowCompat.getInsetsController(window, window.decorView)
                     windowInsetsController.show(WindowInsetsCompat.Type.statusBars())
+                },
+                GuideItemEntity("设为自动隐藏模式-AndroidX兼容") {
+                    val windowInsetsController =
+                        WindowCompat.getInsetsController(window, window.decorView)
+                    windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE)
+                },
+                GuideItemEntity("设为临时隐藏模式-AndroidX兼容") {
+                    val windowInsetsController =
+                        WindowCompat.getInsetsController(window, window.decorView)
+                    windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_DEFAULT)
                 },
                 GuideItemEntity("内容从状态栏和导航栏出来了-AndroidX兼容") {
                     WindowCompat.setDecorFitsSystemWindows(window, true)
