@@ -10,6 +10,8 @@ import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.ListView
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -302,12 +304,6 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 },
                 GuideItemEntity("------------------------------------------------") {
                 },
-                GuideItemEntity("官方的沉浸式") {
-//                    windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
-                },
-                GuideItemEntity("官方的反沉浸式") {
-//                    windowInsetsController.show(WindowInsetsCompat.Type.statusBars())
-                },
                 GuideItemEntity("将内容延伸到了状态栏和导航栏，setDecorFitsSystemWindows") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         window.setDecorFitsSystemWindows(false)
@@ -329,6 +325,16 @@ class TestImmersionActivity : LifecycleLogActivity() {
                         val controller = window.insetsController
                         controller?.show(WindowInsets.Type.statusBars())
                     }
+                },
+                GuideItemEntity("临时隐藏状态栏-AndroidX兼容") {
+                    val windowInsetsController =
+                        WindowCompat.getInsetsController(window, window.decorView)
+                    windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
+                },
+                GuideItemEntity("立即显示状态栏-AndroidX兼容") {
+                    val windowInsetsController =
+                        WindowCompat.getInsetsController(window, window.decorView)
+                    windowInsetsController.show(WindowInsetsCompat.Type.statusBars())
                 },
             )
         )
