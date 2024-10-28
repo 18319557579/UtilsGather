@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.ListView
 import androidx.core.view.ViewCompat
@@ -14,6 +15,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
+import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.ui.ColorUtil
 import com.example.utilsgather.ui.immersion.ImmersionUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
@@ -29,11 +31,11 @@ class TestImmersionActivity : LifecycleLogActivity() {
 
         supportActionBar?.hide()
 
-        val windowInsetsController =
+        /*val windowInsetsController =
             WindowCompat.getInsetsController(window, window.decorView)
         // Configure the behavior of the hidden system bars.
         windowInsetsController.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE*/
 
         val listView = findViewById<ListView>(R.id.lv_launcher)
         GuideSettings.set(
@@ -156,9 +158,11 @@ class TestImmersionActivity : LifecycleLogActivity() {
                  */
                 GuideItemEntity("让状态栏消失（16）") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        val decorView = window.decorView
-                        val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
-                        decorView.systemUiVisibility = uiOptions
+                        window.decorView.systemUiVisibility =
+                            window.decorView.systemUiVisibility or
+                                    View.SYSTEM_UI_FLAG_FULLSCREEN and
+                                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY.inv()
+                        LogUtil.d("并一下看看：${window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY}")
                     }
                 },
                 /**
@@ -202,6 +206,23 @@ class TestImmersionActivity : LifecycleLogActivity() {
                     WindowCompat.getInsetsController(window, window.decorView)
                         .isAppearanceLightStatusBars = false
                 },
+                GuideItemEntity("设置状态栏字体 亮色模式-字体黑色。WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS实现") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = getWindow().getInsetsController();
+                        controller?.setSystemBarsAppearance(
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+                    }
+
+                },
+                GuideItemEntity("设置状态栏字体 暗色模式-字体白色。WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS实现") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = getWindow().getInsetsController();
+                        controller?.setSystemBarsAppearance(
+                            0, // 不设置任何外观标志
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+                    }
+                },
                 GuideItemEntity("沉浸式 0.5的透明度。用一行代码简单实现，日间模式会出现白底，夜间模式会出现黑底") {
                     window.statusBarColor = 0x80CD69C
                 },
@@ -241,10 +262,18 @@ class TestImmersionActivity : LifecycleLogActivity() {
 
                 GuideItemEntity("设置状态栏黑色字体图标") {
                     StatusBarUtils.setStatusBarBlackText(this)
+                    LogUtil.d("是否有FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS：${getWindow().getAttributes().flags and WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS != 0}")
+                    LogUtil.d("是否有FLAG_TRANSLUCENT_STATUS：${getWindow().getAttributes().flags and WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS != 0}")
                 },
                 GuideItemEntity("设置状态栏白色字体图标") {
                     StatusBarUtils.setStatusBarWhiteText(this)
+                    LogUtil.d("是否有FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS：${getWindow().getAttributes().flags and WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS != 0}")
+                    LogUtil.d("是否有FLAG_TRANSLUCENT_STATUS：${getWindow().getAttributes().flags and WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS != 0}")
                 },
+                GuideItemEntity("清除掉 FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS") {
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                },
+
                 GuideItemEntity("------------------------------------------------") {
                 },
                 GuideItemEntity("实现状态栏沉浸式，只隐藏一次，后续只要下拉就会还原了") {
@@ -277,10 +306,10 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 GuideItemEntity("------------------------------------------------") {
                 },
                 GuideItemEntity("官方的沉浸式") {
-                    windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
+//                    windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
                 },
                 GuideItemEntity("官方的反沉浸式") {
-                    windowInsetsController.show(WindowInsetsCompat.Type.statusBars())
+//                    windowInsetsController.show(WindowInsetsCompat.Type.statusBars())
                 },
             )
         )
