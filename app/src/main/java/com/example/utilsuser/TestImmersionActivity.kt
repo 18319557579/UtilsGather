@@ -5,13 +5,11 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.ListView
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -242,10 +240,9 @@ class TestImmersionActivity : LifecycleLogActivity() {
                     window.statusBarColor = 0xFFFF0000.toInt()
                 },
                 GuideItemEntity("内容嵌入状态栏") {
-                    var systemUiVisibility = window.decorView.systemUiVisibility
-                    systemUiVisibility = systemUiVisibility or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    systemUiVisibility = systemUiVisibility or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    window.decorView.systemUiVisibility = systemUiVisibility
+                    window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 },
                 GuideItemEntity("沉浸式 0.5的透明度") {
                     StatusBarUtils.immersive(this, 0xCD69C, 0.5f)
