@@ -455,6 +455,25 @@ class TestImmersionActivity : LifecycleLogActivity() {
                                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
                                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 },
+                GuideItemEntity("隐藏导航栏") {
+                    window.decorView.systemUiVisibility =
+                        window.decorView.systemUiVisibility or
+                                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                },
+                GuideItemEntity("隐藏导航栏，加SYSTEM_UI_FLAG_IMMERSIVE") {
+                    window.decorView.systemUiVisibility =
+                        window.decorView.systemUiVisibility or
+                                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                                View.SYSTEM_UI_FLAG_IMMERSIVE
+                },
+                GuideItemEntity("显示导航栏") {
+                    window.decorView.systemUiVisibility =
+                        window.decorView.systemUiVisibility and
+                                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION.inv()
+                },
+                GuideItemEntity("--------------------------------") {
+
+                },
 
             )
         )
