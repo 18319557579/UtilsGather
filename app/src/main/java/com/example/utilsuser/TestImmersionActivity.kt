@@ -444,7 +444,11 @@ class TestImmersionActivity : LifecycleLogActivity() {
                                 View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
                     }
                 },
-
+                GuideItemEntity("取消 内容延伸到导航栏") {
+                    window.decorView.systemUiVisibility =
+                        window.decorView.systemUiVisibility and
+                                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION.inv()
+                },
                 GuideItemEntity("内容延伸到导航栏") {
                     window.decorView.systemUiVisibility =
                         window.decorView.systemUiVisibility or
