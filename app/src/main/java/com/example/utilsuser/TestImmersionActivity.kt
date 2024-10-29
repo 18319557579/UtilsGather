@@ -471,6 +471,14 @@ class TestImmersionActivity : LifecycleLogActivity() {
                         window.decorView.systemUiVisibility and
                                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION.inv()
                 },
+                GuideItemEntity("设置自动隐藏") {
+                    window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                },
+                GuideItemEntity("设置非自动隐藏") {
+                    window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and
+                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY.inv()
+                },
                 GuideItemEntity("--------------------------------") {
 
                 },
