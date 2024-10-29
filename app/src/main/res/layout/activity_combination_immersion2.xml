@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".immersion.SimulationGameImmersionActivity"
+    android:background="#FF9800">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00998B">
+        <TextView
+            android:id="@+id/tv_toop"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#2196F3"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="我就是显示在顶部的，hahahahahahahahahahaha"/>
+        <ListView
+            android:id="@+id/lv_launcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#DADADA"
+
+            app:layout_constraintTop_toBottomOf="@id/tv_toop"
+            app:layout_constraintBottom_toTopOf="@id/tv_bottom"/>
+        <TextView
+            android:id="@+id/tv_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#E91E63"
+            android:textColor="@color/white"
+            android:text="我就是显示在顶部的，hahahahahahahahahahaha"
+            android:gravity="bottom"
+
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

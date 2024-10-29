@@ -20,6 +20,7 @@ import com.example.utilsgather.ui.ColorUtil
 import com.example.utilsgather.ui.immersion.ImmersionUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsgather.ui.status.OtherStatusBarUtil
+import com.example.utilsuser.immersion.SimulationGameImmersionActivity
 import com.example.utilsuser.immersion.OfficialImmersionActivity
 import com.example.utilsuser.kt_room.KtRoomActivity
 import com.example.utilsuser.kt_room.StatusBarUtils
@@ -42,8 +43,11 @@ class TestImmersionActivity : LifecycleLogActivity() {
         val listView = findViewById<ListView>(R.id.lv_launcher)
         GuideSettings.set(
             listView, arrayOf<GuideItemEntity>(
-                GuideItemEntity("跳转利用原子功能组装起来的组合沉浸式效果") {
+                GuideItemEntity("官方沉浸式Activity") {
                     startActivity(Intent(this, OfficialImmersionActivity::class.java))
+                },
+                GuideItemEntity("模仿游戏的Activity") {
+                    startActivity(Intent(this, SimulationGameImmersionActivity::class.java))
                 },
                 GuideItemEntity("去StyleImmersionActivity") {
                     startActivity(Intent(this, StyleImmersionActivity::class.java))
@@ -340,25 +344,25 @@ class TestImmersionActivity : LifecycleLogActivity() {
                         window.setDecorFitsSystemWindows(true)
                     }
                 },
-                GuideItemEntity("隐藏状态栏") {
+                GuideItemEntity("隐藏状态栏-api30") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         controller?.hide(WindowInsets.Type.statusBars())
                     }
                 },
-                GuideItemEntity("立即显示状态栏") {
+                GuideItemEntity("立即显示状态栏-api30") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         controller?.show(WindowInsets.Type.statusBars())
                     }
                 },
-                GuideItemEntity("设为自动隐藏模式") {
+                GuideItemEntity("设为自动隐藏模式-api30") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE)
                     }
                 },
-                GuideItemEntity("设为临时隐藏模式") {
+                GuideItemEntity("设为临时隐藏模式-api30") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_DEFAULT);

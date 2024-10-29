@@ -21,6 +21,9 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".immersion.SimulationGameImmersionActivity"
+            android:exported="false" />
+        <activity
             android:name=".immersion.OfficialImmersionActivity"
             android:exported="false" />
 
