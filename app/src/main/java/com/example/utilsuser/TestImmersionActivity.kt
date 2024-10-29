@@ -417,7 +417,7 @@ class TestImmersionActivity : LifecycleLogActivity() {
                     }
                 },
                 // 发在全透明的情况下，如果底部没有内容（即内容没有延伸到状态栏的情况），那么将显示的是黑色/白色（根据夜间/日间判断）
-                GuideItemEntity("设置导航栏背景颜色") {
+                GuideItemEntity("设置导航栏背景颜色-全透明") {
                     window.apply {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                             // 在导航栏背景全透明的情况下，不要让自动出现蒙层
@@ -427,6 +427,21 @@ class TestImmersionActivity : LifecycleLogActivity() {
                         addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
                         navigationBarColor = Color.TRANSPARENT
+                    }
+                },
+                GuideItemEntity("设置导航栏按钮或条颜色-亮色模式-会深点") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        window.decorView.systemUiVisibility =
+                            window.decorView.systemUiVisibility or
+                                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                    }
+                },
+                // 发现在2台OPPO上无效果
+                GuideItemEntity("设置导航栏按钮或条颜色-暗色模式-会浅点") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        window.decorView.systemUiVisibility =
+                            window.decorView.systemUiVisibility and
+                                View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
                     }
                 },
 
