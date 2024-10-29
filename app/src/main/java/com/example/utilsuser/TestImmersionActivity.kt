@@ -21,8 +21,8 @@ import com.example.utilsgather.ui.immersion.ImmersionUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsgather.ui.status.OtherStatusBarUtil
 import com.example.utilsuser.immersion.InsetsListenerActivity
-import com.example.utilsuser.immersion.SimulationGameImmersionActivity
 import com.example.utilsuser.immersion.OfficialImmersionActivity
+import com.example.utilsuser.immersion.SimulationGameImmersionActivity
 import com.example.utilsuser.kt_room.KtRoomActivity
 import com.example.utilsuser.kt_room.StatusBarUtils
 
@@ -397,6 +397,44 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 },
                 GuideItemEntity("将内容延伸到了状态栏和导航栏-AndroidX兼容") {
                     WindowCompat.setDecorFitsSystemWindows(window, false); // 让内容延伸到系统窗口边界
+                },
+                GuideItemEntity("-------------------专门研究导航栏-----------------------------") {
+                },
+                GuideItemEntity("设置导航栏背景颜色-全红") {
+                    window.apply {
+                        clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                        addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+                        navigationBarColor = Color.parseColor("#FFFF0000")
+                    }
+                },
+                GuideItemEntity("设置导航栏背景颜色-半透明红色") {
+                    window.apply {
+                        clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                        addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+                        navigationBarColor = Color.parseColor("#80FF0000")
+                    }
+                },
+                // 发在全透明的情况下，如果底部没有内容（即内容没有延伸到状态栏的情况），那么将显示的是黑色/白色（根据夜间/日间判断）
+                GuideItemEntity("设置导航栏背景颜色") {
+                    window.apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            // 在导航栏背景全透明的情况下，不要让自动出现蒙层
+                            isNavigationBarContrastEnforced = false
+                        }
+                        clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                        addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+                        navigationBarColor = Color.TRANSPARENT
+                    }
+                },
+
+                GuideItemEntity("内容延伸到导航栏") {
+                    window.decorView.systemUiVisibility =
+                        window.decorView.systemUiVisibility or
+                                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 },
 
             )
