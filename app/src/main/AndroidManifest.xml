@@ -20,9 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
+        <!--使得该Activity在旋转时不会重建-->
         <activity
             android:name=".immersion.SimulationGameImmersionActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="orientation|keyboardHidden|screenSize|screenLayout|uiMode"/>
         <activity
             android:name=".immersion.OfficialImmersionActivity"
             android:exported="false" />
