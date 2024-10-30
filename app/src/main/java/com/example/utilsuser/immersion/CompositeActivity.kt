@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.utilsgather.logcat.LogUtil
@@ -148,6 +149,18 @@ class CompositeActivity : BaseTabViewpagerActivity() {
                     },
                     InnerItemEntity("取消内容延伸到状态栏") {
                         WindowCompat.setDecorFitsSystemWindows(window, true)  // 内容从状态栏和导航栏出来了
+                    },
+                    // 这里发现很难做取消内容延伸到状态栏，不过考虑到其实很少会说内容延伸到状态栏了，又取消延伸（游戏模式那种除外）
+                    InnerItemEntity("将内容延伸到状态栏-防止延伸到导航栏") {
+                        ViewCompat.setOnApplyWindowInsetsListener(findViewById<ViewGroup>(R.id.main)) { v: View, windowInsets: WindowInsetsCompat ->
+                            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+                            // 使用维护的状态变量来决定是否应用 padding
+                            v.setPadding(
+                                v.paddingLeft, v.paddingTop, v.paddingRight, insets.bottom
+                            )
+                            WindowInsetsCompat.CONSUMED
+                        }
+                        WindowCompat.setDecorFitsSystemWindows(window, false)
                     },
                 )
             ))
