@@ -15,6 +15,11 @@ import java.util.List;
 
 public abstract class BaseTabViewpagerActivity extends AppCompatActivity{
 
+    // 如果要传指定的布局，那么请重写这个方法
+    int customContentView() {
+        return R.layout.activity_composite;
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +71,5 @@ public abstract class BaseTabViewpagerActivity extends AppCompatActivity{
     // 这里用于配置主体内容
     abstract void addPairs(List<Pair<String, ShowFragment>> pairs);
 
-    // 如果要传指定的布局，那么请重写这个方法
-    int customContentView() {
-        return R.layout.activity_composite;
-    }
+
 }

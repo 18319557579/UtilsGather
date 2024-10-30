@@ -1,15 +1,20 @@
 package com.example.utilsuser.immersion
 
 import android.graphics.Color
+import android.graphics.Insets
 import android.os.Build
 import android.util.Pair
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.ui.ColorUtil
 import com.example.utilsuser.R
+
 
 class CompositeActivity : BaseTabViewpagerActivity() {
     override fun addPairs(pairs: MutableList<Pair<String, ShowFragment>>) {
@@ -117,6 +122,23 @@ class CompositeActivity : BaseTabViewpagerActivity() {
                     InnerItemEntity("取消内容延伸到状态栏") {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                             window.setDecorFitsSystemWindows(true)  // 内容从状态栏和导航栏出来了
+                        }
+                    },
+                    // 这里发现很难做取消内容延伸到状态栏，不过考虑到其实很少会说内容延伸到状态栏了，又取消延伸（游戏模式那种除外）
+                    InnerItemEntity("将内容延伸到状态栏-防止延伸到导航栏") {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            findViewById<ViewGroup>(R.id.main).setOnApplyWindowInsetsListener { view, windowInsets ->
+                                val insets: Insets = windowInsets.getInsets(WindowInsets.Type.navigationBars())
+                                LogUtil.d("navigationBars-insets: $insets")
+                                view.setPadding(
+                                    view.getPaddingLeft(),
+                                    view.getPaddingTop(),
+                                    view.getPaddingRight(),
+                                    insets.bottom
+                                )
+                                WindowInsets.CONSUMED
+                            }
+                            window.setDecorFitsSystemWindows(false)  // 将内容延伸到了状态栏和导航栏
                         }
                     },
 
