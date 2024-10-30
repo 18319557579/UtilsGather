@@ -12,6 +12,7 @@ import android.view.WindowManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.ui.ColorUtil
 import com.example.utilsuser.R
@@ -203,6 +204,54 @@ class CompositeActivity : BaseTabViewpagerActivity() {
                     },
                 )
             ))
+            )
+            add(
+                Pair("状态栏之隐藏模式", ShowFragment.newInstance(
+                    arrayOf(
+                        InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                        InnerItemEntity("当调用这个方法后，之后就是会自动隐藏的了") {
+                            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        },
+                        InnerItemEntity("当调用这个方法后，之后就是会临时隐藏模式") {
+                            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and
+                                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY.inv()
+                        },
+                        InnerItemEntity("（Android11开始） ---------------------") {  },
+                        InnerItemEntity("当调用这个方法后，之后就是会自动隐藏的了") {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                val controller = window.insetsController
+                                // 当调用这个方法后，之后就是会自动隐藏的了
+                                //（但是只调用这个方法的话不会有表现出来，要通过hide/show/手动，才能感觉得出来有所改变）
+                                controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+                            }
+                        },
+                        InnerItemEntity("当调用这个方法后，之后就是会临时隐藏模式") {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                val controller = window.insetsController
+                                // 当调用这个方法后，之后就是会临时隐藏模式
+                                //（但是只调用这个方法的话不会有表现出来，要通过hide/show/手动，才能感觉得出来有所改变）
+                                controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_DEFAULT);
+                            }
+                        },
+                        InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                        InnerItemEntity("当调用这个方法后，之后就是会自动隐藏的了") {
+                            val windowInsetsController =
+                                WindowCompat.getInsetsController(window, window.decorView)
+                            // 当调用这个方法后，之后就是会自动隐藏的了
+                            //（但是只调用这个方法的话不会有表现出来，要通过hide/show/手动，才能感觉得出来有所改变）
+                            windowInsetsController.setSystemBarsBehavior(
+                                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE)
+                        },
+                        InnerItemEntity("当调用这个方法后，之后就是会临时隐藏模式") {
+                            val windowInsetsController =
+                                WindowCompat.getInsetsController(window, window.decorView)
+                            // 当调用这个方法后，之后就是会临时隐藏模式
+                            //（但是只调用这个方法的话不会有表现出来，要通过hide/show/手动，才能感觉得出来有所改变）
+                            windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_DEFAULT)
+                        },
+                    )
+                ))
             )
         }
     }
