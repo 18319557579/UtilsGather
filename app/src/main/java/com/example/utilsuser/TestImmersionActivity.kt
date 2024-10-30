@@ -20,6 +20,7 @@ import com.example.utilsgather.ui.ColorUtil
 import com.example.utilsgather.ui.immersion.ImmersionUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsgather.ui.status.OtherStatusBarUtil
+import com.example.utilsuser.immersion.CompositeActivity
 import com.example.utilsuser.immersion.InsetsListenerActivity
 import com.example.utilsuser.immersion.OfficialImmersionActivity
 import com.example.utilsuser.immersion.SimulationGameImmersionActivity
@@ -52,6 +53,9 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 },
                 GuideItemEntity("setOnApplyWindowInsetsListener") {
                     startActivity(Intent(this, InsetsListenerActivity::class.java))
+                },
+                GuideItemEntity("集中功能") {
+                    startActivity(Intent(this, CompositeActivity::class.java))
                 },
                 GuideItemEntity("去StyleImmersionActivity") {
                     startActivity(Intent(this, StyleImmersionActivity::class.java))
