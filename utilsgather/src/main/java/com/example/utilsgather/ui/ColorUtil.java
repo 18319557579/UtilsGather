@@ -15,4 +15,13 @@ public class ColorUtil {
         int b = random.nextInt(256);
         return Color.rgb(r,g,b);
     }
+
+    public static int getRandomColorARGB() {
+        Random random = new Random();
+        int a = random.nextInt(256);
+        int r = random.nextInt(256);
+        int g = random.nextInt(256);
+        int b = random.nextInt(256);
+        return Color.argb(a, r,g,b);
+    }
 }

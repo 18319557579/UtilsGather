@@ -25,8 +25,6 @@ public class ShowFragment extends Fragment {
     @LayoutRes int mResource;
     private InnerItemEntity[] mEntities;
 
-    private ShowFragment(){}
-
     static ShowFragment newInstance(@LayoutRes int resource, InnerItemEntity[] entities) {
         Bundle bundle = new Bundle();
         bundle.putInt("resource", resource);
