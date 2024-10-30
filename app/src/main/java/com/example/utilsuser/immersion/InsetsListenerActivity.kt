@@ -20,8 +20,6 @@ class InsetsListenerActivity : AppCompatActivity() {
             window.attributes.layoutInDisplayCutoutMode =
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
 
-        setContentView(R.layout.activity_insets_listener)
-
         window.decorView.systemUiVisibility =
             window.decorView.systemUiVisibility or
             View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
@@ -31,11 +29,7 @@ class InsetsListenerActivity : AppCompatActivity() {
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
             View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 
-        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }*/
+        setContentView(R.layout.activity_insets_listener)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             findViewById<Button>(R.id.btn_top).setOnApplyWindowInsetsListener { v, insets ->

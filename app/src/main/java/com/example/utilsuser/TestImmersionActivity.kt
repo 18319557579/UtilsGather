@@ -54,7 +54,7 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 GuideItemEntity("setOnApplyWindowInsetsListener") {
                     startActivity(Intent(this, InsetsListenerActivity::class.java))
                 },
-                GuideItemEntity("集中功能") {
+                GuideItemEntity("原子功能") {
                     startActivity(Intent(this, CompositeActivity::class.java))
                 },
                 GuideItemEntity("去StyleImmersionActivity") {
