@@ -27,15 +27,6 @@ public class ShowFragment extends Fragment {
 
     private ShowFragment(){}
 
-    static ShowFragment newInstance(List<Integer> colors, int item) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("color", (ArrayList<Integer>)colors);
-        bundle.putInt("item", item);
-        ShowFragment showFragment = new ShowFragment();
-        showFragment.setArguments(bundle);
-        return showFragment;
-    }
-
     static ShowFragment newInstance(@LayoutRes int resource, InnerItemEntity[] entities) {
         Bundle bundle = new Bundle();
         bundle.putInt("resource", resource);
@@ -43,6 +34,11 @@ public class ShowFragment extends Fragment {
         ShowFragment showFragment = new ShowFragment();
         showFragment.setArguments(bundle);
         return showFragment;
+    }
+
+    // 弄个默认的布局id
+    static ShowFragment newInstance(InnerItemEntity[] entities) {
+        return newInstance(R.layout.activity_email, entities);
     }
 
     @Override
