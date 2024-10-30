@@ -166,12 +166,41 @@ class CompositeActivity : BaseTabViewpagerActivity() {
             ))
             )
             add(
-                Pair("状态栏", ShowFragment.newInstance(
+                Pair("状态栏-显示与隐藏", ShowFragment.newInstance(
                 arrayOf(
-                    InnerItemEntity("功能1") { TODO("Not yet implemented") },
-                    InnerItemEntity("功能1") { TODO("Not yet implemented") },
-                    InnerItemEntity("功能1") { TODO("Not yet implemented") },
-                    InnerItemEntity("功能1") { TODO("Not yet implemented") },
+                    InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                    InnerItemEntity("隐藏状态栏") {
+                        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                                View.SYSTEM_UI_FLAG_FULLSCREEN  // 隐藏状态栏
+                    },
+                    InnerItemEntity("显示状态栏") {
+                        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and
+                                View.SYSTEM_UI_FLAG_FULLSCREEN.inv()  // 显示状态栏
+                    },
+                    InnerItemEntity("（Android11开始） ---------------------") {  },
+                    InnerItemEntity("隐藏状态栏") {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            val controller = window.insetsController
+                            controller?.hide(WindowInsets.Type.statusBars())
+                        }  // 隐藏状态栏
+                    },
+                    InnerItemEntity("显示状态栏") {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            val controller = window.insetsController
+                            controller?.show(WindowInsets.Type.statusBars())
+                        }  // 显示状态栏
+                    },
+                    InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                    InnerItemEntity("隐藏状态栏") {
+                        val windowInsetsController =
+                            WindowCompat.getInsetsController(window, window.decorView)
+                        windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())  // 隐藏状态栏
+                    },
+                    InnerItemEntity("显示状态栏") {
+                        val windowInsetsController =
+                            WindowCompat.getInsetsController(window, window.decorView)
+                        windowInsetsController.show(WindowInsetsCompat.Type.statusBars())  // 显示状态栏
+                    },
                 )
             ))
             )
