@@ -253,6 +253,51 @@ class CompositeActivity : BaseTabViewpagerActivity() {
                     )
                 ))
             )
+            add(
+                Pair("导航栏背景颜色", ShowFragment.newInstance(
+                    arrayOf(
+                        InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                        InnerItemEntity("设置导航栏背景颜色-全红") {
+                            window.apply {
+                                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                                addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                                navigationBarColor = Color.parseColor("#FFFF0000")
+                            }
+                        },
+                        InnerItemEntity("设置导航栏背景颜色-半透明红色") {
+                            window.apply {
+                                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                                addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                                navigationBarColor = Color.parseColor("#80FF0000")
+                            }
+                        },
+                        InnerItemEntity("设置导航栏背景颜色-全透明") {
+                            window.apply {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                    // 在导航栏背景全透明的情况下，不要让自动出现蒙层
+                                    isNavigationBarContrastEnforced = false
+                                }
+                                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                                addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                                navigationBarColor = Color.TRANSPARENT
+                            }
+                        },
+                        InnerItemEntity("设置导航栏背景颜色-随机颜色") {
+                            window.apply {
+                                window.apply {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                        // 在导航栏背景全透明的情况下，不要让自动出现蒙层
+                                        isNavigationBarContrastEnforced = false
+                                    }
+                                    clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                                    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                                    navigationBarColor = ColorUtil.getRandomColorARGB()
+                                }
+                            }
+                        },
+                    )
+                ))
+            )
         }
     }
 }
