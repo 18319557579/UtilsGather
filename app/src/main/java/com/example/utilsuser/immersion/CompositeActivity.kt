@@ -320,6 +320,26 @@ class CompositeActivity : BaseTabViewpagerActivity() {
                     )
                 ))
             )
+
+            add(
+                Pair("内容是否延伸到导航栏", ShowFragment.newInstance(
+                    arrayOf(
+                        InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                        InnerItemEntity("内容延伸到导航栏") {
+                            // （但是我发现内容也同时延伸到状态栏了）
+                            window.decorView.systemUiVisibility =
+                                window.decorView.systemUiVisibility or
+                                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        },
+                        InnerItemEntity("取消 内容延伸到导航栏") {
+                            window.decorView.systemUiVisibility =
+                                window.decorView.systemUiVisibility and
+                                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION.inv()
+                        },
+                    )
+                ))
+            )
         }
     }
 }
