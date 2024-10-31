@@ -356,6 +356,12 @@ class CompositeActivity : BaseTabViewpagerActivity() {
                                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
                                         View.SYSTEM_UI_FLAG_IMMERSIVE
                         },
+                        InnerItemEntity("隐藏导航栏，为自动隐藏模式") {
+                            window.decorView.systemUiVisibility =
+                                window.decorView.systemUiVisibility or
+                                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        },
                         InnerItemEntity("显示导航栏") {
                             window.decorView.systemUiVisibility =
                                 window.decorView.systemUiVisibility and
