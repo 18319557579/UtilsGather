@@ -298,6 +298,28 @@ class CompositeActivity : BaseTabViewpagerActivity() {
                     )
                 ))
             )
+
+            add(
+                Pair("导航栏按钮或条颜色", ShowFragment.newInstance(
+                    arrayOf(
+                        InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                        InnerItemEntity("设置导航栏按钮或条颜色-亮色模式-会深点") {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                window.decorView.systemUiVisibility =
+                                    window.decorView.systemUiVisibility or
+                                            View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                            }
+                        },
+                        InnerItemEntity("设置导航栏按钮或条颜色-暗色模式-会浅点") {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                window.decorView.systemUiVisibility =
+                                    window.decorView.systemUiVisibility and
+                                            View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+                            }
+                        },
+                    )
+                ))
+            )
         }
     }
 }
