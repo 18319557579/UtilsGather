@@ -340,6 +340,30 @@ class CompositeActivity : BaseTabViewpagerActivity() {
                     )
                 ))
             )
+
+            add(
+                Pair("导航栏显示与隐藏", ShowFragment.newInstance(
+                    arrayOf(
+                        InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                        InnerItemEntity("隐藏导航栏") {
+                            window.decorView.systemUiVisibility =
+                                window.decorView.systemUiVisibility or
+                                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        },
+                        InnerItemEntity("隐藏导航栏，加SYSTEM_UI_FLAG_IMMERSIVE") {
+                            window.decorView.systemUiVisibility =
+                                window.decorView.systemUiVisibility or
+                                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                                        View.SYSTEM_UI_FLAG_IMMERSIVE
+                        },
+                        InnerItemEntity("显示导航栏") {
+                            window.decorView.systemUiVisibility =
+                                window.decorView.systemUiVisibility and
+                                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION.inv()
+                        },
+                    )
+                ))
+            )
         }
     }
 }
