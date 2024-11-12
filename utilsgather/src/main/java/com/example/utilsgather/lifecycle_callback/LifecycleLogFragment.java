@@ -96,7 +96,7 @@ public class LifecycleLogFragment extends Fragment {
 
     //如果子类继承 LifecycleLogFragment 时，有些方法不super的话，那么日志就打印不了了。所以就要手动调用下面这些方法了：
 
-    private String getPrefix() {
+    protected String getPrefix() {
         String canonicalName = getClass().getCanonicalName();
         if (tag == null) {
             return canonicalName;
