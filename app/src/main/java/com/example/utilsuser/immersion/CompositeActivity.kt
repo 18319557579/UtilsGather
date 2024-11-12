@@ -266,7 +266,6 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 },
             )
             FragmentTag.SIX -> arrayOf(
-                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
                 InnerItemEntity("设置导航栏背景颜色-全红") {
                     window.apply {
                         clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
@@ -321,6 +320,32 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                             window.decorView.systemUiVisibility and
                                     View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
                     }
+                },
+                InnerItemEntity("（Android11开始） ---------------------") {  },
+                InnerItemEntity("亮色模式，导航栏文本为黑色") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = window.insetsController
+                        controller?.setSystemBarsAppearance(
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS)
+                    }  // 亮色模式-字体黑色
+                },
+                InnerItemEntity("暗色模式，导航栏文本为白色") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = window.insetsController;
+                        controller?.setSystemBarsAppearance(
+                            0, // 不设置任何外观标志
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS)
+                    }  // 暗色模式-字体白色
+                },
+                InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                InnerItemEntity("亮色模式，导航栏文本为深色") {
+                    WindowCompat.getInsetsController(window, window.decorView)
+                        .isAppearanceLightNavigationBars = true  // 亮色模式-字体黑色
+                },
+                InnerItemEntity("暗色模式，状态栏文本为浅色") {
+                    WindowCompat.getInsetsController(window, window.decorView)
+                        .isAppearanceLightNavigationBars = false  // 暗色模式-字体白色
                 },
             )
             FragmentTag.EIGHT -> arrayOf(
