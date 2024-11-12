@@ -148,7 +148,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         window.setDecorFitsSystemWindows(true)  // 内容从状态栏和导航栏出来了
                     }
                 },
-                // 这里发现很难做取消内容延伸到状态栏，不过考虑到其实很少会说内容延伸到状态栏了，又取消延伸（游戏模式那种除外）
+                // 这里发现很难做取消内容延伸到导航栏，不过考虑到其实很少会说内容延伸到状态栏了，但取消延伸到导航栏（游戏模式那种除外）
                 InnerItemEntity("将内容延伸到状态栏-防止延伸到导航栏") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         findViewById<ViewGroup>(R.id.main).setOnApplyWindowInsetsListener { view, windowInsets ->
@@ -173,7 +173,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 InnerItemEntity("取消内容延伸到状态栏") {
                     WindowCompat.setDecorFitsSystemWindows(window, true)  // 内容从状态栏和导航栏出来了
                 },
-                // 这里发现很难做取消内容延伸到状态栏，不过考虑到其实很少会说内容延伸到状态栏了，又取消延伸（游戏模式那种除外）
+                // 这里发现很难做取消内容延伸到导航栏，不过考虑到其实很少会说内容延伸到状态栏了，但取消延伸到导航栏（游戏模式那种除外）
                 InnerItemEntity("将内容延伸到状态栏-防止延伸到导航栏") {
                     ViewCompat.setOnApplyWindowInsetsListener(findViewById<ViewGroup>(R.id.main)) { v: View, windowInsets: WindowInsetsCompat ->
                         val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
@@ -361,6 +361,53 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                     window.decorView.systemUiVisibility =
                         window.decorView.systemUiVisibility and
                                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION.inv()
+                },
+                InnerItemEntity("（Android11开始） ---------------------") {  },
+                InnerItemEntity("将内容延伸到导航栏") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        window.setDecorFitsSystemWindows(false)  // 将内容延伸到了状态栏和导航栏
+                    }
+                },
+                InnerItemEntity("取消内容延伸到导航栏") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        window.setDecorFitsSystemWindows(true)  // 内容从状态栏和导航栏出来了
+                    }
+                },
+
+                InnerItemEntity("将内容延伸到导航栏-防止延伸到状态栏") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        findViewById<ViewGroup>(R.id.main).setOnApplyWindowInsetsListener { view, windowInsets ->
+                            val insets: Insets = windowInsets.getInsets(WindowInsets.Type.statusBars())
+                            LogUtil.d("navigationBars-insets: $insets")
+                            view.setPadding(
+                                view.getPaddingLeft(),
+                                insets.top,
+                                view.getPaddingRight(),
+                                view.paddingBottom,
+                            )
+                            WindowInsets.CONSUMED
+                        }
+                        window.setDecorFitsSystemWindows(false)  // 将内容延伸到了状态栏和导航栏
+                    }
+                },
+
+                InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                InnerItemEntity("将内容延伸到导航栏") {
+                    WindowCompat.setDecorFitsSystemWindows(window, false) // 让内容延伸到系统窗口边界
+                },
+                InnerItemEntity("取消内容延伸到导航栏") {
+                    WindowCompat.setDecorFitsSystemWindows(window, true)  // 内容从状态栏和导航栏出来了
+                },
+                InnerItemEntity("将内容延伸到导航栏-防止延伸到状态栏") {
+                    ViewCompat.setOnApplyWindowInsetsListener(findViewById<ViewGroup>(R.id.main)) { v: View, windowInsets: WindowInsetsCompat ->
+                        val insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars())
+                        // 使用维护的状态变量来决定是否应用 padding
+                        v.setPadding(
+                            v.paddingLeft, insets.top, v.paddingRight, v.paddingBottom,
+                        )
+                        WindowInsetsCompat.CONSUMED
+                    }
+                    WindowCompat.setDecorFitsSystemWindows(window, false)
                 },
             )
             FragmentTag.NINE -> arrayOf(
