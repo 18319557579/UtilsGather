@@ -434,6 +434,30 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         window.decorView.systemUiVisibility and
                                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION.inv()
                 },
+                InnerItemEntity("（Android11开始） ---------------------") {  },
+                InnerItemEntity("隐藏状态栏") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = window.insetsController
+                        controller?.hide(WindowInsets.Type.navigationBars())
+                    }  // 隐藏状态栏
+                },
+                InnerItemEntity("显示状态栏") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = window.insetsController
+                        controller?.show(WindowInsets.Type.navigationBars())
+                    }  // 显示状态栏
+                },
+                InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                InnerItemEntity("隐藏状态栏") {
+                    val windowInsetsController =
+                        WindowCompat.getInsetsController(window, window.decorView)
+                    windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())  // 隐藏状态栏
+                },
+                InnerItemEntity("显示状态栏") {
+                    val windowInsetsController =
+                        WindowCompat.getInsetsController(window, window.decorView)
+                    windowInsetsController.show(WindowInsetsCompat.Type.navigationBars())  // 显示状态栏
+                },
             )
 
             else -> {arrayOf()}
