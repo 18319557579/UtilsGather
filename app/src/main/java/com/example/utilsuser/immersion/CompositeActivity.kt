@@ -435,13 +435,13 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION.inv()
                 },
                 InnerItemEntity("（Android11开始） ---------------------") {  },
-                InnerItemEntity("隐藏状态栏") {
+                InnerItemEntity("隐藏导航栏") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         controller?.hide(WindowInsets.Type.navigationBars())
                     }  // 隐藏状态栏
                 },
-                InnerItemEntity("隐藏状态栏，不会因为一点交互就出现") {
+                InnerItemEntity("隐藏导航栏，不会因为一点交互就出现") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         // 设置了这个之后，就不会因为一点交出就出现导航栏栏了。如果设置为BEHAVIOR_SHOW_BARS_BY_TOUCH就会
@@ -449,7 +449,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         controller?.hide(WindowInsets.Type.navigationBars())
                     }  // 隐藏状态栏
                 },
-                InnerItemEntity("隐藏状态栏，自动隐藏模式") {
+                InnerItemEntity("隐藏导航栏，自动隐藏模式") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         // 设置了这个之后，就不会因为一点交出就出现导航栏栏了。如果设置为BEHAVIOR_SHOW_BARS_BY_TOUCH就会
@@ -457,19 +457,31 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         controller?.hide(WindowInsets.Type.navigationBars())
                     }  // 隐藏状态栏
                 },
-                InnerItemEntity("显示状态栏") {
+                InnerItemEntity("显示导航栏") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         controller?.show(WindowInsets.Type.navigationBars())
                     }  // 显示状态栏
                 },
                 InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
-                InnerItemEntity("隐藏状态栏") {
+                InnerItemEntity("隐藏导航栏") {
                     val windowInsetsController =
                         WindowCompat.getInsetsController(window, window.decorView)
                     windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())  // 隐藏状态栏
                 },
-                InnerItemEntity("显示状态栏") {
+                InnerItemEntity("隐藏导航栏，不会因为一点交互就出现") {
+                    val windowInsetsController =
+                        WindowCompat.getInsetsController(window, window.decorView)
+                    windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+                    windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())  // 隐藏状态栏
+                },
+                InnerItemEntity("隐藏导航栏，自动隐藏模式") {
+                    val windowInsetsController =
+                        WindowCompat.getInsetsController(window, window.decorView)
+                    windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                    windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())  // 隐藏状态栏
+                },
+                InnerItemEntity("显示导航栏") {
                     val windowInsetsController =
                         WindowCompat.getInsetsController(window, window.decorView)
                     windowInsetsController.show(WindowInsetsCompat.Type.navigationBars())  // 显示状态栏
