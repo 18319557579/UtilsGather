@@ -18,10 +18,10 @@ import com.example.utilsuser.R
 /**
  * 配合style使用的Activity，但效果还是不佳
  */
-class KtRoomActivity : LifecycleLogActivity() {
+class KtRoom4Activity : LifecycleLogActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test_immersion)
+        setContentView(R.layout.activity_combination_immersion2)
 
         supportActionBar?.hide()
 

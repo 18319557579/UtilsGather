@@ -24,6 +24,11 @@ import com.example.utilsuser.immersion.CompositeActivity
 import com.example.utilsuser.immersion.InsetsListenerActivity
 import com.example.utilsuser.immersion.OfficialImmersionActivity
 import com.example.utilsuser.immersion.SimulationGameImmersionActivity
+import com.example.utilsuser.kt_room.KtRoom2Activity
+import com.example.utilsuser.kt_room.KtRoom3Activity
+import com.example.utilsuser.kt_room.KtRoom4Activity
+import com.example.utilsuser.kt_room.KtRoom5Activity
+import com.example.utilsuser.kt_room.KtRoom6Activity
 import com.example.utilsuser.kt_room.KtRoomActivity
 import com.example.utilsuser.kt_room.StatusBarUtils
 
@@ -63,8 +68,23 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 GuideItemEntity("去StyleImmersion2Activity") {
                     startActivity(Intent(this, StyleImmersion2Activity::class.java))
                 },
-                GuideItemEntity("去KtRoomActivity") {
+                GuideItemEntity("测试Style的windowFullscreen属性") {
                     startActivity(Intent(this, KtRoomActivity::class.java))
+                },
+                GuideItemEntity("测试Style的 windowTranslucentStatus 属性") {
+                    startActivity(Intent(this, KtRoom2Activity::class.java))
+                },
+                GuideItemEntity("测试Style的 windowFullscreen + windowTranslucentStatus 属性") {
+                    startActivity(Intent(this, KtRoom3Activity::class.java))
+                },
+                GuideItemEntity("测试Style windowTranslucentNavigation") {
+                    startActivity(Intent(this, KtRoom4Activity::class.java))
+                },
+                GuideItemEntity("测试Style的 windowTranslucentStatus + windowTranslucentNavigation") {
+                    startActivity(Intent(this, KtRoom5Activity::class.java))
+                },
+                GuideItemEntity("测试Style的 windowFullscreen + windowTranslucentNavigation") {
+                    startActivity(Intent(this, KtRoom6Activity::class.java))
                 },
                 /**
                  * 效果：

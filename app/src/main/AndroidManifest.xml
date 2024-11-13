@@ -277,7 +277,29 @@
             android:exported="false" />
         <activity
             android:name=".kt_room.KtRoomActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Mine.Fullscreen"/>
+        <activity
+            android:name=".kt_room.KtRoom2Activity"
+            android:exported="false"
+            android:theme="@style/Theme.Mine.Fullscreen2"/>
+        <activity
+            android:name=".kt_room.KtRoom3Activity"
+            android:exported="false"
+            android:theme="@style/Theme.Mine.Fullscreen3"/>
+        <activity
+            android:name=".kt_room.KtRoom4Activity"
+            android:exported="false"
+            android:theme="@style/Theme.Mine.Fullscreen4"/>
+        <activity
+            android:name=".kt_room.KtRoom5Activity"
+            android:exported="false"
+            android:theme="@style/Theme.Mine.Fullscreen5"/>
+        <activity
+            android:name=".kt_room.KtRoom6Activity"
+            android:exported="false"
+            android:theme="@style/Theme.Mine.Fullscreen6"/>
+
         <activity
             android:name=".cutomerview.CustomViewActivity"
             android:exported="false" />
