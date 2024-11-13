@@ -232,20 +232,20 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                             View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY.inv()
                 },
                 InnerItemEntity("（Android11开始） ---------------------") {  },
-                InnerItemEntity("当调用这个方法后，之后就是会自动隐藏的了") {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        val controller = window.insetsController
-                        // 当调用这个方法后，之后就是会自动隐藏的了
-                        //（但是只调用这个方法的话不会有表现出来，要通过hide/show/手动，才能感觉得出来有所改变）
-                        controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
-                    }
-                },
                 InnerItemEntity("当调用这个方法后，之后就是会临时隐藏模式") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         // 当调用这个方法后，之后就是会临时隐藏模式
                         //（但是只调用这个方法的话不会有表现出来，要通过hide/show/手动，才能感觉得出来有所改变）
                         controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_DEFAULT);
+                    }
+                },
+                InnerItemEntity("当调用这个方法后，之后就是会自动隐藏的了") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = window.insetsController
+                        // 当调用这个方法后，之后就是会自动隐藏的了
+                        //（但是只调用这个方法的话不会有表现出来，要通过hide/show/手动，才能感觉得出来有所改变）
+                        controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
                     }
                 },
                 InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
@@ -417,7 +417,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         window.decorView.systemUiVisibility or
                                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 },
-                InnerItemEntity("隐藏导航栏，加SYSTEM_UI_FLAG_IMMERSIVE") {
+                InnerItemEntity("隐藏导航栏，加SYSTEM_UI_FLAG_IMMERSIVE，不会因为一点交互就出现") {
                     window.decorView.systemUiVisibility =
                         window.decorView.systemUiVisibility or
                                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
@@ -438,6 +438,22 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 InnerItemEntity("隐藏状态栏") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
+                        controller?.hide(WindowInsets.Type.navigationBars())
+                    }  // 隐藏状态栏
+                },
+                InnerItemEntity("隐藏状态栏，不会因为一点交互就出现") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = window.insetsController
+                        // 设置了这个之后，就不会因为一点交出就出现导航栏栏了。如果设置为BEHAVIOR_SHOW_BARS_BY_TOUCH就会
+                        controller?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_DEFAULT
+                        controller?.hide(WindowInsets.Type.navigationBars())
+                    }  // 隐藏状态栏
+                },
+                InnerItemEntity("隐藏状态栏，自动隐藏模式") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val controller = window.insetsController
+                        // 设置了这个之后，就不会因为一点交出就出现导航栏栏了。如果设置为BEHAVIOR_SHOW_BARS_BY_TOUCH就会
+                        controller?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                         controller?.hide(WindowInsets.Type.navigationBars())
                     }  // 隐藏状态栏
                 },
