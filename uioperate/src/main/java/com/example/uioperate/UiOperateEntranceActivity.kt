@@ -21,6 +21,7 @@ import com.example.uioperate.custom_scrolltext_canger.RecyclerViewScrollActivity
 import com.example.uioperate.custom_shangshan.ProtractorViewActivity
 import com.example.uioperate.databinding.ActivityUiOperateEntranceBinding
 import com.example.uioperate.easy_recyclerview.EasyRecyclerViewActivity
+import com.example.uioperate.event_bus.EventBusGatherActivity
 import com.example.uioperate.fragment.FragmentRouterActivity
 import com.example.uioperate.picture_selection.PictureSelectionActivity
 import com.example.uioperate.shortcus.ShortcutsActivity
@@ -110,6 +111,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("自定义MarqueeTextView") {
                 startActivity(Intent(this, MarqueeTextViewActivity::class.java))
+            },
+            GuideItemEntity("EventBus 功能汇总") {
+                startActivity(Intent(this, EventBusGatherActivity::class.java))
             },
         ))
     }

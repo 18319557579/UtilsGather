@@ -197,6 +197,12 @@
         <activity
             android:name=".storage.image_selector.PhotoActivity"
             android:exported="false" />
+        <activity
+            android:name="com.example.uioperate.event_bus.StickyTestActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.uioperate.event_bus.EventBusGatherActivity"
+            android:exported="false" />
 
         <receiver
             android:name=".shortcus.ShortcutReceiver"
