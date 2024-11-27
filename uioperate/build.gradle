@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -43,7 +44,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     //eventbus
-    implementation("org.greenrobot:eventbus:3.3.1")
+//    implementation("org.greenrobot:eventbus:3.3.1")
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
 
@@ -54,4 +55,13 @@ dependencies {
 
     implementation 'bg.devlabs.fastlist:fast-list:1.4'
 
+    def eventbus_version = '3.3.1'
+    api "org.greenrobot:eventbus:$eventbus_version"
+    kapt "org.greenrobot:eventbus-annotation-processor:$eventbus_version"
+}
+
+kapt {
+    arguments {
+        arg('eventBusIndex', 'com.example.uioperate.fragment.communication_evnetbus.MyEventBusIndex')
+    }
 }
