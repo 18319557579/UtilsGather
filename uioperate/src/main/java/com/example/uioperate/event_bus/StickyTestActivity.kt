@@ -67,4 +67,12 @@ class StickyTestActivity : AppCompatActivity() {
         // prevent event from re-delivering, like when leaving and coming back to app
         EventBus.getDefault().removeStickyEvent(event)
     }
+
+    @Subscribe(sticky = true)
+    fun handleEvent(event: SimpleOtherEvent) {
+        val className = this.javaClass.simpleName
+        val message = "#handleEvent: called for " + event.javaClass.simpleName
+        Toast.makeText(this, className + message, Toast.LENGTH_SHORT).show()
+        Log.d(className, message)
+    }
 }

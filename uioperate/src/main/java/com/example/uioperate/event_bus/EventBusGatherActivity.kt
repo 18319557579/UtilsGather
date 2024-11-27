@@ -26,6 +26,16 @@ class EventBusGatherActivity : AppCompatActivity() {
 
                     startActivity(Intent(this, StickyTestActivity::class.java))
                 },
+                GuideItemEntity("------Begin 用于测试不删除粘性事件的效果------") {
+                },
+                GuideItemEntity("纯发送SimpleOtherEvent，") {
+                    EventBus.getDefault().postSticky(SimpleOtherEvent())
+                },
+                GuideItemEntity("跳转Activity") {
+                    startActivity(Intent(this, StickyTestActivity::class.java))
+                },
+                GuideItemEntity("------End 用于测试不删除粘性事件的效果------") {
+                },
 
                 GuideItemEntity("测试粘性消息TestStickyEvent，先发送消息，再跳转Activity。后面手动检查") {
                     EventBus.getDefault().postSticky(TestStickyEvent())
