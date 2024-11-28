@@ -66,6 +66,12 @@ class EventBusGatherActivity : AppCompatActivity() {
                         EventBus.getDefault().post(NormalStickyEvent())
                     }
                 },
+
+                GuideItemEntity("") {
+                },
+                GuideItemEntity("测试 POSTING 模式") {
+                    startActivity(Intent(this, ModePostingActivity::class.java))
+                },
             )
         )
     }
