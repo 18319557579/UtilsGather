@@ -72,6 +72,9 @@ class EventBusGatherActivity : AppCompatActivity() {
                 GuideItemEntity("测试 POSTING 模式") {
                     startActivity(Intent(this, ModePostingActivity::class.java))
                 },
+                GuideItemEntity("测试 优先级和取消事件传递") {
+                    startActivity(Intent(this, TestCancelActivity::class.java))
+                },
             )
         )
     }

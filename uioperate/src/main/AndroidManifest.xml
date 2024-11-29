@@ -206,6 +206,9 @@
         <activity
             android:name="com.example.uioperate.event_bus.ModePostingActivity"
             android:exported="false" />
+        <activity
+            android:name="com.example.uioperate.event_bus.TestCancelActivity"
+            android:exported="false" />
 
         <receiver
             android:name=".shortcus.ShortcutReceiver"
