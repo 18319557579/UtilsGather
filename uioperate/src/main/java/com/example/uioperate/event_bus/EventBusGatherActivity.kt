@@ -75,6 +75,9 @@ class EventBusGatherActivity : AppCompatActivity() {
                 GuideItemEntity("测试 优先级和取消事件传递") {
                     startActivity(Intent(this, TestCancelActivity::class.java))
                 },
+                GuideItemEntity("捕获后台线程中错误处理的代码") {
+                    startActivity(Intent(this, TestThrowableActivity::class.java))
+                },
             )
         )
     }
