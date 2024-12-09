@@ -405,6 +405,9 @@ class MainActivity : LifecycleLogActivity() {
                 },
                 GuideItemEntity("获得网络信息") {
                     LogUtil.d("网络连接情况: " + NetworkInfoUtil.getNetType(ApplicationGlobal.getInstance()))
+                    LogUtil.d("当前网络是否可用: " + NetworkInfoUtil.isNetworkOK(ApplicationGlobal.getInstance()))
+                    LogUtil.d("当前网络是否可用(新): " + NetworkInfoUtil.isNetworkConnected(ApplicationGlobal.getInstance()))
+                    LogUtil.d("当前网络是否可用(兼容): " + NetworkInfoUtil.isNetworkConnectedCompat(ApplicationGlobal.getInstance()))
                 },
 
 
