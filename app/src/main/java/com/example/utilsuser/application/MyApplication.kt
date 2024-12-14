@@ -25,7 +25,7 @@ class MyApplication : Application() {
         super.onCreate()
         CommUtils.init(this, Handler(), android.os.Process.myTid())
 
-        // 其实全局打印、Logger打印、一次性打印对应着：全局那个Logger、独立创建的Logger、一次性创建用完找不回的Logger
+        /*// 其实全局打印、Logger打印、一次性打印对应着：全局那个Logger、独立创建的Logger、一次性创建用完找不回的Logger
         // 不过注意，全局那个Logger是必须创建的，因为它能使得sIsInitialized字段为true，即初始化完成
 
         // 如果说想要自定义多个独立Logger，但是觉得全局Logger的设置会导致碍事，可以用最简单地XLog.init()来创建一个Logger，但是不使用它，仅仅是为了初始化XLog，后续创建独立Logger来使用即可
@@ -41,10 +41,10 @@ class MyApplication : Application() {
             .build()
         XLog.init(config);
 
-        /* 这些非全局的Logger，在调用build()方法时，会去拿全局的LogConfiguration，最终都是调用LogConfiguration来设置LogConfiguration自己的字段，并把LogConfiguration对象作为Logger的成员变量。
+        *//* 这些非全局的Logger，在调用build()方法时，会去拿全局的LogConfiguration，最终都是调用LogConfiguration来设置LogConfiguration自己的字段，并把LogConfiguration对象作为Logger的成员变量。
         但是，在设置字段之前，会经过Logger.Builder字段的过滤，也就是上面.enableThreadInfo()这个调用的作用：去设置Logger.Builder字段
         （注：XLog.d() 或者 Logger.d()，那些样式的打印与否判断，其实就是基于Logger的成员变量logConfiguration 中的字段
-         */
+         *//*
         copyTagLogger = XLog.tag("Copy_TAG")
             .disableBorder()
             .disableThreadInfo()
@@ -54,7 +54,8 @@ class MyApplication : Application() {
 
         // 由于前面配置了tag黑名单，并且这里会沿用全局的配置，所以不会打印这个日志
         copyTagLogger1 = XLog.tag("BlackTest")
-            .build()
+            .build()*/
+        XLogGlobal.getInstance().init()
 
         val rootDir = MMKV.initialize(this)
         LogUtil.d("mmkv root: $rootDir")

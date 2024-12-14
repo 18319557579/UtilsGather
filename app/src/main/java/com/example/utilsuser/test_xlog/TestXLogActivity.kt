@@ -10,6 +10,8 @@ import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsuser.R
 import com.example.utilsuser.application.MyApplication
+import com.example.utilsuser.application.XLogConstant
+import com.example.utilsuser.application.XLogGlobal
 import java.lang.Exception
 
 /**
@@ -103,6 +105,9 @@ class TestXLogActivity : LifecycleLogActivity() {
                     // 其实内部创建了一个独立Logger来打印日志。很显然，这个Logger除了tag以外的信息，都是取自全局Logger
                     // 但是，这样每次都要创建一个Logger，对资源是一种消耗
                     XLog.tag("TAG-A").d("定制了 TAG 的消息");
+                },
+                GuideItemEntity("使用XLogGlobal") {
+                    XLogGlobal.logger(XLogConstant.COPY_FUNCTION).d("复制成功！")
                 },
             )
         )
