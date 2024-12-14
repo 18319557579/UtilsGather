@@ -95,6 +95,7 @@ import com.example.utilsuser.recyclerview.swipe.RvSwipeActivity
 import com.example.utilsuser.rxjava.RxJavaActivity
 import com.example.utilsuser.service.MyServiceActivity
 import com.example.utilsuser.sqlite.SQLiteActivity
+import com.example.utilsuser.test_xlog.TestXLogActivity
 import com.example.utilsuser.toast.ToastActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -112,6 +113,9 @@ class MainActivity : LifecycleLogActivity() {
         setContentView(mainBinding!!.getRoot())
         GuideSettings.set(
             mainBinding!!.lvLauncher, arrayOf<GuideItemEntity>(
+                GuideItemEntity("测试XLog") {
+                    startActivity(Intent(this, TestXLogActivity::class.java))
+                },
                 GuideItemEntity("跳转 UiOperateEntranceActivity") {
                     startActivity(Intent(this, UiOperateEntranceActivity::class.java))
                 },

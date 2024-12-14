@@ -333,6 +333,9 @@
         <activity
             android:name=".gesture.MyWindowManagerActivity"
             android:exported="false" />
+        <activity
+            android:name=".test_xlog.TestXLogActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -2,6 +2,8 @@ package com.example.utilsuser.application
 
 import android.app.Application
 import android.os.Handler
+import com.elvishew.xlog.LogLevel
+import com.elvishew.xlog.XLog
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsuser.BuildConfig
 import com.example.utilsuser.kt_room.CommUtils
@@ -12,6 +14,8 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         CommUtils.init(this, Handler(), android.os.Process.myTid())
+
+        XLog.init(LogLevel.ALL);
 
         val rootDir = MMKV.initialize(this)
         LogUtil.d("mmkv root: $rootDir")
