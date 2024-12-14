@@ -28,6 +28,9 @@ class MyApplication : Application() {
         // 其实全局打印、Logger打印、一次性打印对应着：全局那个Logger、独立创建的Logger、一次性创建用完找不回的Logger
         // 不过注意，全局那个Logger是必须创建的，因为它能使得sIsInitialized字段为true，即初始化完成
 
+        // 如果说想要自定义多个独立Logger，但是觉得全局Logger的设置会导致碍事，可以用最简单地XLog.init()来创建一个Logger，但是不使用它，仅仅是为了初始化XLog，后续创建独立Logger来使用即可
+        // 然后有小情况不能用独立Logger概括的，例如它就是要边框而独立Logger没有，就创建一次性Logger来实现
+
         val config = LogConfiguration.Builder()
             .logLevel(LogLevel.VERBOSE)
             .tag("Daisy_TAG")
@@ -46,6 +49,7 @@ class MyApplication : Application() {
             .disableBorder()
             .disableThreadInfo()
             .enableStackTrace(1)
+            .addInterceptor(BlacklistTagsFilterInterceptor())  // 看源码，interceptors会覆盖全局Logger中的interceptors中的interceptors
             .build()
 
         // 由于前面配置了tag黑名单，并且这里会沿用全局的配置，所以不会打印这个日志
