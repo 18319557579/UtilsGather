@@ -9,6 +9,7 @@ import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsuser.R
+import com.example.utilsuser.application.MyApplication
 import java.lang.Exception
 
 /**
@@ -93,8 +94,15 @@ class TestXLogActivity : LifecycleLogActivity() {
                     // 打印任意对象，如果没有指定ObjectFormatter，则在对象转换为字符串时，直接调用对象的toString()方法
                     XLog.d(this)
                 },
-                GuideItemEntity("") {
+                GuideItemEntity("更高级用法") {
+                    // 上面XLog打印的话，内部有一个全局的Logger
 
+                    MyApplication.copyTagLogger.d("你好 xlog")
+                    MyApplication.copyTagLogger1.d("你好 xlog")
+
+                    // 其实内部创建了一个独立Logger来打印日志。很显然，这个Logger除了tag以外的信息，都是取自全局Logger
+                    // 但是，这样每次都要创建一个Logger，对资源是一种消耗
+                    XLog.tag("TAG-A").d("定制了 TAG 的消息");
                 },
             )
         )
