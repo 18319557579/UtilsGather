@@ -7,8 +7,18 @@ import com.elvishew.xlog.LogConfiguration;
 import com.elvishew.xlog.LogLevel;
 import com.elvishew.xlog.Logger;
 import com.elvishew.xlog.XLog;
+import com.elvishew.xlog.flattener.ClassicFlattener;
+import com.elvishew.xlog.flattener.PatternFlattener;
 import com.elvishew.xlog.printer.AndroidPrinter;
 import com.elvishew.xlog.printer.Printer;
+import com.elvishew.xlog.printer.file.FilePrinter;
+import com.elvishew.xlog.printer.file.backup.FileSizeBackupStrategy2;
+import com.elvishew.xlog.printer.file.clean.FileLastModifiedCleanStrategy;
+import com.elvishew.xlog.printer.file.naming.ChangelessFileNameGenerator;
+import com.elvishew.xlog.printer.file.naming.DateFileNameGenerator;
+import com.elvishew.xlog.printer.file.naming.LevelFileNameGenerator;
+import com.example.utilsgather.context.ApplicationGlobal;
+import com.example.utilsgather.file_system.FilePathUtil;
 import com.example.utilsuser.BuildConfig;
 
 import com.elvishew.xlog.interceptor.BlacklistTagsFilterInterceptor;
@@ -39,7 +49,24 @@ public class XLogGlobal {
                 .tag(XLogConstant.GLOBAL_TAG)
                 .build();
         Printer androidPrinter = new AndroidPrinter(true);
-        XLog.init(config, androidPrinter);
+        Printer filePrinter = new FilePrinter
+                // 日志文件的存储路径。这里设置的是内部存储路径
+                .Builder(XLogConstant.getFolderPath())
+                // 设置文件名生成规则。这里设置每天有不同的文件名，用当天的日期进行作为文件名
+                .fileNameGenerator(new DateFileNameGenerator())
+                // 自定义每条数据的格式。这里使用格式化后的日期名称
+                .flattener(new ClassicFlattener())
+                // 其实给了这些功能的设置开放：1：备份的条件 2：备份的文件名
+                // 不过，作者封装了很多类用于方便使用，导致会误以为开放了最大index这样的接口，其实也只是备份的文件名的一部分罢了
+                .backupStrategy(new FileSizeBackupStrategy2(
+                        XLogConstant.DEFAULT_LOG_FILE_MAX_SIZE,
+                        FileSizeBackupStrategy2.NO_LIMIT))
+                .cleanStrategy(new FileLastModifiedCleanStrategy(XLogConstant.MILL_SECONDS_IN_A_WEEK))
+                .build();
+
+        XLog.init(config,
+                androidPrinter,
+                filePrinter);
 
         createIndependentLogger(XLogConstant.COPY_FUNCTION, builder -> builder.disableBorder()
                 .disableThreadInfo()
