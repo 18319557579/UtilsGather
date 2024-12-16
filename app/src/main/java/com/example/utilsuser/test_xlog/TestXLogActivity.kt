@@ -5,17 +5,14 @@ import android.os.Bundle
 import android.widget.ListView
 import com.elvishew.xlog.LogUtils
 import com.elvishew.xlog.XLog
-import com.example.utilsgather.context.ApplicationGlobal
-import com.example.utilsgather.file_system.FilePathUtil
 
 import com.example.utilsgather.lifecycle_callback.LifecycleLogActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsuser.R
 import com.example.utilsuser.application.MyApplication
-import com.example.utilsuser.application.XLogConstant
-import com.example.utilsuser.application.XLogGlobal
-import java.io.File
+import com.example.utilsuser.xlog.XLogConstant
+import com.example.utilsuser.xlog.XLogGlobal
 import java.lang.Exception
 
 /**
@@ -111,7 +108,8 @@ class TestXLogActivity : LifecycleLogActivity() {
                     XLog.tag("TAG-A").d("定制了 TAG 的消息");
                 },
                 GuideItemEntity("使用XLogGlobal 的 独立Logger") {
-                    XLogGlobal.logger(XLogConstant.COPY_FUNCTION).d("复制成功！")
+                    XLogGlobal.logger(
+                        XLogConstant.COPY_FUNCTION).d("复制成功！")
                 },
                 GuideItemEntity("压缩日志文件") {
                     LogUtils.compress(

@@ -2,16 +2,11 @@ package com.example.utilsuser.application
 
 import android.app.Application
 import android.os.Handler
-import com.elvishew.xlog.LogConfiguration
-import com.elvishew.xlog.LogLevel
 import com.elvishew.xlog.Logger
-import com.elvishew.xlog.XLog
-import com.elvishew.xlog.interceptor.BlacklistTagsFilterInterceptor
-import com.elvishew.xlog.interceptor.WhitelistTagsFilterInterceptor
-import com.elvishew.xlog.printer.Printer
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsuser.BuildConfig
 import com.example.utilsuser.kt_room.CommUtils
+import com.example.utilsuser.xlog.XLogGlobal
 import com.tencent.mmkv.MMKV
 import org.greenrobot.eventbus.EventBus
 

@@ -1,4 +1,4 @@
-package com.example.utilsuser.application;
+package com.example.utilsuser.xlog;
 
 
 import androidx.annotation.Nullable;
@@ -8,17 +8,12 @@ import com.elvishew.xlog.LogLevel;
 import com.elvishew.xlog.Logger;
 import com.elvishew.xlog.XLog;
 import com.elvishew.xlog.flattener.ClassicFlattener;
-import com.elvishew.xlog.flattener.PatternFlattener;
 import com.elvishew.xlog.printer.AndroidPrinter;
 import com.elvishew.xlog.printer.Printer;
 import com.elvishew.xlog.printer.file.FilePrinter;
 import com.elvishew.xlog.printer.file.backup.FileSizeBackupStrategy2;
 import com.elvishew.xlog.printer.file.clean.FileLastModifiedCleanStrategy;
-import com.elvishew.xlog.printer.file.naming.ChangelessFileNameGenerator;
 import com.elvishew.xlog.printer.file.naming.DateFileNameGenerator;
-import com.elvishew.xlog.printer.file.naming.LevelFileNameGenerator;
-import com.example.utilsgather.context.ApplicationGlobal;
-import com.example.utilsgather.file_system.FilePathUtil;
 import com.example.utilsuser.BuildConfig;
 
 import com.elvishew.xlog.interceptor.BlacklistTagsFilterInterceptor;
@@ -37,12 +32,13 @@ public class XLogGlobal {
         return HolderClass.instance;
     }
 
-    private Map<String, Logger> loggerMap = new HashMap<>();
+    private final Map<String, Logger> loggerMap = new HashMap<>();
 
     public static Logger logger(String xLogConstant) {
         return getInstance().loggerMap.get(xLogConstant);
     }
 
+    // 在Application中调用，以进行初始化
     public void init() {
         LogConfiguration config = new LogConfiguration.Builder()
                 .logLevel(BuildConfig.DEBUG ? LogLevel.ALL: LogLevel.NONE)

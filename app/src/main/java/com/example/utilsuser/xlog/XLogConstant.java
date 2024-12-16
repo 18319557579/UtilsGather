@@ -1,4 +1,4 @@
-package com.example.utilsuser.application;
+package com.example.utilsuser.xlog;
 
 import com.example.utilsgather.context.ApplicationGlobal;
 import com.example.utilsgather.file_system.FilePathUtil;
