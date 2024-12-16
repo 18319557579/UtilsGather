@@ -39,7 +39,11 @@ public class XLogGlobal {
     }
 
     // 在Application中调用，以进行初始化
-    public void init() {
+    public static void init() {
+        getInstance().innerInit();
+    }
+
+    private void innerInit() {
         LogConfiguration config = new LogConfiguration.Builder()
                 .logLevel(BuildConfig.DEBUG ? LogLevel.ALL: LogLevel.NONE)
                 .tag(XLogConstant.GLOBAL_TAG)
@@ -70,7 +74,6 @@ public class XLogGlobal {
                 .addInterceptor(new BlacklistTagsFilterInterceptor()));
 
         createIndependentLogger(XLogConstant.BLACK_FUNCTION);
-
     }
 
     private void createIndependentLogger(String tagName) {

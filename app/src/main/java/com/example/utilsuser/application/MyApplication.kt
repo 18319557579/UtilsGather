@@ -50,7 +50,7 @@ class MyApplication : Application() {
         // 由于前面配置了tag黑名单，并且这里会沿用全局的配置，所以不会打印这个日志
         copyTagLogger1 = XLog.tag("BlackTest")
             .build()*/
-        XLogGlobal.getInstance().init()
+        XLogGlobal.init()
 
         val rootDir = MMKV.initialize(this)
         LogUtil.d("mmkv root: $rootDir")
