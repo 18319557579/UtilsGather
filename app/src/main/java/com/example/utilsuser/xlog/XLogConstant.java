@@ -9,6 +9,8 @@ public class XLogConstant {
     public static final String COPY_FUNCTION = "Copy";
     public static final String BLACK_FUNCTION = "Black";
 
+    public static final String Coroutine = "Coroutine";
+
     /**
      * 获得日志文件的文件夹路径
      */

@@ -336,6 +336,9 @@
         <activity
             android:name=".test_xlog.TestXLogActivity"
             android:exported="false" />
+        <activity
+            android:name=".coroutine.juejin_sheying.CoroutineStudyActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

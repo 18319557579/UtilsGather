@@ -74,6 +74,12 @@ public class XLogGlobal {
                 .addInterceptor(new BlacklistTagsFilterInterceptor()));
 
         createIndependentLogger(XLogConstant.BLACK_FUNCTION);
+
+        createIndependentLogger(XLogConstant.Coroutine, builder -> builder.disableBorder()
+//                .enableThreadInfo()
+//                .enableStackTrace(3)
+//                .enableBorder()
+        );
     }
 
     private void createIndependentLogger(String tagName) {

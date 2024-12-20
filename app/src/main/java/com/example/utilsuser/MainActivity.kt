@@ -477,7 +477,7 @@ class MainActivity : LifecycleLogActivity() {
                     val intent = Intent(this@MainActivity, MyWindowManagerActivity::class.java)
                     startActivity(intent)
                 },
-                GuideItemEntity("跳转到 CoroutineActivity") {
+                GuideItemEntity("学习协程") {
                     val intent = Intent(this@MainActivity, CoroutineActivity::class.java)
                     startActivity(intent)
                 },

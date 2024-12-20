@@ -10,12 +10,15 @@ import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsuser.R
 import com.example.utilsuser.coroutine.flow.FlowActivity
 import com.example.utilsuser.coroutine.flow_operator.FlowOperatorActivity
+import com.example.utilsuser.coroutine.juejin_sheying.CoroutineStudyActivity
 import com.example.utilsuser.coroutine.state_flow.SharedFlowActivityClick
 import com.example.utilsuser.coroutine.state_flow.StateFlowActivity
 import com.example.utilsuser.coroutine.state_flow.StateFlowActivity2
 import com.example.utilsuser.coroutine.state_flow.StateFlowActivityClick
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -47,6 +50,9 @@ class CoroutineActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("去 FlowOperatorActivity") {
                     startActivity(Intent(this, FlowOperatorActivity::class.java))
+                },
+                GuideItemEntity("掘金：一个被摄影耽误的程序猿。跟学") {
+                    startActivity(Intent(this, CoroutineStudyActivity::class.java))
                 },
             )
         )
