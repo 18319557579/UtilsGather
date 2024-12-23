@@ -2,11 +2,13 @@ package com.example.utilsuser.coroutine.juejin_sheying
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
+import com.example.utilsgather.ui.toast.ToastHelper
 import com.example.utilsuser.R
 import com.example.utilsuser.coroutine.flow.FlowActivity
 import com.example.utilsuser.coroutine.flow_operator.FlowOperatorActivity
@@ -35,6 +37,12 @@ import kotlinx.coroutines.withContext
 import kotlin.concurrent.thread
 
 class CoroutineStudyActivity : AppCompatActivity() {
+
+    init {
+        lifecycleScope.launchWhenResumed {
+            XLogGlobal.logger(XLogConstant.Coroutine).d("在类初始化位置启动协程")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,6 +121,8 @@ class CoroutineStudyActivity : AppCompatActivity() {
                 },
             )
         )
+
+        doOnCreate()
     }
 
     private fun start(){
@@ -427,7 +437,12 @@ class CoroutineStudyActivity : AppCompatActivity() {
         }
     }
 
-
+    fun doOnCreate() {
+        lifecycleScope.launch {
+            delay(2000)
+            ToastHelper.showToast(this@CoroutineStudyActivity, "haha", Toast.LENGTH_SHORT)
+        }
+    }
 
 
 }
