@@ -95,6 +95,22 @@ class CoroutineStudyActivity : AppCompatActivity() {
                     XLogGlobal.logger(XLogConstant.Coroutine).dLine()
                     testCoroutineScope4()
                 },
+                GuideItemEntity("测试 协程异常的产生") {
+                    XLogGlobal.logger(XLogConstant.Coroutine).dLine()
+                    testCoroutineExceptionHandler()
+                },
+                GuideItemEntity("测试 协程异常的产生，只在父协程上添加CoroutineExceptionHandler") {
+                    XLogGlobal.logger(XLogConstant.Coroutine).dLine()
+                    testException()
+                },
+                GuideItemEntity("测试 协程异常的产生，使用supervisorScope ") {
+                    XLogGlobal.logger(XLogConstant.Coroutine).dLine()
+                    testExceptionSupervisorScope()
+                },
+                GuideItemEntity("测试 协程异常的产生，使用testExceptionSupervisorJob ") {
+                    XLogGlobal.logger(XLogConstant.Coroutine).dLine()
+                    testExceptionSupervisorJob()
+                },
             )
         )
     }
@@ -328,5 +344,90 @@ class CoroutineStudyActivity : AppCompatActivity() {
             XLogGlobal.logger(XLogConstant.Coroutine).dThread("scope 6--------- ${coroutineContext[CoroutineName]}")
         }
     }
+
+    private fun testCoroutineExceptionHandler(){
+        GlobalScope.launch {
+            val job = launch {
+                XLogGlobal.logger(XLogConstant.Coroutine).dThread("${Thread.currentThread().name} 抛出未捕获异常")
+                throw NullPointerException("异常测试")
+            }
+            job.join()
+            XLogGlobal.logger(XLogConstant.Coroutine).dThread("${Thread.currentThread().name} end")
+        }
+    }
+
+    private fun testException(){
+        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+            XLogGlobal.logger(XLogConstant.Coroutine).dThread("exceptionHandler ${coroutineContext[CoroutineName]} 处理异常 ：$throwable")
+        }
+        GlobalScope.launch(CoroutineName("父协程") + exceptionHandler){
+            val job = launch(CoroutineName("子协程")) {
+                XLogGlobal.logger(XLogConstant.Coroutine).dThread("${Thread.currentThread().name} 我要开始抛异常了" )
+                for (index in 0..10){
+                    launch(CoroutineName("孙子协程$index")) {
+                        XLogGlobal.logger(XLogConstant.Coroutine).dThread("${Thread.currentThread().name} ${coroutineContext[CoroutineName]}" )
+                    }
+                }
+                throw NullPointerException("空指针异常")
+            }
+            for (index in 0..10){
+                launch(CoroutineName("子协程$index")) {
+                    XLogGlobal.logger(XLogConstant.Coroutine).dThread("${Thread.currentThread().name} ${coroutineContext[CoroutineName]}" )
+                }
+            }
+            try {
+                job.join()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            XLogGlobal.logger(XLogConstant.Coroutine).dThread("${Thread.currentThread().name} end")
+        }
+    }
+
+    private fun testExceptionSupervisorScope (){
+        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+            XLogGlobal.logger(XLogConstant.Coroutine).dThread("exceptionHandler ${coroutineContext[CoroutineName].toString()} 处理异常 ：$throwable")
+        }
+        GlobalScope.launch(exceptionHandler) {
+            supervisorScope {
+                launch(CoroutineName("异常子协程")) {
+                    XLogGlobal.logger(XLogConstant.Coroutine).dThread("${Thread.currentThread().name} 我要开始抛异常了")
+                    throw NullPointerException("空指针异常")
+                }
+                for (index in 0..10) {
+                    launch(CoroutineName("子协程$index")) {
+                        XLogGlobal.logger(XLogConstant.Coroutine).dThread("${Thread.currentThread().name}正常执行 $index")
+                        if (index %3 == 0){
+                            throw NullPointerException("子协程${index}空指针异常")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun testExceptionSupervisorJob(){
+        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+            XLogGlobal.logger(XLogConstant.Coroutine).dThread("exceptionHandler ${coroutineContext[CoroutineName].toString()} 处理异常 ：$throwable")
+        }
+        val supervisorScope = CoroutineScope(SupervisorJob() + exceptionHandler)
+        with(supervisorScope) {
+            launch(CoroutineName("异常子协程")) {
+                XLogGlobal.logger(XLogConstant.Coroutine).dThread("${Thread.currentThread().name} 我要开始抛异常了")
+                throw NullPointerException("空指针异常")
+            }
+            for (index in 0..10) {
+                launch(CoroutineName("子协程$index")) {
+                    XLogGlobal.logger(XLogConstant.Coroutine).dThread("${Thread.currentThread().name}正常执行 $index")
+                    if (index % 3 == 0) {
+                        throw NullPointerException("子协程${index}空指针异常")
+                    }
+                }
+            }
+        }
+    }
+
+
+
 
 }
