@@ -14,4 +14,8 @@ public class ToastHelper {
         toast = Toast.makeText(context, text, duration);
         toast.show();
     }
+
+    public static void showToast(Context context, String text) {
+        showToast(context, text, Toast.LENGTH_SHORT);
+    }
 }
