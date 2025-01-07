@@ -53,6 +53,7 @@ import com.example.utilsuser.gesture.GestureActivity
 import com.example.utilsuser.gesture.MyWindowManagerActivity
 import com.example.utilsuser.httpurlconnect.HttpActivity
 import com.example.utilsuser.keyvalue.mmkv.KeyValueActivity
+import com.example.utilsuser.my_locale.MyLocaleActivity
 import com.example.utilsuser.qihang.eight.EraserViewActivity
 import com.example.utilsuser.qihang.eight.InvertedImageViewActivity
 import com.example.utilsuser.qihang.eight.IrregularWaveViewActivity
@@ -102,6 +103,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Locale
 
 
 class MainActivity : LifecycleLogActivity() {
@@ -401,6 +403,7 @@ class MainActivity : LifecycleLogActivity() {
                     LogUtil.d("获得sim卡国家: " + DeviceInfoUtil.getSimCountry(ApplicationGlobal.getInstance()))
                     LogUtil.d("获得国家代码: " + DeviceInfoUtil.getCountryCode())
                     LogUtil.d("AndroidId: " + DeviceInfoUtil.getAndroidId(ApplicationGlobal.getInstance()))
+                    LogUtil.d("Locale: " + Locale.getDefault())
 
                     CoroutineScope(Dispatchers.IO).launch {
                         val adId = DeviceInfoUtil.getAdvertisingId(ApplicationGlobal.getInstance())
@@ -523,6 +526,9 @@ class MainActivity : LifecycleLogActivity() {
                     val theResId: Int = resId.toInt()
                     val isSwitch = resources.getBoolean(theResId)
                     LogUtil.d("开关是否开启: $isSwitch")
+                },
+                GuideItemEntity("测试Locale") {
+                    startActivity(Intent(this, MyLocaleActivity::class.java))
                 },
             )
 

@@ -47,7 +47,9 @@
         <meta-data
             android:name="config_list"
             android:resource="@bool/config_switch" />
-
+        <activity
+            android:name=".my_locale.MyLocaleActivity"
+            android:exported="false" />
         <activity
             android:name=".email.EmailActivity"
             android:exported="false" />

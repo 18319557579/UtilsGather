@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">UtilsGather</string>
+
+    <string name="specific_str">特定字符串</string>
 </resources>

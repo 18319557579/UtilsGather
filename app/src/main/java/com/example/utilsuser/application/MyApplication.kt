@@ -18,6 +18,7 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        LogUtil.d("MyApplication 回调 onCreate()")
         CommUtils.init(this, Handler(), android.os.Process.myTid())
 
         /*// 其实全局打印、Logger打印、一次性打印对应着：全局那个Logger、独立创建的Logger、一次性创建用完找不回的Logger
