@@ -24,8 +24,32 @@ class MyLocaleActivity : LifecycleLogActivity() {
         val listView = findViewById<ListView>(R.id.lv_launcher)
         GuideSettings.set(
             listView, arrayOf<GuideItemEntity>(
-                GuideItemEntity("当前的Locale"){
-                    LogUtil.d("Locale: " + Locale.getDefault())
+                GuideItemEntity("当前系统的Locale"){
+                    val currentLocale = Locale.getDefault()
+
+                    // 输出当前应用的 Locale 信息
+                    val language = currentLocale.language // 获取语言
+                    val country = currentLocale.country // 获取国家/地区
+                    val displayName = currentLocale.displayName // 获取 Locale 显示名称
+
+                    LogUtil.d("Locale: $currentLocale")
+                    LogUtil.d("language: $language")
+                    LogUtil.d("Locale: $country")
+                    LogUtil.d("Locale: $displayName")
+                },
+                GuideItemEntity("当前应用的Locale"){
+                    // 获取当前应用的 Locale
+                    val currentLocale = resources.configuration.locale
+
+                    // 输出当前应用的 Locale 信息
+                    val language = currentLocale.language // 获取语言
+                    val country = currentLocale.country // 获取国家/地区
+                    val displayName = currentLocale.displayName // 获取 Locale 显示名称
+
+                    LogUtil.d("Locale: $currentLocale")
+                    LogUtil.d("language: $language")
+                    LogUtil.d("Locale: $country")
+                    LogUtil.d("Locale: $displayName")
                 },
                 GuideItemEntity("打印特定的字符串"){
                     val specificStr = getString(R.string.specific_str)
