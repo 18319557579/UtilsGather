@@ -16,6 +16,7 @@ import com.example.utilsgather.context.ApplicationGlobal
 import com.example.utilsgather.encoding.Base64Util
 import com.example.utilsgather.exit.ExitUtil
 import com.example.utilsgather.format_trans.FormatTransfer
+import com.example.utilsgather.function.VibrateUtil
 import com.example.utilsgather.handler.HandlerUI
 import com.example.utilsgather.interaction.SniffingAppUtil
 import com.example.utilsgather.jump.JumpActivityUtils
@@ -529,6 +530,9 @@ class MainActivity : LifecycleLogActivity() {
                 },
                 GuideItemEntity("测试Locale") {
                     startActivity(Intent(this, MyLocaleActivity::class.java))
+                },
+                GuideItemEntity("振动") {
+                    VibrateUtil.vibrate(5000L, ApplicationGlobal.getInstance())
                 },
             )
 

@@ -5,4 +5,5 @@
 
     <!--获取网路状态的util中会用到-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 </manifest>
