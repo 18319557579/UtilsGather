@@ -19,6 +19,7 @@ allprojects {
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
 //        maven { url 'C:\\Users\\hsf\\IdeaProjects\\JavaGather\\mavenopening' }
+        maven { url 'https://jitpack.io' }
     }
 }
 
