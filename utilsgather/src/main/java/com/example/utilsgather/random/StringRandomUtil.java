@@ -3,6 +3,7 @@ package com.example.utilsgather.random;
 import static com.example.utilsgather.random.RandomUtil.getRandomInt;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class StringRandomUtil {
 
@@ -44,5 +45,10 @@ public class StringRandomUtil {
      */
     public static String getRandomString() {
         return getRandomStringWithSection(6, 6, 3);
+    }
+
+    // 获得随机UUID字符串
+    public static String getUUID() {
+        return UUID.randomUUID().toString();
     }
 }
