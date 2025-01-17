@@ -4,12 +4,15 @@ import com.example.utilsgather.context.ApplicationGlobal;
 import com.example.utilsgather.file_system.FilePathUtil;
 
 public class XLogConstant {
-    public static final String GLOBAL_TAG = "GlobalTAG";
+    public static final String GlobalTag = "GlobalTag";
 
     public static final String COPY_FUNCTION = "Copy";
     public static final String BLACK_FUNCTION = "Black";
 
     public static final String Coroutine = "Coroutine";
+
+    // GlobalTag下的普通情况，打印方式 GlobalTag-Normal
+    public static final String Normal = "Normal";
 
     /**
      * 获得日志文件的文件夹路径

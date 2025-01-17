@@ -24,6 +24,9 @@
             android:name=".immersion.CompositeActivity"
             android:exported="false" />
         <activity
+            android:name=".json.JsonActivity"
+            android:exported="false" />
+        <activity
             android:name=".immersion.InsetsListenerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout|uiMode"
             android:exported="false" /> <!-- 使得该Activity在旋转时不会重建 -->

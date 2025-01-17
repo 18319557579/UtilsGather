@@ -46,7 +46,7 @@ public class XLogGlobal {
     private void innerInit() {
         LogConfiguration config = new LogConfiguration.Builder()
                 .logLevel(BuildConfig.DEBUG ? LogLevel.ALL: LogLevel.NONE)
-                .tag(XLogConstant.GLOBAL_TAG)
+                .tag(XLogConstant.GlobalTag)
                 .build();
         Printer androidPrinter = new AndroidPrinter(true);
         Printer filePrinter = new FilePrinter
@@ -75,11 +75,13 @@ public class XLogGlobal {
 
         createIndependentLogger(XLogConstant.BLACK_FUNCTION);
 
-        createIndependentLogger(XLogConstant.Coroutine, builder -> builder.disableBorder()
+        createIndependentLogger(XLogConstant.Coroutine, Logger.Builder::disableBorder
 //                .enableThreadInfo()
 //                .enableStackTrace(3)
 //                .enableBorder()
         );
+
+        createIndependentLogger(XLogConstant.Normal, Logger.Builder::disableBorder);
     }
 
     private void createIndependentLogger(String tagName) {
@@ -87,7 +89,7 @@ public class XLogGlobal {
     }
 
     private void createIndependentLogger(String tagName, @Nullable CustomLogger customLogger) {
-        Logger.Builder builder = XLog.tag(XLogConstant.GLOBAL_TAG + "-" + tagName);
+        Logger.Builder builder = XLog.tag(XLogConstant.GlobalTag + "-" + tagName);
         if (customLogger != null) {
             customLogger.custom(builder);
         }

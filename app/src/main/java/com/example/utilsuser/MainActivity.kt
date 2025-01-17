@@ -53,6 +53,7 @@ import com.example.utilsuser.file.FileActivity
 import com.example.utilsuser.gesture.GestureActivity
 import com.example.utilsuser.gesture.MyWindowManagerActivity
 import com.example.utilsuser.httpurlconnect.HttpActivity
+import com.example.utilsuser.json.JsonActivity
 import com.example.utilsuser.keyvalue.mmkv.KeyValueActivity
 import com.example.utilsuser.my_locale.MyLocaleActivity
 import com.example.utilsuser.qihang.eight.EraserViewActivity
@@ -533,6 +534,9 @@ class MainActivity : LifecycleLogActivity() {
                 },
                 GuideItemEntity("振动") {
                     VibrateUtil.vibrate(5000L, ApplicationGlobal.getInstance())
+                },
+                GuideItemEntity("测试JSON相关的") {
+                    startActivity(Intent(this, JsonActivity::class.java))
                 },
             )
 
