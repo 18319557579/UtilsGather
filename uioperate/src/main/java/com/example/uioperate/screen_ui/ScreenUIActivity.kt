@@ -1,6 +1,7 @@
 package com.example.uioperate.screen_ui
 
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uioperate.R
 import com.example.utilsgather.context.ApplicationGlobal
@@ -8,8 +9,11 @@ import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
 import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.ui.screen.ScreenSizeUtil
+import com.example.utilsgather.ui.screen.ScreenZone
 
 class ScreenUIActivity : AppCompatActivity() {
+    private var screenZone: ScreenZone? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_in_common)
@@ -23,8 +27,20 @@ class ScreenUIActivity : AppCompatActivity() {
                     LogUtil.d("getScreenWidthReal: ${ScreenSizeUtil.getScreenWidthReal(ApplicationGlobal.getInstance())}")
                     LogUtil.d("getScreenHeightReal: ${ScreenSizeUtil.getScreenHeightReal(ApplicationGlobal.getInstance())}")
                 },
+                GuideItemEntity("设定屏幕区域分为3份") {
+                    screenZone = ScreenZone(3);
+                },
             )
         )
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        screenZone?.also { sz ->
+            val zoneIndex = sz.getZoneIndex(ev)
+            LogUtil.d("当前点击的区域次序: $zoneIndex")
+        }
+
+        return super.dispatchTouchEvent(ev)
     }
 
 
