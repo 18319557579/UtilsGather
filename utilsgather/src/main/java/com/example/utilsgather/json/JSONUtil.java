@@ -1,7 +1,11 @@
 package com.example.utilsgather.json;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Collection;
+import java.util.List;
 
 public class JSONUtil {
     /**
@@ -14,5 +18,14 @@ public class JSONUtil {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 将Collection类型转为JSONArray
+     * 原理是利用Collection中的迭代器，遍历其中的元素，作为JSON数组的元素
+     */
+    public static String listToJSONArray(Collection<?> list) {
+        JSONArray jsonArray = new JSONArray(list);
+        return jsonArray.toString();
     }
 }
