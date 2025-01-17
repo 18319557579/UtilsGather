@@ -24,6 +24,7 @@ import com.example.uioperate.easy_recyclerview.EasyRecyclerViewActivity
 import com.example.uioperate.event_bus.EventBusGatherActivity
 import com.example.uioperate.fragment.FragmentRouterActivity
 import com.example.uioperate.picture_selection.PictureSelectionActivity
+import com.example.uioperate.screen_ui.ScreenUIActivity
 import com.example.uioperate.shortcus.ShortcutsActivity
 import com.example.uioperate.storage.StorageActivity
 import com.example.uioperate.touch_event.TouchEventActivity
@@ -114,6 +115,9 @@ class UiOperateEntranceActivity : AppCompatActivity() {
             },
             GuideItemEntity("EventBus 功能汇总") {
                 startActivity(Intent(this, EventBusGatherActivity::class.java))
+            },
+            GuideItemEntity("屏幕尺寸相关") {
+                startActivity(Intent(this, ScreenUIActivity::class.java))
             },
         ))
     }

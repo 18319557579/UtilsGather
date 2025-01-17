@@ -212,6 +212,9 @@
         <activity
             android:name="com.example.uioperate.event_bus.TestThrowableActivity"
             android:exported="false" />
+        <activity
+            android:name=".screen_ui.ScreenUIActivity"
+            android:exported="false" />
 
         <receiver
             android:name=".shortcus.ShortcutReceiver"
