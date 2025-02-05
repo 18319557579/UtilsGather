@@ -68,7 +68,33 @@ class SPTestActivity : AppCompatActivity() {
             },
 
             GuideItemEntity("直接使用 SPUtil 来操作数据") {
+                SPUtil.put(
+                    ApplicationGlobal.getInstance(),
+                    SPUtil.Model.COMMON,
+                    "name",
+                    "hqs"
+                )
+                SPUtil.put(
+                    ApplicationGlobal.getInstance(),
+                    SPUtil.Model.PERSONAL,
+                    "age",
+                    54
+                )
 
+                val commonName = SPUtil.get(
+                    ApplicationGlobal.getInstance(),
+                    SPUtil.Model.COMMON,
+                    "name",
+                    "sfoiaeowef"
+                )
+                val personalAge = SPUtil.get(
+                    ApplicationGlobal.getInstance(),
+                    SPUtil.Model.PERSONAL,
+                    "age",
+                    2032
+                )
+                LogUtil.d("common 名字: $commonName")
+                LogUtil.d("personal 年龄: $personalAge")
             },
         ))
     }

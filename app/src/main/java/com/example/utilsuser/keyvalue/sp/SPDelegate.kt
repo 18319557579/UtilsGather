@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 class SPDelegate<T> (
     private val context: Context,
     private val key: String,
-    private val defaultValue: T? = null,
+    private val defaultValue: T? = null,  // 该默认值只有在读取的时候才会使用
     private val spFile: SPUtil.Model = SPUtil.Model.COMMON
 
 ) : ReadWriteProperty<Any?, T>{
