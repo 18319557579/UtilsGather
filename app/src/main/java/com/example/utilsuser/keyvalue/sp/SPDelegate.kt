@@ -13,10 +13,6 @@ class SPDelegate<T> (
 
 ) : ReadWriteProperty<Any?, T>{
 
-    private val sp: SharedPreferences by lazy {
-        context.getSharedPreferences(spFile.str, Context.MODE_PRIVATE)
-    }
-
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
         return SPUtil.get(context, spFile, key, defaultValue)
     }
