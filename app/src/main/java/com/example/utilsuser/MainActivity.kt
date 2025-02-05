@@ -55,6 +55,7 @@ import com.example.utilsuser.gesture.MyWindowManagerActivity
 import com.example.utilsuser.httpurlconnect.HttpActivity
 import com.example.utilsuser.json.JsonActivity
 import com.example.utilsuser.keyvalue.mmkv.KeyValueActivity
+import com.example.utilsuser.keyvalue.sp.SPTestActivity
 import com.example.utilsuser.my_locale.MyLocaleActivity
 import com.example.utilsuser.qihang.eight.EraserViewActivity
 import com.example.utilsuser.qihang.eight.InvertedImageViewActivity
@@ -456,6 +457,10 @@ class MainActivity : LifecycleLogActivity() {
                 },
                 GuideItemEntity("跳转到 KeyValueActivity") {
                     val intent = Intent(this@MainActivity, KeyValueActivity::class.java)
+                    startActivity(intent)
+                },
+                GuideItemEntity("跳转到 SPTestActivity，测试SP存储") {
+                    val intent = Intent(this@MainActivity, SPTestActivity::class.java)
                     startActivity(intent)
                 },
                 GuideItemEntity("跳转到 DelegateActivity") {

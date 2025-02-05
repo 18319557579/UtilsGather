@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 
 import com.example.utilsgather.context.ApplicationGlobal;
 
-public class SpUtil {
+public class SharedPUtil {
     public static void putString(String _sFile, String _sKey,String _sData) {
         if (_sKey != null && _sData != null) {
             SharedPreferences sp = ApplicationGlobal.getInstance().getSharedPreferences(_sFile, Context.MODE_PRIVATE);
