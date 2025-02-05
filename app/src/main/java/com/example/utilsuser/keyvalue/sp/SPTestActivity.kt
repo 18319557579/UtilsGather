@@ -58,6 +58,18 @@ class SPTestActivity : AppCompatActivity() {
                 )
                 LogUtil.d("personal 年龄: $personalAge")
             },
+
+            GuideItemEntity("使用 SPPreinstall 预设的来设置和获取值") {
+                SPPreinstall.commonName = "hwt"
+                SPPreinstall.personalAge = 28
+
+                LogUtil.d("common 名字: ${SPPreinstall.commonName}")
+                LogUtil.d("personal 年龄: ${SPPreinstall.personalAge}")
+            },
+
+            GuideItemEntity("直接使用 SPUtil 来操作数据") {
+
+            },
         ))
     }
 }
