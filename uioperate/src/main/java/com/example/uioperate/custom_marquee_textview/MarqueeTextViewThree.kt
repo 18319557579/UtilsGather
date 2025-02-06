@@ -178,6 +178,9 @@ class MarqueeTextViewThree @JvmOverloads constructor(
         assembleSingleData()
 
         assembleFileDrawText()
+
+        // 注意要重新设置时长，因为内容的长度发生变化了，可能造成速度和原来的不一致
+        mObjectAnimator?.setDuration(((mSingleContentWidth * (1 / BASE_RATIO)).toLong()))
     }
 
     /**
