@@ -37,6 +37,11 @@ class TestGestureView @JvmOverloads constructor(
             return super.onDoubleTapEvent(e)
         }
 
+        override fun onSingleTapUp(e: MotionEvent): Boolean {
+            LogUtil.d("回调 onSingleTapUp: $e")
+            return super.onSingleTapUp(e)
+        }
+
         override fun onLongPress(e: MotionEvent) {
             super.onLongPress(e)
             LogUtil.d("回调 onLongPress: $e")
