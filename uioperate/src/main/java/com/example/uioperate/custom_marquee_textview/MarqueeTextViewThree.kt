@@ -30,7 +30,7 @@ class MarqueeTextViewThree @JvmOverloads constructor(
     companion object {
         const val BLANK = " "
         // 用一个时间比例常数，这样子无论是多长的文本，速度都将会一致了。因为越长的，一次动画的时间也越长了
-        const val BASE_RATIO = 3
+        const val BASE_RATIO = 0.5f
     }
 
     var mText = ""
@@ -58,6 +58,7 @@ class MarqueeTextViewThree @JvmOverloads constructor(
 
     private var mObjectAnimator: ObjectAnimator? = null
 
+    // 用于实时改变文本的显示位置
     fun setMXLocation(progress: Float) {
         mXLocation = -(mSingleContentWidth * progress)
         invalidate()
@@ -87,12 +88,7 @@ class MarqueeTextViewThree @JvmOverloads constructor(
     }
 
     private fun initData() {
-        mSingleContent = (mText + getItemEndBlank()).also { singleContent ->
-            mSingleContentWidth = CustomViewTextUtil.getMeasureTextWidth(singleContent, mTextPaint)
-        }
-
-        // 计算出单个内容的宽度（包括了尾部的空白字符串）
-
+        assembleSingleData()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -121,7 +117,7 @@ class MarqueeTextViewThree @JvmOverloads constructor(
     }
 
     /**
-     * 用户设置的间隔除以一个空格字符串的宽度，空格字符串的数量，加到文本的末尾
+     * 用户设置的间隔除以一个空格字符串的宽度，就是空格的数量，拼接在一起加到文本的末尾
      */
     private fun getItemEndBlank(): String {
         // 一个空格的宽度
@@ -138,21 +134,11 @@ class MarqueeTextViewThree @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         LogUtil.d("回调onSizeChanged")
 
-        val singleContent = mSingleContent
-
-        // 向上取整后 + 1
-        val maxVisibleCount = ceil(width / mSingleContentWidth).toInt() + 1
-
-        // 计算出最终显示的文本内容
-        mFinalDrawText = StringBuilder(singleContent.length * maxVisibleCount).apply {
-            repeat(maxVisibleCount) {
-                append(singleContent)
-            }
-        }.toString()
+        assembleFileDrawText()
 
         if (mObjectAnimator == null) {
             mObjectAnimator = ObjectAnimator.ofFloat(this, "mXLocation", 0f, 1f).apply {
-                setDuration(((mSingleContentWidth * BASE_RATIO).toLong()))
+                setDuration(((mSingleContentWidth * (1 / BASE_RATIO)).toLong()))
                 repeatCount = ValueAnimator.INFINITE
                 repeatMode = ValueAnimator.RESTART
                 interpolator = LinearInterpolator()
@@ -189,10 +175,25 @@ class MarqueeTextViewThree @JvmOverloads constructor(
     fun setText(text: String) {
         mText = text
 
+        assembleSingleData()
+
+        assembleFileDrawText()
+    }
+
+    /**
+     * 用于设置单个数据的信息
+     */
+    private fun assembleSingleData() {
         mSingleContent = (mText + getItemEndBlank()).also { singleContent ->
             mSingleContentWidth = CustomViewTextUtil.getMeasureTextWidth(singleContent, mTextPaint)
         }
+    }
 
+    /**
+     * 用于设置最终显示的文本内容
+     * 该方法需要获得宽度作支撑
+     */
+    private fun assembleFileDrawText() {
         // 向上取整后 + 1
         val maxVisibleCount = ceil(width / mSingleContentWidth).toInt() + 1
 
