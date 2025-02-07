@@ -8,6 +8,7 @@ import com.example.uioperate.touch_event_gcssloop.boss_call_1.Situation1Activity
 import com.example.uioperate.touch_event_gcssloop.boss_call_2.Situation2Activity
 import com.example.uioperate.touch_event_gcssloop.boss_call_3.Situation3Activity
 import com.example.uioperate.touch_event_gcssloop.test_action_outside.ActionOutsideActivity
+import com.example.uioperate.touch_event_gcssloop.test_gesture.FailingBallActivity
 import com.example.uioperate.touch_event_gcssloop.test_gesture.TestGestureActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -31,6 +32,9 @@ class TouchEventGcssloopActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("测试手势事件") {
                     startActivity(Intent(this@TouchEventGcssloopActivity, TestGestureActivity::class.java))
+                },
+                GuideItemEntity("测试手势事件onFling-弹珠球") {
+                    startActivity(Intent(this@TouchEventGcssloopActivity, FailingBallActivity::class.java))
                 },
                 GuideItemEntity("测试ACTION_OUTSIDE事件") {
                     startActivity(Intent(this@TouchEventGcssloopActivity, ActionOutsideActivity::class.java))

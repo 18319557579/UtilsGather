@@ -30,6 +30,9 @@
             android:name=".touch_event_gcssloop.test_gesture.TestGestureActivity"
             android:exported="false" />
         <activity
+            android:name=".touch_event_gcssloop.test_gesture.FailingBallActivity"
+            android:exported="false" />
+        <activity
             android:name=".touch_event_gcssloop.boss_call_3.Situation3Activity"
             android:exported="false" />
         <activity
