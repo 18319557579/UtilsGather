@@ -7,23 +7,14 @@ import android.view.MotionEvent
 import android.view.View
 import com.example.utilsgather.logcat.LogUtil
 
-// 和TestGestureView区别在于，使用setOnTouchListener()，并在重写的方法中调用detector.onTouchEvent，因此OnClickListener和OnLongClickListener都是不会回调的
-class TestGestureView2 @JvmOverloads constructor(
+// 和TestGestureView2区别在于，不设置setOnClickListener和setOnLongClickListener，因此是否能响应事件完全取决于onDown的回调了
+class TestGestureView3 @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ): View(context, attrs, defStyleAttr){
 
     init {
-        // 由于这里响应了事件，因此并不会回调onTouchEvent()，因此OnClickListener和OnLongClickListener都是不会回调的
         setOnTouchListener { v, event ->
             detector.onTouchEvent(event!!)
-        }
-
-        setOnClickListener {
-            LogUtil.d("触发了点击事件")
-        }
-        setOnLongClickListener {
-            LogUtil.d("触发了长按事件")
-            false
         }
     }
 
@@ -51,7 +42,7 @@ class TestGestureView2 @JvmOverloads constructor(
         // 就是用于让消费者选择是否消费掉down事件
         override fun onDown(e: MotionEvent): Boolean {
             LogUtil.d("回调 onDown: $e")
-            return true
+            return false
         }
 
         override fun onFling(
