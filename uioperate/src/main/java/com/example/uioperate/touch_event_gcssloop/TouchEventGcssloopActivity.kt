@@ -11,6 +11,7 @@ import com.example.uioperate.touch_event_gcssloop.test_action_outside.ActionOuts
 import com.example.uioperate.touch_event_gcssloop.test_gesture.BounceMarbleActivity
 import com.example.uioperate.touch_event_gcssloop.test_gesture.FailingBallActivity
 import com.example.uioperate.touch_event_gcssloop.test_gesture.ScaleGestureDemoViewActivity
+import com.example.uioperate.touch_event_gcssloop.test_gesture.ScalePictureActivity
 import com.example.uioperate.touch_event_gcssloop.test_gesture.TestGestureActivity
 import com.example.utilsgather.list_guide.GuideItemEntity
 import com.example.utilsgather.list_guide.GuideSettings
@@ -43,6 +44,9 @@ class TouchEventGcssloopActivity : AppCompatActivity() {
                 },
                 GuideItemEntity("测试ScaleGestureDetector，缩放手势") {
                     startActivity(Intent(this@TouchEventGcssloopActivity, ScaleGestureDemoViewActivity::class.java))
+                },
+                GuideItemEntity("缩放图片") {
+                    startActivity(Intent(this@TouchEventGcssloopActivity, ScalePictureActivity::class.java))
                 },
                 GuideItemEntity("测试ACTION_OUTSIDE事件") {
                     startActivity(Intent(this@TouchEventGcssloopActivity, ActionOutsideActivity::class.java))
