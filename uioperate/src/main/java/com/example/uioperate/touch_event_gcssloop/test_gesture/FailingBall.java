@@ -82,6 +82,7 @@ public class FailingBall extends View {
     public FailingBall(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mGestureDetector = new GestureDetector(context, mSimpleOnGestureListener);
+        mGestureDetector.setIsLongpressEnabled(false);
 
         mPaint = new Paint();
         mPaint.setColor(Color.BLACK);
