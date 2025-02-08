@@ -1,0 +1,235 @@
+/*
+ * Copyright 2017 GcsSloop
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Last modified 2017-07-02 17:08:46
+ *
+ * GitHub: https://github.com/GcsSloop
+ * WeiBo: http://weibo.com/GcsSloop
+ * WebSite: http://www.gcssloop.com
+ */
+
+package com.example.uioperate.touch_event_gcssloop.test_gesture;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.os.Handler;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.uioperate.R;
+
+/**
+ * 可以拖动的 Ball
+ */
+public class BounceMarble extends View {
+    private int mWidth;             // 宽度（整个View的宽度）
+    private int mHeight;            // 高度（整个View的高度）
+
+    private float mStartX = 0;        // 小方块开始位置X（左上角点位）
+    private float mStartY = 0;        // 小方块开始位置Y（左上角点位）
+    private float mEdgeLength = 200;  // 边长（包裹弹珠的矩形边长）
+    // 用于限定弹珠的范围（宽度：左边坐标 + 边长，高度：上边坐标 + 边长）
+    private RectF mRect = new RectF(mStartX, mStartY, mStartX + mEdgeLength, mStartY + mEdgeLength);
+
+    private float mFixedX = 0;  // 修正距离X
+    private float mFixedY = 0;  // 修正距离Y
+
+    private Paint mPaint;
+
+    private GestureDetector mGestureDetector;
+    private boolean mCanFail = false;   // 是否可以拖动
+
+    private float mSpeedX = 0;      // 像素/s
+    private float mSpeedY = 0;
+
+    private Boolean mXFixed = false;  // 用于判断X方向是否被修正
+    private Boolean mYFixed = false;  // 用于判断Y方向是否被修正
+
+    private Bitmap mBitmap;
+
+    public BounceMarble(Context context) {
+        this(context, null);
+    }
+
+    public BounceMarble(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public BounceMarble(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        mGestureDetector = new GestureDetector(context, mSimpleOnGestureListener);
+        mGestureDetector.setIsLongpressEnabled(false);
+
+        mPaint = new Paint();
+        mPaint.setColor(Color.BLACK);
+        mPaint.setAntiAlias(true);
+
+        mBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
+    }
+
+    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mWidth = w;
+        mHeight = h;
+        mStartX = (w - mEdgeLength) / 2;
+        mStartY = (h - mEdgeLength) / 2;
+        refreshRectByCurrentPoint();
+    }
+
+    @Override protected void onDraw(Canvas canvas) {
+        //canvas.drawRect(mRect, mPaint);
+//        canvas.drawOval(mRect, mPaint);
+        canvas.drawBitmap(mBitmap, new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight()),
+                          mRect, mPaint);
+    }
+
+    // 每 100 ms 更新一次
+    private Handler mHandler = new Handler();
+    private Runnable mRunnable = new Runnable() {
+        @Override public void run() {
+            // TODO 刷新内容
+            mStartX = mStartX + mSpeedX / 30;
+            mStartY = mStartY + mSpeedY / 30;
+            //mSpeedX = mSpeedX > 0 ? mSpeedX - 10 : mSpeedX + 10;
+            //mSpeedY = mSpeedY > 0 ? mSpeedY - 10 : mSpeedY + 10;
+            mSpeedX *= 0.97;
+            mSpeedY *= 0.97;
+            if (Math.abs(mSpeedX) < 10) {
+                mSpeedX = 0;
+            }
+            if (Math.abs(mSpeedY) < 10) {
+                mSpeedY = 0;
+            }
+            if (refreshRectByCurrentPoint()) {
+                // 转向
+                if (mXFixed) {
+                    mSpeedX = -mSpeedX;
+                }
+                if (mYFixed) {
+                    mSpeedY = -mSpeedY;
+                }
+            }
+            invalidate();
+            if (mSpeedX == 0 && mSpeedY == 0) {
+                mHandler.removeCallbacks(this);
+                return;
+            }
+            mHandler.postDelayed(this, 33);
+        }
+    };
+
+    private GestureDetector.SimpleOnGestureListener mSimpleOnGestureListener = new
+            GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDown(@NonNull MotionEvent event) {
+                    // 通过手指是否在弹珠内来判断是否处理DOWN事件（但是return false后整个View都无法处理了，因为将mGestureDetector作为了onTouchEvent的返回值，实际应用中要注意）
+                    if (contains(event.getX(), event.getY())) {  // 当按到了弹珠后，只改变其速度为0，那么runnable自然就会停下来了
+                        mCanFail = true;
+                        mFixedX = event.getX() - mStartX;  // 按下的位置距离左边的距离
+                        mFixedY = event.getY() - mStartY;  // 按下的位置距离上边的距离
+                        mSpeedX = 0;
+                        mSpeedY = 0;
+                        return true;
+                    }
+                    return false;
+                }
+
+                @Override
+                public boolean onScroll(@Nullable MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
+                    // 因为只知道手指当前的位置，并不知道球实际的左上角点位，因此要利用前面记录下来的【距离左边和上边的距离】
+                    mStartX = e2.getX() - mFixedX;
+                    mStartY = e2.getY() - mFixedY;
+                    refreshRectByCurrentPoint();
+                    invalidate();
+                    return super.onScroll(e1, e2, distanceX, distanceY);
+                }
+
+                @Override
+                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float
+                        velocityY) {
+                    Log.e("Failing", velocityX + " : " + velocityY);
+                    if (!mCanFail) return false;
+                    mSpeedX = velocityX;
+                    mSpeedY = velocityY;
+                    mHandler.removeCallbacks(mRunnable);
+                    mHandler.postDelayed(mRunnable, 0);
+                    return super.onFling(e1, e2, velocityX, velocityY);
+                }
+            };
+
+    @Override public boolean onTouchEvent(MotionEvent event) {
+        return mGestureDetector.onTouchEvent(event);
+    }
+
+    private Boolean contains(float x, float y) {
+        float radius = mEdgeLength / 2;  // 半径
+        float centerX = mRect.left + radius;  // 中点的位置
+        float centerY = mRect.top + radius;
+        // 利用勾股定理，求出手指到中点的距离，然后通过该距离是否小于半径来判断手指是否在圆内
+        return Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2)) <= radius;
+    }
+
+    /**
+     * 刷新方块位置
+     *
+     * @return true 表示修正过位置, false 表示没有修正过位置
+     */
+    private Boolean refreshRectByCurrentPoint() {
+        Boolean fixed = false;
+        mXFixed = false;
+        mYFixed = false;
+        // 修正坐标
+        if (mStartX < 0) {  // 超出左边
+            mStartX = 0;
+            fixed = true;
+            mXFixed = true;
+        }
+        if (mStartY < 0) {  // 超出上边
+            mStartY = 0;
+            fixed = true;
+            mYFixed = true;
+        }
+        if (mStartX + mEdgeLength > mWidth) {  // 超出右边
+            mStartX = mWidth - mEdgeLength;
+            fixed = true;
+            mXFixed = true;
+        }
+        if (mStartY + mEdgeLength > mHeight) {  // 超出下边
+            mStartY = mHeight - mEdgeLength;
+            fixed = true;
+            mYFixed = true;
+        }
+        // 重设要绘制的矩形区域
+        mRect.left = mStartX;
+        mRect.top = mStartY;
+        mRect.right = mStartX + mEdgeLength;
+        mRect.bottom = mStartY + mEdgeLength;
+//        LogUtil.d("fixed: " + fixed + ", mXFixed: " + mXFixed + ", mYFixed: " + mYFixed);
+        return fixed;
+    }
+}
