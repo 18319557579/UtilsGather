@@ -40,17 +40,19 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.example.uioperate.R;
+import com.example.utilsgather.logcat.LogUtil;
 
 /**
  * 可以拖动的 Ball
  */
 public class FailingBall extends View {
-    private int mWidth;             // 宽度
-    private int mHeight;            // 高度
+    private int mWidth;             // 宽度（整个View的宽度）
+    private int mHeight;            // 高度（整个View的高度）
 
-    private float mStartX = 0;        // 小方块开始位置X
-    private float mStartY = 0;        // 小方块开始位置Y
-    private float mEdgeLength = 200;  // 边长
+    private float mStartX = 0;        // 小方块开始位置X（左上角点位）
+    private float mStartY = 0;        // 小方块开始位置Y（左上角点位）
+    private float mEdgeLength = 200;  // 边长（包裹弹珠的矩形边长）
+    // 用于限定弹珠的范围（宽度：左边坐标 + 边长，高度：上边坐标 + 边长）
     private RectF mRect = new RectF(mStartX, mStartY, mStartX + mEdgeLength, mStartY + mEdgeLength);
 
     private float mFixedX = 0;  // 修正距离X
@@ -64,8 +66,8 @@ public class FailingBall extends View {
     private float mSpeedX = 0;      // 像素/s
     private float mSpeedY = 0;
 
-    private Boolean mXFixed = false;
-    private Boolean mYFixed = false;
+    private Boolean mXFixed = false;  // 用于判断X方向是否被修正
+    private Boolean mYFixed = false;  // 用于判断Y方向是否被修正
 
     private Bitmap mBitmap;
 
@@ -99,7 +101,7 @@ public class FailingBall extends View {
 
     @Override protected void onDraw(Canvas canvas) {
         //canvas.drawRect(mRect, mPaint);
-        canvas.drawOval(mRect, mPaint);
+//        canvas.drawOval(mRect, mPaint);
         canvas.drawBitmap(mBitmap, new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight()),
                           mRect, mPaint);
     }
@@ -158,10 +160,10 @@ public class FailingBall extends View {
         mGestureDetector.onTouchEvent(event);
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                if (contains(event.getX(), event.getY())) {
+                if (contains(event.getX(), event.getY())) {  // 当按到了弹珠后，只改变其速度为0，那么runnable自然就会停下来了
                     mCanFail = true;
-                    mFixedX = event.getX() - mStartX;
-                    mFixedY = event.getY() - mStartY;
+                    mFixedX = event.getX() - mStartX;  // 按下的位置距离左边的距离
+                    mFixedY = event.getY() - mStartY;  // 按下的位置距离上边的距离
                     mSpeedX = 0;
                     mSpeedY = 0;
                 } else {
@@ -169,15 +171,14 @@ public class FailingBall extends View {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
+//                LogUtil.d("初始距离： mFixedX: " + mFixedX + ", mFixedY: " + mFixedY);
                 if (!mCanFail) {
                     break;
                 }
+                // 因为只知道手指当前的位置，并不知道球实际的左上角点位，因此要利用前面记录下来的【距离左边和上边的距离】
                 mStartX = event.getX() - mFixedX;
                 mStartY = event.getY() - mFixedY;
-                if (refreshRectByCurrentPoint()) {
-                    mFixedX = event.getX() - mStartX;
-                    mFixedY = event.getY() - mStartY;
-                }
+                refreshRectByCurrentPoint();
                 invalidate();
                 break;
         }
@@ -185,9 +186,10 @@ public class FailingBall extends View {
     }
 
     private Boolean contains(float x, float y) {
-        float radius = mEdgeLength / 2;
-        float centerX = mRect.left + radius;
+        float radius = mEdgeLength / 2;  // 半径
+        float centerX = mRect.left + radius;  // 中点的位置
         float centerY = mRect.top + radius;
+        // 利用勾股定理，求出手指到中点的距离，然后通过该距离是否小于半径来判断手指是否在圆内
         return Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2)) <= radius;
     }
 
@@ -201,30 +203,32 @@ public class FailingBall extends View {
         mXFixed = false;
         mYFixed = false;
         // 修正坐标
-        if (mStartX < 0) {
+        if (mStartX < 0) {  // 超出左边
             mStartX = 0;
             fixed = true;
             mXFixed = true;
         }
-        if (mStartY < 0) {
+        if (mStartY < 0) {  // 超出上边
             mStartY = 0;
             fixed = true;
             mYFixed = true;
         }
-        if (mStartX + mEdgeLength > mWidth) {
+        if (mStartX + mEdgeLength > mWidth) {  // 超出右边
             mStartX = mWidth - mEdgeLength;
             fixed = true;
             mXFixed = true;
         }
-        if (mStartY + mEdgeLength > mHeight) {
+        if (mStartY + mEdgeLength > mHeight) {  // 超出下边
             mStartY = mHeight - mEdgeLength;
             fixed = true;
             mYFixed = true;
         }
+        // 重设要绘制的矩形区域
         mRect.left = mStartX;
         mRect.top = mStartY;
         mRect.right = mStartX + mEdgeLength;
         mRect.bottom = mStartY + mEdgeLength;
+//        LogUtil.d("fixed: " + fixed + ", mXFixed: " + mXFixed + ", mYFixed: " + mYFixed);
         return fixed;
     }
 }
