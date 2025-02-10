@@ -73,6 +73,15 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                     window.statusBarColor = Color.TRANSPARENT
                 },
+                InnerItemEntity("全透明（但是让系统加蒙层）") {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        // 避免全透明时，系统自动给背景加上蒙层。（其实默认值就为false了，这里可以不用写）
+                        window.isStatusBarContrastEnforced = true
+                    }
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    window.statusBarColor = Color.TRANSPARENT
+                },
                 InnerItemEntity("随机颜色") {
                     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
