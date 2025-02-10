@@ -28,6 +28,13 @@ public class ScaleGestureDemoView extends View {
         mScaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
             @Override
             public boolean onScaleBegin(ScaleGestureDetector detector) {
+                LogUtil.i("--------------------------begin开始-------------------------------");
+                LogUtil.i( "focusX = " + detector.getFocusX());       // 缩放中心，x坐标
+                LogUtil.i( "focusY = " + detector.getFocusY());       // 缩放中心y坐标
+                LogUtil.i( "scale = " + detector.getScaleFactor());   // 缩放因子
+                LogUtil.i( "CurrentSpan = " + detector.getCurrentSpan());
+                LogUtil.i( "PreviousSpan = " + detector.getPreviousSpan());
+                LogUtil.i("--------------------------begin结束-------------------------------");
                 return true;
             }
 
@@ -41,6 +48,11 @@ public class ScaleGestureDemoView extends View {
 
             @Override
             public void onScaleEnd(ScaleGestureDetector detector) {
+                LogUtil.i("--------------------------end开始-------------------------------");
+                LogUtil.i( "focusX = " + detector.getFocusX());       // 缩放中心，x坐标
+                LogUtil.i( "focusY = " + detector.getFocusY());       // 缩放中心y坐标
+                LogUtil.i( "scale = " + detector.getScaleFactor());   // 缩放因子
+                LogUtil.i("--------------------------end结束-------------------------------");
             }
         });
     }
