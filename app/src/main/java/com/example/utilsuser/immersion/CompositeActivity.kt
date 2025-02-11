@@ -303,6 +303,17 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         navigationBarColor = Color.TRANSPARENT
                     }
                 },
+                InnerItemEntity("设置导航栏背景颜色-全透明（但是让系统加蒙层）") {
+                    window.apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            // 在导航栏背景全透明的情况下，不要让自动出现蒙层
+                            isNavigationBarContrastEnforced = true
+                        }
+                        clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                        addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                        navigationBarColor = Color.TRANSPARENT
+                    }
+                },
                 InnerItemEntity("设置导航栏背景颜色-随机颜色") {
                     window.apply {
                         window.apply {
