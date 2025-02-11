@@ -247,6 +247,9 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         // 当调用这个方法后，之后就是会临时隐藏模式
                         //（但是只调用这个方法的话不会有表现出来，要通过hide/show/手动，才能感觉得出来有所改变）
                         controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_DEFAULT);
+                        /* todo 这里有警告，说该参数在31版本才有。我记得大概是这样子的，就是30版本默认就是这个了，但是当时
+                        还并没有这个参数，是在31版本才出的。所以到时整理的时候需要去确定
+                         */
                     }
                 },
                 InnerItemEntity("当调用这个方法后，之后就是会自动隐藏的了") {
