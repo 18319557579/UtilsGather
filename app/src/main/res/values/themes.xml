@@ -50,6 +50,20 @@
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <style name="Theme.Mine.WindowInsets4" parent="@style/Theme.UtilsGather">
+        <item name="android:navigationBarColor">#8000FF00</item>
+    </style>
+
+    <style name="Theme.Mine.WindowInsets5" parent="@style/Theme.UtilsGather">
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:navigationBarColor">#8000FF00</item>  <!--因为发现不改背景颜色的话，无法生效-->
+    </style>
+
+    <style name="Theme.Mine.WindowInsets6" parent="@style/Theme.UtilsGather">
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:navigationBarColor">#8000FF00</item>  <!--因为发现不改背景颜色的话，无法生效-->
+    </style>
+
 
 
     <!-- 基于App主题的沉浸式主题 -->

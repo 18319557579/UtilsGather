@@ -27,6 +27,9 @@ import com.example.utilsuser.immersion.SimulationGameImmersionActivity
 import com.example.utilsuser.immersion.theme_attr.ThemeAttr11Activity
 import com.example.utilsuser.immersion.theme_attr.ThemeAttr12Activity
 import com.example.utilsuser.immersion.theme_attr.ThemeAttr13Activity
+import com.example.utilsuser.immersion.theme_attr.ThemeAttr14Activity
+import com.example.utilsuser.immersion.theme_attr.ThemeAttr15Activity
+import com.example.utilsuser.immersion.theme_attr.ThemeAttr16Activity
 import com.example.utilsuser.immersion.theme_attr.ThemeAttr31Activity
 import com.example.utilsuser.kt_room.KtRoom2Activity
 import com.example.utilsuser.kt_room.KtRoom3Activity
@@ -96,11 +99,20 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 GuideItemEntity("测试Style的 statusBarColor（修改状态栏颜色）") {
                     startActivity(Intent(this, ThemeAttr11Activity::class.java))
                 },
-                GuideItemEntity("测试Style的 statusBarColor（修改状态栏浅色）") {
+                GuideItemEntity("测试Style的 windowLightStatusBar=true（状态栏浅色模式）") {
                     startActivity(Intent(this, ThemeAttr12Activity::class.java))
                 },
-                GuideItemEntity("测试Style的 statusBarColor（修改状态栏深色）") {
+                GuideItemEntity("测试Style的 windowLightStatusBar=false（状态栏深色模式）") {
                     startActivity(Intent(this, ThemeAttr13Activity::class.java))
+                },
+                GuideItemEntity("测试Style的 navigationBarColor（修改导航栏颜色）") {
+                    startActivity(Intent(this, ThemeAttr14Activity::class.java))
+                },
+                GuideItemEntity("测试Style的 windowLightNavigationBar=true（导航栏亮色模式）") {
+                    startActivity(Intent(this, ThemeAttr15Activity::class.java))
+                },
+                GuideItemEntity("测试Style的 windowLightNavigationBar=false（导航栏暗色模式）") {
+                    startActivity(Intent(this, ThemeAttr16Activity::class.java))
                 },
                 GuideItemEntity("下面的不一定有用------------------------------------------------------------") {
 

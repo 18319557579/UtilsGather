@@ -300,6 +300,18 @@
             android:exported="false"
             android:theme="@style/Theme.Mine.WindowInsets3"/>
         <activity
+            android:name=".immersion.theme_attr.ThemeAttr14Activity"
+            android:exported="false"
+            android:theme="@style/Theme.Mine.WindowInsets4"/>
+        <activity
+            android:name=".immersion.theme_attr.ThemeAttr15Activity"
+            android:exported="false"
+            android:theme="@style/Theme.Mine.WindowInsets5"/>
+        <activity
+            android:name=".immersion.theme_attr.ThemeAttr16Activity"
+            android:exported="false"
+            android:theme="@style/Theme.Mine.WindowInsets6"/>
+        <activity
             android:name=".kt_room.KtRoom2Activity"
             android:exported="false"
             android:theme="@style/Theme.Mine.Fullscreen2"/>
