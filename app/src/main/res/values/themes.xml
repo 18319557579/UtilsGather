@@ -38,6 +38,20 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="Theme.Mine.WindowInsets" parent="@style/Theme.UtilsGather">
+        <item name="android:statusBarColor">#80FF0000</item>
+    </style>
+
+    <style name="Theme.Mine.WindowInsets2" parent="@style/Theme.UtilsGather">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="Theme.Mine.WindowInsets3" parent="@style/Theme.UtilsGather">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+
+
     <!-- 基于App主题的沉浸式主题 -->
     <style name="Theme.MyApp.Immersive" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>

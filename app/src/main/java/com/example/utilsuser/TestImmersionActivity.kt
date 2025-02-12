@@ -24,6 +24,9 @@ import com.example.utilsuser.immersion.atomic.CompositeActivity
 import com.example.utilsuser.immersion.InsetsListenerActivity
 import com.example.utilsuser.immersion.OfficialImmersionActivity
 import com.example.utilsuser.immersion.SimulationGameImmersionActivity
+import com.example.utilsuser.immersion.theme_attr.ThemeAttr11Activity
+import com.example.utilsuser.immersion.theme_attr.ThemeAttr12Activity
+import com.example.utilsuser.immersion.theme_attr.ThemeAttr13Activity
 import com.example.utilsuser.immersion.theme_attr.ThemeAttr31Activity
 import com.example.utilsuser.kt_room.KtRoom2Activity
 import com.example.utilsuser.kt_room.KtRoom3Activity
@@ -89,6 +92,15 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 },
                 GuideItemEntity("测试Style的 windowFullscreen + windowTranslucentStatus + windowTranslucentNavigation + windowLayoutInDisplayCutoutMode = shortEdges") {
                     startActivity(Intent(this, KtRoom6Activity::class.java))
+                },
+                GuideItemEntity("测试Style的 statusBarColor（修改状态栏颜色）") {
+                    startActivity(Intent(this, ThemeAttr11Activity::class.java))
+                },
+                GuideItemEntity("测试Style的 statusBarColor（修改状态栏浅色）") {
+                    startActivity(Intent(this, ThemeAttr12Activity::class.java))
+                },
+                GuideItemEntity("测试Style的 statusBarColor（修改状态栏深色）") {
+                    startActivity(Intent(this, ThemeAttr13Activity::class.java))
                 },
                 GuideItemEntity("下面的不一定有用------------------------------------------------------------") {
 
