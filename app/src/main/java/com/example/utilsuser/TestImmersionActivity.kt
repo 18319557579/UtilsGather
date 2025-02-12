@@ -87,7 +87,7 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 GuideItemEntity("测试Style的 windowTranslucentStatus + windowTranslucentNavigation") {
                     startActivity(Intent(this, KtRoom5Activity::class.java))
                 },
-                GuideItemEntity("测试Style的 windowFullscreen + windowTranslucentNavigation") {
+                GuideItemEntity("测试Style的 windowFullscreen + windowTranslucentStatus + windowTranslucentNavigation + windowLayoutInDisplayCutoutMode = shortEdges") {
                     startActivity(Intent(this, KtRoom6Activity::class.java))
                 },
                 GuideItemEntity("下面的不一定有用------------------------------------------------------------") {
