@@ -10,7 +10,7 @@ import com.example.utilsgather.ui.immersion.ImmersionUtil
 class StyleImmersion2Activity : LifecycleLogActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test_immersion)
+        setContentView(R.layout.activity_combination_immersion2)
 
         supportActionBar?.hide()
 

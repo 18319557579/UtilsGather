@@ -24,6 +24,7 @@ import com.example.utilsuser.immersion.atomic.CompositeActivity
 import com.example.utilsuser.immersion.InsetsListenerActivity
 import com.example.utilsuser.immersion.OfficialImmersionActivity
 import com.example.utilsuser.immersion.SimulationGameImmersionActivity
+import com.example.utilsuser.immersion.theme_attr.ThemeAttr31Activity
 import com.example.utilsuser.kt_room.KtRoom2Activity
 import com.example.utilsuser.kt_room.KtRoom3Activity
 import com.example.utilsuser.kt_room.KtRoom4Activity
@@ -77,6 +78,9 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 GuideItemEntity("测试Style的 windowFullscreen + windowTranslucentStatus 属性") {
                     startActivity(Intent(this, KtRoom3Activity::class.java))
                 },
+                GuideItemEntity("测试Style的 windowFullscreen + windowTranslucentStatus + windowLayoutInDisplayCutoutMode = shortEdges") {
+                    startActivity(Intent(this, ThemeAttr31Activity::class.java))
+                },
                 GuideItemEntity("测试Style windowTranslucentNavigation") {
                     startActivity(Intent(this, KtRoom4Activity::class.java))
                 },
@@ -85,6 +89,9 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 },
                 GuideItemEntity("测试Style的 windowFullscreen + windowTranslucentNavigation") {
                     startActivity(Intent(this, KtRoom6Activity::class.java))
+                },
+                GuideItemEntity("下面的不一定有用------------------------------------------------------------") {
+
                 },
                 /**
                  * 效果：

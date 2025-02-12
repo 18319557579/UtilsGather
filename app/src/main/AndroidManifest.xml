@@ -296,6 +296,11 @@
             android:exported="false"
             android:theme="@style/Theme.Mine.Fullscreen3"/>
         <activity
+            android:name=".immersion.theme_attr.ThemeAttr31Activity"
+            android:exported="false"
+            android:theme="@style/Theme.Mine.Fullscreen31"/>
+
+        <activity
             android:name=".kt_room.KtRoom4Activity"
             android:exported="false"
             android:theme="@style/Theme.Mine.Fullscreen4"/>

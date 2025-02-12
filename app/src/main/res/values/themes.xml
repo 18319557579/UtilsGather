@@ -22,8 +22,8 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
     <style name="Theme.Mine.Fullscreen3" parent="@style/Theme.UtilsGather">
-        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
     <style name="Theme.Mine.Fullscreen4" parent="@style/Theme.UtilsGather">
         <item name="android:windowTranslucentNavigation">true</item>

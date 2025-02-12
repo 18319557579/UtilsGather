@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--增加<item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>，使得api>=28的设备，可以实现状态游戏模式-->
+    <style name="Theme.Mine.Fullscreen31" parent="@style/Theme.UtilsGather">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+
 
     <!--不使用 windowLayoutInDisplayCutoutMode 的话，无法实现 隐藏状态栏 + 内容延伸到状态栏-->
     <style name="Theme.Mine.Fullscreen6" parent="@style/Theme.UtilsGather">
