@@ -21,7 +21,7 @@
         android:theme="@style/Theme.UtilsGather"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".immersion.CompositeActivity"
+            android:name=".immersion.atomic.CompositeActivity"
             android:exported="false" />
         <activity
             android:name=".json.JsonActivity"

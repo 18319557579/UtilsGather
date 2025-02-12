@@ -1,4 +1,4 @@
-package com.example.utilsuser.immersion
+package com.example.utilsuser.immersion.atomic
 
 class FragmentTag {
     companion object {

@@ -1,4 +1,4 @@
-package com.example.utilsuser.immersion;
+package com.example.utilsuser.immersion.atomic;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,22 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 
 import com.example.utilsgather.lifecycle_callback.LifecycleLogFragment;
-import com.example.utilsgather.list_guide.GuideAdapter;
-import com.example.utilsgather.list_guide.GuideItemEntity;
 import com.example.utilsgather.logcat.LogUtil;
 import com.example.utilsuser.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ShowFragment extends LifecycleLogFragment {
 

@@ -1,4 +1,4 @@
-package com.example.utilsuser.immersion
+package com.example.utilsuser.immersion.atomic
 
 import android.graphics.Color
 import android.graphics.Insets
@@ -18,14 +18,19 @@ import com.example.utilsgather.ui.ColorUtil
 import com.example.utilsuser.R
 
 
-class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInteractionListener {
+class CompositeActivity : BaseTabViewpagerActivity(),
+    ShowFragment.OnFragmentInteractionListener {
     override fun addPairs(pairs: MutableList<Pair<String, ShowFragment>>) {
         pairs.apply {
             add(
-                Pair("状态栏-修改背景颜色", ShowFragment.newInstance(R.layout.activity_email, FragmentTag.ONE))
+                Pair("状态栏-修改背景颜色",
+                    ShowFragment.newInstance(R.layout.activity_email, FragmentTag.ONE)
+                )
             )
             add(
-                Pair("状态栏-文本颜色切换", ShowFragment.newInstance(R.layout.activity_email, FragmentTag.TWO))
+                Pair("状态栏-文本颜色切换",
+                    ShowFragment.newInstance(R.layout.activity_email, FragmentTag.TWO)
+                )
             )
             add(
                 Pair("状态栏-内容是否延伸到状态栏", ShowFragment.newInstance(FragmentTag.THREE))
@@ -89,7 +94,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 },
             )
             FragmentTag.TWO -> arrayOf(
-                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") { },
                 InnerItemEntity("亮色模式，状态栏文本为黑色") {
                     val decorView = window.decorView
                     decorView.systemUiVisibility =
@@ -106,13 +111,14 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                     LogUtil.d("是否有FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS：${getWindow().getAttributes().flags and WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS != 0}")
                     LogUtil.d("是否有FLAG_TRANSLUCENT_STATUS：${getWindow().getAttributes().flags and WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS != 0}")
                 },
-                InnerItemEntity("（Android11开始） ---------------------") {  },
+                InnerItemEntity("（Android11开始） ---------------------") { },
                 InnerItemEntity("亮色模式，状态栏文本为黑色") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         controller?.setSystemBarsAppearance(
                             WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                        )
                     }  // 亮色模式-字体黑色
                 },
                 InnerItemEntity("暗色模式，状态栏文本为白色") {
@@ -120,10 +126,11 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         val controller = window.insetsController;
                         controller?.setSystemBarsAppearance(
                             0, // 不设置任何外观标志
-                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                        )
                     }  // 暗色模式-字体白色
                 },
-                InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                InnerItemEntity("（AndroidX兼容库） ---------------------") { },
                 InnerItemEntity("亮色模式，状态栏文本为黑色") {
                     WindowCompat.getInsetsController(window, window.decorView)
                         .isAppearanceLightStatusBars = true  // 亮色模式-字体黑色
@@ -134,7 +141,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 },
             )
             FragmentTag.THREE -> arrayOf(
-                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") { },
                 InnerItemEntity("将内容延伸到状态栏") {
                     // 将内容延伸到状态栏
                     window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
@@ -146,7 +153,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN.inv()
                 },
 
-                InnerItemEntity("（Android11开始） ---------------------") {  },
+                InnerItemEntity("（Android11开始） ---------------------") { },
                 InnerItemEntity("将内容延伸到状态栏") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         window.setDecorFitsSystemWindows(false)  // 将内容延伸到了状态栏和导航栏
@@ -161,7 +168,8 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 InnerItemEntity("将内容延伸到状态栏-防止延伸到导航栏") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         findViewById<ViewGroup>(R.id.main).setOnApplyWindowInsetsListener { view, windowInsets ->
-                            val insets: Insets = windowInsets.getInsets(WindowInsets.Type.navigationBars())
+                            val insets: Insets =
+                                windowInsets.getInsets(WindowInsets.Type.navigationBars())
                             LogUtil.d("navigationBars-insets: $insets")
                             view.setPadding(
                                 view.getPaddingLeft(),
@@ -175,7 +183,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                     }
                 },
 
-                InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                InnerItemEntity("（AndroidX兼容库） ---------------------") { },
                 InnerItemEntity("将内容延伸到状态栏") {
                     WindowCompat.setDecorFitsSystemWindows(window, false) // 让内容延伸到系统窗口边界
                 },
@@ -185,7 +193,8 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 // 这里发现很难做取消内容延伸到导航栏，不过考虑到其实很少会说内容延伸到状态栏了，但取消延伸到导航栏（游戏模式那种除外）
                 InnerItemEntity("将内容延伸到状态栏-防止延伸到导航栏") {
                     ViewCompat.setOnApplyWindowInsetsListener(findViewById<ViewGroup>(R.id.main)) { v: View, windowInsets: WindowInsetsCompat ->
-                        val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+                        val insets =
+                            windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
                         // 使用维护的状态变量来决定是否应用 padding
                         v.setPadding(
                             v.paddingLeft, v.paddingTop, v.paddingRight, insets.bottom
@@ -196,7 +205,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 },
             )
             FragmentTag.FOUR -> arrayOf(
-                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") { },
                 InnerItemEntity("隐藏状态栏") {
                     window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
                             View.SYSTEM_UI_FLAG_FULLSCREEN  // 隐藏状态栏
@@ -205,7 +214,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                     window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and
                             View.SYSTEM_UI_FLAG_FULLSCREEN.inv()  // 显示状态栏
                 },
-                InnerItemEntity("（Android11开始） ---------------------") {  },
+                InnerItemEntity("（Android11开始） ---------------------") { },
                 InnerItemEntity("隐藏状态栏") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
@@ -218,7 +227,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         controller?.show(WindowInsets.Type.statusBars())
                     }  // 显示状态栏
                 },
-                InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                InnerItemEntity("（AndroidX兼容库） ---------------------") { },
                 InnerItemEntity("隐藏状态栏") {
                     val windowInsetsController =
                         WindowCompat.getInsetsController(window, window.decorView)
@@ -231,7 +240,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 },
             )
             FragmentTag.FIVE -> arrayOf(
-                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") { },
                 InnerItemEntity("当调用这个方法后，之后就是会自动隐藏的了") {
                     window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
                             View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
@@ -240,7 +249,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                     window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and
                             View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY.inv()
                 },
-                InnerItemEntity("（Android11开始） ---------------------") {  },
+                InnerItemEntity("（Android11开始） ---------------------") { },
                 InnerItemEntity("当调用这个方法后，之后就是会临时隐藏模式") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
@@ -260,14 +269,15 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         controller?.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
                     }
                 },
-                InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                InnerItemEntity("（AndroidX兼容库） ---------------------") { },
                 InnerItemEntity("当调用这个方法后，之后就是会自动隐藏的了") {
                     val windowInsetsController =
                         WindowCompat.getInsetsController(window, window.decorView)
                     // 当调用这个方法后，之后就是会自动隐藏的了
                     //（但是只调用这个方法的话不会有表现出来，要通过hide/show/手动，才能感觉得出来有所改变）
                     windowInsetsController.setSystemBarsBehavior(
-                        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE)
+                        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                    )
                 },
                 InnerItemEntity("当调用这个方法后，之后就是会临时隐藏模式") {
                     val windowInsetsController =
@@ -329,7 +339,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 },
             )
             FragmentTag.SEVEN -> arrayOf(
-                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") { },
                 InnerItemEntity("设置导航栏按钮或条颜色-亮色模式-会深点") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         window.decorView.systemUiVisibility =
@@ -344,13 +354,14 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                                     View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
                     }
                 },
-                InnerItemEntity("（Android11开始） ---------------------") {  },
+                InnerItemEntity("（Android11开始） ---------------------") { },
                 InnerItemEntity("亮色模式，导航栏文本为黑色") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         controller?.setSystemBarsAppearance(
                             WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
-                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS)
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                        )
                     }  // 亮色模式-字体黑色
                 },
                 InnerItemEntity("暗色模式，导航栏文本为白色") {
@@ -358,10 +369,11 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         val controller = window.insetsController;
                         controller?.setSystemBarsAppearance(
                             0, // 不设置任何外观标志
-                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS)
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                        )
                     }  // 暗色模式-字体白色
                 },
-                InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                InnerItemEntity("（AndroidX兼容库） ---------------------") { },
                 InnerItemEntity("亮色模式，导航栏文本为深色") {
                     WindowCompat.getInsetsController(window, window.decorView)
                         .isAppearanceLightNavigationBars = true  // 亮色模式-字体黑色
@@ -372,7 +384,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 },
             )
             FragmentTag.EIGHT -> arrayOf(
-                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") { },
                 InnerItemEntity("内容延伸到导航栏") {
                     // （但是我发现内容也同时延伸到状态栏了）
                     window.decorView.systemUiVisibility =
@@ -385,7 +397,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         window.decorView.systemUiVisibility and
                                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION.inv()
                 },
-                InnerItemEntity("（Android11开始） ---------------------") {  },
+                InnerItemEntity("（Android11开始） ---------------------") { },
                 InnerItemEntity("将内容延伸到导航栏") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         window.setDecorFitsSystemWindows(false)  // 将内容延伸到了状态栏和导航栏
@@ -400,7 +412,8 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 InnerItemEntity("将内容延伸到导航栏-防止延伸到状态栏") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         findViewById<ViewGroup>(R.id.main).setOnApplyWindowInsetsListener { view, windowInsets ->
-                            val insets: Insets = windowInsets.getInsets(WindowInsets.Type.statusBars())
+                            val insets: Insets =
+                                windowInsets.getInsets(WindowInsets.Type.statusBars())
                             LogUtil.d("navigationBars-insets: $insets")
                             view.setPadding(
                                 view.getPaddingLeft(),
@@ -414,7 +427,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                     }
                 },
 
-                InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                InnerItemEntity("（AndroidX兼容库） ---------------------") { },
                 InnerItemEntity("将内容延伸到导航栏") {
                     WindowCompat.setDecorFitsSystemWindows(window, false) // 让内容延伸到系统窗口边界
                 },
@@ -434,7 +447,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 },
             )
             FragmentTag.NINE -> arrayOf(
-                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") {  },
+                InnerItemEntity("（Android11过时）setSystemUiVisibility() 与 WTFs 实现 ---------------------") { },
                 InnerItemEntity("隐藏导航栏") {
                     window.decorView.systemUiVisibility =
                         window.decorView.systemUiVisibility or
@@ -457,7 +470,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         window.decorView.systemUiVisibility and
                                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION.inv()
                 },
-                InnerItemEntity("（Android11开始） ---------------------") {  },
+                InnerItemEntity("（Android11开始） ---------------------") { },
                 InnerItemEntity("隐藏导航栏") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
@@ -476,7 +489,8 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val controller = window.insetsController
                         // 设置了这个之后，就不会因为一点交出就出现导航栏栏了。如果设置为BEHAVIOR_SHOW_BARS_BY_TOUCH就会
-                        controller?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                        controller?.systemBarsBehavior =
+                            WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                         controller?.hide(WindowInsets.Type.navigationBars())
                     }  // 隐藏状态栏
                 },
@@ -486,7 +500,7 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                         controller?.show(WindowInsets.Type.navigationBars())
                     }  // 显示状态栏
                 },
-                InnerItemEntity("（AndroidX兼容库） ---------------------") {  },
+                InnerItemEntity("（AndroidX兼容库） ---------------------") { },
                 InnerItemEntity("隐藏导航栏") {
                     val windowInsetsController =
                         WindowCompat.getInsetsController(window, window.decorView)
@@ -495,13 +509,15 @@ class CompositeActivity : BaseTabViewpagerActivity(), ShowFragment.OnFragmentInt
                 InnerItemEntity("隐藏导航栏，不会因为一点交互就出现") {
                     val windowInsetsController =
                         WindowCompat.getInsetsController(window, window.decorView)
-                    windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+                    windowInsetsController.systemBarsBehavior =
+                        WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
                     windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())  // 隐藏状态栏
                 },
                 InnerItemEntity("隐藏导航栏，自动隐藏模式") {
                     val windowInsetsController =
                         WindowCompat.getInsetsController(window, window.decorView)
-                    windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                    windowInsetsController.systemBarsBehavior =
+                        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                     windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())  // 隐藏状态栏
                 },
                 InnerItemEntity("显示导航栏") {

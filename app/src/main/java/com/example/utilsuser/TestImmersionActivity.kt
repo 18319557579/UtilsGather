@@ -20,7 +20,7 @@ import com.example.utilsgather.ui.ColorUtil
 import com.example.utilsgather.ui.immersion.ImmersionUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsgather.ui.status.OtherStatusBarUtil
-import com.example.utilsuser.immersion.CompositeActivity
+import com.example.utilsuser.immersion.atomic.CompositeActivity
 import com.example.utilsuser.immersion.InsetsListenerActivity
 import com.example.utilsuser.immersion.OfficialImmersionActivity
 import com.example.utilsuser.immersion.SimulationGameImmersionActivity

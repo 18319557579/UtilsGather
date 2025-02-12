@@ -1,4 +1,4 @@
-package com.example.utilsuser.immersion;
+package com.example.utilsuser.immersion.atomic;
 
 import android.view.LayoutInflater;
 import android.view.View;

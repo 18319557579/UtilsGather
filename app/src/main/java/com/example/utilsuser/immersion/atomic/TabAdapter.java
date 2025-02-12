@@ -1,11 +1,9 @@
-package com.example.utilsuser.immersion;
+package com.example.utilsuser.immersion.atomic;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import com.example.utilsgather.list_guide.GuideItemEntity;
 
 import java.util.ArrayList;
 import java.util.List;
