@@ -376,6 +376,9 @@
         <activity
             android:name=".coroutine.juejin_sheying.CoroutineStudyActivity"
             android:exported="false" />
+        <activity
+            android:name=".immersion.fitsSystemWindows.FitSystemWindows1Activity"
+            android:exported="false" />
     </application>
 
 </manifest>

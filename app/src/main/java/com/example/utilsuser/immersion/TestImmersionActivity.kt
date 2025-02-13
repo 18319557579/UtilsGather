@@ -24,6 +24,7 @@ import com.example.utilsuser.R
 import com.example.utilsuser.StyleImmersion2Activity
 import com.example.utilsuser.StyleImmersionActivity
 import com.example.utilsuser.immersion.atomic.CompositeActivity
+import com.example.utilsuser.immersion.fitsSystemWindows.FitSystemWindows1Activity
 import com.example.utilsuser.immersion.theme_attr.ThemeAttr11Activity
 import com.example.utilsuser.immersion.theme_attr.ThemeAttr12Activity
 import com.example.utilsuser.immersion.theme_attr.ThemeAttr13Activity
@@ -75,6 +76,9 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 GuideItemEntity("去StyleImmersion2Activity") {
                     startActivity(Intent(this, StyleImmersion2Activity::class.java))
                 },
+                GuideItemEntity("---测试style属性---") {
+
+                },
                 GuideItemEntity("测试Style的windowFullscreen属性") {
                     startActivity(Intent(this, KtRoomActivity::class.java))
                 },
@@ -114,6 +118,13 @@ class TestImmersionActivity : LifecycleLogActivity() {
                 GuideItemEntity("测试Style的 windowLightNavigationBar=false（导航栏暗色模式）") {
                     startActivity(Intent(this, ThemeAttr16Activity::class.java))
                 },
+                GuideItemEntity("---fitsSystemWindows---") {
+
+                },
+                GuideItemEntity("最简单的使用") {
+                    startActivity(Intent(this, FitSystemWindows1Activity::class.java))
+                },
+
                 GuideItemEntity("下面的不一定有用------------------------------------------------------------") {
 
                 },
