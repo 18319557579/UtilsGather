@@ -2,10 +2,8 @@ package com.example.utilsuser
 
 import android.Manifest
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import com.example.uioperate.UiOperateEntranceActivity
 import com.example.utilsgather.application_device_info.DeviceInfoUtil
 import com.example.utilsgather.application_device_info.NetworkInfoUtil
@@ -27,8 +25,6 @@ import com.example.utilsgather.logcat.LogUtil
 import com.example.utilsgather.manifest.ManifestUtil
 import com.example.utilsgather.permission.permissionX.PermissionX
 import com.example.utilsgather.random.StringRandomUtil
-import com.example.utilsgather.share.email.EmailEntity
-import com.example.utilsgather.share.email.EmailSendUtil
 import com.example.utilsgather.source_file.assets.AssetsUtil
 import com.example.utilsgather.source_file.assets.PropertiesUtil
 import com.example.utilsgather.source_file.raw.SourceUtil
@@ -53,6 +49,7 @@ import com.example.utilsuser.file.FileActivity
 import com.example.utilsuser.gesture.GestureActivity
 import com.example.utilsuser.gesture.MyWindowManagerActivity
 import com.example.utilsuser.httpurlconnect.HttpActivity
+import com.example.utilsuser.immersion.TestImmersionActivity
 import com.example.utilsuser.json.JsonActivity
 import com.example.utilsuser.keyvalue.mmkv.KeyValueActivity
 import com.example.utilsuser.keyvalue.sp.SPTestActivity

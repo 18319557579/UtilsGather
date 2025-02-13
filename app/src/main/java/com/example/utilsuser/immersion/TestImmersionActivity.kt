@@ -1,4 +1,4 @@
-package com.example.utilsuser
+package com.example.utilsuser.immersion
 
 import android.content.Intent
 import android.graphics.Color
@@ -20,10 +20,10 @@ import com.example.utilsgather.ui.ColorUtil
 import com.example.utilsgather.ui.immersion.ImmersionUtil
 import com.example.utilsgather.ui.screen.ScreenFunctionUtils
 import com.example.utilsgather.ui.status.OtherStatusBarUtil
+import com.example.utilsuser.R
+import com.example.utilsuser.StyleImmersion2Activity
+import com.example.utilsuser.StyleImmersionActivity
 import com.example.utilsuser.immersion.atomic.CompositeActivity
-import com.example.utilsuser.immersion.InsetsListenerActivity
-import com.example.utilsuser.immersion.OfficialImmersionActivity
-import com.example.utilsuser.immersion.SimulationGameImmersionActivity
 import com.example.utilsuser.immersion.theme_attr.ThemeAttr11Activity
 import com.example.utilsuser.immersion.theme_attr.ThemeAttr12Activity
 import com.example.utilsuser.immersion.theme_attr.ThemeAttr13Activity

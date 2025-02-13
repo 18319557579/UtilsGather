@@ -15,6 +15,7 @@ public class ImmersionUtil {
      * 3.状态栏背景变为黑色，且状态栏的文字也不显示了
      * 4.从屏幕顶部或底部往里拨动，状态的文字可以显示了，导航栏可见并可以点击了
      */
+    // 现在弄游戏模式不使用这个了，因为没有layoutInDisplayCutoutMode的设置
     public static void hideVirtualButton(Activity activity) {
         if (Build.VERSION.SDK_INT >= 19 &&
                 null != activity) {
